@@ -1,0 +1,47 @@
+services:
+  frontend:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_POLL=true
+    command: sh -c "npm install && npm run dev -- --host"
+    depends_on:
+      - backend
+
+  backend:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./backend/.env
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: flashcards_fsrs
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  backend_uploads:
