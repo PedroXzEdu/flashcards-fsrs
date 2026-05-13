@@ -8,7 +8,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import CalendarHeatmap from "react-calendar-heatmap";
 
 import {
   getRetentionRate,
@@ -17,6 +16,12 @@ import {
   getPredictedRecall,
   getDailyQueue,
 } from "../services/analyticsApi";
+
+function getRecallColor(recall: number) {
+  if (recall < 50) return "bg-red-100";
+  if (recall < 80) return "bg-yellow-100";
+  return "bg-green-100";
+}
 
 export function AnalyticsPage() {
   const [retention, setRetention] = useState<any>(null);
@@ -77,15 +82,17 @@ export function AnalyticsPage() {
     {/* Heatmap */}
     <div className="bg-white rounded-2xl shadow p-6">
       <h2 className="text-xl font-semibold mb-6">Review Heatmap</h2>
-      <CalendarHeatmap
-        startDate={new Date("2026-01-01")}
-        endDate={new Date()}
-        values={heatmap}
-        classForValue={(value) => {
-          if (!value) return "color-empty";
-          return color-scale-${Math.min(value.reviews, 4)};
-        }}
-      />
+      <div className="grid grid-cols-7 gap-2">
+        {heatmap.map((day) => (
+          <div
+            key={day.day}
+            className="rounded bg-purple-100 p-2 text-center text-xs"
+            title={`${day.reviews} reviews`}
+          >
+            {day.reviews}
+          </div>
+        ))}
+      </div>
     </div>
 
     {/* Weakest Cards */}
