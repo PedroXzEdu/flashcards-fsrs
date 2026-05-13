@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authApi } from "../../api/auth";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -7,12 +7,18 @@ import { Sun, Moon, Layers } from "lucide-react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const { theme, toggle } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const safeRedirect =
+    redirect && redirect.startsWith("/") && !redirect.startsWith("//")
+      ? redirect
+      : "/";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -21,7 +27,7 @@ export default function LoginPage() {
     try {
       const res = await authApi.login(email, password);
       login(res.user, res.token);
-      navigate("/");
+      navigate(safeRedirect);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erro ao fazer login.");
     } finally {

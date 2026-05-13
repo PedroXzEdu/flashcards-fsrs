@@ -134,6 +134,7 @@ export default function ReviewPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
   const [reviewed, setReviewed] = useState(0);
   const [history, setHistory] = useState<("correct" | "wrong")[]>([]);
   const [shuffled, setShuffled] = useState(false);
@@ -191,6 +192,7 @@ export default function ReviewPage() {
 
   async function handleFlip() {
     if (flipped) return;
+    setError("");
     setFlipped(true);
     try {
       setPreview(await cardsApi.preview(deckId, cards[index].id));
@@ -202,6 +204,7 @@ export default function ReviewPage() {
   async function handleRate(rating: number) {
     if (submitting) return;
     setSubmitting(true);
+    setError("");
     try {
       await cardsApi.review(deckId, cards[index].id, rating);
       setHistory((h) => [...h, rating >= 3 ? "correct" : "wrong"]);
@@ -214,6 +217,12 @@ export default function ReviewPage() {
         setPreview(null);
         setTimeout(() => setIndex(next), 50);
       }
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erro ao salvar revisÃ£o. Tente novamente.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -672,6 +681,22 @@ export default function ReviewPage() {
             </kbd>{" "}
             para virar
           </p>
+          {error && (
+            <div
+              style={{
+                background: "rgba(243,139,168,0.1)",
+                border: "1px solid var(--danger)",
+                color: "var(--danger)",
+                fontSize: "13px",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                marginBottom: "12px",
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </div>
+          )}
           {flipped && (
             <div
               className="animate-fade-in"

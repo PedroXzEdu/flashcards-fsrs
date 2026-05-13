@@ -12,18 +12,24 @@ interface Props {
 export default function ShareModal({ deck, onClose, onUpdate }: Props) {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
   const [token, setToken] = useState(deck.share_token);
 
   const shareUrl = token ? `${window.location.origin}/shared/${token}` : null;
 
   async function handleShare() {
     setLoading(true);
+    setError("");
     try {
       const res = await decksApi.share(deck.id);
       setToken(res.token);
       onUpdate({ ...deck, share_token: res.token });
-    } catch {
-      /* erro silencioso */
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erro ao gerar link de compartilhamento.",
+      );
     } finally {
       setLoading(false);
     }
@@ -37,12 +43,17 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
     )
       return;
     setLoading(true);
+    setError("");
     try {
       await decksApi.unshare(deck.id);
       setToken(null);
       onUpdate({ ...deck, share_token: null });
-    } catch {
-      /* erro silencioso */
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erro ao desativar link de compartilhamento.",
+      );
     } finally {
       setLoading(false);
     }
@@ -141,6 +152,22 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
             <X size={16} />
           </button>
         </div>
+
+        {error && (
+          <div
+            style={{
+              background: "rgba(243,139,168,0.1)",
+              border: "1px solid var(--danger)",
+              color: "var(--danger)",
+              fontSize: "13px",
+              borderRadius: "10px",
+              padding: "10px 14px",
+              marginBottom: "16px",
+            }}
+          >
+            {error}
+          </div>
+        )}
 
         {token ? (
           <>
