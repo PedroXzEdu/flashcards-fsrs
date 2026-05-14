@@ -2,11 +2,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { AppError } from "../utils/AppError";
+import { env } from "../config/env";
 import { userRepository } from "../repositories/userRepository";
 
 class AuthService {
   private generateToken(userId: number) {
-    return jwt.sign({ userId }, process.env.JWT_SECRET!, {
+    return jwt.sign({ userId }, env.jwtSecret, {
       expiresIn: "7d",
     });
   }

@@ -1,12 +1,11 @@
 import { app } from "./app";
 import { runMigrations } from "./database/db";
-
-const PORT = process.env.PORT || 3000;
+import { env } from "./config/env";
 
 runMigrations()
   .then(() => {
-    app.listen(Number(PORT), "0.0.0.0", () => {
-      console.log(`Server running on port ${PORT}`);
+    app.listen(env.port, "0.0.0.0", () => {
+      console.log(`Server running on port ${env.port}`);
     });
   })
   .catch((err) => {
