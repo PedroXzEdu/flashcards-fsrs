@@ -312,8 +312,8 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
               <Button variant="secondary" size="sm" onClick={onClose}>
                 Cancelar
               </Button>
-              <Button variant="secondary" size="sm" onClick={onClose}>
-                Cancelar
+              <Button variant="secondary" size="sm" onClick={handleImport}>
+                Importar
               </Button>
             </div>
           </>
