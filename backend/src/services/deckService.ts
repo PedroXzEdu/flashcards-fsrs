@@ -2,6 +2,7 @@ import crypto from "crypto";
 
 import { deckRepository } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
+import { sanitizeInput } from "../utils/sanitize";
 
 class DeckService {
   async create(data: any) {
@@ -11,7 +12,8 @@ class DeckService {
 
     return deckRepository.create({
       ...data,
-      description: data.description || null,
+      title: sanitizeInput(data.title),
+      description: data.description ? sanitizeInput(data.description) : null,
       is_public: data.is_public || false,
     });
   }
@@ -37,7 +39,8 @@ class DeckService {
 
     const deck = await deckRepository.update(id, userId, {
       ...data,
-      description: data.description || null,
+      title: sanitizeInput(data.title),
+      description: data.description ? sanitizeInput(data.description) : null,
       is_public: data.is_public || false,
     });
 

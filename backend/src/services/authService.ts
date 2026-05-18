@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { AppError } from "../utils/AppError";
+import { sanitizeInput } from "../utils/sanitize";
 import { env } from "../config/env";
 import { userRepository } from "../repositories/userRepository";
 
@@ -13,7 +14,9 @@ class AuthService {
   }
 
   async register(name: string, email: string, password: string) {
-    const existingUser = await userRepository.findByEmail(email);
+    const sanitizedName = sanitizeInput(name);
+    const sanitizedEmail = sanitizeInput(email).toLowerCase();
+    const existingUser = await userRepository.findByEmail(sanitizedEmail);
 
     if (existingUser) {
       throw new AppError("Email already exists", 400);
@@ -21,7 +24,7 @@ class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await userRepository.create(name, email, hashedPassword);
+    const user = await userRepository.create(sanitizedName, sanitizedEmail, hashedPassword);
 
     return {
       token: this.generateToken(user.id),
@@ -34,7 +37,8 @@ class AuthService {
   }
 
   async login(email: string, password: string) {
-    const user = await userRepository.findByEmail(email);
+    const sanitizedEmail = sanitizeInput(email).toLowerCase();
+    const user = await userRepository.findByEmail(sanitizedEmail);
 
     if (!user) {
       throw new AppError("User not found", 404);

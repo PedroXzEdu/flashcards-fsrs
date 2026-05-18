@@ -29,6 +29,14 @@ export function errorHandler(
     });
   }
 
+  // Payload too large
+  if (err.type === "entity.too.large" || err.code === "ENTITY_TOO_LARGE" || err.status === 413) {
+    return res.status(413).json({
+      success: false,
+      error: "Payload muito grande.",
+    });
+  }
+
   // Erro genérico
   return res.status(500).json({
     success: false,
