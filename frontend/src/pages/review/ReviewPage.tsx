@@ -221,7 +221,7 @@ export default function ReviewPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Erro ao salvar revisÃ£o. Tente novamente.",
+          : "Erro ao salvar revisão. Tente novamente.",
       );
     } finally {
       setSubmitting(false);
