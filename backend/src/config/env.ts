@@ -5,6 +5,43 @@ dotenv.config();
 
 const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3000),
+  CORS_ORIGIN: z
+    .string()
+    .default("http://localhost:5173,http://localhost:4173")
+    .transform((value, ctx) => {
+      const origins = value
+        .split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+        .map((origin) => {
+          if (origin === "*") {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "CORS_ORIGIN must not use wildcard (*)",
+            });
+            return z.NEVER;
+          }
+
+          try {
+            return new URL(origin).origin;
+          } catch {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: `Invalid CORS origin: ${origin}`,
+            });
+            return z.NEVER;
+          }
+        });
+
+      if (origins.length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "CORS_ORIGIN must include at least one origin",
+        });
+      }
+
+      return origins;
+    }),
   DB_HOST: z.string().min(1, "DB_HOST is required"),
   DB_PORT: z.coerce.number().int().positive(),
   DB_USER: z.string().min(1, "DB_USER is required"),
@@ -22,6 +59,7 @@ if (!parsedEnv.success) {
 
 export const env = {
   port: parsedEnv.data.PORT,
+  corsOrigins: parsedEnv.data.CORS_ORIGIN,
   db: {
     host: parsedEnv.data.DB_HOST,
     port: parsedEnv.data.DB_PORT,

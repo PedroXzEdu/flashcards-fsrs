@@ -1,14 +1,28 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import path from "path";
 
 import { routes } from "./routes";
 import analyticsRoutes from "./routes/analyticsRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
+import { env } from "./config/env";
 
 const app = express();
 
-app.use(cors());
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || env.corsOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
+  }),
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {

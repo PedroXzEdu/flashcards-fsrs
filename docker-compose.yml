@@ -42,6 +42,15 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  tools:
+    image: node:20
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/workspace
+    command: sh
+
 volumes:
   pgdata:
   backend_uploads:

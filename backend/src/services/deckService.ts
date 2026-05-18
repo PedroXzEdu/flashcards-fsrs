@@ -5,6 +5,10 @@ import { AppError } from "../utils/AppError";
 
 class DeckService {
   async create(data: any) {
+    if (!data.title) {
+      throw new AppError("O título é obrigatório.", 400);
+    }
+
     return deckRepository.create({
       ...data,
       description: data.description || null,
