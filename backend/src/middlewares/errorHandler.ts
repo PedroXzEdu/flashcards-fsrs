@@ -29,6 +29,22 @@ export function errorHandler(
     });
   }
 
+  // Multer: invalid file type
+  if (err.code === "INVALID_FILE_TYPE") {
+    return res.status(400).json({
+      success: false,
+      error: "Invalid file type",
+    });
+  }
+
+  // Multer: file too large
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(413).json({
+      success: false,
+      error: "File too large",
+    });
+  }
+
   // Payload too large
   if (err.type === "entity.too.large" || err.code === "ENTITY_TOO_LARGE" || err.status === 413) {
     return res.status(413).json({
