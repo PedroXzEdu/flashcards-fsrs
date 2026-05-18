@@ -524,16 +524,22 @@ export default function DeckPage() {
             />
           </div>
           <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-            <Button
-              variant="ghost"
-              size="sm"
-              icon={<Pencil size={13} />}
-              onClick={() => {
-                setNewTitle(deck?.title ?? "");
-                setNewDescription(deck?.description ?? "");
-                setEditingTitle((s) => !s);
+            <button
+              type="submit"
+              style={{
+                background: "var(--accent)",
+                border: "none",
+                borderRadius: "8px",
+                color: "var(--bg)",
+                fontWeight: 600,
+                fontSize: "13px",
+                padding: "8px 16px",
+                cursor: "pointer",
+                fontFamily: "Outfit, sans-serif",
               }}
-            />
+            >
+              Salvar
+            </button>
             <button
               type="button"
               onClick={() => setEditingTitle(false)}
