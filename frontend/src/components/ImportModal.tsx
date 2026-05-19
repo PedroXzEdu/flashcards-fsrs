@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
 import {
   X,
@@ -25,6 +25,14 @@ interface ImportResult {
 }
 
 export default function ImportModal({ onClose, onSuccess }: Props) {
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<ImportResult | null>(null);
   const [error, setError] = useState("");
@@ -126,6 +134,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
             </p>
           </div>
           <button
+            type="button"
             onClick={onClose}
             style={{
               background: "none",

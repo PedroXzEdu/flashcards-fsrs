@@ -227,6 +227,7 @@ export default function DeckPage() {
       actions={
         <div style={{ display: "flex", gap: "8px" }}>
           <button
+            type="button"
             onClick={() => setShowShare(true)}
             title="Compartilhar baralho"
             style={{
@@ -246,6 +247,7 @@ export default function DeckPage() {
             <Share2 size={14} />
           </button>
           <button
+            type="button"
             onClick={() => {
               setNewTitle(deck?.title ?? "");
               setNewDescription(deck?.description ?? "");
@@ -267,6 +269,7 @@ export default function DeckPage() {
             <Pencil size={14} />
           </button>
           <button
+            type="button"
             onClick={() => setShowSettings((s) => !s)}
             title="Configurações do baralho"
             style={{
@@ -433,6 +436,7 @@ export default function DeckPage() {
               </div>
             </div>
             <button
+              type="button"
               onClick={handleSaveSettings}
               style={{
                 background: "var(--accent)",

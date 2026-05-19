@@ -88,6 +88,7 @@ export default function SharedDeckPage() {
           </span>
         </div>
         <button
+          type="button"
           onClick={toggle}
           style={{
             background: "var(--bg-card)",
@@ -120,6 +121,7 @@ export default function SharedDeckPage() {
             <p style={{ fontSize: "48px", marginBottom: "16px" }}>🔗</p>
             <p style={{ color: "var(--text-sub)", fontWeight: 500 }}>{error}</p>
             <button
+              type="button"
               onClick={() => navigate("/")}
               style={{
                 marginTop: "16px",
@@ -185,6 +187,7 @@ export default function SharedDeckPage() {
               O baralho foi adicionado à sua conta com sucesso.
             </p>
             <button
+              type="button"
               onClick={() => navigate("/")}
               style={{
                 background: "var(--accent)",
@@ -300,6 +303,7 @@ export default function SharedDeckPage() {
             )}
 
             <button
+              type="button"
               onClick={handleImport}
               disabled={importing}
               style={{

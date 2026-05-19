@@ -502,6 +502,7 @@ export default function DashboardPage() {
                     </span>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setConfirmDelete(deck)}
                     style={{
                       background: "none",

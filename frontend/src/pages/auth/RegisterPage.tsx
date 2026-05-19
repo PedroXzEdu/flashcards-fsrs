@@ -56,6 +56,7 @@ export default function RegisterPage() {
       }}
     >
       <button
+        type="button"
         onClick={toggle}
         style={{
           position: "absolute",

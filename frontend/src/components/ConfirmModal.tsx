@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Button from "./Button";
 import { Trash2, X } from "lucide-react";
 
@@ -14,6 +15,14 @@ export default function ConfirmModal({
   onConfirm,
   onCancel,
 }: Props) {
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onCancel();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onCancel]);
+
   return (
     <div
       className="modal-overlay"
@@ -64,6 +73,7 @@ export default function ConfirmModal({
             <Trash2 size={18} color="var(--danger)" />
           </div>
           <button
+            type="button"
             onClick={onCancel}
             style={{
               background: "none",

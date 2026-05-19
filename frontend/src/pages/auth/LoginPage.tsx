@@ -61,6 +61,7 @@ export default function LoginPage() {
       }}
     >
       <button
+        type="button"
         onClick={toggle}
         style={{
           position: "absolute",

@@ -27,6 +27,7 @@ function HeaderButton({
   const [p, setP] = useState(false);
   return (
     <button
+      type="button"
       onClick={onClick}
       title={title}
       onMouseEnter={() => setH(true)}
@@ -91,6 +92,7 @@ export default function Layout({
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           {backTo ? (
             <button
+              type="button"
               onClick={() => navigate(backTo)}
               onMouseEnter={() => setBackHover(true)}
               onMouseLeave={() => {
@@ -147,6 +149,7 @@ export default function Layout({
           )}
           {!backTo && (
             <button
+              type="button"
               onClick={() => navigate("/stats")}
               title="Estatísticas globais"
               style={{

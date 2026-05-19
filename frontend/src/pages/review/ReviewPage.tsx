@@ -70,6 +70,7 @@ function RatingButton({
   return (
     <Tooltip text={r.tooltip}>
       <button
+        type="button"
         onClick={() => onRate(r.value)}
         disabled={submitting}
         onMouseEnter={() => setHovered(true)}
@@ -342,6 +343,7 @@ export default function ReviewPage() {
             O FSRS agendou as próximas revisões automaticamente.
           </p>
           <button
+            type="button"
             onClick={() => navigate(`/decks/${deckId}`)}
             style={{
               background: "var(--accent)",
@@ -389,6 +391,7 @@ export default function ReviewPage() {
         }}
       >
         <button
+          type="button"
           onClick={() => navigate(`/decks/${deckId}`)}
           style={{
             background: "none",
@@ -440,6 +443,7 @@ export default function ReviewPage() {
             {index + 1} / {cards.length}
           </span>
           <button
+            type="button"
             onClick={() => {
               setShuffled((s) => !s);
               setCards((prev) =>
@@ -465,6 +469,7 @@ export default function ReviewPage() {
             <Shuffle size={13} />
           </button>
           <button
+            type="button"
             onClick={toggle}
             style={{
               background: "var(--bg-card)",

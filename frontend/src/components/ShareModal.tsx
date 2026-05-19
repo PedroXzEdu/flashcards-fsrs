@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Link, Copy, Check, Trash2, Users } from "lucide-react";
 import { decksApi } from "../api/decks";
 import type { Deck } from "../types";
+import ConfirmModal from "./ConfirmModal";
 
 interface Props {
   deck: Deck;
@@ -10,10 +11,19 @@ interface Props {
 }
 
 export default function ShareModal({ deck, onClose, onUpdate }: Props) {
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const [token, setToken] = useState(deck.share_token);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const shareUrl = token ? `${window.location.origin}/shared/${token}` : null;
 
@@ -35,13 +45,12 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
     }
   }
 
-  async function handleUnshare() {
-    if (
-      !confirm(
-        "Desativar o compartilhamento? O link atual deixará de funcionar.",
-      )
-    )
-      return;
+  function handleUnshare() {
+    setShowConfirm(true);
+  }
+
+  async function handleConfirmUnshare() {
+    setShowConfirm(false);
     setLoading(true);
     setError("");
     try {
@@ -140,6 +149,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
             style={{
               background: "none",
@@ -214,6 +224,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
                 {shareUrl}
               </span>
               <button
+                type="button"
                 onClick={handleCopy}
                 style={{
                   background: copied
@@ -255,6 +266,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <button
+                type="button"
                 onClick={handleUnshare}
                 disabled={loading}
                 style={{
@@ -274,6 +286,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
                 <Trash2 size={13} /> Desativar link
               </button>
               <button
+                type="button"
                 onClick={onClose}
                 style={{
                   background: "var(--accent)",
@@ -343,6 +356,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
               }}
             >
               <button
+                type="button"
                 onClick={onClose}
                 style={{
                   background: "none",
@@ -358,6 +372,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
                 Cancelar
               </button>
               <button
+                type="button"
                 onClick={handleShare}
                 disabled={loading}
                 style={{
@@ -382,6 +397,15 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
           </>
         )}
       </div>
+
+      {showConfirm && (
+        <ConfirmModal
+          title="Desativar compartilhamento"
+          message="Desativar o compartilhamento? O link atual deixará de funcionar."
+          onConfirm={handleConfirmUnshare}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </div>
   );
 }
