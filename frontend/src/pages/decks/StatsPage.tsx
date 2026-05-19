@@ -232,6 +232,7 @@ export default function StatsPage() {
 
         {/* Gráficos */}
         <div
+          className="stats-charts-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -358,6 +359,7 @@ export default function StatsPage() {
             Detalhamento
           </p>
           <div
+            className="stats-detail-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",
@@ -423,10 +425,18 @@ export default function StatsPage() {
             ))}
           </div>
         </div>
-        <div style={{ ...cardStyle, overflow: "visible" }}>
+        <div style={cardStyle}>
           <ActivityHeatmap />
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .stats-charts-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .stats-detail-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </Layout>
   );
 }

@@ -105,7 +105,7 @@ export default function ActivityHeatmap() {
     );
 
   return (
-    <div>
+    <div style={{ maxWidth: "100%" }}>
       <div
         style={{
           display: "flex",
@@ -150,8 +150,8 @@ export default function ActivityHeatmap() {
         </p>
       </div>
 
-      <div style={{ position: "relative" }}>
-        {/* Labels dos dias da semana */}
+      <div style={{ position: "relative", overflowX: "auto", overflowY: "hidden" }}>
+        {/* Labels dos meses */}
         <div
           style={{
             display: "flex",

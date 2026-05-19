@@ -109,14 +109,14 @@ export default function DashboardPage() {
   return (
     <Layout
       actions={
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="header-actions" style={{ display: "flex", gap: "8px" }}>
           <Button
             variant="secondary"
             size="sm"
             icon={<Download size={13} />}
             onClick={() => setShowImport(true)}
           >
-            Importar .apkg
+            <span className="action-label">Importar .apkg</span>
           </Button>
           <Button
             variant="primary"
@@ -124,7 +124,7 @@ export default function DashboardPage() {
             icon={<Plus size={13} />}
             onClick={() => setShowForm(true)}
           >
-            Novo baralho
+            <span className="action-label">Novo baralho</span>
           </Button>
         </div>
       }
@@ -176,7 +176,7 @@ export default function DashboardPage() {
         </h1>
         {streak.streak > 0 || streak.total_days > 0 ? (
           <div
-            className="animate-fade-in"
+            className="animate-fade-in dashboard-streak-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
@@ -355,6 +355,7 @@ export default function DashboardPage() {
 
       {loading ? (
         <div
+          className="deck-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
@@ -397,6 +398,7 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div
+          className="deck-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
@@ -531,6 +533,16 @@ export default function DashboardPage() {
           })}
         </div>
       )}
+      <style>{`
+        @media (max-width: 640px) {
+          .dashboard-streak-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .deck-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important; }
+          .header-actions .action-label { display: none; }
+          .header-actions { gap: 4px !important; }
+        }
+      `}</style>
     </Layout>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import { cardsApi } from "../../api/cards";
@@ -21,6 +21,7 @@ import {
   Search,
   Share2,
   Trash2,
+  MoreVertical,
 } from "lucide-react";
 
 const STATE = [
@@ -64,6 +65,18 @@ export default function DeckPage() {
   const [bulkText, setBulkText] = useState("");
   const [bulkSaving, setBulkSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setShowMoreMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   useEffect(() => {
     loadData();
@@ -209,6 +222,23 @@ export default function DeckPage() {
     resize: "none",
   };
 
+  const dropdownItemStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    width: "100%",
+    padding: "12px 16px",
+    border: "none",
+    background: "none",
+    color: "var(--text-sub)",
+    fontSize: "13px",
+    fontWeight: 500,
+    cursor: "pointer",
+    fontFamily: "Outfit, sans-serif",
+    textAlign: "left" as const,
+    transition: "background 0.1s",
+  };
+
   if (loading)
     return (
       <Layout backTo="/" title={editingTitle ? undefined : deck?.title}>
@@ -225,100 +255,199 @@ export default function DeckPage() {
       backTo="/"
       title={deck?.title}
       actions={
-        <div style={{ display: "flex", gap: "8px" }}>
-          <button
-            type="button"
-            onClick={() => setShowShare(true)}
-            title="Compartilhar baralho"
-            style={{
-              background: deck?.share_token
-                ? "rgba(203,166,247,0.12)"
-                : "var(--bg-card)",
-              border: `1px solid ${deck?.share_token ? "var(--accent)" : "var(--border)"}`,
-              borderRadius: "8px",
-              cursor: "pointer",
-              padding: "7px 9px",
-              display: "flex",
-              alignItems: "center",
-              color: deck?.share_token ? "var(--accent)" : "var(--text-sub)",
-              transition: "all 0.15s ease",
-            }}
-          >
-            <Share2 size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setNewTitle(deck?.title ?? "");
-              setNewDescription(deck?.description ?? "");
-              setEditingTitle((s) => !s);
-            }}
-            title="Renomear baralho"
-            style={{
-              background: editingTitle ? "var(--bg-hover)" : "var(--bg-card)",
-              border: `1px solid ${editingTitle ? "var(--accent)" : "var(--border)"}`,
-              borderRadius: "8px",
-              cursor: "pointer",
-              padding: "7px 9px",
-              display: "flex",
-              alignItems: "center",
-              color: editingTitle ? "var(--accent)" : "var(--text-sub)",
-              transition: "all 0.15s ease",
-            }}
-          >
-            <Pencil size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowSettings((s) => !s)}
-            title="Configurações do baralho"
-            style={{
-              background: showSettings ? "var(--bg-hover)" : "var(--bg-card)",
-              border: `1px solid ${showSettings ? "var(--accent)" : "var(--border)"}`,
-              borderRadius: "8px",
-              cursor: "pointer",
-              padding: "7px 9px",
-              display: "flex",
-              alignItems: "center",
-              color: showSettings ? "var(--accent)" : "var(--text-sub)",
-              transition: "all 0.15s ease",
-            }}
-          >
-            <Settings size={14} />
-          </button>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={<BarChart2 size={13} />}
-            onClick={() => navigate(`/decks/${deckId}/stats`)}
-          >
-            Stats
-          </Button>
-          {dueCount > 0 && (
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<Play size={13} />}
-              onClick={() => navigate(`/decks/${deckId}/review`)}
+        <>
+          {/* Desktop: all buttons visible */}
+          <div className="desktop-header-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <button
+              type="button"
+              onClick={() => setShowShare(true)}
+              title="Compartilhar baralho"
+              style={{
+                background: deck?.share_token
+                  ? "rgba(203,166,247,0.12)"
+                  : "var(--bg-card)",
+                border: `1px solid ${deck?.share_token ? "var(--accent)" : "var(--border)"}`,
+                borderRadius: "8px",
+                cursor: "pointer",
+                padding: "7px 9px",
+                display: "flex",
+                alignItems: "center",
+                color: deck?.share_token ? "var(--accent)" : "var(--text-sub)",
+                transition: "all 0.15s ease",
+              }}
             >
-              Revisar
-              <span
+              <Share2 size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setNewTitle(deck?.title ?? "");
+                setNewDescription(deck?.description ?? "");
+                setEditingTitle((s) => !s);
+              }}
+              title="Renomear baralho"
+              style={{
+                background: editingTitle ? "var(--bg-hover)" : "var(--bg-card)",
+                border: `1px solid ${editingTitle ? "var(--accent)" : "var(--border)"}`,
+                borderRadius: "8px",
+                cursor: "pointer",
+                padding: "7px 9px",
+                display: "flex",
+                alignItems: "center",
+                color: editingTitle ? "var(--accent)" : "var(--text-sub)",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <Pencil size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowSettings((s) => !s)}
+              title="Configurações do baralho"
+              style={{
+                background: showSettings ? "var(--bg-hover)" : "var(--bg-card)",
+                border: `1px solid ${showSettings ? "var(--accent)" : "var(--border)"}`,
+                borderRadius: "8px",
+                cursor: "pointer",
+                padding: "7px 9px",
+                display: "flex",
+                alignItems: "center",
+                color: showSettings ? "var(--accent)" : "var(--text-sub)",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <Settings size={14} />
+            </button>
+
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<BarChart2 size={13} />}
+              onClick={() => navigate(`/decks/${deckId}/stats`)}
+            >
+              <span className="action-label">Stats</span>
+            </Button>
+            {dueCount > 0 && (
+              <Button
+                variant="primary"
+                size="sm"
+                icon={<Play size={13} />}
+                onClick={() => navigate(`/decks/${deckId}/review`)}
+              >
+                <span className="action-label">Revisar</span>
+                <span
+                  style={{
+                    background: "var(--bg)",
+                    color: "var(--accent)",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    borderRadius: "10px",
+                    padding: "1px 6px",
+                    marginLeft: "4px",
+                  }}
+                >
+                  {dueCount}
+                </span>
+              </Button>
+            )}
+          </div>
+
+          {/* Mobile: compact actions row — Revisar + More menu */}
+          <div className="mobile-header-actions" style={{ display: "none", gap: "4px", alignItems: "center" }}>
+            {dueCount > 0 && (
+              <button
+                type="button"
+                onClick={() => navigate(`/decks/${deckId}/review`)}
+                title="Revisar"
                 style={{
-                  background: "var(--bg)",
-                  color: "var(--accent)",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  borderRadius: "10px",
-                  padding: "1px 6px",
-                  marginLeft: "4px",
+                  background: "var(--accent)",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  padding: "7px 9px",
+                  display: "flex",
+                  alignItems: "center",
+                  color: "var(--bg)",
+                  transition: "all 0.15s ease",
                 }}
               >
-                {dueCount}
-              </span>
-            </Button>
-          )}
-        </div>
+                <Play size={14} />
+              </button>
+            )}
+            <div ref={moreRef} style={{ position: "relative" }}>
+              <button
+                type="button"
+                onClick={() => setShowMoreMenu((s) => !s)}
+                title="Mais"
+                style={{
+                  background: showMoreMenu ? "var(--bg-hover)" : "var(--bg-card)",
+                  border: `1px solid ${showMoreMenu ? "var(--accent)" : "var(--border)"}`,
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  padding: "7px 9px",
+                  display: "flex",
+                  alignItems: "center",
+                  color: showMoreMenu ? "var(--accent)" : "var(--text-sub)",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                <MoreVertical size={14} />
+              </button>
+              {showMoreMenu && (
+                <div
+                  className="mobile-more-dropdown"
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    right: 0,
+                    marginTop: "6px",
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "12px",
+                    boxShadow: "var(--shadow)",
+                    minWidth: "170px",
+                    zIndex: 100,
+                    overflow: "hidden",
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => { setShowShare(true); setShowMoreMenu(false); }}
+                    style={dropdownItemStyle}
+                  >
+                    <Share2 size={14} /> Compartilhar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewTitle(deck?.title ?? "");
+                      setNewDescription(deck?.description ?? "");
+                      setEditingTitle((s) => !s);
+                      setShowMoreMenu(false);
+                    }}
+                    style={dropdownItemStyle}
+                  >
+                    <Pencil size={14} /> Renomear
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowSettings((s) => !s); setShowMoreMenu(false); }}
+                    style={dropdownItemStyle}
+                  >
+                    <Settings size={14} /> Configurações
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { navigate(`/decks/${deckId}/stats`); setShowMoreMenu(false); }}
+                    style={dropdownItemStyle}
+                  >
+                    <BarChart2 size={14} /> Stats
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
       }
     >
       {confirmDelete !== null && (
@@ -571,6 +700,8 @@ export default function DeckPage() {
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "24px",
+          flexWrap: "wrap",
+          rowGap: "8px",
         }}
       >
         <p style={{ margin: 0, color: "var(--text-muted)", fontSize: "13px" }}>
@@ -676,6 +807,7 @@ export default function DeckPage() {
             {editingCard ? "Editar card" : "Novo card"}
           </h2>
           <div
+            className="card-form-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
@@ -1032,6 +1164,14 @@ export default function DeckPage() {
             })}
         </div>
       )}
+      <style>{`
+        @media (max-width: 480px) {
+          .card-form-grid { grid-template-columns: 1fr !important; }
+          .desktop-header-actions { display: none !important; }
+          .mobile-header-actions { display: flex !important; }
+          .mobile-more-dropdown button:hover { background: var(--bg-hover) !important; color: var(--text) !important; }
+        }
+      `}</style>
     </Layout>
   );
 }

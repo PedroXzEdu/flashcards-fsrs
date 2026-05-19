@@ -412,7 +412,7 @@ export default function ReviewPage() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           {/* Histórico inline */}
-          <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "3px", alignItems: "center", overflow: "hidden" }}>
             {cards.map((_, i) => (
               <div
                 key={i}
@@ -705,7 +705,7 @@ export default function ReviewPage() {
           )}
           {flipped && (
             <div
-              className="animate-fade-in"
+              className="animate-fade-in rating-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(4, 1fr)",
@@ -725,6 +725,13 @@ export default function ReviewPage() {
           )}
         </div>
       </main>
+      <style>{`
+        @media (max-width: 480px) {
+          .rating-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

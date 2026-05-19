@@ -245,6 +245,7 @@ export default function StatsGlobalPage() {
 
         {/* Distribuição de respostas + Estado dos cards */}
         <div
+          className="stats-charts-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -394,6 +395,11 @@ export default function StatsGlobalPage() {
           <ActivityHeatmap />
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .stats-charts-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </Layout>
   );
 }

@@ -75,6 +75,7 @@ export default function Layout({
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
       <header
+        className="app-header"
         style={{
           background: "var(--bg-alt)",
           borderBottom: "1px solid var(--border)",
@@ -87,6 +88,7 @@ export default function Layout({
           top: 0,
           zIndex: 10,
           backdropFilter: "blur(8px)",
+          gap: "8px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -183,7 +185,7 @@ export default function Layout({
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="app-header-right" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           {actions}
           <HeaderButton
             onClick={toggle}
@@ -194,6 +196,7 @@ export default function Layout({
           {user && (
             <>
               <span
+                className="username-label"
                 style={{
                   fontSize: "12px",
                   color: "var(--text-muted)",
@@ -214,10 +217,18 @@ export default function Layout({
       </header>
 
       <main
-        style={{ maxWidth: "900px", margin: "0 auto", padding: "32px 24px" }}
+        style={{ maxWidth: "900px", margin: "0 auto", padding: "32px 24px", overflowX: "hidden" }}
       >
         {children}
       </main>
+      <style>{`
+        @media (max-width: 480px) {
+          .username-label { display: none; }
+        }
+        @media (max-width: 640px) {
+          .app-header { min-height: 56px !important; height: auto !important; padding: 8px 12px !important; }
+        }
+      `}</style>
     </div>
   );
 }
