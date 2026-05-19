@@ -135,6 +135,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
           </div>
           <button
             type="button"
+            aria-label="Fechar"
             onClick={onClose}
             style={{
               background: "none",
@@ -264,6 +265,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
 
             {error && (
               <div
+                role="alert"
                 style={{
                   display: "flex",
                   alignItems: "center",

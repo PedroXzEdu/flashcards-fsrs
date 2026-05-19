@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import type { DeckStats } from "../../types";
 import Layout from "../../components/Layout";
+import { SkeletonDeckCard } from "../../components/SkeletonCard";
 import ActivityHeatmap from "../../components/ActivityHeatmap";
 import {
   BarChart,
@@ -33,17 +34,19 @@ export default function StatsPage() {
 
   if (loading)
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "var(--bg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <p style={{ color: "var(--text-muted)" }}>Carregando...</p>
-      </div>
+      <Layout backTo={`/decks/${deckId}`} title="Estatísticas">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+            gap: "12px",
+          }}
+        >
+          {[1, 2, 3, 4].map((i) => (
+            <SkeletonDeckCard key={i} />
+          ))}
+        </div>
+      </Layout>
     );
   if (!stats) return null;
 

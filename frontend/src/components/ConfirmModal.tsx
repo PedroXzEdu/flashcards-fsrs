@@ -74,6 +74,7 @@ export default function ConfirmModal({
           </div>
           <button
             type="button"
+            aria-label="Fechar"
             onClick={onCancel}
             style={{
               background: "none",

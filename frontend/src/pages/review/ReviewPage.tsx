@@ -381,7 +381,7 @@ export default function ReviewPage() {
           background: "var(--bg-alt)",
           borderBottom: "1px solid var(--border)",
           padding: "0 24px",
-          height: "52px",
+          height: "56px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -399,7 +399,7 @@ export default function ReviewPage() {
             cursor: "pointer",
             color: "var(--text-muted)",
             fontSize: "13px",
-            padding: "4px 8px",
+            padding: "7px 9px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -407,7 +407,7 @@ export default function ReviewPage() {
             fontFamily: "Outfit, sans-serif",
           }}
         >
-          <X size={14} /> Encerrar
+          <X size={15} /> Encerrar
         </button>
 
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -688,6 +688,7 @@ export default function ReviewPage() {
           </p>
           {error && (
             <div
+              role="alert"
               style={{
                 background: "rgba(243,139,168,0.1)",
                 border: "1px solid var(--danger)",

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDailyQueue } from "../services/analyticsApi";
+import { Calendar } from "lucide-react";
 
 export function DailyQueue() {
   const [queue, setQueue] = useState<any[]>([]);
@@ -24,7 +25,37 @@ export function DailyQueue() {
     <div className="space-y-4">
       <h2 className="text-xl font-bold mb-4">Fila do Dia</h2>
 
-      {queue.length === 0 && <p>Sem cartões para hoje!</p>}
+      {queue.length === 0 && (
+        <div style={{ textAlign: "center", padding: "60px 0" }}>
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "16px",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 16px",
+            }}
+          >
+            <Calendar size={24} color="var(--text-muted)" />
+          </div>
+          <p style={{ color: "var(--text-sub)", margin: 0, fontWeight: 500 }}>
+            Nenhum card para revisar hoje!
+          </p>
+          <p
+            style={{
+              color: "var(--text-muted)",
+              fontSize: "13px",
+              marginTop: "4px",
+            }}
+          >
+            Adicione novos cards ou volte amanhã.
+          </p>
+        </div>
+      )}
 
       {queue.map((card) => (
         <div

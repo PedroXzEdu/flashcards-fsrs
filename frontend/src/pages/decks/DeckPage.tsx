@@ -340,6 +340,7 @@ export default function DeckPage() {
 
       {error && (
         <div
+          role="alert"
           style={{
             background: "rgba(243,139,168,0.1)",
             border: "1px solid var(--danger)",
