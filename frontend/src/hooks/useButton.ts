@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 export function useButton(baseStyle: React.CSSProperties) {
   const [pressed, setPressed] = useState(false);

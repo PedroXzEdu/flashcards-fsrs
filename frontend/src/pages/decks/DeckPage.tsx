@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import { cardsApi } from "../../api/cards";
@@ -78,11 +78,7 @@ export default function DeckPage() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  useEffect(() => {
-    loadData();
-  }, [deckId]);
-
-  async function loadData() {
+  const loadData = useCallback(async () => {
     try {
       const [deckData, cardsData, reviewData] = await Promise.all([
         decksApi.get(deckId),
@@ -98,7 +94,12 @@ export default function DeckPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [deckId]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+  }, [loadData]);
 
   async function handleRename(e: React.FormEvent) {
     e.preventDefault();
@@ -208,20 +209,6 @@ export default function DeckPage() {
     setBack("");
   }
 
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    background: "var(--bg)",
-    border: "1px solid var(--border)",
-    borderRadius: "10px",
-    padding: "10px 14px",
-    fontSize: "14px",
-    color: "var(--text)",
-    outline: "none",
-    fontFamily: "Outfit, sans-serif",
-    transition: "border-color 0.2s",
-    resize: "none",
-  };
-
   const dropdownItemStyle: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -257,7 +244,10 @@ export default function DeckPage() {
       actions={
         <>
           {/* Desktop: all buttons visible */}
-          <div className="desktop-header-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <div
+            className="desktop-header-actions"
+            style={{ display: "flex", gap: "8px", alignItems: "center" }}
+          >
             <button
               type="button"
               onClick={() => setShowShare(true)}
@@ -353,7 +343,10 @@ export default function DeckPage() {
           </div>
 
           {/* Mobile: compact actions row — Revisar + More menu */}
-          <div className="mobile-header-actions" style={{ display: "none", gap: "4px", alignItems: "center" }}>
+          <div
+            className="mobile-header-actions"
+            style={{ display: "none", gap: "4px", alignItems: "center" }}
+          >
             {dueCount > 0 && (
               <button
                 type="button"
@@ -380,7 +373,9 @@ export default function DeckPage() {
                 onClick={() => setShowMoreMenu((s) => !s)}
                 title="Mais"
                 style={{
-                  background: showMoreMenu ? "var(--bg-hover)" : "var(--bg-card)",
+                  background: showMoreMenu
+                    ? "var(--bg-hover)"
+                    : "var(--bg-card)",
                   border: `1px solid ${showMoreMenu ? "var(--accent)" : "var(--border)"}`,
                   borderRadius: "8px",
                   cursor: "pointer",
@@ -412,7 +407,10 @@ export default function DeckPage() {
                 >
                   <button
                     type="button"
-                    onClick={() => { setShowShare(true); setShowMoreMenu(false); }}
+                    onClick={() => {
+                      setShowShare(true);
+                      setShowMoreMenu(false);
+                    }}
                     style={dropdownItemStyle}
                   >
                     <Share2 size={14} /> Compartilhar
@@ -431,14 +429,20 @@ export default function DeckPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => { setShowSettings((s) => !s); setShowMoreMenu(false); }}
+                    onClick={() => {
+                      setShowSettings((s) => !s);
+                      setShowMoreMenu(false);
+                    }}
                     style={dropdownItemStyle}
                   >
                     <Settings size={14} /> Configurações
                   </button>
                   <button
                     type="button"
-                    onClick={() => { navigate(`/decks/${deckId}/stats`); setShowMoreMenu(false); }}
+                    onClick={() => {
+                      navigate(`/decks/${deckId}/stats`);
+                      setShowMoreMenu(false);
+                    }}
                     style={dropdownItemStyle}
                   >
                     <BarChart2 size={14} /> Stats

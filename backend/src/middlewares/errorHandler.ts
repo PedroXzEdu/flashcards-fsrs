@@ -11,7 +11,10 @@ export function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  logger.error({ err, requestId: req.requestId }, err.message || "Unhandled error");
+  logger.error(
+    { err, requestId: req.requestId },
+    err.message || "Unhandled error",
+  );
 
   const requestId = req.requestId;
 
@@ -53,7 +56,11 @@ export function errorHandler(
   }
 
   // Payload too large
-  if (err.type === "entity.too.large" || err.code === "ENTITY_TOO_LARGE" || err.status === 413) {
+  if (
+    err.type === "entity.too.large" ||
+    err.code === "ENTITY_TOO_LARGE" ||
+    err.status === 413
+  ) {
     return res.status(413).json({
       success: false,
       error: "Payload muito grande.",

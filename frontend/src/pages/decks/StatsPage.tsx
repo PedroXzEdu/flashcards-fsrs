@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import type { DeckStats } from "../../types";
 import Layout from "../../components/Layout";
@@ -20,7 +20,6 @@ import {
 
 export default function StatsPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const deckId = Number(id);
   const [stats, setStats] = useState<DeckStats | null>(null);
   const [loading, setLoading] = useState(true);

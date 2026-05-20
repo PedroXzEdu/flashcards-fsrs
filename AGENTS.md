@@ -15,19 +15,23 @@ Primary goal:
 ## Stack
 
 ### Frontend
+
 - React 19
 - Vite
 - TypeScript
 
 ### Backend
+
 - Node.js
 - Express
 - TypeScript
 
 ### Database
+
 - PostgreSQL
 
 ### Infrastructure
+
 - Docker Compose
 - Node 20
 
@@ -80,16 +84,19 @@ Always prioritize stability over elegance.
 ## Current Priorities
 
 ### High Priority
+
 - UX improvements (incremental)
 - observability
 - E2E regression prevention
 
 ### Medium Priority
+
 - performance improvements
 - database indexes
 - batch operations
 
 ### Low Priority
+
 - cosmetic refactors
 - architecture cleanup
 
@@ -108,7 +115,7 @@ Success:
   "success": true,
   "data": {}
 }
-````
+```
 
 Error:
 
@@ -127,12 +134,12 @@ Do not introduce inconsistent response formats.
 
 Already completed:
 
-* env validation
-* helmet
-* restricted CORS
-* auth rate limit
-* backend sanitization
-* .apkg upload hardening
+- env validation
+- helmet
+- restricted CORS
+- auth rate limit
+- backend sanitization
+- .apkg upload hardening
 
 Avoid reworking these unless fixing a bug.
 
@@ -142,17 +149,17 @@ Avoid reworking these unless fixing a bug.
 
 Source of truth:
 
-* DB_HOST
-* DB_PORT
-* DB_USER
-* DB_PASSWORD
-* DB_NAME
-* JWT_SECRET
+- DB_HOST
+- DB_PORT
+- DB_USER
+- DB_PASSWORD
+- DB_NAME
+- JWT_SECRET
 
 Optional:
 
-* PORT
-* CORS_ORIGIN
+- PORT
+- CORS_ORIGIN
 
 Do NOT migrate to DATABASE_URL unless explicitly requested.
 
@@ -164,8 +171,8 @@ Prefer repository pattern.
 
 Avoid:
 
-* spreading raw SQL randomly
-* mixing query logic into controllers
+- spreading raw SQL randomly
+- mixing query logic into controllers
 
 ---
 
@@ -177,11 +184,11 @@ Do NOT refactor or rewrite FSRS logic unless fixing a confirmed bug.
 
 Protected working flows:
 
-* due queue
-* preview again/hard/good/easy
-* submit review
-* review logs
-* analytics
+- due queue
+- preview again/hard/good/easy
+- submit review
+- review logs
+- analytics
 
 Regression risk here is considered HIGH.
 
@@ -201,19 +208,19 @@ Only apply minimal hardening or bug fixes.
 
 Prefer:
 
-* minimal UI changes
-* localized component edits
-* theme consistency
-* Portuguese language consistency
-* accessibility improvements
-* responsive-safe changes
+- minimal UI changes
+- localized component edits
+- theme consistency
+- Portuguese language consistency
+- accessibility improvements
+- responsive-safe changes
 
 Avoid:
 
-* redesigns
-* replacing UI system
-* changing UX patterns globally
-* broad styling rewrites
+- redesigns
+- replacing UI system
+- changing UX patterns globally
+- broad styling rewrites
 
 ---
 
@@ -224,7 +231,7 @@ Always explicitly define button type:
 Use:
 
 ```html
-<button type="button">
+<button type="button"></button>
 ```
 
 for non-submit actions.
@@ -288,15 +295,15 @@ Verify affected flow manually.
 
 Examples:
 
-* login
-* register
-* create deck
-* rename deck
-* create card
-* review FSRS
-* analytics
-* import .apkg
-* share/unshare
+- login
+- register
+- create deck
+- rename deck
+- create card
+- review FSRS
+- analytics
+- import .apkg
+- share/unshare
 
 Never assume functionality works without validation.
 
@@ -322,12 +329,12 @@ Unless explicitly requested:
 
 DO NOT:
 
-* refactor broadly
-* rename files unnecessarily
-* change API contracts
-* modify unrelated code
-* rewrite working logic
-* introduce new architecture patterns
+- refactor broadly
+- rename files unnecessarily
+- change API contracts
+- modify unrelated code
+- rewrite working logic
+- introduce new architecture patterns
 
 Prefer:
 

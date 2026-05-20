@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { statsApi } from "../api/decks";
 import type { GlobalStats } from "../types";
 import Layout from "../components/Layout";
@@ -25,7 +24,6 @@ const RATING_COLORS = [
 ];
 
 export default function StatsGlobalPage() {
-  const navigate = useNavigate();
   const [stats, setStats] = useState<GlobalStats | null>(null);
   const [loading, setLoading] = useState(true);
 

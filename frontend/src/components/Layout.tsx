@@ -185,7 +185,10 @@ export default function Layout({
           )}
         </div>
 
-        <div className="app-header-right" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div
+          className="app-header-right"
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
+        >
           {actions}
           <HeaderButton
             onClick={toggle}
@@ -217,7 +220,12 @@ export default function Layout({
       </header>
 
       <main
-        style={{ maxWidth: "900px", margin: "0 auto", padding: "32px 24px", overflowX: "hidden" }}
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "32px 24px",
+          overflowX: "hidden",
+        }}
       >
         {children}
       </main>

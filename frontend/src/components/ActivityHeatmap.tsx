@@ -150,7 +150,9 @@ export default function ActivityHeatmap() {
         </p>
       </div>
 
-      <div style={{ position: "relative", overflowX: "auto", overflowY: "hidden" }}>
+      <div
+        style={{ position: "relative", overflowX: "auto", overflowY: "hidden" }}
+      >
         {/* Labels dos meses */}
         <div
           style={{

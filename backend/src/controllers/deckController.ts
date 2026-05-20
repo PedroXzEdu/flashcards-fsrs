@@ -64,7 +64,11 @@ export async function updateDeck(
   next: NextFunction,
 ) {
   try {
-    const deck = await deckService.update(req.params.id as string, req.userId!, req.body);
+    const deck = await deckService.update(
+      req.params.id as string,
+      req.userId!,
+      req.body,
+    );
 
     return res.json({
       success: true,
@@ -95,7 +99,10 @@ export async function getDeckStats(
   next: NextFunction,
 ) {
   try {
-    const stats = await deckService.getStats(req.params.id as string, req.userId!);
+    const stats = await deckService.getStats(
+      req.params.id as string,
+      req.userId!,
+    );
 
     return res.json({
       success: true,
@@ -133,7 +140,10 @@ export async function shareDeck(
   next: NextFunction,
 ) {
   try {
-    const result = await deckService.share(req.params.id as string, req.userId!);
+    const result = await deckService.share(
+      req.params.id as string,
+      req.userId!,
+    );
 
     return res.json({
       success: true,
@@ -150,7 +160,10 @@ export async function unshareDeck(
   next: NextFunction,
 ) {
   try {
-    const result = await deckService.unshare(req.params.id as string, req.userId!);
+    const result = await deckService.unshare(
+      req.params.id as string,
+      req.userId!,
+    );
 
     return res.json({
       success: true,
@@ -187,7 +200,9 @@ export async function getSharedDeckPreview(
   next: NextFunction,
 ) {
   try {
-    const deck = await deckService.previewSharedDeck(req.params.token as string);
+    const deck = await deckService.previewSharedDeck(
+      req.params.token as string,
+    );
 
     return res.json({
       success: true,

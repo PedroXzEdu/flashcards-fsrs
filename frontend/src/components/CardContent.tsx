@@ -47,7 +47,7 @@ function renderLatex(text: string): string {
   });
 
   // Inline: $...$
-  result = result.replace(/\$([^\$\n]+?)\$/g, (_, expr) => {
+  result = result.replace(/\$([^$\n]+?)\$/g, (_, expr) => {
     try {
       return katex.renderToString(expr.trim(), {
         displayMode: false,

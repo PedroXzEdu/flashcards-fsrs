@@ -1,28 +1,28 @@
 import { api } from "../api/client";
 
-interface RetentionRate {
+export interface RetentionRate {
   retention_rate: string | number | null;
   successful_reviews: string | number;
   total_reviews: string | number;
 }
 
-interface ForgettingCurve {
+export interface ForgettingCurve {
   stability: number;
   curve: { day: number; retention: number }[];
 }
 
-interface HeatmapDay {
+export interface HeatmapDay {
   day: string;
   reviews: number;
 }
 
-interface PredictedRecall {
+export interface PredictedRecall {
   card_id: number;
   front: string;
   predicted_recall: number;
 }
 
-interface DailyQueueCard {
+export interface DailyQueueCard {
   id: number;
   front: string;
   predicted_recall: number;

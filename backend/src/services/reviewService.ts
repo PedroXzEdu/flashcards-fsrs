@@ -24,7 +24,7 @@ class ReviewService {
     const card = await cardRepository.findById(cardId, userId);
 
     if (!card) {
-      throw new AppError("Card nÃ£o encontrado.", 404);
+      throw new AppError("Card não encontrado.", 404);
     }
 
     const preview = fsrsService.preview(card);
@@ -38,8 +38,10 @@ class ReviewService {
   }
 
   async submitReview(cardId: string, userId: number, rating: Rating) {
-    if (![Rating.Again, Rating.Hard, Rating.Good, Rating.Easy].includes(rating)) {
-      throw new AppError("Rating invÃ¡lido.", 400);
+    if (
+      ![Rating.Again, Rating.Hard, Rating.Good, Rating.Easy].includes(rating)
+    ) {
+      throw new AppError("Rating inválido.", 400);
     }
 
     const card = await cardRepository.findById(cardId, userId);

@@ -142,6 +142,7 @@ export default function ReviewPage() {
 
   useEffect(() => {
     loadCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckId]);
 
   useEffect(() => {
@@ -168,6 +169,7 @@ export default function ReviewPage() {
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flipped, submitting, index]);
 
   async function loadCards() {
@@ -412,7 +414,14 @@ export default function ReviewPage() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           {/* Histórico inline */}
-          <div style={{ display: "flex", gap: "3px", alignItems: "center", overflow: "hidden" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "3px",
+              alignItems: "center",
+              overflow: "hidden",
+            }}
+          >
             {cards.map((_, i) => (
               <div
                 key={i}

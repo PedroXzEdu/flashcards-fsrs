@@ -140,9 +140,7 @@ export default function Button({
           }}
         />
       ) : icon ? (
-        <span style={{ display: "inline-flex" }}>
-          {icon}
-        </span>
+        <span style={{ display: "inline-flex" }}>{icon}</span>
       ) : null}
       {children}
     </button>

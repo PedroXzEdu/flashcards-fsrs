@@ -17,58 +17,60 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 function PageLoader() {
-  return <div style={{ padding: 24, color: "var(--text-muted)" }}>Carregando...</div>;
+  return (
+    <div style={{ padding: 24, color: "var(--text-muted)" }}>Carregando...</div>
+  );
 }
 
 export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <DashboardPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/stats"
-        element={
-          <PrivateRoute>
-            <StatsGlobalPage />
-          </PrivateRoute>
-        }
-      />
-      <Route path="/shared/:token" element={<SharedDeckPage />} />
-      <Route
-        path="/decks/:id"
-        element={
-          <PrivateRoute>
-            <DeckPage />
-          </PrivateRoute>
-        }
-      />
-      <Route path="*" element={<Navigate to="/" />} />
-      <Route
-        path="/decks/:id/review"
-        element={
-          <PrivateRoute>
-            <ReviewPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/decks/:id/stats"
-        element={
-          <PrivateRoute>
-            <StatsPage />
-          </PrivateRoute>
-        }
-      />
-    </Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/stats"
+          element={
+            <PrivateRoute>
+              <StatsGlobalPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/shared/:token" element={<SharedDeckPage />} />
+        <Route
+          path="/decks/:id"
+          element={
+            <PrivateRoute>
+              <DeckPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route
+          path="/decks/:id/review"
+          element={
+            <PrivateRoute>
+              <ReviewPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/decks/:id/stats"
+          element={
+            <PrivateRoute>
+              <StatsPage />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
     </Suspense>
   );
 }

@@ -24,7 +24,11 @@ class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await userRepository.create(sanitizedName, sanitizedEmail, hashedPassword);
+    const user = await userRepository.create(
+      sanitizedName,
+      sanitizedEmail,
+      hashedPassword,
+    );
 
     return {
       token: this.generateToken(user.id),
