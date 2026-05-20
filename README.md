@@ -15,6 +15,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 ## Funcionalidades
 
 ### Autenticação
+
 - Cadastro e login com JWT
 - Proteção de rotas
 - Rate limiting em login e registro
@@ -22,18 +23,21 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - Request ID para rastreamento de erros
 
 ### Gestão de Baralhos
+
 - Criar, renomear e excluir baralhos
 - Configuração personalizada por deck
 - Compartilhamento por link
 - Importação de decks `.apkg`
 
 ### Gestão de Cards
+
 - Criar, editar e excluir cards
 - Editor rico (Rich Text)
 - Suporte a fórmulas matemáticas com KaTeX
 - Busca e gerenciamento em lote
 
 ### Sistema de Revisão (FSRS)
+
 - Agendamento inteligente de revisões
 - Estados de aprendizado
 - Avaliações:
@@ -44,6 +48,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - Fila diária de revisão
 
 ### Estatísticas
+
 - Heatmap de atividade
 - Taxa de acerto
 - Distribuição de reviews
@@ -51,6 +56,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - Métricas globais
 
 ### Qualidade e Engenharia
+
 - Docker-first workflow
 - Lazy loading no frontend
 - Logging estruturado com Pino
@@ -65,6 +71,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 ## Stack Tecnológica
 
 ### Frontend
+
 - React
 - TypeScript
 - Vite
@@ -75,6 +82,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - KaTeX
 
 ### Backend
+
 - Node.js
 - Express
 - TypeScript
@@ -84,10 +92,12 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - Pino Logger
 
 ### Infraestrutura
+
 - Docker
 - Docker Compose
 
 ### Qualidade
+
 - ESLint
 - Prettier
 - Husky
@@ -107,7 +117,7 @@ flashfsrs/
 ├── docker-compose.yml
 ├── AGENTS.md
 └── README.md
-````
+```
 
 ### Backend
 
@@ -144,15 +154,15 @@ src/
 
 ### Pré-requisitos
 
-* Docker
-* Docker Compose
+- Docker
+- Docker Compose
 
 > Não é necessário instalar Node.js localmente.
 
 ### 1. Clone o repositório
 
 ```bash
-git clone [<url-do-repositorio>](https://github.com/PedroXzEdu/flashcards-fsrs)
+git clone [<url-do-repositorio>](https://github.com/PedroXzEdu/flashfsrs)
 cd flashcards-fsrs
 ```
 
@@ -242,9 +252,9 @@ docker compose exec backend npm run format
 
 O projeto possui testes automatizados para:
 
-* Auth Service
-* Deck Service
-* Review Service
+- Auth Service
+- Deck Service
+- Review Service
 
 Executar:
 
@@ -258,13 +268,13 @@ docker compose exec backend npm test
 
 O projeto implementa medidas básicas de segurança para um MVP:
 
-* JWT Authentication
-* Rate limiting em autenticação
-* Sanitização de entradas
-* Upload seguro de `.apkg`
-* Request IDs para rastreamento
-* Logging estruturado
-* Error handling centralizado
+- JWT Authentication
+- Rate limiting em autenticação
+- Sanitização de entradas
+- Upload seguro de `.apkg`
+- Request IDs para rastreamento
+- Logging estruturado
+- Error handling centralizado
 
 ---
 
@@ -272,24 +282,24 @@ O projeto implementa medidas básicas de segurança para um MVP:
 
 ### Curto prazo
 
-* [ ] Melhorias adicionais de responsividade
-* [ ] Testes E2E
-* [ ] Melhorias visuais no dashboard
-* [ ] Mais métricas de aprendizagem
+- [ ] Melhorias adicionais de responsividade
+- [ ] Testes E2E
+- [ ] Melhorias visuais no dashboard
+- [ ] Mais métricas de aprendizagem
 
 ### Médio prazo
 
-* [ ] PWA
-* [ ] Sincronização em tempo real
-* [ ] Modo offline
-* [ ] Sistema de tags
+- [ ] PWA
+- [ ] Sincronização em tempo real
+- [ ] Modo offline
+- [ ] Sistema de tags
 
 ### Longo prazo
 
-* [ ] Deploy em produção
-* [ ] Compartilhamento público de decks
-* [ ] Gamificação
-* [ ] Aplicativo mobile
+- [ ] Deploy em produção
+- [ ] Compartilhamento público de decks
+- [ ] Gamificação
+- [ ] Aplicativo mobile
 
 ---
 
