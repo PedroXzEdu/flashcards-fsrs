@@ -1,2 +1,2 @@
-npx lint-staged
-cd frontend && npx eslint .
+docker compose run --rm -T tools sh -c "npm install --no-audit --no-fund --loglevel=error && npx lint-staged"
+docker compose run --rm -T frontend sh -c "npm install --no-audit --no-fund --loglevel=error && npx eslint ."
