@@ -1,22 +1,29 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import DashboardPage from "./pages/decks/DashboardPage";
-import DeckPage from "./pages/decks/DeckPage";
-import ReviewPage from "./pages/review/ReviewPage";
-import StatsPage from "./pages/decks/StatsPage";
-import StatsGlobalPage from "./pages/StatsGlobalPage";
-import SharedDeckPage from "./pages/SharedDeckPage";
+
+const DashboardPage = lazy(() => import("./pages/decks/DashboardPage"));
+const DeckPage = lazy(() => import("./pages/decks/DeckPage"));
+const ReviewPage = lazy(() => import("./pages/review/ReviewPage"));
+const StatsPage = lazy(() => import("./pages/decks/StatsPage"));
+const StatsGlobalPage = lazy(() => import("./pages/StatsGlobalPage"));
+const SharedDeckPage = lazy(() => import("./pages/SharedDeckPage"));
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 }
 
+function PageLoader() {
+  return <div style={{ padding: 24, color: "var(--text-muted)" }}>Carregando...</div>;
+}
+
 export default function App() {
   return (
-    <Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route
@@ -62,5 +69,6 @@ export default function App() {
         }
       />
     </Routes>
+    </Suspense>
   );
 }

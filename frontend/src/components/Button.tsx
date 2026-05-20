@@ -24,7 +24,7 @@ const variants = {
     },
     hover: {
       background: "var(--bg-hover)",
-      borderColor: "var(--accent)",
+      border: "1px solid var(--accent)",
       color: "var(--text)",
     },
   },
