@@ -175,7 +175,7 @@ export default function Layout({
                 (e.currentTarget.style.color = "var(--text-muted)")
               }
             >
-              <BarChart2 size={14} /> Stats
+              <BarChart2 size={14} /> <span className="stats-label">Stats</span>
             </button>
           )}
           {title && (
@@ -224,6 +224,7 @@ export default function Layout({
       <style>{`
         @media (max-width: 480px) {
           .username-label { display: none; }
+          .stats-label { display: none; }
         }
         @media (max-width: 640px) {
           .app-header { min-height: 56px !important; height: auto !important; padding: 8px 12px !important; }

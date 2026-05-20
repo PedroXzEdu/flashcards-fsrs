@@ -17,29 +17,39 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
+function getStoredAuth(): { token: string | null; user: User | null } {
+  try {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      return { token: storedToken, user: JSON.parse(storedUser) };
     }
+  } catch {
+    /* ignore */
+  }
+  return { token: null, user: null };
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [auth, setAuth] = useState(() => getStoredAuth());
+  const user = auth.user;
+  const token = auth.token;
+
+  useEffect(() => {
+    // Keep in sync with external changes (e.g. other tabs)
+    const handler = () => setAuth(getStoredAuth());
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
   }, []);
 
   function login(user: User, token: string) {
-    setUser(user);
-    setToken(token);
+    setAuth({ user, token });
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
   }
 
   function logout() {
-    setUser(null);
-    setToken(null);
+    setAuth({ user: null, token: null });
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   }
