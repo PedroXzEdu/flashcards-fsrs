@@ -8,6 +8,7 @@ import unzipper from "unzipper";
 import Database from "better-sqlite3";
 import { promisify } from "util";
 import { pipeline } from "stream";
+import { logger } from "../config/logger";
 
 const streamPipeline = promisify(pipeline);
 
@@ -134,7 +135,7 @@ export async function importApkg(req: AuthRequest, res: Response) {
       message: `${imported} cards importados com sucesso!`,
     });
   } catch (err) {
-    console.error("Erro ao importar .apkg:", err);
+    logger.error({ err }, "Erro ao importar .apkg");
     res.status(500).json({ error: "Erro ao processar o arquivo .apkg." });
   } finally {
     // Limpa arquivos temporários

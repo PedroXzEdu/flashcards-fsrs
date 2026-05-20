@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 
 import { env } from "../config/env";
+import { logger } from "../config/logger";
 
 export const pool = new Pool({
   host: env.db.host,
@@ -15,5 +16,5 @@ export const pool = new Pool({
 export async function runMigrations() {
   const sql = fs.readFileSync(path.join(__dirname, "migrations.sql"), "utf-8");
   await pool.query(sql);
-  console.log("Migrações executadas com sucesso!");
+  logger.info("Migrações executadas com sucesso!");
 }

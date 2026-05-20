@@ -3,6 +3,7 @@ import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
 import { createEmptyCard } from "ts-fsrs";
 import { sanitizeInput } from "../utils/sanitize";
+import { logger } from "../config/logger";
 
 export async function createCard(req: AuthRequest, res: Response) {
   const { deck_id } = req.params;
@@ -56,7 +57,7 @@ export async function createCard(req: AuthRequest, res: Response) {
       data: result.rows[0],
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao criar card");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -84,7 +85,7 @@ export async function getCards(req: AuthRequest, res: Response) {
       data: result.rows,
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao listar cards");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -128,7 +129,7 @@ export async function updateCard(req: AuthRequest, res: Response) {
       data: result.rows[0],
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao atualizar card");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -158,7 +159,7 @@ export async function deleteCard(req: AuthRequest, res: Response) {
 
     res.status(204).send();
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao deletar card");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }

@@ -2,10 +2,14 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
+import pinoHttp from "pino-http";
 
 import { routes } from "./routes";
 import analyticsRoutes from "./routes/analyticsRoutes";
+import { healthCheck } from "./controllers/healthController";
+import { requestId } from "./middlewares/requestId";
 import { errorHandler } from "./middlewares/errorHandler";
+import { logger } from "./config/logger";
 import { env } from "./config/env";
 
 const app = express();
@@ -26,11 +30,39 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
+app.use(requestId);
+
+app.use(
+  pinoHttp({
+    logger,
+    quietReqLogger: true,
+    customReceivedMessage: function (req) {
+      return `incoming request`;
+    },
+    customSuccessMessage: function (req, res) {
+      return `${req.method} ${req.url} ${res.statusCode}`;
+    },
+    customErrorMessage: function (req, res) {
+      return `${req.method} ${req.url} ${res.statusCode}`;
+    },
+    genReqId: function (req) {
+      return (req as any).requestId;
+    },
+    autoLogging: {
+      ignore: function (req) {
+        return (req as any).url === "/health";
+      },
+    },
+  }),
+);
+
 app.get("/", (req, res) => {
   res.json({
     message: "API Flashcards FSRS funcionando!",
   });
 });
+
+app.get("/health", healthCheck);
 
 app.use("/media", express.static(path.join(__dirname, "../uploads/media")));
 

@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
+import { logger } from "../config/logger";
 
 export async function getReviewLogs(req: AuthRequest, res: Response) {
   try {
@@ -34,7 +35,7 @@ export async function getReviewLogs(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao buscar logs de revisão");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -68,7 +69,7 @@ export async function getDailyStats(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao buscar estatísticas diárias");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -152,7 +153,7 @@ export async function getStreak(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao buscar streak");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -176,7 +177,7 @@ export async function getActivity(req: AuthRequest, res: Response) {
       data: { activity: result.rows },
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao buscar activity");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
@@ -242,7 +243,7 @@ export async function getGlobalStats(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    console.error(err);
+    logger.error({ err }, "Erro ao buscar estatísticas globais");
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 }

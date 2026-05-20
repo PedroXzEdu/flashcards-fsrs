@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 
 import { AppError } from "../utils/AppError";
+import { logger } from "../config/logger";
 
 export function errorHandler(
   err: any,
@@ -10,13 +11,16 @@ export function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  console.error(err);
+  logger.error({ err, requestId: req.requestId }, err.message || "Unhandled error");
+
+  const requestId = req.requestId;
 
   // AppError
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
       error: err.message,
+      requestId,
     });
   }
 
@@ -26,6 +30,7 @@ export function errorHandler(
       success: false,
       error: "Erro de validação.",
       details: err.flatten(),
+      requestId,
     });
   }
 
@@ -34,6 +39,7 @@ export function errorHandler(
     return res.status(400).json({
       success: false,
       error: "Invalid file type",
+      requestId,
     });
   }
 
@@ -42,6 +48,7 @@ export function errorHandler(
     return res.status(413).json({
       success: false,
       error: "File too large",
+      requestId,
     });
   }
 
@@ -50,6 +57,7 @@ export function errorHandler(
     return res.status(413).json({
       success: false,
       error: "Payload muito grande.",
+      requestId,
     });
   }
 
@@ -57,5 +65,6 @@ export function errorHandler(
   return res.status(500).json({
     success: false,
     error: "Erro interno do servidor.",
+    requestId,
   });
 }
