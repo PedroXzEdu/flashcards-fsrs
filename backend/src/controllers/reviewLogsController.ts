@@ -1,9 +1,12 @@
-import { Response } from "express";
+import { Response, NextFunction } from "express";
 import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
-import { logger } from "../config/logger";
 
-export async function getReviewLogs(req: AuthRequest, res: Response) {
+export async function getReviewLogs(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const result = await pool.query(
       `SELECT
@@ -35,12 +38,15 @@ export async function getReviewLogs(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao buscar logs de revisão");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function getDailyStats(req: AuthRequest, res: Response) {
+export async function getDailyStats(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const result = await pool.query(
       `SELECT
@@ -69,12 +75,15 @@ export async function getDailyStats(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao buscar estatísticas diárias");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function getStreak(req: AuthRequest, res: Response) {
+export async function getStreak(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const result = await pool.query(
       `SELECT DISTINCT DATE(review) as day
@@ -101,7 +110,6 @@ export async function getStreak(req: AuthRequest, res: Response) {
       .toISOString()
       .slice(0, 10);
 
-    // Só conta streak se estudou hoje ou ontem
     if (days[0] !== today && days[0] !== yesterday) {
       res.json({
         success: true,
@@ -115,7 +123,6 @@ export async function getStreak(req: AuthRequest, res: Response) {
       return;
     }
 
-    // Calcula streak atual
     let streak = 1;
     for (let i = 1; i < days.length; i++) {
       const prev = new Date(days[i - 1]);
@@ -128,7 +135,6 @@ export async function getStreak(req: AuthRequest, res: Response) {
       }
     }
 
-    // Calcula maior streak
     let longest = 1;
     let current = 1;
     for (let i = 1; i < days.length; i++) {
@@ -153,12 +159,15 @@ export async function getStreak(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao buscar streak");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function getActivity(req: AuthRequest, res: Response) {
+export async function getActivity(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const result = await pool.query(
       `SELECT
@@ -177,12 +186,15 @@ export async function getActivity(req: AuthRequest, res: Response) {
       data: { activity: result.rows },
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao buscar activity");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function getGlobalStats(req: AuthRequest, res: Response) {
+export async function getGlobalStats(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const cards = await pool.query(
       `SELECT
@@ -243,7 +255,6 @@ export async function getGlobalStats(req: AuthRequest, res: Response) {
       },
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao buscar estatísticas globais");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }

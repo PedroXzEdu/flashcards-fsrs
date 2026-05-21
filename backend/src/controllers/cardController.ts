@@ -1,34 +1,34 @@
-import { Request, Response } from "express";
+import { Response, NextFunction } from "express";
 import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
 import { createEmptyCard } from "ts-fsrs";
 import { sanitizeInput } from "../utils/sanitize";
-import { logger } from "../config/logger";
+import { AppError } from "../utils/AppError";
 
-export async function createCard(req: AuthRequest, res: Response) {
-  const { deck_id } = req.params;
-  const { front, back } = req.body;
-
-  const sanitizedFront = sanitizeInput(front);
-  const sanitizedBack = sanitizeInput(back);
-
-  if (!sanitizedFront || !sanitizedBack) {
-    res.status(400).json({ error: "Frente e verso são obrigatórios." });
-    return;
-  }
-
+export async function createCard(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
-    // Verifica se o deck pertence ao usuário
+    const { deck_id } = req.params;
+    const { front, back } = req.body;
+
+    const sanitizedFront = sanitizeInput(front);
+    const sanitizedBack = sanitizeInput(back);
+
+    if (!sanitizedFront || !sanitizedBack) {
+      throw new AppError("Frente e verso são obrigatórios.", 400);
+    }
+
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
       [deck_id, req.userId],
     );
     if (deck.rows.length === 0) {
-      res.status(404).json({ error: "Baralho não encontrado." });
-      return;
+      throw new AppError("Baralho não encontrado.", 404);
     }
 
-    // Cria um card vazio com os valores iniciais do FSRS
     const emptyCard = createEmptyCard();
 
     const result = await pool.query(
@@ -57,22 +57,24 @@ export async function createCard(req: AuthRequest, res: Response) {
       data: result.rows[0],
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao criar card");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function getCards(req: AuthRequest, res: Response) {
-  const { deck_id } = req.params;
-
+export async function getCards(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
+    const { deck_id } = req.params;
+
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
       [deck_id, req.userId],
     );
     if (deck.rows.length === 0) {
-      res.status(404).json({ error: "Baralho não encontrado." });
-      return;
+      throw new AppError("Baralho não encontrado.", 404);
     }
 
     const result = await pool.query(
@@ -85,31 +87,32 @@ export async function getCards(req: AuthRequest, res: Response) {
       data: result.rows,
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao listar cards");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function updateCard(req: AuthRequest, res: Response) {
-  const { deck_id, card_id } = req.params;
-  const { front, back } = req.body;
-
-  const sanitizedFront = sanitizeInput(front);
-  const sanitizedBack = sanitizeInput(back);
-
-  if (!sanitizedFront || !sanitizedBack) {
-    res.status(400).json({ error: "Frente e verso são obrigatórios." });
-    return;
-  }
-
+export async function updateCard(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
+    const { deck_id, card_id } = req.params;
+    const { front, back } = req.body;
+
+    const sanitizedFront = sanitizeInput(front);
+    const sanitizedBack = sanitizeInput(back);
+
+    if (!sanitizedFront || !sanitizedBack) {
+      throw new AppError("Frente e verso são obrigatórios.", 400);
+    }
+
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
       [deck_id, req.userId],
     );
     if (deck.rows.length === 0) {
-      res.status(404).json({ error: "Baralho não encontrado." });
-      return;
+      throw new AppError("Baralho não encontrado.", 404);
     }
 
     const result = await pool.query(
@@ -120,8 +123,7 @@ export async function updateCard(req: AuthRequest, res: Response) {
     );
 
     if (result.rows.length === 0) {
-      res.status(404).json({ error: "Card não encontrado." });
-      return;
+      throw new AppError("Card não encontrado.", 404);
     }
 
     res.json({
@@ -129,22 +131,24 @@ export async function updateCard(req: AuthRequest, res: Response) {
       data: result.rows[0],
     });
   } catch (err) {
-    logger.error({ err }, "Erro ao atualizar card");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
 
-export async function deleteCard(req: AuthRequest, res: Response) {
-  const { deck_id, card_id } = req.params;
-
+export async function deleteCard(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
+    const { deck_id, card_id } = req.params;
+
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
       [deck_id, req.userId],
     );
     if (deck.rows.length === 0) {
-      res.status(404).json({ error: "Baralho não encontrado." });
-      return;
+      throw new AppError("Baralho não encontrado.", 404);
     }
 
     const result = await pool.query(
@@ -153,13 +157,11 @@ export async function deleteCard(req: AuthRequest, res: Response) {
     );
 
     if (result.rows.length === 0) {
-      res.status(404).json({ error: "Card não encontrado." });
-      return;
+      throw new AppError("Card não encontrado.", 404);
     }
 
     res.status(204).send();
   } catch (err) {
-    logger.error({ err }, "Erro ao deletar card");
-    res.status(500).json({ error: "Erro interno do servidor." });
+    next(err);
   }
 }
