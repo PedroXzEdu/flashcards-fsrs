@@ -1,7 +1,18 @@
 import dotenv from "dotenv";
 import { z } from "zod";
 
+import { logger } from "./logger";
+
 dotenv.config();
+
+const COMMON_WEAK_SECRETS = [
+  "supersecretkey",
+  "password",
+  "jwt_secret",
+  "changeme",
+  "default",
+  "123456789012",
+];
 
 const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3000),
@@ -47,15 +58,21 @@ const envSchema = z.object({
   DB_USER: z.string().min(1, "DB_USER is required"),
   DB_PASSWORD: z.string().min(1, "DB_PASSWORD is required"),
   DB_NAME: z.string().min(1, "DB_NAME is required"),
-  JWT_SECRET: z.string().min(12, "JWT_SECRET must be at least 12 characters"),
+  JWT_SECRET: z
+    .string()
+    .min(12, "JWT_SECRET must be at least 12 characters")
+    .refine((val) => !COMMON_WEAK_SECRETS.includes(val.toLowerCase()), {
+      message:
+        "JWT_SECRET uses a common or weak value. Generate a strong random string.",
+    }),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
 
 if (!parsedEnv.success) {
-  console.error(
-    "Invalid environment variables:",
-    parsedEnv.error.flatten().fieldErrors,
+  logger.error(
+    { errors: parsedEnv.error.flatten().fieldErrors },
+    "Invalid environment variables. Server cannot start.",
   );
   process.exit(1);
 }

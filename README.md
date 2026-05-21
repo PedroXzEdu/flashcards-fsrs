@@ -87,7 +87,7 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 - Express
 - TypeScript
 - PostgreSQL
-- Prisma ORM
+- pg (raw SQL)
 - JWT Authentication
 - Pino Logger
 
@@ -113,7 +113,7 @@ O projeto segue uma arquitetura separada entre frontend e backend.
 ```txt
 flashfsrs/
 ├── frontend/          # React + Vite
-├── backend/           # Express + Prisma
+├── backend/           # Express + PostgreSQL
 ├── docker-compose.yml
 ├── AGENTS.md
 └── README.md
@@ -173,10 +173,13 @@ Crie os arquivos `.env`.
 #### Backend (`backend/.env`)
 
 ```env
-DATABASE_URL=postgresql://postgres:postgres@db:5432/flashfsrs
+DB_HOST=db
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=flashfsrs
 JWT_SECRET=sua_chave_secreta
 PORT=3000
-NODE_ENV=development
 ```
 
 #### Frontend (`frontend/.env`)
@@ -191,11 +194,9 @@ VITE_API_URL=http://localhost:3000
 docker compose up --build
 ```
 
-### 4. Rode as migrations
+### 4. Migrations
 
-```bash
-docker compose exec backend npx prisma migrate deploy
-```
+As migrations são executadas automaticamente quando o backend inicia.
 
 ### 5. Acesse a aplicação
 
@@ -236,7 +237,7 @@ docker compose exec frontend npm run test
 docker compose exec backend npm run dev
 docker compose exec backend npm run build
 docker compose exec backend npm run test
-docker compose exec backend npx prisma studio
+docker compose exec backend npm run dev
 ```
 
 ### Formatação

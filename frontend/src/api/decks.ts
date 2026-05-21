@@ -1,4 +1,5 @@
 import { api } from "./client";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 import type { Deck, DeckStats, GlobalStats } from "../types";
 
 export const decksApi = {
@@ -46,7 +47,7 @@ export const importApi = {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("http://localhost:3000/import", {
+    const res = await fetch(`${BASE_URL}/import`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
