@@ -374,3 +374,23 @@ Do not optimize prematurely.
 5. **Validate thoroughly**: run automated tests and perform minimal manual verification in affected flows to confirm root cause is resolved.
 6. **Prefer minimal, incremental changes**: avoid broad refactors or premature optimizations.
 7. **Maintain a record of attempts**: keep a log of recurring errors and fixes to aid future troubleshooting and prevent repeated cycles.
+
+---
+
+## ROADMAP.md
+
+[`ROADMAP.md`](./ROADMAP.md) é o único documento de roadmap e status do projeto.
+
+**Quando atualizar:**
+
+- funcionalidade concluída ou removida
+- mudança arquitetural relevante
+- dívida técnica descoberta que merece registro
+- prioridades mudam significativamente
+
+**Quando NÃO atualizar:**
+
+- correções triviais (digitação, formatação, refactor menor)
+- tarefas do dia — não é um quadro de sprint
+
+Mantenha curto e honesto. Um roadmap desatualizado é pior que nenhum.
