@@ -48,3 +48,5 @@ CREATE TABLE IF NOT EXISTS review_logs (
 );
 
 ALTER TABLE decks ADD COLUMN IF NOT EXISTS share_token VARCHAR(64) UNIQUE;
+
+CREATE INDEX IF NOT EXISTS idx_cards_due ON cards (due);

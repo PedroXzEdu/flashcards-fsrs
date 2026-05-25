@@ -62,16 +62,16 @@ describe("AuthService", () => {
 
       await expect(
         authService.register("Teste", "teste@email.com", "senha123"),
-      ).rejects.toThrow("Email already exists");
+      ).rejects.toThrow("Email já cadastrado.");
     });
   });
 
   describe("login", () => {
     it("deve autenticar com credenciais válidas", async () => {
       vi.mocked(userRepository.findByEmail).mockResolvedValue(mockUser);
-      vi.mocked(
-        bcrypt.compare as ReturnType<typeof vi.fn>,
-      ).mockResolvedValue(true);
+      vi.mocked(bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(
+        true,
+      );
 
       const result = await authService.login("teste@email.com", "senha123");
 
@@ -85,13 +85,13 @@ describe("AuthService", () => {
 
     it("deve lançar erro com senha inválida", async () => {
       vi.mocked(userRepository.findByEmail).mockResolvedValue(mockUser);
-      vi.mocked(
-        bcrypt.compare as ReturnType<typeof vi.fn>,
-      ).mockResolvedValue(false);
+      vi.mocked(bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(
+        false,
+      );
 
       await expect(
         authService.login("teste@email.com", "senha_errada"),
-      ).rejects.toThrow("Invalid password");
+      ).rejects.toThrow("Senha inválida.");
     });
 
     it("deve lançar erro se usuário não existe", async () => {
@@ -99,7 +99,7 @@ describe("AuthService", () => {
 
       await expect(
         authService.login("nao_existe@email.com", "senha123"),
-      ).rejects.toThrow("User not found");
+      ).rejects.toThrow("Usuário não encontrado.");
     });
   });
 });

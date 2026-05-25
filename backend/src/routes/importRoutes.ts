@@ -35,7 +35,7 @@ const upload = multer({
     if (ext === ".apkg" && mimeOk) {
       cb(null, true);
     } else {
-      const err = new Error("Invalid file type") as any;
+      const err = new Error("Tipo de arquivo inválido.") as any;
       err.code = "INVALID_FILE_TYPE";
       cb(err);
     }

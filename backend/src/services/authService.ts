@@ -19,7 +19,7 @@ class AuthService {
     const existingUser = await userRepository.findByEmail(sanitizedEmail);
 
     if (existingUser) {
-      throw new AppError("Email already exists", 400);
+      throw new AppError("Email já cadastrado.", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,13 +45,13 @@ class AuthService {
     const user = await userRepository.findByEmail(sanitizedEmail);
 
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new AppError("Usuário não encontrado.", 404);
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError("Invalid password", 401);
+      throw new AppError("Senha inválida.", 401);
     }
 
     return {

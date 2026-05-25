@@ -29,7 +29,7 @@ export function authMiddleware(
     const userId = payload.userId ?? payload.id;
 
     if (!userId) {
-      res.status(401).json({ error: "Token invÃ¡lido." });
+      res.status(401).json({ error: "Token inválido." });
       return;
     }
 

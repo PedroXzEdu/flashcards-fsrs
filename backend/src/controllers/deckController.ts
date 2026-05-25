@@ -1,4 +1,4 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
 import { deckService } from "../services/deckService";
@@ -195,7 +195,7 @@ export async function importSharedDeck(
 }
 
 export async function getSharedDeckPreview(
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) {

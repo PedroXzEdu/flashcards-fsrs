@@ -41,7 +41,7 @@ export function errorHandler(
   if (err.code === "INVALID_FILE_TYPE") {
     return res.status(400).json({
       success: false,
-      error: "Invalid file type",
+      error: "Tipo de arquivo inválido.",
       requestId,
     });
   }
@@ -50,7 +50,7 @@ export function errorHandler(
   if (err.code === "LIMIT_FILE_SIZE") {
     return res.status(413).json({
       success: false,
-      error: "File too large",
+      error: "Arquivo muito grande.",
       requestId,
     });
   }
