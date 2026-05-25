@@ -8,15 +8,29 @@ import { cardRepository } from "../repositories/cardRepository";
 
 import { reviewLogRepository } from "../repositories/reviewLogRepository";
 
+import { deckRepository } from "../repositories/deckRepository";
+
 import { AppError } from "../utils/AppError";
 
 class ReviewService {
   async getDueCards(deckId: string, userId: number) {
-    const cards = await cardRepository.findDueByDeck(deckId, userId);
+    const [cards, deck] = await Promise.all([
+      cardRepository.findDueByDeck(deckId, userId),
+      deckRepository.findByIdRaw(deckId, userId),
+    ]);
+
+    const newCardsPerDay = deck?.new_cards_per_day ?? 20;
+
+    const reviewCards = cards.filter((c) => c.state !== 0);
+    const newCards = cards
+      .filter((c) => c.state === 0)
+      .slice(0, newCardsPerDay);
+
+    const result = [...reviewCards, ...newCards];
 
     return {
-      cards,
-      total: cards.length,
+      cards: result,
+      total: result.length,
     };
   }
 

@@ -21,7 +21,10 @@ class CardRepository {
        WHERE c.deck_id = $1
          AND d.user_id = $2
          AND c.due <= NOW()
-       ORDER BY c.due ASC, c.created_at ASC`,
+       ORDER BY
+         CASE WHEN c.state != 0 THEN 0 ELSE 1 END,
+         c.due ASC,
+         c.created_at ASC`,
       [deckId, userId],
     );
 

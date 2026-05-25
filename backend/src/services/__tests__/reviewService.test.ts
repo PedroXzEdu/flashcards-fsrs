@@ -4,6 +4,7 @@ import { Rating } from "ts-fsrs";
 import { reviewService } from "../reviewService";
 
 import { cardRepository } from "../../repositories/cardRepository";
+import { deckRepository } from "../../repositories/deckRepository";
 import { reviewLogRepository } from "../../repositories/reviewLogRepository";
 import { pool } from "../../database/db";
 import { fsrsService } from "../fsrsService";
@@ -13,6 +14,12 @@ vi.mock("../../repositories/cardRepository", () => ({
     findById: vi.fn(),
     findDueByDeck: vi.fn(),
     updateFsrsData: vi.fn(),
+  },
+}));
+
+vi.mock("../../repositories/deckRepository", () => ({
+  deckRepository: {
+    findByIdRaw: vi.fn(),
   },
 }));
 
@@ -96,11 +103,7 @@ describe("ReviewService", () => {
       const updatedCard = { ...mockCard, stability: 3.0, scheduled_days: 3 };
       vi.mocked(cardRepository.updateFsrsData).mockResolvedValue(updatedCard);
 
-      const result = await reviewService.submitReview(
-        "1",
-        1,
-        Rating.Good,
-      );
+      const result = await reviewService.submitReview("1", 1, Rating.Good);
 
       expect(result.card.stability).toBe(3.0);
       expect(result.scheduled_days).toBe(3);
@@ -111,6 +114,9 @@ describe("ReviewService", () => {
   describe("getDueCards", () => {
     it("deve retornar cards devidos", async () => {
       vi.mocked(cardRepository.findDueByDeck).mockResolvedValue([mockCard]);
+      vi.mocked(deckRepository.findByIdRaw).mockResolvedValue({
+        new_cards_per_day: 20,
+      });
 
       const result = await reviewService.getDueCards("1", 1);
 
@@ -120,11 +126,54 @@ describe("ReviewService", () => {
 
     it("deve retornar lista vazia se não há cards devidos", async () => {
       vi.mocked(cardRepository.findDueByDeck).mockResolvedValue([]);
+      vi.mocked(deckRepository.findByIdRaw).mockResolvedValue({
+        new_cards_per_day: 20,
+      });
 
       const result = await reviewService.getDueCards("1", 1);
 
       expect(result.total).toBe(0);
       expect(result.cards).toEqual([]);
+    });
+
+    it("deve limitar cards novos conforme new_cards_per_day", async () => {
+      const newCard1 = { ...mockCard, id: 1, state: 0 };
+      const newCard2 = { ...mockCard, id: 2, state: 0 };
+      const newCard3 = { ...mockCard, id: 3, state: 0 };
+      const reviewCard = { ...mockCard, id: 4, state: 2 };
+
+      vi.mocked(cardRepository.findDueByDeck).mockResolvedValue([
+        reviewCard,
+        newCard1,
+        newCard2,
+        newCard3,
+      ]);
+      vi.mocked(deckRepository.findByIdRaw).mockResolvedValue({
+        new_cards_per_day: 2,
+      });
+
+      const result = await reviewService.getDueCards("1", 1);
+
+      expect(result.total).toBe(3);
+      expect(result.cards.map((c: any) => c.id)).toEqual([4, 1, 2]);
+    });
+
+    it("deve retornar só revisão se new_cards_per_day é 0", async () => {
+      const newCard = { ...mockCard, id: 1, state: 0 };
+      const reviewCard = { ...mockCard, id: 2, state: 2 };
+
+      vi.mocked(cardRepository.findDueByDeck).mockResolvedValue([
+        reviewCard,
+        newCard,
+      ]);
+      vi.mocked(deckRepository.findByIdRaw).mockResolvedValue({
+        new_cards_per_day: 0,
+      });
+
+      const result = await reviewService.getDueCards("1", 1);
+
+      expect(result.total).toBe(1);
+      expect(result.cards.map((c: any) => c.id)).toEqual([2]);
     });
   });
 });
