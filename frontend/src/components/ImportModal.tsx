@@ -57,7 +57,10 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
   }
 
   async function handleImport() {
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      setError("Selecione um arquivo .apkg primeiro.");
+      return;
+    }
     setStatus("loading");
     setError("");
     try {
