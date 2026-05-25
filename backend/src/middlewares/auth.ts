@@ -14,7 +14,11 @@ export function authMiddleware(
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    res.status(401).json({ error: "Token não fornecido." });
+    res.status(401).json({
+      success: false,
+      error: "Token não fornecido.",
+      requestId: req.requestId,
+    });
     return;
   }
 
@@ -29,13 +33,21 @@ export function authMiddleware(
     const userId = payload.userId ?? payload.id;
 
     if (!userId) {
-      res.status(401).json({ error: "Token inválido." });
+      res.status(401).json({
+        success: false,
+        error: "Token inválido.",
+        requestId: req.requestId,
+      });
       return;
     }
 
     req.userId = userId;
     next();
   } catch {
-    res.status(401).json({ error: "Token inválido." });
+    res.status(401).json({
+      success: false,
+      error: "Token inválido.",
+      requestId: req.requestId,
+    });
   }
 }

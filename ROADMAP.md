@@ -31,49 +31,41 @@ MVP funcional com as features principais entregues. O que falta é
 
 ---
 
-## Dívida Técnica (itens reais, não teoria)
+## Polimentos Concluídos
 
-### Consistência
+### Sessão anterior
 
-- `cardController`, `reviewLogsController`, `importController` tratam
-  erro inline (`res.status(500).json({ error })`) em vez de usar o
-  error handler centralizado com `next(err)`
-- Isso gera formato de resposta inconsistente:
-  `{ error }` vs `{ success: false, error }`
-- `importController` retorna dados sem wrapper `{ success, data }`
-- `getSharedDeckPreview` assinado como `AuthRequest` mesmo sendo rota
-  pública (não quebra, mas é impreciso)
+- [x] Error handling padronizado (inline → centralizado com `next(err)`)
+- [x] `VITE_API_URL` substituindo URL hardcoded
+- [x] `console.log` de debug removidos
+- [x] Mensagens de erro padronizadas para PT-BR
+- [x] `new_cards_per_day` corrigido (query respeita o limite)
+- [x] Índice `cards.due` adicionado
+- [x] README corrigido (Prisma → raw SQL)
+- [x] `AnalyticsPage.tsx` removida/roteada
 
-### Acabamento
+### Sessão atual
 
-- `console.log` de debug no `server.ts` (3 ocorrências)
-- Hardcoded `http://localhost:3000` no `client.ts` e `decks.ts`
-- Erros do backend misturam PT e EN
-- `.env` do frontend não existe (ninguém criou o arquivo de exemplo)
-- README menciona Prisma ORM (não usado — é raw SQL)
-- README mostra `DATABASE_URL` mas o sistema usa variáveis separadas
-- `AnalyticsPage.tsx` existe mas não está roteada (dead code)
-
-### Funcional
-
-- `new_cards_per_day` salvo no banco e editável na UI, mas ignorado
-  pelo backend na query de due cards
-- Sem índice em `cards.due` — a query mais frequente do sistema faz
-  scan sequencial
+- [x] Schema Zod para auth (`registerSchema` + `loginSchema`) aplicado via `validate()` nas rotas
+- [x] `authMiddleware` retorna `{ success: false, error, requestId }` (consistente com API contract)
+- [x] `.env.example` criado para backend e frontend
+- [x] `axios` removido do frontend (não utilizado, só `fetch`)
 
 ---
 
-## Prioridades Imediatas (antes da escrita do TCC)
+## Dívida Técnica Restante
 
-1. ✅ Padronizar error handling (inline → centralizado)
-2. ✅ Substituir URL hardcoded por `VITE_API_URL`
-3. ✅ Remover `console.log` de debug
-4. ✅ Padronizar mensagens de erro para PT-BR
-5. ✅ Corrigir `new_cards_per_day` (bug real)
-6. ✅ Adicionar índice em `cards.due`
-7. ✅ Corrigir README (Prisma → raw SQL, `.env` exemplo correto)
-8. ✅ Remover/rotear AnalyticsPage.tsx
-9. ✅ Criar `.env.example` para frontend e backend
+### Consistência
+
+- `importController` retorna dados sem wrapper `{ success, data }`
+- `getSharedDeckPreview` assinado como `AuthRequest` (rota pública)
+- Auth middleware trata erros inline em vez de `next(err)` (baixo risco, resposta já padronizada)
+
+### Testes
+
+- Sem testes de frontend
+- Sem testes de integração (controllers, middleware, rotas)
+- Cobertura apenas dos services
 
 ---
 
