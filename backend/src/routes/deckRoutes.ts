@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth";
 import { validate } from "../middlewares/validate";
+import { createDeckRateLimiter } from "../middlewares/rateLimiter";
 import { createDeckSchema } from "../schemas/deckSchema";
 import {
   createDeck,
@@ -22,7 +23,7 @@ router.get("/shared/:token/preview", getSharedDeckPreview);
 
 router.use(authMiddleware);
 
-router.post("/", validate(createDeckSchema), createDeck);
+router.post("/", createDeckRateLimiter, validate(createDeckSchema), createDeck);
 router.get("/", getDecks);
 router.post("/shared/:token/import", importSharedDeck);
 router.get("/:id", getDeck);

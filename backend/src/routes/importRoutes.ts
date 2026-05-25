@@ -3,6 +3,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { authMiddleware } from "../middlewares/auth";
+import { importRateLimiter } from "../middlewares/rateLimiter";
 import { importApkg } from "../controllers/importController";
 
 const uploadDir = path.join(__dirname, "../../uploads/tmp");
@@ -45,6 +46,6 @@ const upload = multer({
 
 const router = Router();
 router.use(authMiddleware);
-router.post("/", upload.single("file"), importApkg);
+router.post("/", importRateLimiter, upload.single("file"), importApkg);
 
 export default router;

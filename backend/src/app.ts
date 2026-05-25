@@ -15,7 +15,23 @@ import { env } from "./config/env";
 
 const app = express();
 
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      reportOnly: true,
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:"],
+        fontSrc: ["'self'"],
+        connectSrc: ["'self'"],
+        baseUri: ["'none'"],
+        formAction: ["'self'"],
+      },
+    },
+  }),
+);
 app.use(
   cors({
     origin(origin, callback) {

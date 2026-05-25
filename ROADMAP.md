@@ -50,6 +50,7 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] `authMiddleware` retorna `{ success: false, error, requestId }` (consistente com API contract)
 - [x] `.env.example` criado para backend e frontend
 - [x] `axios` removido do frontend (não utilizado, só `fetch`)
+- [x] Rate limiting granular: POST /decks (20/15min), POST /decks/:id/cards (100/15min), POST /import (5/15min)
 
 ---
 
