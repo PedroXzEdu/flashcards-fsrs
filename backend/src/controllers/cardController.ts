@@ -2,7 +2,6 @@ import { Response, NextFunction } from "express";
 import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
 import { createEmptyCard } from "ts-fsrs";
-import { sanitizeInput } from "../utils/sanitize";
 import { AppError } from "../utils/AppError";
 
 export async function createCard(
@@ -13,13 +12,6 @@ export async function createCard(
   try {
     const { deck_id } = req.params;
     const { front, back } = req.body;
-
-    const sanitizedFront = sanitizeInput(front);
-    const sanitizedBack = sanitizeInput(back);
-
-    if (!sanitizedFront || !sanitizedBack) {
-      throw new AppError("Frente e verso são obrigatórios.", 400);
-    }
 
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
@@ -39,8 +31,8 @@ export async function createCard(
        RETURNING *`,
       [
         deck_id,
-        sanitizedFront,
-        sanitizedBack,
+        front,
+        back,
         emptyCard.stability,
         emptyCard.difficulty,
         emptyCard.elapsed_days,
@@ -100,13 +92,6 @@ export async function updateCard(
     const { deck_id, card_id } = req.params;
     const { front, back } = req.body;
 
-    const sanitizedFront = sanitizeInput(front);
-    const sanitizedBack = sanitizeInput(back);
-
-    if (!sanitizedFront || !sanitizedBack) {
-      throw new AppError("Frente e verso são obrigatórios.", 400);
-    }
-
     const deck = await pool.query(
       "SELECT id FROM decks WHERE id = $1 AND user_id = $2",
       [deck_id, req.userId],
@@ -119,7 +104,7 @@ export async function updateCard(
       `UPDATE cards SET front = $1, back = $2
        WHERE id = $3 AND deck_id = $4
        RETURNING *`,
-      [sanitizedFront, sanitizedBack, card_id, deck_id],
+      [front, back, card_id, deck_id],
     );
 
     if (result.rows.length === 0) {
