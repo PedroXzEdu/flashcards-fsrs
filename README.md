@@ -281,26 +281,7 @@ O projeto implementa medidas básicas de segurança para um MVP:
 
 ## Roadmap
 
-### Curto prazo
-
-- [ ] Melhorias adicionais de responsividade
-- [ ] Testes E2E
-- [ ] Melhorias visuais no dashboard
-- [ ] Mais métricas de aprendizagem
-
-### Médio prazo
-
-- [ ] PWA
-- [ ] Sincronização em tempo real
-- [ ] Modo offline
-- [ ] Sistema de tags
-
-### Longo prazo
-
-- [ ] Deploy em produção
-- [ ] Compartilhamento público de decks
-- [ ] Gamificação
-- [ ] Aplicativo mobile
+Consulte o arquivo [`ROADMAP.md`](./ROADMAP.md) para o status atual, funcionalidades concluídas e próximas prioridades.
 
 ---
 

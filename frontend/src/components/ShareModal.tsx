@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Link, Copy, Check, Trash2, Users } from "lucide-react";
 import { decksApi } from "../api/decks";
 import type { Deck } from "../types";
+import Button from "./Button";
 import ConfirmModal from "./ConfirmModal";
 
 interface Props {
@@ -373,28 +374,15 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
               >
                 Cancelar
               </button>
-              <button
+              <Button
                 type="button"
+                size="md"
+                icon={<Link size={13} />}
+                loading={loading}
                 onClick={handleShare}
-                disabled={loading}
-                style={{
-                  background: "var(--accent)",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "var(--bg)",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  padding: "8px 20px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                  opacity: loading ? 0.7 : 1,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
               >
-                <Link size={13} /> Gerar link
-              </button>
+                {loading ? "Gerando..." : "Gerar link"}
+              </Button>
             </div>
           </>
         )}
