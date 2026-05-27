@@ -43,25 +43,45 @@ export function DailyQueue() {
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold mb-4">Fila do Dia</h2>
+    <div
+      className="animate-fade-in"
+      style={{
+        background: "var(--bg-card)",
+        border: "1px solid var(--border)",
+        borderRadius: "16px",
+        padding: "20px",
+        boxShadow: "var(--shadow-sm)",
+      }}
+    >
+      <h2
+        style={{
+          margin: "0 0 16px",
+          fontSize: "15px",
+          fontWeight: 600,
+          color: "var(--text)",
+          textTransform: "uppercase",
+          letterSpacing: "0.5px",
+        }}
+      >
+        Fila do Dia
+      </h2>
 
       {queue.length === 0 && (
-        <div style={{ textAlign: "center", padding: "60px 0" }}>
+        <div style={{ textAlign: "center", padding: "40px 0" }}>
           <div
             style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "16px",
+              width: "48px",
+              height: "48px",
+              borderRadius: "14px",
               background: "var(--bg-card)",
               border: "1px solid var(--border)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 16px",
+              margin: "0 auto 12px",
             }}
           >
-            <Calendar size={24} color="var(--text-muted)" />
+            <Calendar size={20} color="var(--text-muted)" />
           </div>
           <p style={{ color: "var(--text-sub)", margin: 0, fontWeight: 500 }}>
             Nenhum card para revisar hoje!
@@ -78,16 +98,46 @@ export function DailyQueue() {
         </div>
       )}
 
-      {queue.map((card) => (
-        <div
-          key={card.id}
-          className="rounded-xl shadow p-4 flex justify-between"
-          style={getRecallStyle(card.predicted_recall)}
-        >
-          <span>{card.front}</span>
-          <span className="font-semibold">{card.predicted_recall}%</span>
-        </div>
-      ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        {queue.map((card) => (
+          <div
+            key={card.id}
+            style={{
+              borderRadius: "12px",
+              padding: "12px 16px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              ...getRecallStyle(card.predicted_recall),
+            }}
+          >
+            <span
+              style={{
+                fontSize: "13px",
+                color: "var(--text)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                flex: 1,
+                marginRight: "12px",
+              }}
+            >
+              {card.front}
+            </span>
+            <span
+              style={{
+                fontWeight: 700,
+                fontSize: "13px",
+                fontFamily: "JetBrains Mono, monospace",
+                color: "var(--text)",
+                flexShrink: 0,
+              }}
+            >
+              {card.predicted_recall}%
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

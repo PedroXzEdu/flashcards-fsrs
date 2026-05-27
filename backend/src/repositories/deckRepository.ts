@@ -83,7 +83,8 @@ class DeckRepository {
         COUNT(*) FILTER (WHERE state = 2)         AS reviewing,
         COUNT(*) FILTER (WHERE due <= NOW())      AS due_today,
         ROUND(AVG(difficulty)::numeric, 2)        AS avg_difficulty,
-        ROUND(AVG(stability)::numeric, 2)         AS avg_stability
+        ROUND(AVG(stability)::numeric, 2)         AS avg_stability,
+        COALESCE(SUM(lapses), 0)                  AS lapses
        FROM cards
        WHERE deck_id = $1`,
       [deckId],

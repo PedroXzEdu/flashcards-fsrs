@@ -8,6 +8,7 @@ import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonDeckCard } from "../../components/SkeletonCard";
 import ImportModal from "../../components/ImportModal";
 import Button from "../../components/Button";
+import { DailyQueue } from "../../components/DailyQueue";
 import { statsApi } from "../../api/decks";
 import {
   Plus,
@@ -285,6 +286,10 @@ export default function DashboardPage() {
         >
           {decks.length} {decks.length === 1 ? "baralho" : "baralhos"}
         </p>
+      </div>
+
+      <div style={{ marginBottom: "24px" }}>
+        <DailyQueue />
       </div>
 
       {showForm && (
