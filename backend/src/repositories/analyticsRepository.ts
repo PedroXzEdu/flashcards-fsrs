@@ -60,15 +60,14 @@ class AnalyticsRepository {
   async getWorkloadForecast(userId: number, days: number) {
     const result = await pool.query(
       `SELECT
-        DATE(c.due) AS day,
+        GREATEST(DATE(c.due), CURRENT_DATE)::text AS day,
         COUNT(*) FILTER (WHERE c.state != 0)::int AS review_cards,
         COUNT(*) FILTER (WHERE c.state = 0)::int  AS new_cards
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
        WHERE d.user_id = $1
-         AND c.due >= DATE(NOW())
-         AND c.due < DATE(NOW()) + INTERVAL '1 day' * $2
-       GROUP BY DATE(c.due)
+         AND c.due < CURRENT_DATE + INTERVAL '1 day' * $2
+       GROUP BY GREATEST(DATE(c.due), CURRENT_DATE)
        ORDER BY day`,
       [userId, days],
     );

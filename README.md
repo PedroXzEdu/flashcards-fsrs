@@ -152,71 +152,80 @@ src/
 
 ## Como Executar o Projeto
 
-### Pré-requisitos
+### Ambientes .env
+
+O projeto usa três arquivos de ambiente no diretório `backend/`:
+
+| Arquivo | Finalidade | `DB_HOST` |
+|---|---|---|
+| `.env` | Fonte de verdade para Docker Compose | `db` (nome do serviço) |
+| `.env.local` | Execução local sem Docker | `localhost` |
+| `.env.example` | Template público para onboarding | `localhost` |
+
+**Regra importante:** Nunca use `localhost` como hostname do Postgres dentro de containers Docker. Dentro da rede do Docker, o banco é acessível pelo nome do serviço (`db`).
+
+---
+
+### Docker (recomendado)
+
+#### Pré-requisitos
 
 - Docker
 - Docker Compose
 
 > Não é necessário instalar Node.js localmente.
 
-### 1. Clone o repositório
+#### 1. Clone o repositório
 
 ```bash
 git clone [<url-do-repositorio>](https://github.com/PedroXzEdu/flashfsrs)
 cd flashcards-fsrs
 ```
 
-### 2. Configure as variáveis de ambiente
-
-Crie os arquivos `.env`.
-
-#### Backend (`backend/.env`)
-
-```env
-DB_HOST=db
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=flashfsrs
-JWT_SECRET=sua_chave_secreta
-PORT=3000
-```
-
-#### Frontend (`frontend/.env`)
-
-```env
-VITE_API_URL=http://localhost:3000
-```
-
-### 3. Suba os containers
+#### 2. Suba os containers
 
 ```bash
-docker compose up --build
+docker compose up
 ```
 
-### 4. Migrations
+O backend usa `backend/.env` (`DB_HOST=db`) e o Postgres sobe automaticamente com health check.
 
-As migrations são executadas automaticamente quando o backend inicia.
+#### 3. Acesse a aplicação
 
-### 5. Acesse a aplicação
+Frontend: `http://localhost:5173`
+Backend:  `http://localhost:3000`
+Health:   `http://localhost:3000/health`
 
-Frontend:
+---
 
-```txt
-http://localhost:5173
+### Local (sem Docker)
+
+#### Pré-requisitos
+
+- Node.js 20
+- PostgreSQL 16 rodando localmente
+
+#### 1. Configure o ambiente local
+
+```bash
+cp backend/.env.local backend/.env
 ```
 
-Backend:
+Isso copia o arquivo com `DB_HOST=localhost` para o backend.
 
-```txt
-http://localhost:3000
+#### 2. Instale as dependências
+
+```bash
+cd backend && npm install
 ```
 
-Health check:
+#### 3. Execute o backend
 
-```txt
-http://localhost:3000/health
+```bash
+npm run dev
 ```
+
+> O frontend requer Docker ou configuração separada com `VITE_API_URL=http://localhost:3000`.
 
 ---
 

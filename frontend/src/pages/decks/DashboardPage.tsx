@@ -30,6 +30,78 @@ import {
   Calendar,
 } from "lucide-react";
 
+function fillWorkloadDays(
+  data: WorkloadForecastDay[],
+  days: number
+): (WorkloadForecastDay & { label: string })[] {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const dataMap = new Map<string, WorkloadForecastDay>();
+  for (const d of data) {
+    dataMap.set(d.day, d);
+  }
+
+  const result: (WorkloadForecastDay & { label: string })[] = [];
+  for (let i = 0; i < days; i++) {
+    const date = new Date(today);
+    date.setDate(date.getDate() + i);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dayStr = `${year}-${month}-${day}`;
+    const existing = dataMap.get(dayStr);
+    result.push({
+      day: dayStr,
+      review_cards: existing?.review_cards ?? 0,
+      new_cards: existing?.new_cards ?? 0,
+      label: date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+      }),
+    });
+  }
+
+  return result;
+}
+
+function WorkloadTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
+  const review = payload.find((p: any) => p.dataKey === "review_cards")?.value ?? 0;
+  const newCards = payload.find((p: any) => p.dataKey === "new_cards")?.value ?? 0;
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-card)",
+        border: "1px solid var(--border)",
+        borderRadius: "8px",
+        padding: "8px 12px",
+        fontSize: "12px",
+        lineHeight: 1.6,
+      }}
+    >
+      <p style={{ margin: 0, fontWeight: 600, color: "var(--text)" }}>
+        {label}
+      </p>
+      {review + newCards === 0 ? (
+        <p style={{ margin: "2px 0 0", color: "var(--text-muted)" }}>
+          Nenhuma revisão prevista
+        </p>
+      ) : (
+        <>
+          <p style={{ margin: "2px 0 0", color: "var(--accent)" }}>
+            Revisões: {review}
+          </p>
+          <p style={{ margin: 0, color: "var(--info)" }}>
+            Novos: {newCards}
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate();
   const [decks, setDecks] = useState<Deck[]>([]);
@@ -50,6 +122,13 @@ export default function DashboardPage() {
   const [workload, setWorkload] = useState<WorkloadForecastDay[]>([]);
   const [workloadDays, setWorkloadDays] = useState(30);
   const [workloadLoading, setWorkloadLoading] = useState(false);
+
+  const filledWorkload = fillWorkloadDays(workload, workloadDays);
+  const allWorkloadZero = filledWorkload.every(
+    (d) => d.review_cards === 0 && d.new_cards === 0,
+  );
+  const workloadTickInterval =
+    workloadDays <= 7 ? 0 : workloadDays <= 14 ? 1 : 4;
 
   useEffect(() => {
     loadDecks();
@@ -638,36 +717,38 @@ export default function DashboardPage() {
               animation: "shimmer 1.5s infinite",
             }}
           />
-        ) : workload.length === 0 ? (
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "12px",
-              textAlign: "center",
-              padding: "24px 0",
-              margin: 0,
-            }}
-          >
-            Nenhuma revisão prevista nos próximos {workloadDays} dias.
-          </p>
+        ) : workload.length === 0 || allWorkloadZero ? (
+          <div style={{ textAlign: "center", padding: "24px 0" }}>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: "13px",
+                margin: 0,
+                fontWeight: 500,
+              }}
+            >
+              Sem revisões previstas nos próximos {workloadDays} dias.
+            </p>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: "12px",
+                margin: "6px 0 0",
+              }}
+            >
+              Os cards ainda não foram agendados ou não há revisões
+              pendentes.
+            </p>
+          </div>
         ) : (
           <ResponsiveContainer width="100%" height={160}>
-            <BarChart
-              data={workload.map((d) => ({
-                ...d,
-                label: new Date(d.day).toLocaleDateString("pt-BR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                }),
-              }))}
-              barCategoryGap="20%"
-            >
+            <BarChart data={filledWorkload} barCategoryGap="10%">
               <XAxis
                 dataKey="label"
                 tick={{ fontSize: 9, fill: "var(--text-muted)" }}
                 axisLine={false}
                 tickLine={false}
-                interval={Math.floor(workload.length / 6)}
+                interval={workloadTickInterval}
               />
               <YAxis
                 tick={{ fontSize: 9, fill: "var(--text-muted)" }}
@@ -675,29 +756,20 @@ export default function DashboardPage() {
                 tickLine={false}
                 allowDecimals={false}
               />
-              <Tooltip
-                contentStyle={{
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                  fontSize: "11px",
-                }}
-                formatter={(value) => [`${value} cards`, ""]}
-                labelFormatter={(label) => `Dia ${label}`}
-              />
+              <Tooltip content={<WorkloadTooltip />} />
               <Bar
                 dataKey="review_cards"
                 name="Revisões"
                 fill="var(--accent)"
                 radius={[3, 3, 0, 0]}
-                maxBarSize={20}
+                maxBarSize={28}
               />
               <Bar
                 dataKey="new_cards"
                 name="Novos"
                 fill="var(--info)"
                 radius={[3, 3, 0, 0]}
-                maxBarSize={20}
+                maxBarSize={28}
               />
             </BarChart>
           </ResponsiveContainer>

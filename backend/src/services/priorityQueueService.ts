@@ -14,7 +14,7 @@ class PriorityQueueService {
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
        WHERE d.user_id = $1
-       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,0)) DESC
+       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,0)) DESC NULLS LAST
        LIMIT $2`,
       [userId, limit],
     );

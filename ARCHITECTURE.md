@@ -23,6 +23,20 @@ Separação por camadas no backend: Controller → Service → Repository.
 
 ---
 
+### Convenção de Ambientes `.env`
+
+Três arquivos em `backend/` definem a configuração do backend:
+
+| Arquivo | Uso | `DB_HOST` |
+|---|---|---|
+| `.env` | Fonte de verdade para Docker Compose (via `env_file`) | `db` |
+| `.env.local` | Execução local sem Docker (copiar para `.env`) | `localhost` |
+| `.env.example` | Template público com valores placeholder | `localhost` |
+
+**Regra:** Dentro de containers Docker, o Postgres é acessível pelo nome do serviço (`db`), nunca por `localhost`.
+
+---
+
 ## 2. Estrutura de Pastas
 
 ```
