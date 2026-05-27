@@ -12,6 +12,8 @@ import { deckRepository } from "../repositories/deckRepository";
 
 import { AppError } from "../utils/AppError";
 
+import { logger } from "../config/logger";
+
 class ReviewService {
   async getDueCards(deckId: string, userId: number) {
     const [cards, deck] = await Promise.all([
@@ -75,6 +77,20 @@ class ReviewService {
         client,
         cardId,
         scheduling.card,
+      );
+
+      logger.info(
+        {
+          cardId,
+          due_antes: card.due,
+          scheduling_due: scheduling.card.due,
+          updated_due: updatedCard.due,
+          stability: updatedCard.stability,
+          state: updatedCard.state,
+          scheduled_days: updatedCard.scheduled_days,
+          rating: Number(rating),
+        },
+        "submitReview — card atualizado",
       );
 
       await reviewLogRepository.create(client, {

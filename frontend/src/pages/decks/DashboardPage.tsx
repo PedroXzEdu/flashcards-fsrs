@@ -10,6 +10,16 @@ import ImportModal from "../../components/ImportModal";
 import Button from "../../components/Button";
 import { DailyQueue } from "../../components/DailyQueue";
 import { statsApi } from "../../api/decks";
+import { getWorkloadForecast } from "../../services/analyticsApi";
+import type { WorkloadForecastDay } from "../../services/analyticsApi";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import {
   Plus,
   Trash2,
@@ -37,10 +47,35 @@ export default function DashboardPage() {
     longest: 0,
     total_days: 0,
   });
+  const [workload, setWorkload] = useState<WorkloadForecastDay[]>([]);
+  const [workloadDays, setWorkloadDays] = useState(30);
+  const [workloadLoading, setWorkloadLoading] = useState(false);
 
   useEffect(() => {
     loadDecks();
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadWorkload() {
+      setWorkloadLoading(true);
+      try {
+        const data = await getWorkloadForecast(workloadDays);
+        if (!cancelled) setWorkload(data);
+      } catch {
+        // silencioso — não quebrar o dashboard
+      } finally {
+        if (!cancelled) setWorkloadLoading(false);
+      }
+    }
+
+    loadWorkload();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [workloadDays]);
 
   async function loadDecks() {
     try {
@@ -286,10 +321,6 @@ export default function DashboardPage() {
         >
           {decks.length} {decks.length === 1 ? "baralho" : "baralhos"}
         </p>
-      </div>
-
-      <div style={{ marginBottom: "24px" }}>
-        <DailyQueue />
       </div>
 
       {showForm && (
@@ -538,6 +569,141 @@ export default function DashboardPage() {
           })}
         </div>
       )}
+
+      <div style={{ marginTop: "28px", marginBottom: "16px" }}>
+        <DailyQueue />
+      </div>
+
+      <div
+        className="animate-fade-in"
+        style={{
+          background: "var(--bg-card)",
+          border: "1px solid var(--border)",
+          borderRadius: "16px",
+          padding: "16px",
+          boxShadow: "var(--shadow-sm)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <h2
+            style={{
+              margin: 0,
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "var(--text)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Previsão de Revisões
+          </h2>
+          <div style={{ display: "flex", gap: "4px" }}>
+            {[7, 14, 30].map((d) => (
+              <button
+                key={d}
+                type="button"
+                onClick={() => setWorkloadDays(d)}
+                style={{
+                  background:
+                    workloadDays === d ? "var(--accent)" : "var(--bg)",
+                  color: workloadDays === d ? "var(--bg)" : "var(--text-muted)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "6px",
+                  padding: "3px 8px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 0.15s",
+                }}
+              >
+                {d}d
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {workloadLoading ? (
+          <div
+            style={{
+              height: "140px",
+              borderRadius: "10px",
+              background: "var(--bg)",
+              animation: "shimmer 1.5s infinite",
+            }}
+          />
+        ) : workload.length === 0 ? (
+          <p
+            style={{
+              color: "var(--text-muted)",
+              fontSize: "12px",
+              textAlign: "center",
+              padding: "24px 0",
+              margin: 0,
+            }}
+          >
+            Nenhuma revisão prevista nos próximos {workloadDays} dias.
+          </p>
+        ) : (
+          <ResponsiveContainer width="100%" height={160}>
+            <BarChart
+              data={workload.map((d) => ({
+                ...d,
+                label: new Date(d.day).toLocaleDateString("pt-BR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                }),
+              }))}
+              barCategoryGap="20%"
+            >
+              <XAxis
+                dataKey="label"
+                tick={{ fontSize: 9, fill: "var(--text-muted)" }}
+                axisLine={false}
+                tickLine={false}
+                interval={Math.floor(workload.length / 6)}
+              />
+              <YAxis
+                tick={{ fontSize: 9, fill: "var(--text-muted)" }}
+                axisLine={false}
+                tickLine={false}
+                allowDecimals={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "8px",
+                  fontSize: "11px",
+                }}
+                formatter={(value) => [`${value} cards`, ""]}
+                labelFormatter={(label) => `Dia ${label}`}
+              />
+              <Bar
+                dataKey="review_cards"
+                name="Revisões"
+                fill="var(--accent)"
+                radius={[3, 3, 0, 0]}
+                maxBarSize={20}
+              />
+              <Bar
+                dataKey="new_cards"
+                name="Novos"
+                fill="var(--info)"
+                radius={[3, 3, 0, 0]}
+                maxBarSize={20}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+
       <style>{`
         @media (max-width: 640px) {
           .dashboard-streak-grid { grid-template-columns: 1fr !important; }

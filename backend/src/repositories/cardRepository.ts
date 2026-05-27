@@ -1,5 +1,6 @@
-import { pool as client } from "../database/db";
+import { pool as client, runMigrations } from "../database/db";
 import { PoolClient } from "pg";
+import { logger } from "../config/logger";
 
 class CardRepository {
   async findByDeckId(deckId: string) {

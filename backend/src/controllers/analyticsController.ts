@@ -73,6 +73,34 @@ export async function getPredictedRecall(
   }
 }
 
+export async function getWorkloadForecast(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const days = Math.min(
+      Math.max(parseInt(req.query.days as string) || 30, 7),
+      30,
+    );
+
+    const allowed = [7, 14, 30];
+    const clamped = allowed.includes(days) ? days : 30;
+
+    const result = await analyticsService.getWorkloadForecast(
+      req.userId!,
+      clamped,
+    );
+
+    return res.json({
+      success: true,
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getDailyQueue(
   req: AuthRequest,
   res: Response,

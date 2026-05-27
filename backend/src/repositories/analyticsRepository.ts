@@ -1,4 +1,5 @@
 import { pool } from "../database/db";
+import { logger } from "../config/logger";
 
 class AnalyticsRepository {
   async getRetentionRate(userId: number) {
@@ -54,6 +55,30 @@ class AnalyticsRepository {
     );
 
     return result.rows[0];
+  }
+
+  async getWorkloadForecast(userId: number, days: number) {
+    const result = await pool.query(
+      `SELECT
+        DATE(c.due) AS day,
+        COUNT(*) FILTER (WHERE c.state != 0)::int AS review_cards,
+        COUNT(*) FILTER (WHERE c.state = 0)::int  AS new_cards
+       FROM cards c
+       JOIN decks d ON d.id = c.deck_id
+       WHERE d.user_id = $1
+         AND c.due >= DATE(NOW())
+         AND c.due < DATE(NOW()) + INTERVAL '1 day' * $2
+       GROUP BY DATE(c.due)
+       ORDER BY day`,
+      [userId, days],
+    );
+
+    logger.info(
+      { userId, days, rows: result.rows.length, data: result.rows.slice(0, 5) },
+      "WorkloadForecast — resultados",
+    );
+
+    return result.rows;
   }
 
   async getCardsForRecall(userId: number) {

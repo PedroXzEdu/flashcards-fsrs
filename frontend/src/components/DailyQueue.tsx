@@ -12,12 +12,22 @@ export function DailyQueue() {
   const [queue, setQueue] = useState<DailyQueueCard[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function loadQueue() {
-      const data = await getDailyQueue();
-      setQueue(data);
+      try {
+        const data = await getDailyQueue();
+        if (!cancelled) setQueue(data);
+      } catch {
+        // silencioso — não quebrar o dashboard
+      }
     }
 
     loadQueue();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function getRecallStyle(retention: number) {
@@ -42,6 +52,10 @@ export function DailyQueue() {
     };
   }
 
+  const DISPLAY_LIMIT = 5;
+  const visible = queue.slice(0, DISPLAY_LIMIT);
+  const remaining = queue.length - DISPLAY_LIMIT;
+
   return (
     <div
       className="animate-fade-in"
@@ -49,48 +63,75 @@ export function DailyQueue() {
         background: "var(--bg-card)",
         border: "1px solid var(--border)",
         borderRadius: "16px",
-        padding: "20px",
+        padding: "16px",
         boxShadow: "var(--shadow-sm)",
       }}
     >
-      <h2
+      <div
         style={{
-          margin: "0 0 16px",
-          fontSize: "15px",
-          fontWeight: 600,
-          color: "var(--text)",
-          textTransform: "uppercase",
-          letterSpacing: "0.5px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "12px",
         }}
       >
-        Fila do Dia
-      </h2>
+        <h2
+          style={{
+            margin: 0,
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "var(--text)",
+            textTransform: "uppercase",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Fila do Dia
+        </h2>
+        {queue.length > 0 && (
+          <span
+            style={{
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              fontWeight: 500,
+            }}
+          >
+            {queue.length} card{queue.length === 1 ? "" : "s"}
+          </span>
+        )}
+      </div>
 
       {queue.length === 0 && (
-        <div style={{ textAlign: "center", padding: "40px 0" }}>
+        <div style={{ textAlign: "center", padding: "24px 0" }}>
           <div
             style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "14px",
+              width: "40px",
+              height: "40px",
+              borderRadius: "12px",
               background: "var(--bg-card)",
               border: "1px solid var(--border)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 12px",
+              margin: "0 auto 10px",
             }}
           >
-            <Calendar size={20} color="var(--text-muted)" />
+            <Calendar size={16} color="var(--text-muted)" />
           </div>
-          <p style={{ color: "var(--text-sub)", margin: 0, fontWeight: 500 }}>
+          <p
+            style={{
+              color: "var(--text-sub)",
+              margin: 0,
+              fontWeight: 500,
+              fontSize: "13px",
+            }}
+          >
             Nenhum card para revisar hoje!
           </p>
           <p
             style={{
               color: "var(--text-muted)",
-              fontSize: "13px",
-              marginTop: "4px",
+              fontSize: "12px",
+              marginTop: "2px",
             }}
           >
             Adicione novos cards ou volte amanhã.
@@ -98,13 +139,13 @@ export function DailyQueue() {
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        {queue.map((card) => (
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        {visible.map((card) => (
           <div
             key={card.id}
             style={{
-              borderRadius: "12px",
-              padding: "12px 16px",
+              borderRadius: "10px",
+              padding: "8px 12px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -113,13 +154,13 @@ export function DailyQueue() {
           >
             <span
               style={{
-                fontSize: "13px",
+                fontSize: "12px",
                 color: "var(--text)",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 flex: 1,
-                marginRight: "12px",
+                marginRight: "10px",
               }}
             >
               {card.front}
@@ -127,7 +168,7 @@ export function DailyQueue() {
             <span
               style={{
                 fontWeight: 700,
-                fontSize: "13px",
+                fontSize: "12px",
                 fontFamily: "JetBrains Mono, monospace",
                 color: "var(--text)",
                 flexShrink: 0,
@@ -138,6 +179,19 @@ export function DailyQueue() {
           </div>
         ))}
       </div>
+
+      {remaining > 0 && (
+        <p
+          style={{
+            margin: "10px 0 0",
+            fontSize: "12px",
+            color: "var(--warning)",
+            fontWeight: 600,
+          }}
+        >
+          +{remaining} card{remaining === 1 ? "" : "s"} em risco
+        </p>
+      )}
     </div>
   );
 }

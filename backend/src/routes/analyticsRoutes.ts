@@ -7,6 +7,7 @@ import {
   getReviewHeatmap,
   getForgettingCurve,
   getPredictedRecall,
+  getWorkloadForecast,
   getDailyQueue,
 } from "../controllers/analyticsController";
 
@@ -21,6 +22,8 @@ router.get("/review-heatmap", getReviewHeatmap);
 router.get("/forgetting-curve", getForgettingCurve);
 
 router.get("/predicted-recall", getPredictedRecall);
+
+router.get("/workload-forecast", getWorkloadForecast);
 
 router.get("/daily-queue", getDailyQueue);
 

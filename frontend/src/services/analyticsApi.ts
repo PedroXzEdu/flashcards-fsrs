@@ -22,6 +22,12 @@ export interface PredictedRecall {
   predicted_recall: number;
 }
 
+export interface WorkloadForecastDay {
+  day: string;
+  review_cards: number;
+  new_cards: number;
+}
+
 export interface DailyQueueCard {
   id: number;
   front: string;
@@ -42,6 +48,12 @@ export async function getForgettingCurve() {
 
 export async function getPredictedRecall() {
   return api.get<PredictedRecall[]>("/analytics/predicted-recall");
+}
+
+export async function getWorkloadForecast(days = 30) {
+  return api.get<WorkloadForecastDay[]>(
+    `/analytics/workload-forecast?days=${days}`,
+  );
 }
 
 export async function getDailyQueue() {

@@ -1,4 +1,5 @@
 import { pool } from "../database/db";
+import { logger } from "../config/logger";
 
 class PriorityQueueService {
   /**
@@ -6,14 +7,21 @@ class PriorityQueueService {
    * Quanto menor a retenção prevista, maior prioridade.
    */
   async getDailyQueue(userId: number, limit = 50) {
+    logger.info({ userId }, "DailyQueue — consultando cards");
+
     const result = await pool.query(
-      `SELECT c.id, c.front, c.back, c.stability, c.due
+      `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
        WHERE d.user_id = $1
-       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,1)) DESC
+       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,0)) DESC
        LIMIT $2`,
       [userId, limit],
+    );
+
+    logger.info(
+      { userId, rows: result.rows.length, firstFew: result.rows.slice(0, 3) },
+      "DailyQueue — resultados",
     );
 
     // Calcula predicted recall para cada card

@@ -31,6 +31,10 @@ class AnalyticsService {
     };
   }
 
+  async getWorkloadForecast(userId: number, days: number) {
+    return analyticsRepository.getWorkloadForecast(userId, days);
+  }
+
   async getPredictedRecall(userId: number) {
     const cards = await analyticsRepository.getCardsForRecall(userId);
 
