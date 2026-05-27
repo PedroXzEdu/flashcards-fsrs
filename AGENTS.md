@@ -70,16 +70,51 @@ Work in small iterations:
 
 1. analyze
 2. implement minimal change
-3. validate
-4. review (invoke @reviewer)
-5. commit
-6. move to next step
+3. validate (build + tests)
+4. invoke @reviewer → fix findings if needed
+5. regression check
+6. commit
+7. move to next step
 
-> O passo 4 (`review`) inclui verificação de regressões — não há passo separado de regression check.
+> O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
 
 Never batch unrelated changes together.
 
 Always prioritize stability over elegance.
+
+### Before Completion Checklist
+
+Every task MUST pass this checklist before the agent signals completion:
+
+- [ ] Build/tests pass
+- [ ] `@reviewer` executed
+- [ ] Reviewer findings addressed (or justified)
+- [ ] Regression checklist verified
+
+---
+
+## Mandatory Review Policy
+
+### Rules
+
+- After ANY code, documentation, config, migration, test, or infra change, the primary agent MUST invoke `@reviewer` before completion.
+- The primary agent MUST NOT finalize a task without review.
+- The primary agent MUST wait for the reviewer's output before suggesting a commit.
+- If the reviewer finds MEDIUM/HIGH risk or a potential regression, the primary agent MUST either fix the finding or provide an explicit justification for accepting the risk.
+- Only tasks with zero diff (e.g., answering questions, explaining code, debugging without edits) MAY skip review.
+
+### Exceptions
+
+The only valid exceptions for skipping `@reviewer`:
+
+1. No files were changed (zero diff).
+2. The change is a revert of a previous commit with no additional modifications.
+
+All other cases require review.
+
+### Recursion Guard
+
+`@reviewer` is a terminal agent — it MUST NOT invoke `@reviewer`, `@task`, or any other agent. It is read-only and never modifies files. This guarantees no infinite review loop.
 
 ---
 
@@ -357,7 +392,9 @@ When proposing changes:
 3. list files changed
 4. explain regression risks
 5. validate build/tests
-6. preserve existing behavior
+6. invoke @reviewer (mandatory — see Mandatory Review Policy)
+7. fix findings if needed (or justify if accepted)
+8. preserve existing behavior
 
 If uncertain:
 
