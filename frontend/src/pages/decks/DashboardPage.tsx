@@ -32,7 +32,7 @@ import {
 
 function fillWorkloadDays(
   data: WorkloadForecastDay[],
-  days: number
+  days: number,
 ): (WorkloadForecastDay & { label: string })[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -65,10 +65,16 @@ function fillWorkloadDays(
   return result;
 }
 
-function WorkloadTooltip({ active, payload, label }: any) {
+type WorkloadTooltipProps = {
+  active?: boolean;
+  payload?: { dataKey: string; value: number }[];
+  label?: string;
+};
+
+function WorkloadTooltip({ active, payload, label }: WorkloadTooltipProps) {
   if (!active || !payload?.length) return null;
-  const review = payload.find((p: any) => p.dataKey === "review_cards")?.value ?? 0;
-  const newCards = payload.find((p: any) => p.dataKey === "new_cards")?.value ?? 0;
+  const review = payload.find((p) => p.dataKey === "review_cards")?.value ?? 0;
+  const newCards = payload.find((p) => p.dataKey === "new_cards")?.value ?? 0;
 
   return (
     <div
@@ -93,9 +99,7 @@ function WorkloadTooltip({ active, payload, label }: any) {
           <p style={{ margin: "2px 0 0", color: "var(--accent)" }}>
             Revisões: {review}
           </p>
-          <p style={{ margin: 0, color: "var(--info)" }}>
-            Novos: {newCards}
-          </p>
+          <p style={{ margin: 0, color: "var(--info)" }}>Novos: {newCards}</p>
         </>
       )}
     </div>
@@ -736,8 +740,7 @@ export default function DashboardPage() {
                 margin: "6px 0 0",
               }}
             >
-              Os cards ainda não foram agendados ou não há revisões
-              pendentes.
+              Os cards ainda não foram agendados ou não há revisões pendentes.
             </p>
           </div>
         ) : (
