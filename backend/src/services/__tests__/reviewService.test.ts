@@ -114,6 +114,59 @@ describe("ReviewService", () => {
       expect(result.scheduled_days).toBe(3);
       expect(cardRepository.findById).toHaveBeenCalledWith("1", 1);
     });
+
+    it("deve lançar erro se card pertence a outro usuário", async () => {
+      vi.mocked(cardRepository.findById).mockResolvedValue(null);
+
+      await expect(
+        reviewService.submitReview("1", 999, Rating.Good),
+      ).rejects.toThrow("Card não encontrado.");
+    });
+
+    it("deve fazer rollback se reviewLogRepository.create falha", async () => {
+      vi.mocked(cardRepository.findById).mockResolvedValue(mockCard);
+
+      const release = vi.fn();
+      const mockQuery = vi.fn().mockResolvedValue({ rows: [] });
+
+      vi.mocked(pool.connect).mockResolvedValue({
+        query: mockQuery,
+        release,
+      } as never);
+
+      vi.mocked(fsrsService.review).mockReturnValue({
+        card: { ...mockCard, stability: 3.0 },
+        log: {
+          rating: Rating.Good,
+          state: 1,
+          stability: 3.0,
+          difficulty: 0.4,
+          elapsed_days: 1,
+          scheduled_days: 3,
+          last_elapsed_days: 1,
+          learning_steps: 0,
+          due: new Date(),
+          review: new Date(),
+        },
+      });
+
+      const updatedCard = { ...mockCard, stability: 3.0, scheduled_days: 3 };
+      vi.mocked(cardRepository.updateFsrsData).mockResolvedValue(updatedCard);
+
+      vi.mocked(reviewLogRepository.create).mockRejectedValue(
+        new Error("DB error"),
+      );
+
+      await expect(
+        reviewService.submitReview("1", 1, Rating.Good),
+      ).rejects.toThrow("DB error");
+
+      expect(mockQuery).toHaveBeenNthCalledWith(1, "BEGIN");
+      expect(mockQuery).toHaveBeenCalledWith("ROLLBACK");
+      expect(mockQuery).not.toHaveBeenCalledWith("COMMIT");
+      expect(cardRepository.updateFsrsData).toHaveBeenCalledTimes(1);
+      expect(release).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe("getDueCards", () => {
@@ -179,6 +232,16 @@ describe("ReviewService", () => {
 
       expect(result.total).toBe(1);
       expect(result.cards.map((c: any) => c.id)).toEqual([2]);
+    });
+  });
+
+  describe("previewReview", () => {
+    it("deve lançar 404 se card não existe", async () => {
+      vi.mocked(cardRepository.findById).mockResolvedValue(null);
+
+      await expect(reviewService.previewReview("999", 1)).rejects.toThrow(
+        "Card não encontrado.",
+      );
     });
   });
 });
