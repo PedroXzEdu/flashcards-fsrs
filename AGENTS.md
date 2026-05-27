@@ -71,9 +71,11 @@ Work in small iterations:
 1. analyze
 2. implement minimal change
 3. validate
-4. regression check
+4. review (invoke @reviewer)
 5. commit
 6. move to next step
+
+> O passo 4 (`review`) inclui verificação de regressões — não há passo separado de regression check.
 
 Never batch unrelated changes together.
 
@@ -374,6 +376,47 @@ Do not optimize prematurely.
 5. **Validate thoroughly**: run automated tests and perform minimal manual verification in affected flows to confirm root cause is resolved.
 6. **Prefer minimal, incremental changes**: avoid broad refactors or premature optimizations.
 7. **Maintain a record of attempts**: keep a log of recurring errors and fixes to aid future troubleshooting and prevent repeated cycles.
+
+---
+
+## Reviewer Subagent (`@reviewer`)
+
+Um subagent especializado em **revisão de código** para o FlashFSRS.
+
+**Como invocar:**
+
+- digite `@reviewer` seguido do escopo da revisão
+- ou automaticamente pelo agente primário em tarefas de revisão
+
+**O que ele faz:**
+
+1. detecta regressões (contract mismatch, Docker breakage, FSRS edge cases, SQL risks, regression memory checklist)
+2. valida arquitetura (camadas backend/frontend, injeção de lógica em controller, `any`)
+3. revisa UX (layout, scroll, botões sem rota, feedback ausente)
+4. verifica qualidade (TypeScript strict, ESLint, build, dead code, TODOs)
+
+**O que ele NÃO faz:**
+
+- não modifica arquivos
+- não escreve código
+- não refatora
+- não adiciona dependências
+
+**Formato de saída:**
+
+Toda review segue o formato:
+
+1. **Summary** — veredito geral da análise
+2. **Risks** — riscos identificados com severidade (HIGH / MEDIUM / LOW)
+3. **Regressions** — regressões confirmadas ou prováveis
+4. **Minimal Fix Proposal** — menor correção possível (descritiva, sem implementar)
+5. **Validation Checklist** — lista de verificações (tsc, build, lint, testes, Docker, regression checklist)
+
+**Quando usar:**
+
+- antes de commitar uma mudança
+- após validar que a funcionalidade funciona
+- quando identificar código duvidoso durante implementação
 
 ---
 
