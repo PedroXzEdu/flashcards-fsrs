@@ -1,4 +1,4 @@
-import { Rating } from "ts-fsrs";
+import { Grade, Rating } from "ts-fsrs";
 
 import { pool } from "../database/db";
 
@@ -66,7 +66,7 @@ class ReviewService {
       throw new AppError("Card não encontrado.", 404);
     }
 
-    const scheduling = fsrsService.review(card, rating);
+    const scheduling = fsrsService.review(card, rating as Grade);
 
     const client = await pool.connect();
 

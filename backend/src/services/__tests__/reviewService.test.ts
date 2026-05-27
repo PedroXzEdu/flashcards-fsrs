@@ -55,8 +55,9 @@ const mockCard = {
   lapses: 0,
   state: 1,
   due: new Date(),
-  last_review: null,
+  last_review: undefined,
   created_at: new Date(),
+  learning_steps: 0,
 };
 
 describe("ReviewService", () => {
@@ -91,11 +92,15 @@ describe("ReviewService", () => {
       vi.mocked(fsrsService.review).mockReturnValue({
         card: { ...mockCard, stability: 3.0 },
         log: {
+          rating: Rating.Good,
           state: 1,
           stability: 3.0,
           difficulty: 0.4,
           elapsed_days: 1,
           scheduled_days: 3,
+          last_elapsed_days: 1,
+          learning_steps: 0,
+          due: new Date(),
           review: new Date(),
         },
       });
