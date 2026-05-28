@@ -67,17 +67,21 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── authService.ts
 │   │   │   ├── deckService.ts
 │   │   │   ├── deckImportService.ts
+│   │   │   ├── cardService.ts
 │   │   │   ├── reviewService.ts      ← transactional (FSRS)
+│   │   │   ├── reviewLogsService.ts
 │   │   │   ├── fsrsService.ts        ← ts-fsrs wrapper
 │   │   │   ├── analyticsService.ts
 │   │   │   ├── priorityQueueService.ts
+│   │   │   ├── importService.ts
 │   │   │   └── __tests__/
 │   │   ├── repositories/       → SQL puro (pg)
 │   │   │   ├── userRepository.ts
 │   │   │   ├── deckRepository.ts
 │   │   │   ├── cardRepository.ts
 │   │   │   ├── reviewLogRepository.ts
-│   │   │   └── analyticsRepository.ts
+│   │   │   ├── analyticsRepository.ts
+│   │   │   └── __tests__/
 │   │   ├── middlewares/
 │   │   │   ├── auth.ts             → JWT verify
 │   │   │   ├── errorHandler.ts     → Centralized error handler
@@ -140,8 +144,6 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   ├── contexts/
 │   │   │   ├── AuthContext.tsx     → token + user state
 │   │   │   └── ThemeContext.tsx    → dark/light
-│   │   ├── hooks/
-│   │   │   └── useButton.ts
 │   │   ├── services/
 │   │   │   └── analyticsApi.ts
 │   │   ├── types/
@@ -222,7 +224,8 @@ POST /import (multipart: file)
     → unzipper (extract ZIP)
     → better-sqlite3 (lê collection.anki2)
     → copia mídia para uploads/media/
-    → cria deck + cards (createEmptyCard FSRS defaults)
+    → importService.createDeckFromAnki()
+      → deckRepository.create() + cardRepository.createDirect()
   → { success: true, data: { deck, imported, skipped, message } }
 ```
 
@@ -249,7 +252,7 @@ POST /decks/shared/:token/import  → cópia transactional
 - **Validação de request** via Zod middleware (`validate.ts`)
 - **Evitar lógica complexa em routes** — routes só registram middleware + controller
 - **Transações** via `PoolClient` adquirido com `pool.connect()`
-- **Respostas seguem padrão** `{ success: true, data: {} }` — exceção: `importController`
+- **Respostas seguem padrão** `{ success: true, data: {} }`
 - **CSP em reportOnly** — violações logadas mas não bloqueadas
 - **JWT sem refresh token** — stateless, 7d expiry
 
@@ -257,6 +260,8 @@ POST /decks/shared/:token/import  → cópia transactional
 
 ## 6. Inconsistências Conhecidas
 
-### `importController` acessa SQLite diretamente
+### `importController` faz parsing de SQLite do `.apkg` diretamente
 
-O controller de importação usa `better-sqlite3` para ler o arquivo `collection.anki2` do `.apkg` — que é um banco SQLite, não o Postgres da aplicação. Isso é aceitável pois lê de um arquivo enviado pelo usuário, mas foge do padrão controller → service → repository para essa etapa específica.
+O controller de importação usa `better-sqlite3` para ler o arquivo `collection.anki2` do `.apkg`. Embora o SQL de criação de deck e cards tenha sido extraído para `importService`, a leitura do SQLite do arquivo enviado permanece no controller.
+
+**Justificativa:** O SQLite do `.apkg` é o formato de arquivo Anki, não o banco da aplicação. O parsing ocorre antes de qualquer lógica de negócio e não envolve o Postgres. É mais próximo de file parsing do que de acesso a banco. Mantido no controller por simplicidade operacional.

@@ -73,9 +73,9 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] Testes de middlewares (auth, errorHandler)
 - [ ] Testes de frontend
 - [ ] Testes de integração (controller → service → repo real)
-- [ ] Testes de serviços restantes (cardService, reviewLogsService, importService, deckImportService)
-- [ ] Testes de middlewares restantes (rateLimiter, requestId, validate)
-- [ ] Teste do importController
+- [x] Testes de serviços restantes (cardService, reviewLogsService, importService, deckImportService)
+- [x] Testes de middlewares restantes (rateLimiter, requestId, validate)
+- [x] Teste do importController
 
 ---
 

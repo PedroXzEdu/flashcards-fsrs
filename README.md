@@ -156,11 +156,11 @@ src/
 
 O projeto usa três arquivos de ambiente no diretório `backend/`:
 
-| Arquivo | Finalidade | `DB_HOST` |
-|---|---|---|
-| `.env` | Fonte de verdade para Docker Compose | `db` (nome do serviço) |
-| `.env.local` | Execução local sem Docker | `localhost` |
-| `.env.example` | Template público para onboarding | `localhost` |
+| Arquivo        | Finalidade                           | `DB_HOST`              |
+| -------------- | ------------------------------------ | ---------------------- |
+| `.env`         | Fonte de verdade para Docker Compose | `db` (nome do serviço) |
+| `.env.local`   | Execução local sem Docker            | `localhost`            |
+| `.env.example` | Template público para onboarding     | `localhost`            |
 
 **Regra importante:** Nunca use `localhost` como hostname do Postgres dentro de containers Docker. Dentro da rede do Docker, o banco é acessível pelo nome do serviço (`db`).
 
@@ -193,8 +193,8 @@ O backend usa `backend/.env` (`DB_HOST=db`) e o Postgres sobe automaticamente co
 #### 3. Acesse a aplicação
 
 Frontend: `http://localhost:5173`
-Backend:  `http://localhost:3000`
-Health:   `http://localhost:3000/health`
+Backend: `http://localhost:3000`
+Health: `http://localhost:3000/health`
 
 ---
 
@@ -246,7 +246,6 @@ docker compose exec frontend npm run test
 docker compose exec backend npm run dev
 docker compose exec backend npm run build
 docker compose exec backend npm run test
-docker compose exec backend npm run dev
 ```
 
 ### Formatação
@@ -262,9 +261,18 @@ docker compose exec backend npm run format
 
 O projeto possui testes automatizados para:
 
-- Auth Service
-- Deck Service
-- Review Service
+### Backend — Services (10 arquivos)
+
+- Auth, Deck, Review, FSRS, Analytics, PriorityQueue
+- Card, ReviewLogs, Import, DeckImport
+
+### Backend — Controllers (8 arquivos)
+
+- Auth, Deck, Card, Review, ReviewLogs, Analytics, Health, Import
+
+### Backend — Middlewares (5 arquivos)
+
+- Auth, ErrorHandler, RateLimiter, RequestId, Validate
 
 Executar:
 
