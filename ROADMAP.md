@@ -51,16 +51,9 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] `.env.example` criado para backend e frontend
 - [x] `axios` removido do frontend (não utilizado, só `fetch`)
 - [x] Rate limiting granular: POST /decks (20/15min), POST /decks/:id/cards (100/15min), POST /import (5/15min)
-
----
-
-## Dívida Técnica Restante
-
-### Consistência
-
-- `importController` retorna dados sem wrapper `{ success, data }`
-- `getSharedDeckPreview` assinado como `AuthRequest` (rota pública)
-- Auth middleware trata erros inline em vez de `next(err)` (baixo risco, resposta já padronizada)
+- [x] `importController` padronizado com wrapper `{ success, data }`
+- [x] `getSharedDeckPreview` corrigido: `Request` em vez de `AuthRequest` (rota pública)
+- [x] Auth middleware padronizado com `next(err)` em vez de resposta inline
 
 ### Testes
 

@@ -33,7 +33,7 @@ Você é um revisor de código especializado no projeto **FlashFSRS** (React 19 
 
 ### 1. Detecção de Regressões
 
-- **Backend/Frontend contract mismatch**: verifique se a forma da resposta da API mudou sem atualizar o frontend (ex: campo renomeado, tipo alterado, `success.data` vs `success.message`).
+- **Backend/Frontend contract mismatch**: verifique se a forma da resposta da API mudou sem atualizar o frontend (ex: campo renomeado, tipo alterado, `success.data` vs `success.error`).
 - **Docker breakage**: se `docker-compose.yml`, `Dockerfile` ou `.env` foram alterados, verifique se `DB_HOST` continua compatível (`db` no Docker, `localhost` local).
 - **API payload incompatibility**: mudanças em schemas Zod ou tipos de request/response.
 - **Dashboard quebrando com arrays vazios**: componentes que iteram sobre dados da API sem fallback para `[]`.

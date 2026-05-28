@@ -223,7 +223,7 @@ POST /import (multipart: file)
     → better-sqlite3 (lê collection.anki2)
     → copia mídia para uploads/media/
     → cria deck + cards (createEmptyCard FSRS defaults)
-  → { deck, imported, skipped, message }  ← sem wrapper success/data
+  → { success: true, data: { deck, imported, skipped, message } }
 ```
 
 ### Compartilhamento de Deck

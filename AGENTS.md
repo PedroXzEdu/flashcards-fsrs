@@ -159,7 +159,7 @@ Error:
 ```json
 {
   "success": false,
-  "message": "Human readable message"
+  "error": "Human readable message"
 }
 ```
 
