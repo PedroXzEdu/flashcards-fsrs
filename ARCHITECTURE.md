@@ -57,9 +57,9 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   ├── controllers/         → HTTP layer (req/res/next)
 │   │   │   ├── authController.ts
 │   │   │   ├── deckController.ts
-│   │   │   ├── cardController.ts    ← raw SQL (não segue service/repo)
+│   │   │   ├── cardController.ts
 │   │   │   ├── reviewController.ts
-│   │   │   ├── reviewLogsController.ts  ← raw SQL
+│   │   │   ├── reviewLogsController.ts
 │   │   │   ├── importController.ts    ← raw SQL
 │   │   │   ├── analyticsController.ts
 │   │   │   └── healthController.ts
@@ -70,7 +70,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── reviewService.ts      ← transactional (FSRS)
 │   │   │   ├── fsrsService.ts        ← ts-fsrs wrapper
 │   │   │   ├── analyticsService.ts
-│   │   │   ├── priorityQueueService.ts  ← raw SQL
+│   │   │   ├── priorityQueueService.ts
 │   │   │   └── __tests__/
 │   │   ├── repositories/       → SQL puro (pg)
 │   │   │   ├── userRepository.ts
@@ -240,7 +240,7 @@ POST /decks/shared/:token/import  → cópia transactional
 
 ## 5. Regras Arquiteturais
 
-- **Controllers não acessam DB direto** — exceção: card, reviewLogs, import (inconsistência)
+- **Controllers não acessam DB direto** — exceção: import (lê SQLite do .apkg, não o Postgres da app)
 - **Services não conhecem Express** — sem req/res
 - **Repository = SQL only** — sem regra de negócio
 - **Rich text é armazenado como HTML bruto** no banco
@@ -257,4 +257,6 @@ POST /decks/shared/:token/import  → cópia transactional
 
 ## 6. Inconsistências Conhecidas
 
-Nenhuma no momento.
+### `importController` acessa SQLite diretamente
+
+O controller de importação usa `better-sqlite3` para ler o arquivo `collection.anki2` do `.apkg` — que é um banco SQLite, não o Postgres da aplicação. Isso é aceitável pois lê de um arquivo enviado pelo usuário, mas foge do padrão controller → service → repository para essa etapa específica.

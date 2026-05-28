@@ -55,11 +55,27 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] `getSharedDeckPreview` corrigido: `Request` em vez de `AuthRequest` (rota pública)
 - [x] Auth middleware padronizado com `next(err)` em vez de resposta inline
 
+### Sessão de testes e normalização
+
+- [x] Testes de controller (7 arquivos: auth, deck, card, review, reviewLogs, analytics, health)
+- [x] Testes de repositório (5 arquivos: user, deck, card, reviewLog, analytics)
+- [x] Testes de segurança do FSRS e review service
+- [x] Cobertura do priority queue service
+- [x] Normalização da arquitetura: cardController, reviewLogsController, priorityQueueService → padrão service/repository
+- [x] Remoção de código morto (useButton hook) + registro da extensão Underline no editor
+- [x] Refatoração do importController (SQL extraído para importService)
+
 ### Testes
 
-- Sem testes de frontend
-- Sem testes de integração (controllers, middleware, rotas)
-- Cobertura apenas dos services
+- [x] Testes de services (auth, deck, review, fsrs, analytics, priorityQueue)
+- [x] Testes de repositories (user, deck, card, reviewLog, analytics)
+- [x] Testes de controllers (auth, deck, card, review, reviewLogs, analytics, health)
+- [x] Testes de middlewares (auth, errorHandler)
+- [ ] Testes de frontend
+- [ ] Testes de integração (controller → service → repo real)
+- [ ] Testes de serviços restantes (cardService, reviewLogsService, importService, deckImportService)
+- [ ] Testes de middlewares restantes (rateLimiter, requestId, validate)
+- [ ] Teste do importController
 
 ---
 
