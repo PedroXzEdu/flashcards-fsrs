@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
+import { AppError } from "../utils/AppError";
 
 export interface AuthRequest extends Request {
   userId?: number;
@@ -14,12 +15,7 @@ export function authMiddleware(
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    res.status(401).json({
-      success: false,
-      error: "Token não fornecido.",
-      requestId: req.requestId,
-    });
-    return;
+    return next(new AppError("Token não fornecido.", 401));
   }
 
   const token = authHeader.split(" ")[1];
@@ -33,21 +29,12 @@ export function authMiddleware(
     const userId = payload.userId ?? payload.id;
 
     if (!userId) {
-      res.status(401).json({
-        success: false,
-        error: "Token inválido.",
-        requestId: req.requestId,
-      });
-      return;
+      return next(new AppError("Token inválido.", 401));
     }
 
     req.userId = userId;
     next();
   } catch {
-    res.status(401).json({
-      success: false,
-      error: "Token inválido.",
-      requestId: req.requestId,
-    });
+    return next(new AppError("Token inválido.", 401));
   }
 }

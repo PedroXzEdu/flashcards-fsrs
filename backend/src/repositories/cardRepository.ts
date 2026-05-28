@@ -14,6 +14,20 @@ class CardRepository {
     return result.rows;
   }
 
+  async findDailyQueue(userId: number, limit = 50) {
+    const result = await client.query(
+      `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
+       FROM cards c
+       JOIN decks d ON d.id = c.deck_id
+       WHERE d.user_id = $1
+       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,0)) DESC NULLS LAST
+       LIMIT $2`,
+      [userId, limit],
+    );
+
+    return result.rows;
+  }
+
   async findDueByDeck(deckId: string, userId: number) {
     const result = await client.query(
       `SELECT c.*
@@ -30,6 +44,46 @@ class CardRepository {
     );
 
     return result.rows;
+  }
+
+  async createDirect(data: any) {
+    const result = await client.query(
+      `INSERT INTO cards
+        (
+          deck_id,
+          front,
+          back,
+          stability,
+          difficulty,
+          elapsed_days,
+          scheduled_days,
+          reps,
+          lapses,
+          state,
+          due
+        )
+       VALUES
+        (
+          $1,$2,$3,$4,$5,
+          $6,$7,$8,$9,$10,$11
+        )
+       RETURNING *`,
+      [
+        data.deck_id,
+        data.front,
+        data.back,
+        data.stability,
+        data.difficulty,
+        data.elapsed_days,
+        data.scheduled_days,
+        data.reps,
+        data.lapses,
+        data.state,
+        data.due,
+      ],
+    );
+
+    return result.rows[0];
   }
 
   async create(client: PoolClient, data: any) {
@@ -113,6 +167,26 @@ class CardRepository {
      AND d.user_id = $2
      LIMIT 1`,
       [id, userId],
+    );
+
+    return result.rows[0];
+  }
+
+  async update(deckId: string, cardId: string, front: string, back: string) {
+    const result = await client.query(
+      `UPDATE cards SET front = $1, back = $2
+       WHERE id = $3 AND deck_id = $4
+       RETURNING *`,
+      [front, back, cardId, deckId],
+    );
+
+    return result.rows[0];
+  }
+
+  async delete(deckId: string, cardId: string) {
+    const result = await client.query(
+      `DELETE FROM cards WHERE id = $1 AND deck_id = $2 RETURNING id`,
+      [cardId, deckId],
     );
 
     return result.rows[0];

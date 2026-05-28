@@ -124,10 +124,13 @@ export async function importApkg(
     }
 
     res.json({
-      deck,
-      imported,
-      skipped,
-      message: `${imported} cards importados com sucesso!`,
+      success: true,
+      data: {
+        deck,
+        imported,
+        skipped,
+        message: `${imported} cards importados com sucesso!`,
+      },
     });
   } catch (err) {
     next(err);

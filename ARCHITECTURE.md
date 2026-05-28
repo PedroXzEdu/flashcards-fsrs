@@ -27,11 +27,11 @@ Separação por camadas no backend: Controller → Service → Repository.
 
 Três arquivos em `backend/` definem a configuração do backend:
 
-| Arquivo | Uso | `DB_HOST` |
-|---|---|---|
-| `.env` | Fonte de verdade para Docker Compose (via `env_file`) | `db` |
-| `.env.local` | Execução local sem Docker (copiar para `.env`) | `localhost` |
-| `.env.example` | Template público com valores placeholder | `localhost` |
+| Arquivo        | Uso                                                   | `DB_HOST`   |
+| -------------- | ----------------------------------------------------- | ----------- |
+| `.env`         | Fonte de verdade para Docker Compose (via `env_file`) | `db`        |
+| `.env.local`   | Execução local sem Docker (copiar para `.env`)        | `localhost` |
+| `.env.example` | Template público com valores placeholder              | `localhost` |
 
 **Regra:** Dentro de containers Docker, o Postgres é acessível pelo nome do serviço (`db`), nunca por `localhost`.
 
@@ -163,7 +163,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 - Recebe request (req.params, req.body, req.userId)
 - Chama service
 - Retorna `{ success: true, data: ... }`
-- Exceção: `cardController`, `reviewLogsController`, `importController` fazem SQL direto (inconsistência conhecida)
+- Exceção: `importController` faz SQL direto (inconsistência conhecida)
 
 **Service**
 
@@ -171,7 +171,6 @@ Três arquivos em `backend/` definem a configuração do backend:
 - Coordena repositórios
 - Regras do FSRS
 - Transações (BEGIN/COMMIT/ROLLBACK)
-- Exceção: `priorityQueueService` faz SQL direto
 
 **Repository**
 
@@ -261,11 +260,6 @@ POST /decks/shared/:token/import  → cópia transactional
 
 Estes pontos desviam do padrão arquitetural descrito acima. Estão documentados para evitar confusão:
 
-1. **`cardController`** — faz SQL direto em vez de service → repository
-2. **`reviewLogsController`** — faz SQL direto
-3. **`importController`** — faz SQL direto + retorno sem `{ success, data }`
-4. **`priorityQueueService`** — faz SQL direto em vez de repository
-5. **`getSharedDeckPreview`** — rota pública, mas handler assinado como `AuthRequest`
-6. **Auth middleware** — trata erros inline em vez de `next(err)` (resposta já padronizada, baixo risco)
-7. **Frontend `useButton` hook** — existe mas não é usado pelo `Button` component
-8. **Underline extension** — instalada mas não registrada no Tiptap
+1. **`importController`** — faz SQL direto (fluxo atípico com transações longas, mantido para evitar refatoração de alto risco)
+2. **Frontend `useButton` hook** — existe mas não é usado pelo `Button` component
+3. **Underline extension** — instalada mas não registrada no Tiptap

@@ -60,7 +60,8 @@ export const importApi = {
       throw new Error(error.error || "Erro ao importar.");
     }
 
-    return res.json();
+    const json = await res.json();
+    return json.data;
   },
 };
 

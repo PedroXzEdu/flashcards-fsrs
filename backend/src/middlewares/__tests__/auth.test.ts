@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import jwt from "jsonwebtoken";
 
 import { authMiddleware } from "../auth";
+import { AppError } from "../../utils/AppError";
 
 vi.mock("jsonwebtoken", () => ({
   default: {
@@ -43,13 +44,12 @@ describe("authMiddleware", () => {
 
     authMiddleware(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      success: false,
-      error: "Token não fornecido.",
-      requestId: "test-request-id",
-    });
-    expect(next).not.toHaveBeenCalled();
+    expect(next).toHaveBeenCalledTimes(1);
+    const err = next.mock.calls[0][0];
+    expect(err).toBeInstanceOf(AppError);
+    expect(err.message).toBe("Token não fornecido.");
+    expect(err.statusCode).toBe(401);
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it("deve retornar 401 se header não começar com Bearer", () => {
@@ -59,13 +59,12 @@ describe("authMiddleware", () => {
 
     authMiddleware(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      success: false,
-      error: "Token não fornecido.",
-      requestId: "test-request-id",
-    });
-    expect(next).not.toHaveBeenCalled();
+    expect(next).toHaveBeenCalledTimes(1);
+    const err = next.mock.calls[0][0];
+    expect(err).toBeInstanceOf(AppError);
+    expect(err.message).toBe("Token não fornecido.");
+    expect(err.statusCode).toBe(401);
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it("deve retornar 401 se jwt.verify lançar erro", () => {
@@ -79,13 +78,12 @@ describe("authMiddleware", () => {
 
     authMiddleware(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      success: false,
-      error: "Token inválido.",
-      requestId: "test-request-id",
-    });
-    expect(next).not.toHaveBeenCalled();
+    expect(next).toHaveBeenCalledTimes(1);
+    const err = next.mock.calls[0][0];
+    expect(err).toBeInstanceOf(AppError);
+    expect(err.message).toBe("Token inválido.");
+    expect(err.statusCode).toBe(401);
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it("deve retornar 401 se payload não contiver userId", () => {
@@ -97,13 +95,12 @@ describe("authMiddleware", () => {
 
     authMiddleware(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      success: false,
-      error: "Token inválido.",
-      requestId: "test-request-id",
-    });
-    expect(next).not.toHaveBeenCalled();
+    expect(next).toHaveBeenCalledTimes(1);
+    const err = next.mock.calls[0][0];
+    expect(err).toBeInstanceOf(AppError);
+    expect(err.message).toBe("Token inválido.");
+    expect(err.statusCode).toBe(401);
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it("deve chamar next() e preencher req.userId com token válido", () => {

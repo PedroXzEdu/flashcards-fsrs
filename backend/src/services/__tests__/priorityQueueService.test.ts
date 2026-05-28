@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { priorityQueueService } from "../priorityQueueService";
-import { pool } from "../../database/db";
+import { cardRepository } from "../../repositories/cardRepository";
 
-vi.mock("../../database/db", () => ({
-  pool: {
-    query: vi.fn(),
+vi.mock("../../repositories/cardRepository", () => ({
+  cardRepository: {
+    findDailyQueue: vi.fn(),
   },
 }));
 
@@ -28,7 +28,7 @@ describe("PriorityQueueService", () => {
 
   describe("getDailyQueue", () => {
     it("deve retornar lista vazia quando não há cards", async () => {
-      vi.mocked(pool.query).mockResolvedValue({ rows: [] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([]);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
@@ -36,32 +36,32 @@ describe("PriorityQueueService", () => {
     });
 
     it("deve usar limit padrão 50 quando não especificado", async () => {
-      vi.mocked(pool.query).mockResolvedValue({ rows: [] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([]);
 
       await priorityQueueService.getDailyQueue(1);
 
-      expect(pool.query).toHaveBeenCalledWith(expect.any(String), [1, 50]);
+      expect(cardRepository.findDailyQueue).toHaveBeenCalledWith(1, 50);
     });
 
     it("deve aceitar limit personalizado", async () => {
-      vi.mocked(pool.query).mockResolvedValue({ rows: [] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([]);
 
       await priorityQueueService.getDailyQueue(1, 10);
 
-      expect(pool.query).toHaveBeenCalledWith(expect.any(String), [1, 10]);
+      expect(cardRepository.findDailyQueue).toHaveBeenCalledWith(1, 10);
     });
 
     it("deve isolar cards por usuário via parâmetro userId", async () => {
-      vi.mocked(pool.query).mockResolvedValue({ rows: [] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([]);
 
       await priorityQueueService.getDailyQueue(42);
 
-      expect(pool.query).toHaveBeenCalledWith(expect.any(String), [42, 50]);
+      expect(cardRepository.findDailyQueue).toHaveBeenCalledWith(42, 50);
     });
 
     it("deve retornar cards com predicted_recall calculado", async () => {
       const card = mockCard();
-      vi.mocked(pool.query).mockResolvedValue({ rows: [card] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([card]);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
@@ -87,9 +87,11 @@ describe("PriorityQueueService", () => {
         due: new Date("2025-06-12"),
       });
 
-      vi.mocked(pool.query).mockResolvedValue({
-        rows: [cardA, cardB, cardC],
-      } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([
+        cardA,
+        cardB,
+        cardC,
+      ]);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
@@ -103,7 +105,7 @@ describe("PriorityQueueService", () => {
 
     it("deve funcionar com stability=0 sem quebrar", async () => {
       const card = mockCard({ stability: 0 });
-      vi.mocked(pool.query).mockResolvedValue({ rows: [card] } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([card]);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
@@ -116,9 +118,10 @@ describe("PriorityQueueService", () => {
       const normal = mockCard({ id: 1, stability: 3 });
       const zero = mockCard({ id: 2, stability: 0 });
 
-      vi.mocked(pool.query).mockResolvedValue({
-        rows: [normal, zero],
-      } as never);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([
+        normal,
+        zero,
+      ]);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
