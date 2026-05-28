@@ -143,7 +143,6 @@ src/
 ├── components/
 ├── pages/
 ├── contexts/
-├── hooks/
 ├── services/
 └── types/
 ```

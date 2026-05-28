@@ -412,7 +412,7 @@ Se as inconsistências forem corrigidas e o padrão estiver consolidado.
 
 ---
 
-## 15. Testes Focados no Backend (Services + Middlewares)
+## 15. Testes de Frontend com vitest + testing-library
 
 ### Contexto
 
@@ -420,22 +420,23 @@ Estratégia de testes.
 
 ### Escolha
 
-Testes unitários nos services e middlewares do backend. Zero testes de frontend.
+Testes unitários nos services e middlewares do backend. Testes de frontend com `vitest` + `@testing-library/react` + `jsdom` para componentes, contextos e hooks. Zero testes de integração e E2E.
 
 ### Justificativa
 
 - Lógica de negócio crítica está no backend (FSRS, transações, queries)
-- Backend tem boundaries claras (controller/service/repository) — fáceis de mockar
-- Tempo limitado (prazo acadêmico): foco no que pode quebrar silenciosamente
-- Frontend tem menos lógica de negócio (maioria é apresentação)
+- Vitest já usado no backend — consistência de tooling
+- testing-library incentiva testar comportamento (não implementação)
+- jsdom permite testar renderização React sem browser real
+- Cobertura focada em: componentes puros, contextos, sanitização de HTML, e edge cases de UI
 
 ### Trade-offs
 
 - Sem testes de integração (controller → service → repo real)
-- Sem testes de frontend (regressão visual, comportamento de componentes)
-- Confiança manual para validação frontend
+- Sem testes de snapshot ou regressão visual
+- jsdom não cobre rendering real (layout, scroll, eventos complexos)
 - Service tests usam banco real (não mockam repositórios) — mais integração que unitário
 
 ### Quando revisitar
 
-Quando houver mais tempo ou surgirem regressões no frontend não detectadas.
+Se surgirem regressões no frontend não detectadas pelos testes atuais, ou quando houver necessidade de testes E2E com Playwright/Cypress.

@@ -12,7 +12,7 @@ FlashFSRS é um monólito modular de três camadas (frontend + backend + banco) 
 frontend (React + Vite) → HTTP/JSON → backend (Express) → SQL → PostgreSQL
 ```
 
-- **Frontend**: React 19, Vite, Tailwind v4, Catppuccin, Tiptap (rich text), KaTeX
+- **Frontend**: React 19, Vite, Tailwind v4, Catppuccin, Tiptap (rich text), KaTeX, vitest + testing-library (testes)
 - **Backend**: Node.js, Express 5, TypeScript, `pg` (raw SQL), Zod, ts-fsrs
 - **Banco**: PostgreSQL 16 (Alpine)
 - **Infra**: Docker Compose (Node 20, serviços frontend/backend/db/tools)
@@ -114,6 +114,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │       └── media/                  → Mídia extraída de .apkg
 │
 ├── frontend/
+│   ├── vitest.config.ts          → Test config (jsdom, globals, setup)
 │   ├── src/
 │   │   ├── main.tsx               → Entry point (providers wrappers)
 │   │   ├── App.tsx                → Routes definition
@@ -148,6 +149,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   └── analyticsApi.ts
 │   │   ├── types/
 │   │   │   └── index.ts
+│   │   ├── test/
+│   │   │   └── setup.ts          → Vitest global setup (localStorage + matchMedia mocks)
 │   │   └── styles/
 │   │       ├── index.css          → Tailwind + Catppuccin + animations
 │   │       └── heatmap.css        → Legacy (não usado)
@@ -196,6 +199,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 **Contexts** → AuthContext (token/user), ThemeContext (dark/light)
 **Rich text** → Tiptap + KaTeX render no `CardContent`
 **State** → local (useState/useEffect), sem Redux/Zustand
+**Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
 
 ---
 

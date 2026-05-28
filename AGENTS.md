@@ -324,6 +324,7 @@ Run:
 ```bash
 npm run build
 npx tsc -b --noEmit
+npx vitest run
 ```
 
 ---
