@@ -257,7 +257,4 @@ POST /decks/shared/:token/import  → cópia transactional
 
 ## 6. Inconsistências Conhecidas
 
-Estes pontos desviam do padrão arquitetural descrito acima. Estão documentados para evitar confusão:
-
-1. **Frontend `useButton` hook** — existe mas não é usado pelo `Button` component
-2. **Underline extension** — instalada mas não registrada no Tiptap
+Nenhuma no momento.
