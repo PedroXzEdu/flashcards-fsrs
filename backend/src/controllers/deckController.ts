@@ -11,8 +11,8 @@ export async function createDeck(
 ) {
   try {
     const deck = await deckService.create({
-      userId: req.userId,
       ...req.body,
+      userId: req.userId,
     });
 
     return res.status(201).json({
