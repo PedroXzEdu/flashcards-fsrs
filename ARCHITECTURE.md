@@ -163,7 +163,6 @@ Três arquivos em `backend/` definem a configuração do backend:
 - Recebe request (req.params, req.body, req.userId)
 - Chama service
 - Retorna `{ success: true, data: ... }`
-- Exceção: `importController` faz SQL direto (inconsistência conhecida)
 
 **Service**
 
@@ -260,6 +259,5 @@ POST /decks/shared/:token/import  → cópia transactional
 
 Estes pontos desviam do padrão arquitetural descrito acima. Estão documentados para evitar confusão:
 
-1. **`importController`** — faz SQL direto (fluxo atípico com transações longas, mantido para evitar refatoração de alto risco)
-2. **Frontend `useButton` hook** — existe mas não é usado pelo `Button` component
-3. **Underline extension** — instalada mas não registrada no Tiptap
+1. **Frontend `useButton` hook** — existe mas não é usado pelo `Button` component
+2. **Underline extension** — instalada mas não registrada no Tiptap

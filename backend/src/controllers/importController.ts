@@ -1,7 +1,5 @@
 import { Response, NextFunction } from "express";
 import { AuthRequest } from "../middlewares/auth";
-import { pool } from "../database/db";
-import { createEmptyCard } from "ts-fsrs";
 import fs from "fs";
 import path from "path";
 import unzipper from "unzipper";
@@ -9,6 +7,7 @@ import Database from "better-sqlite3";
 import { promisify } from "util";
 import { pipeline } from "stream";
 import { AppError } from "../utils/AppError";
+import { importService } from "../services/importService";
 
 const streamPipeline = promisify(pipeline);
 
@@ -74,62 +73,25 @@ export async function importApkg(
       .all() as AnkiNote[];
     db.close();
 
-    const deckName = req.file.originalname.replace(".apkg", "");
-
-    const deckResult = await pool.query(
-      `INSERT INTO decks (user_id, title, description, is_public)
-       VALUES ($1, $2, $3, false)
-       RETURNING *`,
-      [req.userId, deckName, `Importado do Anki`],
-    );
-    const deck = deckResult.rows[0];
-
-    const emptyCard = createEmptyCard();
-    let imported = 0;
-    let skipped = 0;
-
-    for (const note of notes) {
+    const notesData = notes.map((note) => {
       const fields = note.flds.split("\x1f");
-      const front = fields[0]?.trim();
-      const back = fields[1]?.trim();
+      return {
+        front: processMidiaRefs(fields[0]?.trim() || ""),
+        back: processMidiaRefs(fields[1]?.trim() || ""),
+      };
+    });
 
-      if (!front || !back) {
-        skipped++;
-        continue;
-      }
-
-      const processedFront = processMidiaRefs(front);
-      const processedBack = processMidiaRefs(back);
-
-      await pool.query(
-        `INSERT INTO cards
-          (deck_id, front, back, stability, difficulty, elapsed_days,
-           scheduled_days, reps, lapses, state, due)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-        [
-          deck.id,
-          processedFront,
-          processedBack,
-          emptyCard.stability,
-          emptyCard.difficulty,
-          emptyCard.elapsed_days,
-          emptyCard.scheduled_days,
-          emptyCard.reps,
-          emptyCard.lapses,
-          emptyCard.state,
-          emptyCard.due,
-        ],
-      );
-      imported++;
-    }
+    const result = await importService.createDeckFromAnki(
+      req.userId!,
+      req.file.originalname.replace(".apkg", ""),
+      notesData,
+    );
 
     res.json({
       success: true,
       data: {
-        deck,
-        imported,
-        skipped,
-        message: `${imported} cards importados com sucesso!`,
+        ...result,
+        message: `${result.imported} cards importados com sucesso!`,
       },
     });
   } catch (err) {
