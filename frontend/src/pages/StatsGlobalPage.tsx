@@ -13,7 +13,10 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  PieChart,
+  Pie,
   Cell,
+  Legend,
 } from "recharts";
 
 const RATING_COLORS = [
@@ -77,6 +80,16 @@ export default function StatsGlobalPage() {
     }),
     total: Number(d.total),
   }));
+
+  const stateData = [
+    { name: "Novos", value: Number(cards.new_cards), fill: "var(--info)" },
+    {
+      name: "Aprendendo",
+      value: Number(cards.learning),
+      fill: "var(--warning)",
+    },
+    { name: "Revisão", value: Number(cards.reviewing), fill: "var(--success)" },
+  ].filter((d) => d.value > 0);
 
   const ratingData = [
     {
@@ -320,71 +333,38 @@ export default function StatsGlobalPage() {
             >
               Estado dos Cards
             </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              {[
-                {
-                  label: "Novos",
-                  value: cards.new_cards,
-                  color: "var(--info)",
-                  bg: "rgba(137,180,250,0.1)",
-                },
-                {
-                  label: "Aprendendo",
-                  value: cards.learning,
-                  color: "var(--warning)",
-                  bg: "rgba(249,226,175,0.1)",
-                },
-                {
-                  label: "Em revisão",
-                  value: cards.reviewing,
-                  color: "var(--success)",
-                  bg: "rgba(166,227,161,0.1)",
-                },
-                {
-                  label: "Dif. média",
-                  value: Number(cards.avg_difficulty).toFixed(2),
-                  color: "var(--accent)",
-                  bg: "rgba(203,166,247,0.1)",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    background: item.bg,
-                    borderRadius: "12px",
-                    padding: "14px",
-                    textAlign: "center",
-                  }}
-                >
-                  <p
-                    style={{
-                      margin: "0 0 4px",
-                      fontSize: "20px",
-                      fontWeight: 700,
-                      color: item.color,
-                      fontFamily: "JetBrains Mono, monospace",
-                    }}
+            {stateData.length === 0 ? (
+              <p
+                style={{
+                  color: "var(--text-muted)",
+                  fontSize: "13px",
+                  textAlign: "center",
+                  padding: "40px 0",
+                }}
+              >
+                Nenhum card ainda.
+              </p>
+            ) : (
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie
+                    data={stateData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={80}
+                    paddingAngle={3}
+                    dataKey="value"
                   >
-                    {item.value}
-                  </p>
-                  <p
-                    style={{
-                      margin: 0,
-                      fontSize: "11px",
-                      color: "var(--text-muted)",
-                    }}
-                  >
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+                    {stateData.map((entry, i) => (
+                      <Cell key={i} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(v) => [`${v} cards`, ""]} />
+                  <Legend iconType="circle" iconSize={8} />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </div>
 

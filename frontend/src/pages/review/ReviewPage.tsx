@@ -344,23 +344,44 @@ export default function ReviewPage() {
           >
             O FSRS agendou as próximas revisões automaticamente.
           </p>
-          <button
-            type="button"
-            onClick={() => navigate(`/decks/${deckId}`)}
-            style={{
-              background: "var(--accent)",
-              border: "none",
-              borderRadius: "10px",
-              color: "var(--bg)",
-              fontWeight: 600,
-              fontSize: "14px",
-              padding: "12px 24px",
-              cursor: "pointer",
-              fontFamily: "Outfit, sans-serif",
-            }}
+          <div
+            style={{ display: "flex", gap: "10px", justifyContent: "center" }}
           >
-            Voltar ao baralho
-          </button>
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              style={{
+                background: "none",
+                border: "1px solid var(--border)",
+                borderRadius: "10px",
+                color: "var(--text-muted)",
+                fontWeight: 600,
+                fontSize: "14px",
+                padding: "12px 24px",
+                cursor: "pointer",
+                fontFamily: "Outfit, sans-serif",
+              }}
+            >
+              Ir para o início
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(`/decks/${deckId}`)}
+              style={{
+                background: "var(--accent)",
+                border: "none",
+                borderRadius: "10px",
+                color: "var(--bg)",
+                fontWeight: 600,
+                fontSize: "14px",
+                padding: "12px 24px",
+                cursor: "pointer",
+                fontFamily: "Outfit, sans-serif",
+              }}
+            >
+              Voltar ao baralho
+            </button>
+          </div>
         </div>
       </div>
     );

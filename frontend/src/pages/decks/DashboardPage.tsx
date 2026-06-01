@@ -126,6 +126,7 @@ export default function DashboardPage() {
   const [workload, setWorkload] = useState<WorkloadForecastDay[]>([]);
   const [workloadDays, setWorkloadDays] = useState(30);
   const [workloadLoading, setWorkloadLoading] = useState(false);
+  const [workloadError, setWorkloadError] = useState(false);
 
   const filledWorkload = fillWorkloadDays(workload, workloadDays);
   const allWorkloadZero = filledWorkload.every(
@@ -143,11 +144,12 @@ export default function DashboardPage() {
 
     async function loadWorkload() {
       setWorkloadLoading(true);
+      setWorkloadError(false);
       try {
         const data = await getWorkloadForecast(workloadDays);
         if (!cancelled) setWorkload(data);
       } catch {
-        // silencioso — não quebrar o dashboard
+        if (!cancelled) setWorkloadError(true);
       } finally {
         if (!cancelled) setWorkloadLoading(false);
       }
@@ -394,7 +396,30 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div
+            className="animate-fade-in"
+            style={{
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
+              borderRadius: "14px",
+              padding: "16px 20px",
+              marginBottom: "24px",
+              textAlign: "center",
+            }}
+          >
+            <p
+              style={{
+                color: "var(--text-muted)",
+                margin: 0,
+                fontSize: "13px",
+                fontWeight: 500,
+              }}
+            >
+              Complete sua primeira revisão para iniciar sua sequência!
+            </p>
+          </div>
+        )}
         <p
           style={{
             margin: "4px 0 0",
@@ -721,6 +746,19 @@ export default function DashboardPage() {
               animation: "shimmer 1.5s infinite",
             }}
           />
+        ) : workloadError ? (
+          <div style={{ textAlign: "center", padding: "24px 0" }}>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: "13px",
+                margin: 0,
+                fontWeight: 500,
+              }}
+            >
+              Não foi possível carregar a previsão.
+            </p>
+          </div>
         ) : workload.length === 0 || allWorkloadZero ? (
           <div style={{ textAlign: "center", padding: "24px 0" }}>
             <p
@@ -731,7 +769,7 @@ export default function DashboardPage() {
                 fontWeight: 500,
               }}
             >
-              Sem revisões previstas nos próximos {workloadDays} dias.
+              Nenhuma revisão prevista para este período.
             </p>
             <p
               style={{

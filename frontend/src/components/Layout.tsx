@@ -175,7 +175,8 @@ export default function Layout({
                 (e.currentTarget.style.color = "var(--text-muted)")
               }
             >
-              <BarChart2 size={14} /> <span className="stats-label">Stats</span>
+              <BarChart2 size={14} />{" "}
+              <span className="stats-label">Estatísticas</span>
             </button>
           )}
           {title && (

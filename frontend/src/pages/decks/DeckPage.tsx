@@ -61,6 +61,12 @@ export default function DeckPage() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [search, setSearch] = useState("");
+  const filteredCards = cards.filter(
+    (card) =>
+      search === "" ||
+      card.front.toLowerCase().includes(search.toLowerCase()) ||
+      card.back.toLowerCase().includes(search.toLowerCase()),
+  );
   const [showBulk, setShowBulk] = useState(false);
   const [bulkText, setBulkText] = useState("");
   const [bulkSaving, setBulkSaving] = useState(false);
@@ -1064,108 +1070,114 @@ export default function DeckPage() {
             Adicione seu primeiro card!
           </p>
         </div>
+      ) : search !== "" && filteredCards.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "60px 0" }}>
+          <p
+            style={{
+              color: "var(--text-sub)",
+              margin: 0,
+              fontWeight: 500,
+              fontSize: "14px",
+            }}
+          >
+            Nenhum card encontrado para sua busca.
+          </p>
+        </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          {cards
-            .filter(
-              (card) =>
-                search === "" ||
-                card.front.toLowerCase().includes(search.toLowerCase()) ||
-                card.back.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((card, i) => {
-              const s = STATE[card.state] ?? STATE[0];
-              return (
-                <div
-                  key={card.id}
-                  className="animate-slide-in"
+          {filteredCards.map((card, i) => {
+            const s = STATE[card.state] ?? STATE[0];
+            return (
+              <div
+                key={card.id}
+                className="animate-slide-in"
+                style={{
+                  animationDelay: `${i * 30}ms`,
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "12px",
+                  padding: "16px 20px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.borderColor = "var(--border-sub)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderColor = "var(--border)")
+                }
+              >
+                <span
                   style={{
-                    animationDelay: `${i * 30}ms`,
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "12px",
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "16px",
-                    transition: "border-color 0.2s",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    padding: "3px 8px",
+                    borderRadius: "6px",
+                    color: s.color,
+                    background: s.bg,
+                    whiteSpace: "nowrap",
+                    minWidth: "80px",
+                    textAlign: "center",
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.borderColor = "var(--border-sub)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.borderColor = "var(--border)")
-                  }
                 >
+                  {s.label}
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <CardContent
+                    html={card.front}
+                    style={{
+                      margin: 0,
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      color: "var(--text)",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  />
+                  <CardContent
+                    html={card.back}
+                    style={{
+                      margin: "2px 0 0",
+                      fontSize: "13px",
+                      color: "var(--text-muted)",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  />
+                </div>
+                {card.reps > 0 && (
                   <span
                     style={{
                       fontSize: "11px",
-                      fontWeight: 600,
-                      padding: "3px 8px",
-                      borderRadius: "6px",
-                      color: s.color,
-                      background: s.bg,
+                      color: "var(--text-muted)",
                       whiteSpace: "nowrap",
-                      minWidth: "80px",
-                      textAlign: "center",
                     }}
                   >
-                    {s.label}
+                    {card.reps} rev.
                   </span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <CardContent
-                      html={card.front}
-                      style={{
-                        margin: 0,
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        color: "var(--text)",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    />
-                    <CardContent
-                      html={card.back}
-                      style={{
-                        margin: "2px 0 0",
-                        fontSize: "13px",
-                        color: "var(--text-muted)",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    />
-                  </div>
-                  {card.reps > 0 && (
-                    <span
-                      style={{
-                        fontSize: "11px",
-                        color: "var(--text-muted)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {card.reps} rev.
-                    </span>
-                  )}
-                  <div style={{ display: "flex", gap: "4px" }}>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      icon={<Pencil size={13} />}
-                      onClick={() => handleEdit(card)}
-                    />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      icon={<Trash2 size={13} />}
-                      onClick={() => setConfirmDelete(card.id)}
-                      style={{ color: "var(--danger)" }}
-                    />
-                  </div>
+                )}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon={<Pencil size={13} />}
+                    onClick={() => handleEdit(card)}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon={<Trash2 size={13} />}
+                    onClick={() => setConfirmDelete(card.id)}
+                    style={{ color: "var(--danger)" }}
+                  />
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       )}
       <style>{`
