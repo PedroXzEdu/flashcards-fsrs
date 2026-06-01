@@ -93,13 +93,14 @@ function RatingButton({
           gap: "4px",
           opacity: submitting ? 0.6 : 1,
           transform: pressed
-            ? "scale(0.95)"
+            ? "scale(0.96)"
             : hovered
-              ? "translateY(-3px)"
+              ? "translateY(-2px)"
               : "none",
           boxShadow:
             hovered && !submitting ? `0 6px 16px rgba(0,0,0,0.2)` : "none",
-          transition: "all 0.15s cubic-bezier(0.4,0,0.2,1)",
+          transition:
+            "transform 120ms ease, background-color 150ms ease, box-shadow 150ms ease",
           fontFamily: "Outfit, sans-serif",
         }}
       >
