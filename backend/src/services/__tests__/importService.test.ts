@@ -13,7 +13,7 @@ vi.mock("../../repositories/deckRepository", () => ({
 
 vi.mock("../../repositories/cardRepository", () => ({
   cardRepository: {
-    createDirect: vi.fn(),
+    create: vi.fn(),
   },
 }));
 
@@ -31,7 +31,7 @@ describe("ImportService", () => {
   describe("createDeckFromAnki", () => {
     it("deve importar notas com sucesso", async () => {
       vi.mocked(deckRepository.create).mockResolvedValue(mockDeck);
-      vi.mocked(cardRepository.createDirect).mockResolvedValue({ id: 1 });
+      vi.mocked(cardRepository.create).mockResolvedValue({ id: 1 });
 
       const notes = [
         { front: "Pergunta 1", back: "Resposta 1" },
@@ -47,8 +47,8 @@ describe("ImportService", () => {
       expect(result.deck).toEqual(mockDeck);
       expect(result.imported).toBe(2);
       expect(result.skipped).toBe(0);
-      expect(cardRepository.createDirect).toHaveBeenCalledTimes(2);
-      expect(cardRepository.createDirect).toHaveBeenCalledWith(
+      expect(cardRepository.create).toHaveBeenCalledTimes(2);
+      expect(cardRepository.create).toHaveBeenCalledWith(
         expect.objectContaining({
           deck_id: 1,
           front: "Pergunta 1",
@@ -62,7 +62,7 @@ describe("ImportService", () => {
 
     it("deve pular notas com front ou back vazios", async () => {
       vi.mocked(deckRepository.create).mockResolvedValue(mockDeck);
-      vi.mocked(cardRepository.createDirect).mockResolvedValue({ id: 1 });
+      vi.mocked(cardRepository.create).mockResolvedValue({ id: 1 });
 
       const notes = [
         { front: "Válida", back: "Resposta" },
@@ -79,7 +79,7 @@ describe("ImportService", () => {
 
       expect(result.imported).toBe(1);
       expect(result.skipped).toBe(3);
-      expect(cardRepository.createDirect).toHaveBeenCalledTimes(1);
+      expect(cardRepository.create).toHaveBeenCalledTimes(1);
     });
 
     it("deve importar lista vazia de notas", async () => {
@@ -89,7 +89,7 @@ describe("ImportService", () => {
 
       expect(result.imported).toBe(0);
       expect(result.skipped).toBe(0);
-      expect(cardRepository.createDirect).not.toHaveBeenCalled();
+      expect(cardRepository.create).not.toHaveBeenCalled();
     });
 
     it("deve propagar erro se criação do deck falhar", async () => {
@@ -101,7 +101,7 @@ describe("ImportService", () => {
         ]),
       ).rejects.toThrow("DB error");
 
-      expect(cardRepository.createDirect).not.toHaveBeenCalled();
+      expect(cardRepository.create).not.toHaveBeenCalled();
     });
   });
 });

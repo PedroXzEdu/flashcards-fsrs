@@ -11,8 +11,14 @@ class PriorityQueueService {
 
     const rows = await cardRepository.findDailyQueue(userId, limit);
 
+    const summary = rows.slice(0, 3).map((r) => ({
+      card_id: r.id,
+      due: r.due,
+      stability: r.stability,
+      state: r.state,
+    }));
     logger.info(
-      { userId, rows: rows.length, firstFew: rows.slice(0, 3) },
+      { userId, rows: rows.length, firstFew: summary },
       "DailyQueue — resultados",
     );
 

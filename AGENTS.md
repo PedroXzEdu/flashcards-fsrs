@@ -70,11 +70,12 @@ Work in small iterations:
 
 1. analyze
 2. implement minimal change
-3. validate (build + tests)
-4. invoke @reviewer → fix findings if needed
-5. regression check
-6. commit
-7. move to next step
+3. `tsc --noEmit` (type check rápido)
+4. invoke @reviewer → valida (build + testes) e revisa
+5. fix findings if needed
+6. regression check
+7. commit
+8. move to next step
 
 > O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
 
@@ -86,8 +87,7 @@ Always prioritize stability over elegance.
 
 Every task MUST pass this checklist before the agent signals completion:
 
-- [ ] Build/tests pass
-- [ ] `@reviewer` executed
+- [ ] `@reviewer` executed (build + testes rodados dentro da review)
 - [ ] Reviewer findings addressed (or justified)
 - [ ] Regression checklist verified
 
@@ -305,26 +305,18 @@ Avoid mixing English and Portuguese in user-facing UI.
 
 ## Validation Requirements
 
-Before considering work complete:
+Validation (type check, build, tests) runs inside `@reviewer`. Before invoking the reviewer, run only:
 
 ### Backend
 
-Run:
-
 ```bash
 npx tsc --noEmit
-npm run build
-npx vitest run
 ```
 
 ### Frontend
 
-Run:
-
 ```bash
-npm run build
 npx tsc -b --noEmit
-npx vitest run
 ```
 
 ---
@@ -392,8 +384,8 @@ When proposing changes:
 2. implement smallest viable fix
 3. list files changed
 4. explain regression risks
-5. validate build/tests
-6. invoke @reviewer (mandatory — see Mandatory Review Policy)
+5. run `tsc --noEmit` (type check rápido)
+6. invoke @reviewer (roda build + testes e revisa)
 7. fix findings if needed (or justify if accepted)
 8. preserve existing behavior
 

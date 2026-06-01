@@ -117,7 +117,7 @@ describe("authMiddleware", () => {
     expect(res.status).not.toHaveBeenCalled();
   });
 
-  it("deve aceitar payload com campo id como fallback", () => {
+  it("deve rejeitar token que só contém campo id (sem userId)", () => {
     (jwt.verify as any).mockReturnValue({ id: 5 });
 
     const req = createReq("Bearer token-com-id") as any;
@@ -126,7 +126,10 @@ describe("authMiddleware", () => {
 
     authMiddleware(req, res, next);
 
-    expect(req.userId).toBe(5);
     expect(next).toHaveBeenCalledTimes(1);
+    const err = next.mock.calls[0][0];
+    expect(err).toBeInstanceOf(AppError);
+    expect(err.message).toBe("Token inválido.");
+    expect(err.statusCode).toBe(401);
   });
 });

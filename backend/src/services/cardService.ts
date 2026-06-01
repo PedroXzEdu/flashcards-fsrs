@@ -15,7 +15,7 @@ class CardService {
     }
 
     const emptyCard = createEmptyCard();
-    const card = await cardRepository.createDirect({
+    const card = await cardRepository.create({
       deck_id: parseInt(deckId),
       front: data.front,
       back: data.back,

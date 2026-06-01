@@ -1,8 +1,11 @@
 import rateLimit from "express-rate-limit";
 
+const shouldSkip = () => process.env.NODE_ENV === "test";
+
 export const authRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
+  skip: shouldSkip,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -14,6 +17,7 @@ export const authRateLimiter = rateLimit({
 export const createDeckRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
+  skip: shouldSkip,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -26,6 +30,7 @@ export const createDeckRateLimiter = rateLimit({
 export const createCardRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
+  skip: shouldSkip,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -37,6 +42,7 @@ export const createCardRateLimiter = rateLimit({
 export const importRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
+  skip: shouldSkip,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

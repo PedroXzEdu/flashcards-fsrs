@@ -125,7 +125,7 @@ describe("CardRepository", () => {
       const newCard = { ...mockCard, id: 2 };
       mockClient.query.mockResolvedValue({ rows: [newCard] });
 
-      const result = await cardRepository.create(mockClient, newCard);
+      const result = await cardRepository.create(newCard, mockClient);
 
       expect(result.id).toBe(2);
       expect(mockClient.query).toHaveBeenCalledWith(
@@ -138,7 +138,10 @@ describe("CardRepository", () => {
       const cardWithZeroStability = { ...mockCard, stability: 0 };
       mockClient.query.mockResolvedValue({ rows: [cardWithZeroStability] });
 
-      const result = await cardRepository.create(mockClient, cardWithZeroStability);
+      const result = await cardRepository.create(
+        cardWithZeroStability,
+        mockClient,
+      );
 
       expect(result.stability).toBe(0);
     });
@@ -155,7 +158,11 @@ describe("CardRepository", () => {
       const updatedCard = { ...mockCard, stability: 3.5, reps: 2 };
       mockClient.query.mockResolvedValue({ rows: [updatedCard] });
 
-      const result = await cardRepository.updateFsrsData(mockClient, "1", updatedCard);
+      const result = await cardRepository.updateFsrsData(
+        mockClient,
+        "1",
+        updatedCard,
+      );
 
       expect(result.stability).toBe(3.5);
       expect(result.reps).toBe(2);
@@ -164,7 +171,11 @@ describe("CardRepository", () => {
     it("deve retornar undefined quando card não encontrado", async () => {
       mockClient.query.mockResolvedValue({ rows: [] });
 
-      const result = await cardRepository.updateFsrsData(mockClient, "999", mockCard);
+      const result = await cardRepository.updateFsrsData(
+        mockClient,
+        "999",
+        mockCard,
+      );
 
       expect(result).toBeUndefined();
     });

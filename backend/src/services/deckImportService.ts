@@ -36,20 +36,23 @@ class DeckImportService {
       );
 
       for (const card of cards) {
-        await cardRepository.create(client, {
-          deck_id: newDeck.id,
-          front: card.front,
-          back: card.back,
+        await cardRepository.create(
+          {
+            deck_id: newDeck.id,
+            front: card.front,
+            back: card.back,
 
-          stability: emptyCard.stability,
-          difficulty: emptyCard.difficulty,
-          elapsed_days: emptyCard.elapsed_days,
-          scheduled_days: emptyCard.scheduled_days,
-          reps: emptyCard.reps,
-          lapses: emptyCard.lapses,
-          state: emptyCard.state,
-          due: emptyCard.due,
-        });
+            stability: emptyCard.stability,
+            difficulty: emptyCard.difficulty,
+            elapsed_days: emptyCard.elapsed_days,
+            scheduled_days: emptyCard.scheduled_days,
+            reps: emptyCard.reps,
+            lapses: emptyCard.lapses,
+            state: emptyCard.state,
+            due: emptyCard.due,
+          },
+          client,
+        );
       }
 
       await client.query("COMMIT");

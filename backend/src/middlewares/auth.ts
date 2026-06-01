@@ -22,11 +22,11 @@ export function authMiddleware(
 
   try {
     const payload = jwt.verify(token, env.jwtSecret) as {
-      id?: number;
       userId?: number;
     };
 
-    const userId = payload.userId ?? payload.id;
+    // userId is the only supported claim key
+    const userId = payload.userId;
 
     if (!userId) {
       return next(new AppError("Token inválido.", 401));

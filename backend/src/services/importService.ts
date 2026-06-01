@@ -30,7 +30,7 @@ class ImportService {
         continue;
       }
 
-      await cardRepository.createDirect({
+      await cardRepository.create({
         deck_id: deck.id,
         front: note.front,
         back: note.back,

@@ -31,7 +31,7 @@ class AnalyticsRepository {
   async getReviewHeatmap(userId: number) {
     const result = await pool.query(
       `SELECT
-        DATE(created_at) AS day,
+        DATE(review) AS day,
         COUNT(*)::int AS reviews
        FROM review_logs
        WHERE user_id = $1

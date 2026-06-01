@@ -229,7 +229,7 @@ POST /import (multipart: file)
     → better-sqlite3 (lê collection.anki2)
     → copia mídia para uploads/media/
     → importService.createDeckFromAnki()
-      → deckRepository.create() + cardRepository.createDirect()
+      → deckRepository.create() + cardRepository.create()
   → { success: true, data: { deck, imported, skipped, message } }
 ```
 

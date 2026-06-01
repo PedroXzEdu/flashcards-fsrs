@@ -7,7 +7,7 @@ import { deckRepository } from "../../repositories/deckRepository";
 
 vi.mock("../../repositories/cardRepository", () => ({
   cardRepository: {
-    createDirect: vi.fn(),
+    create: vi.fn(),
     findByDeckId: vi.fn(),
     update: vi.fn(),
     delete: vi.fn(),
@@ -44,7 +44,7 @@ describe("CardService", () => {
   describe("create", () => {
     it("deve criar um card", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
-      vi.mocked(cardRepository.createDirect).mockResolvedValue(mockCard);
+      vi.mocked(cardRepository.create).mockResolvedValue(mockCard);
 
       const result = await cardService.create("1", 1, {
         front: "Frente",
@@ -53,7 +53,7 @@ describe("CardService", () => {
 
       expect(result).toEqual(mockCard);
       expect(deckRepository.findById).toHaveBeenCalledWith("1", 1);
-      expect(cardRepository.createDirect).toHaveBeenCalledWith(
+      expect(cardRepository.create).toHaveBeenCalledWith(
         expect.objectContaining({
           deck_id: 1,
           front: "Frente",

@@ -1,10 +1,10 @@
-import { pool as client, runMigrations } from "../database/db";
+import { pool, runMigrations } from "../database/db";
 import { PoolClient } from "pg";
 import { logger } from "../config/logger";
 
 class CardRepository {
   async findByDeckId(deckId: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT *
        FROM cards
        WHERE deck_id = $1`,
@@ -15,7 +15,7 @@ class CardRepository {
   }
 
   async findDailyQueue(userId: number, limit = 50) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
@@ -29,7 +29,7 @@ class CardRepository {
   }
 
   async findDueByDeck(deckId: string, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT c.*
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
@@ -46,48 +46,9 @@ class CardRepository {
     return result.rows;
   }
 
-  async createDirect(data: any) {
-    const result = await client.query(
-      `INSERT INTO cards
-        (
-          deck_id,
-          front,
-          back,
-          stability,
-          difficulty,
-          elapsed_days,
-          scheduled_days,
-          reps,
-          lapses,
-          state,
-          due
-        )
-       VALUES
-        (
-          $1,$2,$3,$4,$5,
-          $6,$7,$8,$9,$10,$11
-        )
-       RETURNING *`,
-      [
-        data.deck_id,
-        data.front,
-        data.back,
-        data.stability,
-        data.difficulty,
-        data.elapsed_days,
-        data.scheduled_days,
-        data.reps,
-        data.lapses,
-        data.state,
-        data.due,
-      ],
-    );
-
-    return result.rows[0];
-  }
-
-  async create(client: PoolClient, data: any) {
-    const result = await client.query(
+  async create(data: any, client?: PoolClient) {
+    const db = client ?? pool;
+    const result = await db.query(
       `INSERT INTO cards
         (
           deck_id,
@@ -159,7 +120,7 @@ class CardRepository {
   }
 
   async findById(id: string, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT c.*
      FROM cards c
      JOIN decks d ON d.id = c.deck_id
@@ -173,7 +134,7 @@ class CardRepository {
   }
 
   async update(deckId: string, cardId: string, front: string, back: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `UPDATE cards SET front = $1, back = $2
        WHERE id = $3 AND deck_id = $4
        RETURNING *`,
@@ -184,7 +145,7 @@ class CardRepository {
   }
 
   async delete(deckId: string, cardId: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `DELETE FROM cards WHERE id = $1 AND deck_id = $2 RETURNING id`,
       [cardId, deckId],
     );

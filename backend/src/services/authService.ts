@@ -8,6 +8,7 @@ import { userRepository } from "../repositories/userRepository";
 
 class AuthService {
   private generateToken(userId: number) {
+    // signs with { userId } — the only supported claim key
     return jwt.sign({ userId }, env.jwtSecret, {
       expiresIn: "7d",
     });
