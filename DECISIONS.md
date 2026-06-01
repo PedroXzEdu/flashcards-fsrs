@@ -129,7 +129,7 @@ Ambiente de desenvolvimento e execução.
 
 ### Escolha
 
-Docker Compose com 4 serviços: frontend, backend, db, tools.
+Docker Compose com 5 serviços: frontend, backend, db, db-test, tools.
 
 ### Justificativa
 
@@ -420,19 +420,19 @@ Estratégia de testes.
 
 ### Escolha
 
-Testes unitários nos services e middlewares do backend. Testes de frontend com `vitest` + `@testing-library/react` + `jsdom` para componentes, contextos e hooks. Zero testes de integração e E2E.
+Testes unitários nos services e middlewares do backend. Testes de integração (controller → service → repo real com PostgreSQL) rodando via Vitest workspace (`vitest --project integration`). Testes de frontend com `vitest` + `@testing-library/react` + `jsdom` para componentes, contextos e hooks. Zero testes E2E.
 
 ### Justificativa
 
 - Lógica de negócio crítica está no backend (FSRS, transações, queries)
-- Vitest já usado no backend — consistência de tooling
+- Testes de integração validam o pipeline completo contra banco real, detectando regressões que unit tests não pegam
+- Vitest workspace permite projects separados (unit + integration) com configs distintas
 - testing-library incentiva testar comportamento (não implementação)
 - jsdom permite testar renderização React sem browser real
-- Cobertura focada em: componentes puros, contextos, sanitização de HTML, e edge cases de UI
 
 ### Trade-offs
 
-- Sem testes de integração (controller → service → repo real)
+- Testes de integração exigem `db-test` Docker rodando (porta 5433)
 - Sem testes de snapshot ou regressão visual
 - jsdom não cobre rendering real (layout, scroll, eventos complexos)
 - Service tests usam banco real (não mockam repositórios) — mais integração que unitário
