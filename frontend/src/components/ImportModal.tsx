@@ -9,6 +9,7 @@ import {
   Loader,
 } from "lucide-react";
 import { importApi } from "../api/decks";
+import { useToast } from "../contexts/ToastContext";
 
 interface Props {
   onClose: () => void;
@@ -38,6 +39,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
   const [error, setError] = useState("");
   const [dragOver, setDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const toast = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleFile(file: File) {
@@ -69,11 +71,13 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
       setStatus("success");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erro ao importar.");
+      toast.error(err instanceof Error ? err.message : "Erro ao importar.");
       setStatus("error");
     }
   }
 
   function handleFinish() {
+    toast.success("Importação concluída");
     onSuccess();
     onClose();
   }

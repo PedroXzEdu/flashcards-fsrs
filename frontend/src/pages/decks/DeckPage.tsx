@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import { cardsApi } from "../../api/cards";
 import type { Deck, Card } from "../../types";
+import { useToast } from "../../contexts/ToastContext";
 import Layout from "../../components/Layout";
 import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonCardItem } from "../../components/SkeletonCard";
@@ -71,6 +72,7 @@ export default function DeckPage() {
   const [bulkText, setBulkText] = useState("");
   const [bulkSaving, setBulkSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const toast = useToast();
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
 
@@ -121,6 +123,7 @@ export default function DeckPage() {
       setEditingTitle(false);
     } catch {
       setError("Erro ao renomear baralho.");
+      toast.error("Erro ao renomear baralho.");
     }
   }
 
@@ -130,6 +133,7 @@ export default function DeckPage() {
       setShowSettings(false);
     } catch {
       setError("Erro ao salvar configurações.");
+      toast.error("Erro ao salvar configurações.");
     }
   }
 
@@ -153,8 +157,10 @@ export default function DeckPage() {
       setFront("");
       setBack("");
       setShowForm(false);
+      toast.success("Card salvo");
     } catch {
       setError("Erro ao salvar card.");
+      toast.error("Erro ao salvar card.");
     } finally {
       setSaving(false);
     }
@@ -182,10 +188,12 @@ export default function DeckPage() {
         pairs.map((p) => cardsApi.create(deckId, p.front, p.back)),
       );
       setCards((prev) => [...created, ...prev]);
+      toast.success("Cards criados");
       setBulkText("");
       setShowBulk(false);
     } catch {
       setError("Erro ao criar cards em lote.");
+      toast.error("Erro ao criar cards em lote.");
     } finally {
       setBulkSaving(false);
     }
@@ -195,9 +203,11 @@ export default function DeckPage() {
     try {
       await cardsApi.delete(deckId, cardId);
       setCards((p) => p.filter((c) => c.id !== cardId));
+      toast.success("Card excluído");
       setConfirmDelete(null);
     } catch {
       setError("Erro ao excluir.");
+      toast.error("Erro ao excluir.");
     }
   }
 

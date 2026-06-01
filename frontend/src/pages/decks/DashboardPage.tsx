@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import { cardsApi } from "../../api/cards";
 import type { Deck } from "../../types";
+import { useToast } from "../../contexts/ToastContext";
 import Layout from "../../components/Layout";
 import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonDeckCard } from "../../components/SkeletonCard";
@@ -127,6 +128,7 @@ export default function DashboardPage() {
   const [workloadDays, setWorkloadDays] = useState(30);
   const [workloadLoading, setWorkloadLoading] = useState(false);
   const [workloadError, setWorkloadError] = useState(false);
+  const toast = useToast();
 
   const filledWorkload = fillWorkloadDays(workload, workloadDays);
   const allWorkloadZero = filledWorkload.every(
@@ -194,11 +196,13 @@ export default function DashboardPage() {
     try {
       const deck = await decksApi.create(title, description, false);
       setDecks((p) => [deck, ...p]);
+      toast.success("Baralho criado");
       setTitle("");
       setDescription("");
       setShowForm(false);
     } catch {
       setError("Erro ao criar baralho.");
+      toast.error("Erro ao criar baralho.");
     } finally {
       setSaving(false);
     }
@@ -208,9 +212,11 @@ export default function DashboardPage() {
     try {
       await decksApi.delete(deck.id);
       setDecks((p) => p.filter((d) => d.id !== deck.id));
+      toast.success("Baralho excluído");
       setConfirmDelete(null);
     } catch {
       setError("Erro ao excluir.");
+      toast.error("Erro ao excluir.");
     }
   }
 

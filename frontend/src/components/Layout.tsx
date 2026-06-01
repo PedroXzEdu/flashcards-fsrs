@@ -30,6 +30,7 @@ function HeaderButton({
       type="button"
       onClick={onClick}
       title={title}
+      aria-label={title}
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => {
         setH(false);

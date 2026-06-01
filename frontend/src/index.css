@@ -297,3 +297,34 @@ body,
     transform: rotate(360deg);
   }
 }
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+.toast {
+  min-width: 200px;
+  max-width: 300px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid;
+  animation: fadeIn 0.3s ease both;
+}
+.toast-success {
+  border-left-color: var(--success);
+}
+.toast-error {
+  border-left-color: var(--danger);
+}
+.toast-info {
+  border-left-color: var(--info);
+}
