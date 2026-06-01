@@ -49,19 +49,19 @@ const sizes = {
   sm: {
     padding: "5px 10px",
     fontSize: "12px",
-    borderRadius: "7px",
+    borderRadius: "var(--radius-sm)",
     gap: "4px",
   },
   md: {
     padding: "8px 16px",
     fontSize: "13px",
-    borderRadius: "8px",
+    borderRadius: "var(--radius-md)",
     gap: "6px",
   },
   lg: {
     padding: "11px 22px",
     fontSize: "14px",
-    borderRadius: "10px",
+    borderRadius: "var(--radius-lg)",
     gap: "8px",
   },
 };
