@@ -80,7 +80,7 @@ export default function RegisterPage() {
         style={{
           background: "var(--bg-card)",
           border: "1px solid var(--border)",
-          borderRadius: "20px",
+          borderRadius: "var(--radius-lg)",
           padding: "40px",
           width: "100%",
           maxWidth: "420px",
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                 border: "1px solid var(--danger)",
                 color: "var(--danger)",
                 fontSize: "13px",
-                borderRadius: "10px",
+                borderRadius: "var(--radius-md)",
                 padding: "10px 14px",
               }}
             >
@@ -191,7 +191,7 @@ export default function RegisterPage() {
             style={{
               background: "var(--accent)",
               border: "none",
-              borderRadius: "10px",
+              borderRadius: "var(--radius-md)",
               color: "var(--bg)",
               fontWeight: 600,
               fontSize: "14px",

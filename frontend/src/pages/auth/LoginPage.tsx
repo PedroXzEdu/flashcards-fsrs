@@ -85,7 +85,7 @@ export default function LoginPage() {
         style={{
           background: "var(--bg-card)",
           border: "1px solid var(--border)",
-          borderRadius: "20px",
+          borderRadius: "var(--radius-lg)",
           padding: "40px",
           width: "100%",
           maxWidth: "420px",
@@ -184,7 +184,7 @@ export default function LoginPage() {
                 border: "1px solid var(--danger)",
                 color: "var(--danger)",
                 fontSize: "13px",
-                borderRadius: "10px",
+                borderRadius: "var(--radius-md)",
                 padding: "10px 14px",
               }}
             >
