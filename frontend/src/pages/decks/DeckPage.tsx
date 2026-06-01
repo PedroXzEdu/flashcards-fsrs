@@ -5,6 +5,7 @@ import { cardsApi } from "../../api/cards";
 import type { Deck, Card } from "../../types";
 import { useToast } from "../../contexts/ToastContext";
 import Layout from "../../components/Layout";
+import EmptyState from "../../components/EmptyState";
 import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonCardItem } from "../../components/SkeletonCard";
 import CardContent from "../../components/CardContent";
@@ -1051,35 +1052,11 @@ export default function DeckPage() {
       )}
 
       {cards.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "80px 0" }}>
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              borderRadius: "20px",
-              background: "var(--bg-card)",
-              border: "1px solid var(--border)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 16px",
-            }}
-          >
-            <FileText size={28} color="var(--text-muted)" />
-          </div>
-          <p style={{ color: "var(--text-sub)", margin: 0, fontWeight: 500 }}>
-            Nenhum card ainda.
-          </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "13px",
-              marginTop: "4px",
-            }}
-          >
-            Adicione seu primeiro card!
-          </p>
-        </div>
+        <EmptyState
+          icon={<FileText size={28} color="var(--text-muted)" />}
+          title="Nenhum card ainda."
+          description="Adicione seu primeiro card!"
+        />
       ) : search !== "" && filteredCards.length === 0 ? (
         <div style={{ textAlign: "center", padding: "60px 0" }}>
           <p

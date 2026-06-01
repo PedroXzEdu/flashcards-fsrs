@@ -247,6 +247,15 @@ export default function ReviewPage() {
       </div>
     );
 
+  if (!loading && cards.length === 0)
+    return (
+      <EmptyState
+        icon={<Check size={28} color="var(--success)" />}
+        title="Nenhum card disponível para revisão hoje"
+        description="Você está em dia 🎉"
+      />
+    );
+
   if (done)
     return (
       <div
