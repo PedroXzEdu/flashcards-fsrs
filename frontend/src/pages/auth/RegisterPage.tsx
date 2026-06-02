@@ -4,6 +4,7 @@ import { authApi } from "../../api/auth";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { Sun, Moon, Layers } from "lucide-react";
+import Button from "../../components/Button";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -186,26 +187,9 @@ export default function RegisterPage() {
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              background: "var(--accent)",
-              border: "none",
-              borderRadius: "var(--radius-md)",
-              color: "var(--bg)",
-              fontWeight: 600,
-              fontSize: "14px",
-              padding: "12px",
-              cursor: loading ? "not-allowed" : "pointer",
-              opacity: loading ? 0.7 : 1,
-              transition: "opacity 0.2s",
-              fontFamily: "Outfit, sans-serif",
-              marginTop: "4px",
-            }}
-          >
+          <Button type="submit" loading={loading} size="lg">
             {loading ? "Cadastrando..." : "Criar conta"}
-          </button>
+          </Button>
         </form>
 
         <p

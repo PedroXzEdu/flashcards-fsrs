@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { ArrowLeft, BarChart2, Sun, Moon, LogOut, Layers } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -72,6 +72,10 @@ export default function Layout({
   const navigate = useNavigate();
   const [backHover, setBackHover] = useState(false);
   const [backPressed, setBackPressed] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>

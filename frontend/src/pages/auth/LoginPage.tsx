@@ -4,6 +4,7 @@ import { authApi } from "../../api/auth";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import { Sun, Moon, Layers } from "lucide-react";
+import Button from "../../components/Button";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -193,32 +194,9 @@ export default function LoginPage() {
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              background: "var(--accent)",
-              border: "none",
-              borderRadius: "10px",
-              color: "var(--bg)",
-              fontWeight: 600,
-              fontSize: "14px",
-              padding: "12px",
-              cursor: loading ? "not-allowed" : "pointer",
-              opacity: loading ? 0.7 : 1,
-              transition: "opacity 0.2s, transform 0.1s",
-              fontFamily: "Outfit, sans-serif",
-              marginTop: "4px",
-            }}
-            onMouseEnter={(e) =>
-              !loading && (e.currentTarget.style.opacity = "0.9")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.opacity = loading ? "0.7" : "1")
-            }
-          >
+          <Button type="submit" loading={loading} size="lg">
             {loading ? "Entrando..." : "Entrar"}
-          </button>
+          </Button>
         </form>
 
         <p

@@ -909,23 +909,13 @@ export default function DeckPage() {
             </div>
           </div>
           <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-            <button
+            <Button
               type="submit"
-              disabled={saving}
-              style={{
-                background: "var(--accent)",
-                border: "none",
-                borderRadius: "8px",
-                color: "var(--bg)",
-                fontWeight: 600,
-                fontSize: "13px",
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
+              size="sm"
+              loading={saving}
             >
               {saving ? "Salvando..." : editingCard ? "Salvar" : "Criar"}
-            </button>
+            </Button>
             <button
               type="button"
               onClick={cancelForm}
@@ -1060,24 +1050,13 @@ export default function DeckPage() {
               >
                 Cancelar
               </button>
-              <button
+              <Button
                 type="submit"
-                disabled={bulkSaving}
-                style={{
-                  background: "var(--accent)",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "var(--bg)",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  padding: "8px 16px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                  opacity: bulkSaving ? 0.7 : 1,
-                }}
+                size="sm"
+                loading={bulkSaving}
               >
                 {bulkSaving ? "Criando..." : "Criar cards"}
-              </button>
+              </Button>
             </div>
           </div>
         </form>
