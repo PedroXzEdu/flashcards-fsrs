@@ -141,7 +141,7 @@ export default function RegisterPage() {
               setter: setPassword,
               placeholder: "••••••••",
             },
-          ].map((field) => (
+          ].map((field, i) => (
             <div key={field.label}>
               <label
                 style={{
@@ -162,6 +162,7 @@ export default function RegisterPage() {
                 onChange={(e) => field.setter(e.target.value)}
                 placeholder={field.placeholder}
                 required
+                autoFocus={i === 0}
                 style={inputStyle}
                 onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
                 onBlur={(e) => (e.target.style.borderColor = "var(--border)")}

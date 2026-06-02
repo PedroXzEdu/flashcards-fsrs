@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { importApi } from "../api/decks";
 import { useToast } from "../contexts/ToastContext";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface Props {
   onClose: () => void;
@@ -26,6 +27,8 @@ interface ImportResult {
 }
 
 export default function ImportModal({ onClose, onSuccess }: Props) {
+  const trapRef = useFocusTrap(true);
+
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -98,6 +101,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
       }}
     >
       <div
+        ref={trapRef}
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{

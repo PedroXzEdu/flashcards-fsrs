@@ -25,9 +25,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const id = Date.now() + Math.random();
     const newToast: Toast = { id, type, message };
     setToasts((prev) => [...prev, newToast]);
+    const duration = type === "error" ? 5000 : 2000;
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 2000);
+    }, duration);
   }, []);
 
   const toast = {

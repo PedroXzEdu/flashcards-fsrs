@@ -77,6 +77,17 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] Testes de middlewares restantes (rateLimiter, requestId, validate)
 - [x] Teste do importController
 
+### Sessão de UI/UX
+
+- [x] Toast notifications (`ToastContext.tsx`) com feedback visual de operações
+- [x] Global focus system (outline visível em elementos focados)
+- [x] Empty states (`EmptyState.tsx`) para listas vazias
+- [x] Loading feedback em Dashboard, Deck, Review e StatsGlobal
+- [x] Design tokens iniciais (CSS custom properties para `border-radius`)
+- [x] Normalização de `border-radius` em formulários de login/register
+- [x] Melhorias nos botões de rating da revisão (feedback visual)
+- [x] Remoção de `heatmap.css` legado (não utilizado)
+
 ---
 
 ## Melhorias Futuras (pós-TCC, se quiser)

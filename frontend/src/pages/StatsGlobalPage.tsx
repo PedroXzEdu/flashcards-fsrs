@@ -4,6 +4,8 @@ import type { GlobalStats } from "../types";
 import Layout from "../components/Layout";
 import ActivityHeatmap from "../components/ActivityHeatmap";
 import { SkeletonDeckCard } from "../components/SkeletonCard";
+import { AlertTriangle } from "lucide-react";
+import Button from "../components/Button";
 import {
   AreaChart,
   Area,
@@ -29,13 +31,21 @@ const RATING_COLORS = [
 export default function StatsGlobalPage() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
+  function fetchStats() {
+    setLoading(true);
+    setError("");
     statsApi
       .globalStats()
       .then(setStats)
+      .catch((err) => {
+        setError(err instanceof Error ? err.message : "Erro ao carregar estatísticas");
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }
+
+  useEffect(() => { fetchStats(); }, []);
 
   const cardStyle = {
     background: "var(--bg-card)",
@@ -58,6 +68,46 @@ export default function StatsGlobalPage() {
           {[1, 2, 3, 4].map((i) => (
             <SkeletonDeckCard key={i} />
           ))}
+        </div>
+      </Layout>
+    );
+
+  if (error)
+    return (
+      <Layout backTo="/" title="Estatísticas Globais">
+        <div
+          style={{
+            textAlign: "center",
+            padding: "80px 0",
+            color: "var(--text-muted)",
+          }}
+        >
+          <div
+            style={{
+              width: "64px",
+              height: "64px",
+              borderRadius: "var(--radius-lg)",
+              background: "rgba(243,139,168,0.1)",
+              border: "1px solid rgba(243,139,168,0.3)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 16px",
+            }}
+          >
+            <AlertTriangle size={24} color="var(--danger)" />
+          </div>
+          <p style={{ color: "var(--text-sub)", fontWeight: 500, margin: "0 0 4px" }}>
+            {error}
+          </p>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={fetchStats}
+            style={{ marginTop: "16px" }}
+          >
+            Tentar novamente
+          </Button>
         </div>
       </Layout>
     );

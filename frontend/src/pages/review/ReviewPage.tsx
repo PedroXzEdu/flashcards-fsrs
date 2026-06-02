@@ -3,9 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { cardsApi } from "../../api/cards";
 import type { Card, PreviewRatings } from "../../types";
 import { useTheme } from "../../contexts/ThemeContext";
-import { X, Sun, Moon, Check, RotateCcw, Shuffle } from "lucide-react";
+import { X, Sun, Moon, Check, RotateCcw, Shuffle, LogOut } from "lucide-react";
 import Tooltip from "../../components/Tooltip";
 import CardContent from "../../components/CardContent";
+import ConfirmModal from "../../components/ConfirmModal";
+import EmptyState from "../../components/EmptyState";
 
 const RATINGS = [
   {
@@ -140,6 +142,7 @@ export default function ReviewPage() {
   const [reviewed, setReviewed] = useState(0);
   const [history, setHistory] = useState<("correct" | "wrong")[]>([]);
   const [shuffled, setShuffled] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   useEffect(() => {
     loadCards();
@@ -425,7 +428,7 @@ export default function ReviewPage() {
       >
         <button
           type="button"
-          onClick={() => navigate(`/decks/${deckId}`)}
+          onClick={() => setShowExitConfirm(true)}
           style={{
             background: "none",
             border: "none",
@@ -765,6 +768,20 @@ export default function ReviewPage() {
           )}
         </div>
       </main>
+      {showExitConfirm && (
+        <ConfirmModal
+          title="Encerrar revisão?"
+          message="Você ainda não terminou todos os cards. O progresso desta sessão será perdido."
+          confirmText="Sair da revisão"
+          confirmVariant="secondary"
+          icon={<LogOut size={18} />}
+          iconBg="rgba(203,166,247,0.12)"
+          iconColor="var(--accent)"
+          buttonIcon={<LogOut size={13} />}
+          onConfirm={() => navigate(`/decks/${deckId}`)}
+          onCancel={() => setShowExitConfirm(false)}
+        />
+      )}
       <style>{`
         @media (max-width: 480px) {
           .rating-grid {

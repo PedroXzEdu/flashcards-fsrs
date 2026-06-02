@@ -74,6 +74,8 @@ export default function DeckPage() {
   const [bulkSaving, setBulkSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const toast = useToast();
+  const [renaming, setRenaming] = useState(false);
+  const [settingsSaving, setSettingsSaving] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
 
@@ -86,6 +88,19 @@ export default function DeckPage() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key !== "Escape") return;
+      if (showForm) setShowForm(false);
+      if (showBulk) setShowBulk(false);
+      if (showSettings) setShowSettings(false);
+      if (editingTitle) setEditingTitle(false);
+      if (showMoreMenu) setShowMoreMenu(false);
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [showForm, showBulk, showSettings, editingTitle, showMoreMenu]);
 
   const loadData = useCallback(async () => {
     try {
@@ -113,6 +128,7 @@ export default function DeckPage() {
   async function handleRename(e: React.FormEvent) {
     e.preventDefault();
     if (!newTitle.trim()) return;
+    setRenaming(true);
     try {
       const updated = await decksApi.update(
         deckId,
@@ -125,16 +141,21 @@ export default function DeckPage() {
     } catch {
       setError("Erro ao renomear baralho.");
       toast.error("Erro ao renomear baralho.");
+    } finally {
+      setRenaming(false);
     }
   }
 
   async function handleSaveSettings() {
+    setSettingsSaving(true);
     try {
       await decksApi.updateSettings(deckId, newCardsPerDay);
       setShowSettings(false);
     } catch {
       setError("Erro ao salvar configurações.");
       toast.error("Erro ao salvar configurações.");
+    } finally {
+      setSettingsSaving(false);
     }
   }
 
@@ -499,9 +520,31 @@ export default function DeckPage() {
             borderRadius: "10px",
             padding: "10px 14px",
             marginBottom: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
           }}
         >
-          {error}
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={loadData}
+            style={{
+              background: "none",
+              border: "1px solid var(--danger)",
+              borderRadius: "6px",
+              color: "var(--danger)",
+              padding: "4px 10px",
+              fontSize: "12px",
+              cursor: "pointer",
+              fontFamily: "Outfit, sans-serif",
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Tentar novamente
+          </button>
         </div>
       )}
 
@@ -586,24 +629,13 @@ export default function DeckPage() {
                 </span>
               </div>
             </div>
-            <button
-              type="button"
+            <Button
+              size="sm"
+              loading={settingsSaving}
               onClick={handleSaveSettings}
-              style={{
-                background: "var(--accent)",
-                border: "none",
-                borderRadius: "8px",
-                color: "var(--bg)",
-                fontWeight: 600,
-                fontSize: "13px",
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-                whiteSpace: "nowrap",
-              }}
             >
               Salvar
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -643,6 +675,7 @@ export default function DeckPage() {
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Título do baralho"
               required
+              autoFocus
               style={{
                 background: "var(--bg)",
                 border: "1px solid var(--border)",
@@ -679,38 +712,21 @@ export default function DeckPage() {
             />
           </div>
           <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-            <button
+            <Button
               type="submit"
-              style={{
-                background: "var(--accent)",
-                border: "none",
-                borderRadius: "8px",
-                color: "var(--bg)",
-                fontWeight: 600,
-                fontSize: "13px",
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
+              size="sm"
+              loading={renaming}
             >
               Salvar
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
               type="button"
               onClick={() => setEditingTitle(false)}
-              style={{
-                background: "none",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                color: "var(--text-muted)",
-                fontSize: "13px",
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
             >
               Cancelar
-            </button>
+            </Button>
           </div>
         </form>
       )}
@@ -1160,6 +1176,7 @@ export default function DeckPage() {
                     icon={<Trash2 size={13} />}
                     onClick={() => setConfirmDelete(card.id)}
                     style={{ color: "var(--danger)" }}
+                    aria-label="Excluir card"
                   />
                 </div>
               </div>

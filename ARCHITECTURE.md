@@ -152,10 +152,13 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── DailyQueue.tsx
 │   │   │   ├── ErrorBoundary.tsx
 │   │   │   ├── SkeletonCard.tsx
-│   │   │   └── Tooltip.tsx
+│   │   │   ├── Tooltip.tsx
+│   │   │   ├── EmptyState.tsx     → Feedback para listas vazias
+│   │   │   └── __tests__/        → Testes de componentes (Button, CardContent, etc.)
 │   │   ├── contexts/
 │   │   │   ├── AuthContext.tsx     → token + user state
-│   │   │   └── ThemeContext.tsx    → dark/light
+│   │   │   ├── ThemeContext.tsx    → dark/light
+│   │   │   └── ToastContext.tsx    → Notificações toast
 │   │   ├── services/
 │   │   │   └── analyticsApi.ts
 │   │   ├── types/
@@ -163,8 +166,7 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 │   │   ├── test/
 │   │   │   └── setup.ts          → Vitest global setup (localStorage + matchMedia mocks)
 │   │   └── styles/
-│   │       ├── index.css          → Tailwind + Catppuccin + animations
-│   │       └── heatmap.css        → Legacy (não usado)
+│   │       └── index.css          → Tailwind + Catppuccin + animations + design tokens
 │   └── public/
 ```
 
@@ -207,7 +209,7 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 **Pages** → componentes de rota (lazy loaded)
 **Components** → reutilizáveis (Button, Modal, Layout)
 **API layer** → fetch wrapper (`client.ts`) + módulos por recurso
-**Contexts** → AuthContext (token/user), ThemeContext (dark/light)
+**Contexts** → AuthContext (token/user), ThemeContext (dark/light), ToastContext (notificações)
 **Rich text** → Tiptap + KaTeX render no `CardContent`
 **State** → local (useState/useEffect), sem Redux/Zustand
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`

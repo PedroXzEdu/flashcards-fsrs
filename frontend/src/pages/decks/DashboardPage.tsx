@@ -142,6 +142,20 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+      if (e.key === "n" && !showForm && !showImport) setShowForm(true);
+      if (e.key === "i" && !showImport && !showForm) setShowImport(true);
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [showForm, showImport]);
+
+  useEffect(() => {
     let cancelled = false;
 
     async function loadWorkload() {
@@ -283,9 +297,31 @@ export default function DashboardPage() {
             borderRadius: "10px",
             padding: "10px 14px",
             marginBottom: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
           }}
         >
-          {error}
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={loadDecks}
+            style={{
+              background: "none",
+              border: "1px solid var(--danger)",
+              borderRadius: "6px",
+              color: "var(--danger)",
+              padding: "4px 10px",
+              fontSize: "12px",
+              cursor: "pointer",
+              fontFamily: "Outfit, sans-serif",
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Tentar novamente
+          </button>
         </div>
       )}
 
@@ -469,6 +505,7 @@ export default function DashboardPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Título do baralho"
               required
+              autoFocus
               style={inputStyle}
               onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
               onBlur={(e) => (e.target.style.borderColor = "var(--border)")}

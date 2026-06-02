@@ -4,6 +4,7 @@ import { decksApi } from "../api/decks";
 import type { Deck } from "../types";
 import Button from "./Button";
 import ConfirmModal from "./ConfirmModal";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface Props {
   deck: Deck;
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export default function ShareModal({ deck, onClose, onUpdate }: Props) {
+  const trapRef = useFocusTrap(true);
+
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -92,6 +95,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
       }}
     >
       <div
+        ref={trapRef}
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{

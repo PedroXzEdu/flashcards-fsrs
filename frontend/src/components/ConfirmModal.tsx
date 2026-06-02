@@ -1,12 +1,19 @@
 import { useEffect } from "react";
 import Button from "./Button";
 import { Trash2, X } from "lucide-react";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface Props {
   title: string;
   message: string;
   onConfirm: () => void;
   onCancel: () => void;
+  confirmText?: string;
+  confirmVariant?: "primary" | "secondary" | "danger" | "ghost";
+  icon?: React.ReactNode;
+  iconBg?: string;
+  iconColor?: string;
+  buttonIcon?: React.ReactNode;
 }
 
 export default function ConfirmModal({
@@ -14,7 +21,15 @@ export default function ConfirmModal({
   message,
   onConfirm,
   onCancel,
+  confirmText = "Excluir",
+  confirmVariant = "danger",
+  icon = <Trash2 size={18} />,
+  iconBg = "rgba(243,139,168,0.12)",
+  iconColor = "var(--danger)",
+  buttonIcon,
 }: Props) {
+  const trapRef = useFocusTrap(true);
+
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onCancel();
@@ -39,6 +54,7 @@ export default function ConfirmModal({
       }}
     >
       <div
+        ref={trapRef}
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{
@@ -64,13 +80,13 @@ export default function ConfirmModal({
               width: "40px",
               height: "40px",
               borderRadius: "10px",
-              background: "rgba(243,139,168,0.12)",
+              background: iconBg,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Trash2 size={18} color="var(--danger)" />
+            {icon && <span style={{ color: iconColor }}>{icon}</span>}
           </div>
           <button
             type="button"
@@ -114,12 +130,12 @@ export default function ConfirmModal({
             Cancelar
           </Button>
           <Button
-            variant="danger"
+            variant={confirmVariant}
             size="sm"
-            icon={<Trash2 size={13} />}
+            icon={buttonIcon}
             onClick={onConfirm}
           >
-            Excluir
+            {confirmText}
           </Button>
         </div>
       </div>
