@@ -74,10 +74,12 @@ Work in small iterations:
 4. invoke @reviewer → valida (build + testes) e revisa
 5. fix findings if needed
 6. regression check
-7. commit
-8. move to next step
+7. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS precisam de update
+8. commit
+9. move to next step
 
 > O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
+> O passo 7 (`invoke @doc`) é **OBRIGATÓRIO** quando há mudanças estruturais (novas pastas, camadas, fluxos, dependências, contratos de API). Opcional para mudanças triviais.
 
 Never batch unrelated changes together.
 
@@ -90,6 +92,7 @@ Every task MUST pass this checklist before the agent signals completion:
 - [ ] `@reviewer` executed (build + testes rodados dentro da review)
 - [ ] Reviewer findings addressed (or justified)
 - [ ] Regression checklist verified
+- [ ] `@doc` invoked (ou justificado por que não necessário)
 
 ---
 
@@ -319,6 +322,12 @@ npx tsc --noEmit
 npx tsc -b --noEmit
 ```
 
+### E2E
+
+```bash
+npm run test:e2e
+```
+
 ---
 
 ## Manual Validation
@@ -387,7 +396,8 @@ When proposing changes:
 5. run `tsc --noEmit` (type check rápido)
 6. invoke @reviewer (roda build + testes e revisa)
 7. fix findings if needed (or justify if accepted)
-8. preserve existing behavior
+8. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS precisam de update
+9. preserve existing behavior
 
 If uncertain:
 

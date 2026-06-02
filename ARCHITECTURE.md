@@ -47,6 +47,18 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 ├── ROADMAP.md
 ├── DECISIONS.md
 ├── docker-compose.yml
+├── e2e/
+│   ├── playwright.config.ts
+│   ├── helpers.ts
+│   ├── auth.spec.ts
+│   ├── review.spec.ts
+│   ├── import.spec.ts
+│   └── helpers/
+│       └── generate-apkg.mjs
+├── .opencode/
+│   └── agents/
+│       ├── reviewer.md
+│       └── doc.md
 │
 ├── backend/
 │   ├── vitest.workspace.ts       → Projetos unit + integration
@@ -213,6 +225,7 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 **Rich text** → Tiptap + KaTeX render no `CardContent`
 **State** → local (useState/useEffect), sem Redux/Zustand
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
+**E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 3 suites (auth, review, import)
 
 ---
 

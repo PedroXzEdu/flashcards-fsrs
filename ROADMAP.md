@@ -28,6 +28,7 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] Testes unitários (auth, deck, review services)
 - [x] Lazy loading no frontend
 - [x] Error boundary
+- [x] Testes E2E (Playwright, 3 suites: auth, review, import)
 
 ---
 
@@ -88,11 +89,17 @@ MVP funcional com as features principais entregues. O que falta é
 - [x] Melhorias nos botões de rating da revisão (feedback visual)
 - [x] Remoção de `heatmap.css` legado (não utilizado)
 
+### Sessão de E2E e automação
+
+- [x] Testes E2E com Playwright (auth, review, import)
+- [x] Subagent `@doc` para revisão de documentação
+- [x] Rate limiting desabilitado em modo de teste (NODE_ENV=test)
+- [x] Fixture .apkg gerado programaticamente via `better-sqlite3`
+
 ---
 
 ## Melhorias Futuras (pós-TCC, se quiser)
 
-- Testes E2E (Puppeteer/Playwright)
 - Deploy real (VPS ou Railway)
 - PWA completo (já tem config base)
 - Modo offline

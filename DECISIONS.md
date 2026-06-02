@@ -440,3 +440,69 @@ Testes unitários nos services e middlewares do backend. Testes de integração 
 ### Quando revisitar
 
 Se surgirem regressões no frontend não detectadas pelos testes atuais, ou quando houver necessidade de testes E2E com Playwright/Cypress.
+
+---
+
+## 16. Subagent `@doc` para Revisão de Documentação
+
+### Contexto
+
+O fluxo de desenvolvimento não tinha um passo dedicado a verificar se ROADMAP.md, ARCHITECTURE.md e DECISIONS.md precisavam de atualização após mudanças no código. O `@reviewer` cobre qualidade de código, mas não avalia documentação.
+
+### Escolha
+
+Subagent `@doc` em `.opencode/agents/doc.md`, invocado manualmente antes do commit (passo 7 do fluxo de desenvolvimento). Read-only, modelado após o `@reviewer`.
+
+### Justificativa
+
+- Separa responsabilidades: reviewer cuida de código, doc cuida de documentação
+- Invocação sob demanda evita ruído em commits triviais
+- Regras de "quando atualizar" já existiam no AGENTS.md — o agente apenas as aplica
+- Read-only elimina risco de corrupção acidental da documentação
+- Mesmo padrão do `@reviewer` (subagent, terminal, sem recursão)
+
+### Trade-offs
+
+- Um agente a mais para invocar manualmente no fluxo
+- Se a invocação for esquecida, a documentação continua desatualizada (mesmo problema de antes)
+- O agente pode errar ao classificar mudanças como triviais vs estruturais (falso negativo)
+
+### Quando revisitar
+
+Se o agente for ignorado consistentemente ou se a documentação continuar desatualizada apesar dele, considerar automatizar a verificação no CI ou fundir com o `@reviewer`.
+
+---
+
+## 17. E2E Tests com Playwright
+
+### Contexto
+
+O projeto tinha testes unitários e de integração no backend, e testes de componentes no frontend. Faltavam testes E2E para validar fluxos completos (auth, review, import) contra o stack real rodando via Docker Compose.
+
+### Escolha
+
+Playwright com Chromium, testes em `e2e/`, configurado via `e2e/playwright.config.ts`. Três suites:
+
+- **auth.spec.ts** — registro, login, logout, rotas protegidas
+- **review.spec.ts** — criar baralho, criar cards em lote, revisar 3 cards, verificar tela de conclusão
+- **import.spec.ts** — importar .apkg gerado programaticamente via `better-sqlite3`
+
+### Justificativa
+
+- Cobre os flows críticos que testes unitários/integração não validam (frontend + backend integrados)
+- Chromium é suficiente para o escopo (sem necessidade de cross-browser)
+- Fixture .apkg gerada em `e2e/helpers/generate-apkg.mjs` — evita binário grande no repositório
+- Testes rodam contra Docker Compose (mesmo ambiente de dev), sem necessidade de mocks
+- Playwright foi escolhido sobre Cypress por: API mais limpa, execução headless por padrão, melhor integração com TypeScript
+
+### Trade-offs
+
+- Requer Docker Compose rodando (frontend + backend + db)
+- Rate limiting do backend pode afetar testes se reexecutados muitas vezes sem restart
+- Testes são sequenciais (1 worker) para evitar concorrência no banco
+- Sem cobertura de cross-browser (apenas Chromium)
+- O teste de import gera .apkg com `zip` CLI (requer disponível no sistema)
+
+### Quando revisitar
+
+Se surgirem regressões nos flows cobertos, ou quando houver necessidade de expandir para flows adicionais (compartilhamento, analytics). Se os testes se tornarem lentos, considerar parallelização com múltiplos workers e banco isolado.
