@@ -13,6 +13,8 @@ export default function Tooltip({ text, children }: Props) {
       style={{ position: "relative", display: "inline-flex" }}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
+      onFocus={() => setVisible(true)}
+      onBlur={() => setVisible(false)}
     >
       {children}
       {visible && (

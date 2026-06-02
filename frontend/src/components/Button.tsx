@@ -85,6 +85,7 @@ export default function Button({
 
   return (
     <button
+      type="button"
       {...props}
       disabled={isDisabled}
       onMouseEnter={(e) => {

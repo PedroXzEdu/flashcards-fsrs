@@ -14,6 +14,7 @@ interface Props {
   iconBg?: string;
   iconColor?: string;
   buttonIcon?: React.ReactNode;
+  loading?: boolean;
 }
 
 export default function ConfirmModal({
@@ -27,21 +28,22 @@ export default function ConfirmModal({
   iconBg = "rgba(243,139,168,0.12)",
   iconColor = "var(--danger)",
   buttonIcon,
+  loading = false,
 }: Props) {
   const trapRef = useFocusTrap(true);
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onCancel();
+      if (e.key === "Escape" && !loading) onCancel();
     }
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onCancel]);
+  }, [onCancel, loading]);
 
   return (
     <div
       className="modal-overlay"
-      onClick={onCancel}
+      onClick={loading ? undefined : onCancel}
       style={{
         position: "fixed",
         inset: 0,
@@ -91,13 +93,14 @@ export default function ConfirmModal({
           <button
             type="button"
             aria-label="Fechar"
-            onClick={onCancel}
+            onClick={loading ? undefined : onCancel}
             style={{
               background: "none",
               border: "none",
-              cursor: "pointer",
+              cursor: loading ? "not-allowed" : "pointer",
               color: "var(--text-muted)",
               padding: "4px",
+              opacity: loading ? 0.4 : 1,
             }}
           >
             <X size={16} />
@@ -133,6 +136,7 @@ export default function ConfirmModal({
             variant={confirmVariant}
             size="sm"
             icon={buttonIcon}
+            loading={loading}
             onClick={onConfirm}
           >
             {confirmText}

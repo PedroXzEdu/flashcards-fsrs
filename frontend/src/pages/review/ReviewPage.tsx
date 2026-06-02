@@ -252,11 +252,39 @@ export default function ReviewPage() {
 
   if (!loading && cards.length === 0)
     return (
-      <EmptyState
-        icon={<Check size={28} color="var(--success)" />}
-        title="Nenhum card disponível para revisão hoje"
-        description="Você está em dia 🎉"
-      />
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "var(--bg)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px",
+        }}
+      >
+        <EmptyState
+          icon={<Check size={28} color="var(--success)" />}
+          title="Nenhum card disponível para revisão hoje"
+          description="Você está em dia 🎉"
+        />
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          style={{
+            marginTop: "16px",
+            background: "none",
+            border: "none",
+            color: "var(--accent)",
+            fontSize: "14px",
+            fontWeight: 500,
+            cursor: "pointer",
+            fontFamily: "Outfit, sans-serif",
+          }}
+        >
+          ← Voltar ao início
+        </button>
+      </div>
     );
 
   if (done)

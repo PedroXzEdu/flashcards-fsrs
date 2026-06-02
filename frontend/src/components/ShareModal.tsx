@@ -232,6 +232,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
               </span>
               <button
                 type="button"
+                aria-label="Copiar link"
                 onClick={handleCopy}
                 style={{
                   background: copied
@@ -272,26 +273,15 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <button
-                type="button"
+              <Button
+                variant="danger"
+                size="sm"
+                icon={<Trash2 size={13} />}
                 onClick={handleUnshare}
-                disabled={loading}
-                style={{
-                  background: "none",
-                  border: "1px solid rgba(243,139,168,0.3)",
-                  borderRadius: "8px",
-                  color: "var(--danger)",
-                  fontSize: "13px",
-                  padding: "8px 14px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
+                loading={loading}
               >
-                <Trash2 size={13} /> Desativar link
-              </button>
+                Desativar link
+              </Button>
               <button
                 type="button"
                 onClick={onClose}

@@ -118,6 +118,7 @@ export default function DashboardPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<Deck | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const [showImport, setShowImport] = useState(false);
   const [streak, setStreak] = useState({
     streak: 0,
@@ -223,6 +224,7 @@ export default function DashboardPage() {
   }
 
   async function handleDelete(deck: Deck) {
+    setDeleting(true);
     try {
       await decksApi.delete(deck.id);
       setDecks((p) => p.filter((d) => d.id !== deck.id));
@@ -231,6 +233,8 @@ export default function DashboardPage() {
     } catch {
       setError("Erro ao excluir.");
       toast.error("Erro ao excluir.");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -276,6 +280,7 @@ export default function DashboardPage() {
           message={`Tem certeza que deseja excluir "${confirmDelete.title}"? Todos os cards e histórico serão perdidos.`}
           onConfirm={() => handleDelete(confirmDelete)}
           onCancel={() => setConfirmDelete(null)}
+          loading={deleting}
         />
       )}
 
@@ -693,6 +698,7 @@ export default function DashboardPage() {
                   </div>
                   <button
                     type="button"
+                    aria-label="Excluir baralho"
                     onClick={() => setConfirmDelete(deck)}
                     style={{
                       background: "none",

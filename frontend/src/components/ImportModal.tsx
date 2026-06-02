@@ -29,14 +29,6 @@ interface ImportResult {
 export default function ImportModal({ onClose, onSuccess }: Props) {
   const trapRef = useFocusTrap(true);
 
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose]);
-
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<ImportResult | null>(null);
   const [error, setError] = useState("");
@@ -44,6 +36,14 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const toast = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape" && status !== "loading") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose, status]);
 
   function handleFile(file: File) {
     if (!file.name.endsWith(".apkg")) {
@@ -88,7 +88,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
   return (
     <div
       className="modal-overlay"
-      onClick={onClose}
+      onClick={status !== "loading" ? onClose : undefined}
       style={{
         position: "fixed",
         inset: 0,
@@ -147,14 +147,15 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
           <button
             type="button"
             aria-label="Fechar"
-            onClick={onClose}
+            onClick={status !== "loading" ? onClose : undefined}
             style={{
               background: "none",
               border: "none",
-              cursor: "pointer",
+              cursor: status !== "loading" ? "pointer" : "not-allowed",
               color: "var(--text-muted)",
               padding: "4px",
               display: "flex",
+              opacity: status === "loading" ? 0.4 : 1,
             }}
           >
             <X size={16} />

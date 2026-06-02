@@ -77,6 +77,7 @@ export default function DeckPage() {
   const [renaming, setRenaming] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -222,6 +223,7 @@ export default function DeckPage() {
   }
 
   async function handleDelete(cardId: number) {
+    setDeleting(true);
     try {
       await cardsApi.delete(deckId, cardId);
       setCards((p) => p.filter((c) => c.id !== cardId));
@@ -230,6 +232,8 @@ export default function DeckPage() {
     } catch {
       setError("Erro ao excluir.");
       toast.error("Erro ao excluir.");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -288,6 +292,7 @@ export default function DeckPage() {
           >
             <button
               type="button"
+              aria-label="Compartilhar baralho"
               onClick={() => setShowShare(true)}
               title="Compartilhar baralho"
               style={{
@@ -308,6 +313,7 @@ export default function DeckPage() {
             </button>
             <button
               type="button"
+              aria-label="Renomear baralho"
               onClick={() => {
                 setNewTitle(deck?.title ?? "");
                 setNewDescription(deck?.description ?? "");
@@ -330,6 +336,7 @@ export default function DeckPage() {
             </button>
             <button
               type="button"
+              aria-label="Configurações do baralho"
               onClick={() => setShowSettings((s) => !s)}
               title="Configurações do baralho"
               style={{
@@ -408,6 +415,9 @@ export default function DeckPage() {
             <div ref={moreRef} style={{ position: "relative" }}>
               <button
                 type="button"
+                aria-label="Mais"
+                aria-expanded={showMoreMenu}
+                aria-haspopup="menu"
                 onClick={() => setShowMoreMenu((s) => !s)}
                 title="Mais"
                 style={{
@@ -429,6 +439,7 @@ export default function DeckPage() {
               {showMoreMenu && (
                 <div
                   className="mobile-more-dropdown"
+                  role="menu"
                   style={{
                     position: "absolute",
                     top: "100%",
@@ -445,6 +456,7 @@ export default function DeckPage() {
                 >
                   <button
                     type="button"
+                    role="menuitem"
                     onClick={() => {
                       setShowShare(true);
                       setShowMoreMenu(false);
@@ -455,6 +467,7 @@ export default function DeckPage() {
                   </button>
                   <button
                     type="button"
+                    role="menuitem"
                     onClick={() => {
                       setNewTitle(deck?.title ?? "");
                       setNewDescription(deck?.description ?? "");
@@ -467,6 +480,7 @@ export default function DeckPage() {
                   </button>
                   <button
                     type="button"
+                    role="menuitem"
                     onClick={() => {
                       setShowSettings((s) => !s);
                       setShowMoreMenu(false);
@@ -477,6 +491,7 @@ export default function DeckPage() {
                   </button>
                   <button
                     type="button"
+                    role="menuitem"
                     onClick={() => {
                       navigate(`/decks/${deckId}/stats`);
                       setShowMoreMenu(false);
@@ -498,6 +513,7 @@ export default function DeckPage() {
           message="Tem certeza que deseja excluir este card? O histórico de revisões também será removido."
           onConfirm={() => handleDelete(confirmDelete)}
           onCancel={() => setConfirmDelete(null)}
+          loading={deleting}
         />
       )}
 
@@ -1169,6 +1185,7 @@ export default function DeckPage() {
                     size="sm"
                     icon={<Pencil size={13} />}
                     onClick={() => handleEdit(card)}
+                    aria-label="Editar card"
                   />
                   <Button
                     variant="ghost"
