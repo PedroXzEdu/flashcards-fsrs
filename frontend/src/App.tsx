@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { SkeletonPage } from "./components/SkeletonCard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 
@@ -16,23 +18,33 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 }
 
-function PageLoader() {
-  return (
-    <div style={{ padding: 24, color: "var(--text-muted)" }}>Carregando...</div>
-  );
-}
-
 export default function App() {
   return (
-    <Suspense fallback={<PageLoader />}>
+    <Suspense fallback={<SkeletonPage />}>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/login"
+          element={
+            <ErrorBoundary>
+              <LoginPage />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ErrorBoundary>
+              <RegisterPage />
+            </ErrorBoundary>
+          }
+        />
         <Route
           path="/"
           element={
             <PrivateRoute>
-              <DashboardPage />
+              <ErrorBoundary>
+                <DashboardPage />
+              </ErrorBoundary>
             </PrivateRoute>
           }
         />
@@ -40,16 +52,27 @@ export default function App() {
           path="/stats"
           element={
             <PrivateRoute>
-              <StatsGlobalPage />
+              <ErrorBoundary>
+                <StatsGlobalPage />
+              </ErrorBoundary>
             </PrivateRoute>
           }
         />
-        <Route path="/shared/:token" element={<SharedDeckPage />} />
+        <Route
+          path="/shared/:token"
+          element={
+            <ErrorBoundary>
+              <SharedDeckPage />
+            </ErrorBoundary>
+          }
+        />
         <Route
           path="/decks/:id"
           element={
             <PrivateRoute>
-              <DeckPage />
+              <ErrorBoundary>
+                <DeckPage />
+              </ErrorBoundary>
             </PrivateRoute>
           }
         />
@@ -58,7 +81,9 @@ export default function App() {
           path="/decks/:id/review"
           element={
             <PrivateRoute>
-              <ReviewPage />
+              <ErrorBoundary>
+                <ReviewPage />
+              </ErrorBoundary>
             </PrivateRoute>
           }
         />
@@ -66,7 +91,9 @@ export default function App() {
           path="/decks/:id/stats"
           element={
             <PrivateRoute>
-              <StatsPage />
+              <ErrorBoundary>
+                <StatsPage />
+              </ErrorBoundary>
             </PrivateRoute>
           }
         />

@@ -4,6 +4,7 @@ import { decksApi } from "../api/decks";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { Layers, Sun, Moon, Download, LogIn } from "lucide-react";
+import { SkeletonSharedDeck } from "../components/SkeletonCard";
 
 export default function SharedDeckPage() {
   const { token } = useParams<{ token: string }>();
@@ -115,7 +116,7 @@ export default function SharedDeckPage() {
         }}
       >
         {loading ? (
-          <p style={{ color: "var(--text-muted)" }}>Carregando...</p>
+          <SkeletonSharedDeck />
         ) : error ? (
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: "48px", marginBottom: "16px" }}>🔗</p>

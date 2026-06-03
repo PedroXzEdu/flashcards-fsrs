@@ -8,6 +8,7 @@ import Tooltip from "../../components/Tooltip";
 import CardContent from "../../components/CardContent";
 import ConfirmModal from "../../components/ConfirmModal";
 import EmptyState from "../../components/EmptyState";
+import { SkeletonReviewCard } from "../../components/SkeletonCard";
 
 const RATINGS = [
   {
@@ -236,19 +237,7 @@ export default function ReviewPage() {
   }
 
   if (loading)
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "var(--bg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <p style={{ color: "var(--text-muted)" }}>Carregando sessão...</p>
-      </div>
-    );
+    return <SkeletonReviewCard />;
 
   if (!loading && cards.length === 0)
     return (

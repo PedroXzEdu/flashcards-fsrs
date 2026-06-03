@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDailyQueue } from "../services/analyticsApi";
 import { Calendar } from "lucide-react";
+import { SkeletonQueueItem } from "./SkeletonCard";
 
 interface DailyQueueCard {
   id: number;
@@ -107,16 +108,10 @@ export function DailyQueue() {
       </div>
 
       {loading && (
-        <div style={{ textAlign: "center", padding: "24px 0" }}>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              margin: 0,
-              fontSize: "13px",
-            }}
-          >
-            Carregando fila diária...
-          </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <SkeletonQueueItem key={i} />
+          ))}
         </div>
       )}
       {error && (
