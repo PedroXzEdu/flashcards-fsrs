@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import Button from "./Button";
 
 interface Props {
   children: ReactNode;
@@ -96,39 +97,12 @@ export default class ErrorBoundary extends Component<Props, State> {
               </pre>
             )}
             <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-              <button
-                type="button"
-                onClick={this.handleReset}
-                style={{
-                  background: "var(--accent)",
-                  border: "none",
-                  borderRadius: "10px",
-                  color: "var(--bg)",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  padding: "12px 24px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                }}
-              >
+              <Button variant="primary" onClick={this.handleReset}>
                 Tentar novamente
-              </button>
-              <button
-                type="button"
-                onClick={() => window.location.reload()}
-                style={{
-                  background: "none",
-                  border: "1px solid var(--border)",
-                  borderRadius: "10px",
-                  color: "var(--text-muted)",
-                  fontSize: "14px",
-                  padding: "12px 24px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                }}
-              >
+              </Button>
+              <Button variant="secondary" onClick={() => window.location.reload()}>
                 Recarregar
-              </button>
+              </Button>
             </div>
           </div>
         </div>

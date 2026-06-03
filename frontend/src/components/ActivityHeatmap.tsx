@@ -52,7 +52,9 @@ export default function ActivityHeatmap() {
     text: string;
   } | null>(null);
 
-  useEffect(() => {
+  function loadActivity() {
+    setLoading(true);
+    setError(null);
     api
       .get<{ activity: ActivityDay[] }>("/review-logs/activity")
       .then((data) => {
@@ -64,6 +66,10 @@ export default function ActivityHeatmap() {
       })
       .catch(() => setError("Erro ao carregar heatmap de atividade"))
       .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    loadActivity();
   }, []);
 
   const days = getLast365Days();
@@ -105,15 +111,32 @@ export default function ActivityHeatmap() {
           height: "120px",
           borderRadius: "12px",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          gap: "8px",
           color: "var(--danger)",
           fontSize: "13px",
           background: "var(--bg-card)",
           border: "1px solid var(--border)",
         }}
       >
-        {error}
+        <span>{error}</span>
+        <button type="button" onClick={loadActivity} aria-label="Tentar novamente"
+          style={{
+            background: "none",
+            border: "1px solid var(--danger)",
+            borderRadius: "6px",
+            color: "var(--danger)",
+            padding: "4px 10px",
+            fontSize: "12px",
+            cursor: "pointer",
+            fontFamily: "Outfit, sans-serif",
+            fontWeight: 600,
+          }}
+        >
+          Tentar novamente
+        </button>
       </div>
     );
 
@@ -243,6 +266,9 @@ export default function ActivityHeatmap() {
                   return (
                     <div
                       key={di}
+                      role="gridcell"
+                      tabIndex={0}
+                      aria-label={`${day.toLocaleDateString("pt-BR")}: ${count > 0 ? `${count} revisões` : "Sem revisões"}`}
                       style={{
                         width: "11px",
                         height: "11px",
@@ -262,13 +288,27 @@ export default function ActivityHeatmap() {
                               ? `${count} revisões em ${day.toLocaleDateString("pt-BR")}`
                               : `Sem revisões em ${day.toLocaleDateString("pt-BR")}`,
                         });
-                        (e.currentTarget as HTMLElement).style.transform =
-                          "scale(1.3)";
+                        e.currentTarget.style.transform = "scale(1.3)";
                       }}
                       onMouseLeave={(e) => {
                         setTooltip(null);
-                        (e.currentTarget as HTMLElement).style.transform =
-                          "scale(1)";
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}
+                      onFocus={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        setTooltip({
+                          x: rect.left + rect.width / 2,
+                          y: rect.top - 8,
+                          text:
+                            count > 0
+                              ? `${count} revisões em ${day.toLocaleDateString("pt-BR")}`
+                              : `Sem revisões em ${day.toLocaleDateString("pt-BR")}`,
+                        });
+                        e.currentTarget.style.transform = "scale(1.3)";
+                      }}
+                      onBlur={(e) => {
+                        setTooltip(null);
+                        e.currentTarget.style.transform = "scale(1)";
                       }}
                     />
                   );

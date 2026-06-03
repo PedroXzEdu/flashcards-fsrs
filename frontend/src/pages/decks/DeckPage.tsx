@@ -918,22 +918,9 @@ export default function DeckPage() {
             >
               {saving ? "Salvando..." : editingCard ? "Salvar" : "Criar"}
             </Button>
-            <button
-              type="button"
-              onClick={cancelForm}
-              style={{
-                background: "none",
-                border: "1px solid var(--border)",
-                borderRadius: "8px",
-                color: "var(--text-muted)",
-                fontSize: "13px",
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
-            >
+            <Button type="button" variant="secondary" size="sm" onClick={cancelForm}>
               Cancelar
-            </button>
+            </Button>
           </div>
         </form>
       )}

@@ -309,24 +309,9 @@ export default function DashboardPage() {
           }}
         >
           <span>{error}</span>
-          <button
-            type="button"
-            onClick={loadDecks}
-            style={{
-              background: "none",
-              border: "1px solid var(--danger)",
-              borderRadius: "6px",
-              color: "var(--danger)",
-              padding: "4px 10px",
-              fontSize: "12px",
-              cursor: "pointer",
-              fontFamily: "Outfit, sans-serif",
-              fontWeight: 600,
-              whiteSpace: "nowrap",
-            }}
-          >
+          <Button variant="danger" size="sm" onClick={loadDecks}>
             Tentar novamente
-          </button>
+          </Button>
         </div>
       )}
 

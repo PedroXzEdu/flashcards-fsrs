@@ -14,27 +14,21 @@ export function DailyQueue() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadQueue() {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await getDailyQueue();
-        if (!cancelled) setQueue(data);
-      } catch {
-        if (!cancelled) setError("Não foi possível carregar a fila do dia.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
+  async function loadQueue() {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getDailyQueue();
+      setQueue(data);
+    } catch {
+      setError("Não foi possível carregar a fila do dia.");
+    } finally {
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
     loadQueue();
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   function getRecallStyle(retention: number) {
@@ -119,12 +113,27 @@ export function DailyQueue() {
           <p
             style={{
               color: "var(--danger)",
-              margin: 0,
+              margin: "0 0 8px",
               fontSize: "13px",
             }}
           >
             {error}
           </p>
+          <button type="button" onClick={loadQueue} aria-label="Tentar novamente"
+            style={{
+              background: "none",
+              border: "1px solid var(--danger)",
+              borderRadius: "6px",
+              color: "var(--danger)",
+              padding: "4px 10px",
+              fontSize: "12px",
+              cursor: "pointer",
+              fontFamily: "Outfit, sans-serif",
+              fontWeight: 600,
+            }}
+          >
+            Tentar novamente
+          </button>
         </div>
       )}
       {!loading && !error && queue.length === 0 && (

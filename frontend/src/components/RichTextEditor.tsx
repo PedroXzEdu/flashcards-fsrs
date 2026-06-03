@@ -23,6 +23,7 @@ interface ToolbarButtonProps {
   onClick: () => void;
   active?: boolean;
   title: string;
+  label: string;
   children: React.ReactNode;
 }
 
@@ -30,6 +31,7 @@ function ToolbarButton({
   onClick,
   active,
   title,
+  label,
   children,
 }: ToolbarButtonProps) {
   return (
@@ -37,6 +39,7 @@ function ToolbarButton({
       type="button"
       onClick={onClick}
       title={title}
+      aria-label={label}
       style={{
         background: active ? "var(--accent)" : "none",
         border: "none",
@@ -132,6 +135,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive("bold")}
           title="Negrito (Ctrl+B)"
+          label="Negrito"
         >
           <Bold size={13} />
         </ToolbarButton>
@@ -140,6 +144,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleItalic().run()}
           active={editor.isActive("italic")}
           title="Itálico (Ctrl+I)"
+          label="Itálico"
         >
           <Italic size={13} />
         </ToolbarButton>
@@ -148,6 +153,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           active={editor.isActive("underline")}
           title="Sublinhado (Ctrl+U)"
+          label="Sublinhado"
         >
           <UnderlineIcon size={13} />
         </ToolbarButton>
@@ -165,6 +171,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleCode().run()}
           active={editor.isActive("code")}
           title="Código inline"
+          label="Código inline"
         >
           <Code size={13} />
         </ToolbarButton>
@@ -182,6 +189,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           active={editor.isActive("bulletList")}
           title="Lista"
+          label="Lista"
         >
           <List size={13} />
         </ToolbarButton>
@@ -190,6 +198,7 @@ export default function RichTextEditor({
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           active={editor.isActive("orderedList")}
           title="Lista numerada"
+          label="Lista numerada"
         >
           <ListOrdered size={13} />
         </ToolbarButton>
@@ -206,6 +215,7 @@ export default function RichTextEditor({
         <ToolbarButton
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
           title="Linha divisória"
+          label="Linha divisória"
         >
           <Minus size={13} />
         </ToolbarButton>
