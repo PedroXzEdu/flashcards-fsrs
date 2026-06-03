@@ -254,6 +254,46 @@ docker compose exec frontend npm run format
 docker compose exec backend npm run format
 ```
 
+### Graphify — Knowledge Graph
+
+O projeto usa [@nodesify/graphify](https://www.npmjs.com/package/@nodesify/graphify) para gerar um grafo de conhecimento do código-fonte, analisando arquivos, dependências, módulos e suas relações.
+
+#### Regenerar o grafo manualmente
+
+```bash
+npm run graphify
+```
+
+Gera o grafo completo em `.graphify/graph.json` e o relatório em `.graphify/graph_report.md`.
+
+#### Atualização incremental
+
+```bash
+npm run graphify:update
+```
+
+Atualiza apenas os arquivos modificados desde a última execução (mais rápido).
+
+#### Modo watch
+
+```bash
+npm run graphify:watch
+```
+
+Monitora mudanças no código e atualiza o grafo automaticamente.
+
+#### Consultar o grafo
+
+```bash
+npx @nodesify/graphify query "Como funciona o algoritmo FSRS?"
+```
+
+O comando `query` faz uma travessia BFS/DFS no grafo a partir de nós relevantes à pergunta.
+
+#### Atualização automática (pre-commit)
+
+O hook do Husky executa `graphify:update` automaticamente antes de cada commit, mantendo o grafo sincronizado com o código. Os arquivos modificados em `.graphify/` são incluídos no próprio commit.
+
 ---
 
 ## Testes
