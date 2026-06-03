@@ -27,8 +27,22 @@ export default function StatsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  function fetchStats() {
-    return decksApi
+  useEffect(() => {
+    decksApi
+      .stats(deckId)
+      .then(setStats)
+      .catch((err) => {
+        setError(
+          err instanceof Error ? err.message : "Erro ao carregar estatísticas",
+        );
+      })
+      .finally(() => setLoading(false));
+  }, [deckId]);
+
+  function handleRetry() {
+    setLoading(true);
+    setError("");
+    decksApi
       .stats(deckId)
       .then(setStats)
       .catch((err) => {
@@ -38,10 +52,6 @@ export default function StatsPage() {
       })
       .finally(() => setLoading(false));
   }
-
-  useEffect(() => {
-    fetchStats();
-  }, [deckId]);
 
   if (loading)
     return (
@@ -96,11 +106,7 @@ export default function StatsPage() {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => {
-              setLoading(true);
-              setError("");
-              fetchStats();
-            }}
+            onClick={handleRetry}
             style={{ marginTop: "16px" }}
           >
             Tentar novamente
