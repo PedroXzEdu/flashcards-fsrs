@@ -83,8 +83,8 @@ describe("Review Integration", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(logsRes.status).toBe(200);
-    expect(logsRes.body.data.length).toBeGreaterThanOrEqual(1);
-    expect(logsRes.body.data[0].rating).toBe(3);
+    expect(logsRes.body.data.logs.length).toBeGreaterThanOrEqual(1);
+    expect(logsRes.body.data.logs[0].rating).toBe(3);
   });
 
   it("GET /decks/:id/review/:cardId/preview returns four scheduling options without persisting", async () => {
@@ -106,8 +106,8 @@ describe("Review Integration", () => {
     expect(res.body.data.good).toBeDefined();
     expect(res.body.data.easy).toBeDefined();
 
-    expect(res.body.data.good.scheduled_days).toBeGreaterThan(
-      res.body.data.again.scheduled_days,
+    expect(new Date(res.body.data.good.due).getTime()).toBeGreaterThan(
+      new Date(res.body.data.again.due).getTime(),
     );
 
     const cardsRes = await request(app)

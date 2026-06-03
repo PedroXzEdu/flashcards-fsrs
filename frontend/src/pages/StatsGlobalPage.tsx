@@ -34,18 +34,20 @@ export default function StatsGlobalPage() {
   const [error, setError] = useState("");
 
   function fetchStats() {
-    setLoading(true);
-    setError("");
-    statsApi
+    return statsApi
       .globalStats()
       .then(setStats)
       .catch((err) => {
-        setError(err instanceof Error ? err.message : "Erro ao carregar estatísticas");
+        setError(
+          err instanceof Error ? err.message : "Erro ao carregar estatísticas",
+        );
       })
       .finally(() => setLoading(false));
   }
 
-  useEffect(() => { fetchStats(); }, []);
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   const cardStyle = {
     background: "var(--bg-card)",
@@ -97,13 +99,23 @@ export default function StatsGlobalPage() {
           >
             <AlertTriangle size={24} color="var(--danger)" />
           </div>
-          <p style={{ color: "var(--text-sub)", fontWeight: 500, margin: "0 0 4px" }}>
+          <p
+            style={{
+              color: "var(--text-sub)",
+              fontWeight: 500,
+              margin: "0 0 4px",
+            }}
+          >
             {error}
           </p>
           <Button
             variant="secondary"
             size="sm"
-            onClick={fetchStats}
+            onClick={() => {
+              setLoading(true);
+              setError("");
+              fetchStats();
+            }}
             style={{ marginTop: "16px" }}
           >
             Tentar novamente
