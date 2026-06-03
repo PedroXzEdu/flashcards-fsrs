@@ -35,6 +35,10 @@ Primary goal:
 - Docker Compose
 - Node 20
 
+### Knowledge
+
+- Graphify (knowledge graph do código-fonte)
+
 ---
 
 ## Architecture Principles
@@ -68,14 +72,14 @@ If a feature already works, prefer hardening over rewriting.
 
 Work in small iterations:
 
-1. analyze
+1. analyze (use `graphify query "<pergunta>"` para navegar no grafo de código)
 2. implement minimal change
 3. `tsc --noEmit` (type check rápido)
 4. invoke @reviewer → valida (build + testes) e revisa
 5. fix findings if needed
 6. regression check
 7. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS precisam de update
-8. commit
+8. commit (Graphify atualiza automaticamente via pre-commit hook)
 9. move to next step
 
 > O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
