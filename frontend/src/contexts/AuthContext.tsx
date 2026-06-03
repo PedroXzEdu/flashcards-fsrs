@@ -24,8 +24,8 @@ function getStoredAuth(): { token: string | null; user: User | null } {
     if (storedToken && storedUser) {
       return { token: storedToken, user: JSON.parse(storedUser) };
     }
-  } catch {
-    /* ignore */
+  } catch (err) {
+    if (import.meta.env.DEV) console.error("Erro ao ler auth do localStorage:", err);
   }
   return { token: null, user: null };
 }

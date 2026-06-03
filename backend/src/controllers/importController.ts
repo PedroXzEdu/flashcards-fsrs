@@ -4,12 +4,8 @@ import fs from "fs";
 import path from "path";
 import unzipper from "unzipper";
 import Database from "better-sqlite3";
-import { promisify } from "util";
-import { pipeline } from "stream";
 import { AppError } from "../utils/AppError";
 import { importService } from "../services/importService";
-
-const streamPipeline = promisify(pipeline);
 
 interface AnkiNote {
   id: number;

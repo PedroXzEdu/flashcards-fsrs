@@ -45,6 +45,7 @@ function getLast365Days(): Date[] {
 export default function ActivityHeatmap() {
   const [activityMap, setActivityMap] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState<{
     x: number;
     y: number;
@@ -61,6 +62,7 @@ export default function ActivityHeatmap() {
         });
         setActivityMap(map);
       })
+      .catch(() => setError("Erro ao carregar heatmap de atividade"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -95,6 +97,25 @@ export default function ActivityHeatmap() {
 
   const totalReviews = Object.values(activityMap).reduce((a, b) => a + b, 0);
   const activeDays = Object.keys(activityMap).length;
+
+  if (error)
+    return (
+      <div
+        style={{
+          height: "120px",
+          borderRadius: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "var(--danger)",
+          fontSize: "13px",
+          background: "var(--bg-card)",
+          border: "1px solid var(--border)",
+        }}
+      >
+        {error}
+      </div>
+    );
 
   if (loading)
     return (

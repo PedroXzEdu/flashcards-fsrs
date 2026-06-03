@@ -9,7 +9,7 @@ export function errorHandler(
   err: any,
   req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) {
   logger.error(
     { err, requestId: req.requestId },

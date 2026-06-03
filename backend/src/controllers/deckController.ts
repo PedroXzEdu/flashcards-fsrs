@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { pool } from "../database/db";
 import { AuthRequest } from "../middlewares/auth";
 import { deckService } from "../services/deckService";
 import { deckImportService } from "../services/deckImportService";

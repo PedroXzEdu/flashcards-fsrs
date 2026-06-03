@@ -4,33 +4,48 @@ function getToken() {
   return localStorage.getItem("token");
 }
 
+const REQUEST_TIMEOUT = 15000;
+
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken();
 
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
-  if (!res.ok) {
-    const error = await res
-      .json()
-      .catch(() => ({ error: "Erro desconhecido" }));
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
 
-    throw new Error(error.error || "Erro na requisição");
+    if (!res.ok) {
+      const error = await res
+        .json()
+        .catch(() => ({ error: "Erro desconhecido" }));
+
+      throw new Error(error.error || "Erro na requisição");
+    }
+
+    if (res.status === 204) {
+      return null as T;
+    }
+
+    const json = await res.json();
+
+    return json.data as T;
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      throw new Error("Requisição excedeu o tempo limite", { cause: err });
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  if (res.status === 204) {
-    return null as T;
-  }
-
-  const json = await res.json();
-
-  return json.data as T;
 }
 
 export const api = {

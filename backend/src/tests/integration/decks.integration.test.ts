@@ -13,7 +13,7 @@ describe("Decks Integration", () => {
 
   beforeEach(async () => {
     await cleanDatabase();
-    const user = await createUser();
+    await createUser();
     const res = await request(app)
       .post("/auth/login")
       .send({ email: "test@test.com", password: "password123" });

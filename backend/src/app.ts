@@ -58,7 +58,7 @@ app.use(
   pinoHttp({
     logger,
     quietReqLogger: true,
-    customReceivedMessage: function (req) {
+    customReceivedMessage: function (_req) {
       return `incoming request`;
     },
     customSuccessMessage: function (req, res) {
@@ -78,7 +78,7 @@ app.use(
   }),
 );
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.json({
     message: "API Flashcards FSRS funcionando!",
   });

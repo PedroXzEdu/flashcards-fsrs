@@ -11,17 +11,19 @@ interface DailyQueueCard {
 export function DailyQueue() {
   const [queue, setQueue] = useState<DailyQueueCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadQueue() {
       setLoading(true);
+      setError(null);
       try {
         const data = await getDailyQueue();
         if (!cancelled) setQueue(data);
       } catch {
-        // silencioso — não quebrar o dashboard
+        if (!cancelled) setError("Não foi possível carregar a fila do dia.");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -117,7 +119,20 @@ export function DailyQueue() {
           </p>
         </div>
       )}
-      {!loading && queue.length === 0 && (
+      {error && (
+        <div style={{ textAlign: "center", padding: "24px 0" }}>
+          <p
+            style={{
+              color: "var(--danger)",
+              margin: 0,
+              fontSize: "13px",
+            }}
+          >
+            {error}
+          </p>
+        </div>
+      )}
+      {!loading && !error && queue.length === 0 && (
         <div style={{ textAlign: "center", padding: "24px 0" }}>
           <div
             style={{
