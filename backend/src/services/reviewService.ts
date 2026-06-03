@@ -54,12 +54,6 @@ class ReviewService {
   }
 
   async submitReview(cardId: string, userId: number, rating: Rating) {
-    if (
-      ![Rating.Again, Rating.Hard, Rating.Good, Rating.Easy].includes(rating)
-    ) {
-      throw new AppError("Rating inválido.", 400);
-    }
-
     const card = await cardRepository.findById(cardId, userId);
 
     if (!card) {

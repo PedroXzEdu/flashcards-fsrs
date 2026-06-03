@@ -50,3 +50,9 @@ CREATE TABLE IF NOT EXISTS review_logs (
 ALTER TABLE decks ADD COLUMN IF NOT EXISTS share_token VARCHAR(64) UNIQUE;
 
 CREATE INDEX IF NOT EXISTS idx_cards_due ON cards (due);
+
+CREATE INDEX IF NOT EXISTS idx_decks_user_id ON decks (user_id);
+CREATE INDEX IF NOT EXISTS idx_cards_deck_id ON cards (deck_id);
+CREATE INDEX IF NOT EXISTS idx_cards_deck_id_due ON cards (deck_id, due);
+CREATE INDEX IF NOT EXISTS idx_review_logs_user_id ON review_logs (user_id);
+CREATE INDEX IF NOT EXISTS idx_review_logs_card_id ON review_logs (card_id);

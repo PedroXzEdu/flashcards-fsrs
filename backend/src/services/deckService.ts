@@ -33,10 +33,6 @@ class DeckService {
   }
 
   async update(id: string, userId: number, data: any) {
-    if (!data.title) {
-      throw new AppError("O título é obrigatório.", 400);
-    }
-
     const deck = await deckRepository.update(id, userId, {
       ...data,
       title: sanitizeInput(data.title),
@@ -82,10 +78,6 @@ class DeckService {
 
   async updateSettings(deckId: string, userId: number, data: any) {
     const { new_cards_per_day } = data;
-
-    if (typeof new_cards_per_day !== "number" || new_cards_per_day < 0) {
-      throw new AppError("Valor inválido para new_cards_per_day.", 400);
-    }
 
     const deck = await deckRepository.updateSettings(
       deckId,

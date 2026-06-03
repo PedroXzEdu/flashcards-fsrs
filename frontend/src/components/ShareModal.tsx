@@ -5,6 +5,7 @@ import type { Deck } from "../types";
 import Button from "./Button";
 import ConfirmModal from "./ConfirmModal";
 import { useFocusTrap } from "../hooks/useFocusTrap";
+import { useToast } from "../contexts/ToastContext";
 
 interface Props {
   deck: Deck;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function ShareModal({ deck, onClose, onUpdate }: Props) {
+  const toast = useToast();
   const trapRef = useFocusTrap(true);
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
       const res = await decksApi.share(deck.id);
       setToken(res.token);
       onUpdate({ ...deck, share_token: res.token });
+      toast.success("Link de compartilhamento gerado.");
     } catch (err: unknown) {
       setError(
         err instanceof Error
@@ -61,6 +64,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
       await decksApi.unshare(deck.id);
       setToken(null);
       onUpdate({ ...deck, share_token: null });
+      toast.success("Compartilhamento desativado.");
     } catch (err: unknown) {
       setError(
         err instanceof Error
@@ -76,6 +80,7 @@ export default function ShareModal({ deck, onClose, onUpdate }: Props) {
     if (!shareUrl) return;
     await navigator.clipboard.writeText(shareUrl);
     setCopied(true);
+    toast.success("Link copiado.");
     setTimeout(() => setCopied(false), 2000);
   }
 

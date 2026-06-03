@@ -66,14 +66,6 @@ describe("ReviewService", () => {
   });
 
   describe("submitReview", () => {
-    it("deve lançar erro com rating inválido", async () => {
-      const invalidRating = 99 as Rating;
-
-      await expect(
-        reviewService.submitReview("1", 1, invalidRating),
-      ).rejects.toThrow("Rating inválido.");
-    });
-
     it("deve lançar erro se card não existe", async () => {
       vi.mocked(cardRepository.findById).mockResolvedValue(null);
 

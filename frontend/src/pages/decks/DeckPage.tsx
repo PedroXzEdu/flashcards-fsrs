@@ -139,6 +139,7 @@ export default function DeckPage() {
       );
       setDeck(updated);
       setEditingTitle(false);
+      toast.success("Baralho renomeado.");
     } catch {
       setError("Erro ao renomear baralho.");
       toast.error("Erro ao renomear baralho.");
@@ -152,6 +153,7 @@ export default function DeckPage() {
     try {
       await decksApi.updateSettings(deckId, newCardsPerDay);
       setShowSettings(false);
+      toast.success("Configurações salvas.");
     } catch {
       setError("Erro ao salvar configurações.");
       toast.error("Erro ao salvar configurações.");

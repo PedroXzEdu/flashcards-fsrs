@@ -94,12 +94,6 @@ describe("DeckService", () => {
       expect(deckRepository.update).toHaveBeenCalled();
     });
 
-    it("deve lançar erro sem título na atualização", async () => {
-      await expect(
-        deckService.update("1", 1, { description: "Nova descrição" }),
-      ).rejects.toThrow("O título é obrigatório.");
-    });
-
     it("deve lançar erro se deck não existe na atualização", async () => {
       vi.mocked(deckRepository.update).mockResolvedValue(null);
 
@@ -136,14 +130,6 @@ describe("DeckService", () => {
       });
 
       expect(result).toEqual(mockDeck);
-    });
-
-    it("deve lançar erro com valor inválido", async () => {
-      await expect(
-        deckService.updateSettings("1", 1, {
-          new_cards_per_day: -1,
-        }),
-      ).rejects.toThrow("Valor inválido para new_cards_per_day.");
     });
 
     it("deve lançar erro se deck não existe nas configurações", async () => {
