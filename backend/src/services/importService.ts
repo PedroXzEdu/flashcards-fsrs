@@ -1,6 +1,7 @@
 import { createEmptyCard } from "ts-fsrs";
 import { deckRepository } from "../repositories/deckRepository";
 import { cardRepository } from "../repositories/cardRepository";
+import { collector } from "../middlewares/metrics";
 
 interface NoteInput {
   front: string;
@@ -45,6 +46,8 @@ class ImportService {
       });
       imported++;
     }
+
+    collector.incrementBusiness("importsCompleted");
 
     return { deck, imported, skipped };
   }

@@ -103,6 +103,7 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── rateLimiter.ts      → 4 rate limiters
 │   │   │   ├── requestId.ts        → UUID per request
 │   │   │   ├── validate.ts         → Zod middleware
+│   │   │   ├── metrics.ts          → MetricsCollector + middleware (contadores, histograma)
 │   │   │   └── __tests__/
 │   │   ├── routes/
 │   │   │   ├── index.ts            → Route aggregator
@@ -112,13 +113,14 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── reviewRoutes.ts
 │   │   │   ├── reviewLogsRoutes.ts
 │   │   │   ├── importRoutes.ts
-│   │   │   └── analyticsRoutes.ts
+│   │   │   ├── analyticsRoutes.ts
+│   │   │   └── metricsRoutes.ts
 │   │   ├── schemas/               → Zod schemas
 │   │   │   ├── authSchema.ts
 │   │   │   ├── cardSchema.ts
 │   │   │   └── deckSchema.ts
 │   │   ├── database/
-│   │   │   ├── db.ts               → PG Pool + runMigrations()
+│   │   │   ├── db.ts               → PG Pool + runMigrations() + ping()
 │   │   │   └── migrations.sql      → 4 tabelas + índices
 │   │   ├── tests/                  → Testes de integração
 │   │   │   └── integration/
@@ -215,6 +217,7 @@ Quatro arquivos em `backend/` definem a configuração do backend:
 - `rateLimiter`: 4 limiters granulares
 - `requestId`: UUID + header X-Request-Id
 - `errorHandler`: centraliza erros (AppError, ZodError, Multer, genérico)
+- `metrics`: coleta métricas de requisição (contadores por rota, histograma de duração, erros), expõe singleton `collector` para incrementos de métricas de negócio nos services
 
 ### Frontend
 

@@ -14,6 +14,8 @@ import { AppError } from "../utils/AppError";
 
 import { logger } from "../config/logger";
 
+import { collector } from "../middlewares/metrics";
+
 class ReviewService {
   async getDueCards(deckId: string, userId: number) {
     const [cards, deck] = await Promise.all([
@@ -100,6 +102,8 @@ class ReviewService {
       });
 
       await client.query("COMMIT");
+
+      collector.incrementBusiness("reviewsSubmitted");
 
       return {
         card: updatedCard,

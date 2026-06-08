@@ -72,22 +72,26 @@ If a feature already works, prefer hardening over rewriting.
 
 Work in small iterations:
 
+0. **consult plan** — leia a fase atual em `.plans/tasks/` antes de qualquer implementação
 1. analyze (use `graphify query "<pergunta>"` para navegar no grafo de código)
 2. implement minimal change
 3. `tsc --noEmit` (type check rápido)
 4. invoke @reviewer → valida (build + testes) e revisa
 5. fix findings if needed
 6. regression check
-7. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS precisam de update
-8. commit (Graphify atualiza automaticamente via pre-commit hook)
-9. move to next step
+7. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS/AGENTS precisam de update
+8. update plan progress — marcar tarefa concluída em `.plans/tasks/` e registrar desvios
+9. commit (Graphify atualiza automaticamente via pre-commit hook)
+10. move to next step
 
 > O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
-> O passo 7 (`invoke @doc`) é **OBRIGATÓRIO** quando há mudanças estruturais (novas pastas, camadas, fluxos, dependências, contratos de API). Opcional para mudanças triviais.
+> O passo 7 (`invoke @doc`) é **OBRIGATÓRIO** quando há mudanças estruturais (novas pastas, camadas, fluxos, dependências, contratos de API, subagentes, skills, plugins). Opcional para mudanças triviais.
 
 Never batch unrelated changes together.
 
 Always prioritize stability over elegance.
+
+> **Plan as source of truth:** antes de criar qualquer código, consulte ou atualize os arquivos de planejamento em `.plans/tasks/`. Nenhuma implementação deve começar sem que a fase e tarefa atuais estejam claramente documentadas.
 
 ### Before Completion Checklist
 
@@ -96,7 +100,8 @@ Every task MUST pass this checklist before the agent signals completion:
 - [ ] `@reviewer` executed (build + testes rodados dentro da review)
 - [ ] Reviewer findings addressed (or justified)
 - [ ] Regression checklist verified
-- [ ] `@doc` invoked (ou justificado por que não necessário)
+- [ ] `@doc` invoked (ou justificado por que não necessário — opcional para mudanças triviais)
+- [ ] Plan progress updated in `.plans/tasks/`
 
 ---
 
@@ -393,15 +398,16 @@ Prefer:
 
 When proposing changes:
 
-1. explain root cause
-2. implement smallest viable fix
-3. list files changed
-4. explain regression risks
-5. run `tsc --noEmit` (type check rápido)
-6. invoke @reviewer (roda build + testes e revisa)
-7. fix findings if needed (or justify if accepted)
-8. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS precisam de update
-9. preserve existing behavior
+1. consult `.plans/tasks/` para identificar a fase e tarefa atuais
+2. explain root cause
+3. implement smallest viable fix
+4. list files changed
+5. explain regression risks
+6. run `tsc --noEmit` (type check rápido)
+7. invoke @reviewer (roda build + testes e revisa)
+8. fix findings if needed (or justify if accepted)
+9. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS/AGENTS precisam de update
+10. preserve existing behavior
 
 If uncertain:
 

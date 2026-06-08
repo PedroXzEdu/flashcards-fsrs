@@ -9,6 +9,7 @@ import { routes } from "./routes";
 import analyticsRoutes from "./routes/analyticsRoutes";
 import { healthCheck } from "./controllers/healthController";
 import { requestId } from "./middlewares/requestId";
+import { metricsMiddleware } from "./middlewares/metrics";
 import { errorHandler } from "./middlewares/errorHandler";
 import { logger } from "./config/logger";
 import { env } from "./config/env";
@@ -54,6 +55,8 @@ app.use(
 
 app.use(requestId);
 
+app.use(metricsMiddleware);
+
 app.use(
   pinoHttp({
     logger,
@@ -61,18 +64,28 @@ app.use(
     customReceivedMessage: function (_req) {
       return `incoming request`;
     },
-    customSuccessMessage: function (req, res) {
+    customSuccessMessage: function (req, res, responseTime) {
+      return `${req.method} ${req.url} ${res.statusCode} ${responseTime}ms`;
+    },
+    customErrorMessage: function (req, res, _err) {
       return `${req.method} ${req.url} ${res.statusCode}`;
     },
-    customErrorMessage: function (req, res) {
-      return `${req.method} ${req.url} ${res.statusCode}`;
+    customLogLevel: function (_req, res, _err) {
+      if (res.statusCode >= 500) return "error";
+      if (res.statusCode >= 400) return "warn";
+      return "info";
+    },
+    customProps: function (req) {
+      return {
+        userId: (req as any).userId,
+      };
     },
     genReqId: function (req) {
       return (req as any).requestId;
     },
     autoLogging: {
       ignore: function (req) {
-        return (req as any).url === "/health";
+        return (req as any).url === "/health" || (req as any).url === "/metrics";
       },
     },
   }),

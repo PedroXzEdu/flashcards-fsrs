@@ -506,3 +506,35 @@ Playwright com Chromium, testes em `e2e/`, configurado via `e2e/playwright.confi
 ### Quando revisitar
 
 Se surgirem regressões nos flows cobertos, ou quando houver necessidade de expandir para flows adicionais (compartilhamento, analytics). Se os testes se tornarem lentos, considerar parallelização com múltiplos workers e banco isolado.
+
+---
+
+## 18. Custom In-Memory Metrics Collector em vez de Prometheus Client
+
+### Contexto
+
+Precisava-se de métricas de requisição (contadores, histograma de duração, erros) e métricas de negócio (decks criados, cards criados, revisões, imports). Alternativas: `prom-client` (padrão Prometheus), `express-prom-bundle`, ou armazenar métricas em tabela PostgreSQL.
+
+### Escolha
+
+Classe `MetricsCollector` customizada em `backend/src/middlewares/metrics.ts`, armazenando em memória (Maps de runtime), exposta via `GET /metrics` em JSON simples.
+
+### Justificativa
+
+- Zero dependências externas (sem `prom-client`, sem biblioteca extra)
+- Dados efêmeros são aceitáveis para MVP — métricas resetam ao restart, mas não há SLAs que exijam persistência
+- JSON simples é mais fácil de consumir que formato Prometheus para o escopo atual
+- Controle total sobre estrutura dos dados (histograma com buckets customizados, métricas de negócio acopladas)
+- Fácil de substituir por Prometheus client no futuro sem quebrar API (basta mudar o formato de saída)
+
+### Trade-offs
+
+- Métricas resetam ao reiniciar o servidor (sem histórico entre restarts)
+- Sem formato padrão Prometheus — não pode ser coletado automaticamente por um scraper Prometheus sem adaptador
+- Histograma em memória pode crescer se houver muitas rotas dinâmicas (mitigado usando `req.route.path` em vez de `req.path`)
+- Sem labels/tags avançadas (apenas método + rota)
+- Único processo: se horizontal scaling for implementado, cada instância tem métricas isoladas
+
+### Quando revisitar
+
+Se houver necessidade de métricas históricas, monitoramento contínuo (Grafana), ou deploy em produção com múltiplas instâncias — migrar para `prom-client` com exportação Prometheus real e scraper externo.

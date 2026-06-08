@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { deckRepository } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
 import { sanitizeInput } from "../utils/sanitize";
+import { collector } from "../middlewares/metrics";
 
 class DeckService {
   async create(data: any) {
@@ -10,12 +11,16 @@ class DeckService {
       throw new AppError("O título é obrigatório.", 400);
     }
 
-    return deckRepository.create({
+    const deck = await deckRepository.create({
       ...data,
       title: sanitizeInput(data.title),
       description: data.description ? sanitizeInput(data.description) : null,
       is_public: data.is_public || false,
     });
+
+    collector.incrementBusiness("decksCreated");
+
+    return deck;
   }
 
   async list(userId: number) {

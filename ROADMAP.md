@@ -9,6 +9,17 @@
 MVP funcional com as features principais entregues. O que falta é
 **consistência e acabamento**, não funcionalidade nova.
 
+O projeto segue agora um plano de execução estruturado em 5 fases,
+detalhado em [`.plans/tasks/`](.plans/tasks/):
+
+| Fase | Escopo |
+|---|---|
+| **01 — Observability & Monitoring** ✅ | Métricas, health check detalhado, logs enriquecidos |
+| **02 — UX Hardening** | Confirm dialogs, progresso, acessibilidade, responsivo, auto-save |
+| **03 — Database Performance & Batch** | Índices, batch create, paginação, otimização de queries |
+| **04 — Testing & Quality** | Testes de frontend, regressão FSRS, integração, E2E, ESLint, segurança |
+| **05 — Production Readiness** | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |
+
 ---
 
 ## Funcionalidades Concluídas
@@ -98,11 +109,21 @@ MVP funcional com as features principais entregues. O que falta é
 
 ---
 
-## Melhorias Futuras (pós-TCC, se quiser)
+### Fase 01 — Observability & Monitoring
 
-- Deploy real (VPS ou Railway)
-- PWA completo (já tem config base)
-- Modo offline
+- [x] Metrics middleware (`metrics.ts`) com contadores por rota, histograma de duração (50ms–5s), tracking de erros
+- [x] `GET /metrics` expondo: uptime, totalRequests, errorRate, requestsByRoute (avgDuration + histogram), business metrics
+- [x] `GET /health` enriquecido: db status (`ping()`), versão do `ts-fsrs`, uptime, memoryUsage (rss, heap)
+- [x] Logs enriquecidos via `pino-http`: customLogLevel (info/warn/error), customProps com `userId`, responseTime
+- [x] Business metrics: `decksCreated`, `cardsCreated`, `reviewsSubmitted`, `importsCompleted` (incrementados nos services)
+- [x] `ping()` function em `db.ts` para health check do banco
+
+---
+
+## Melhorias Futuras (pós-fases atuais)
+
+Itens não cobertos pelas fases planejadas:
+
 - Sistema de tags
 - Gamificação
 - Sincronização em tempo real

@@ -2,6 +2,7 @@ import { createEmptyCard } from "ts-fsrs";
 import { cardRepository } from "../repositories/cardRepository";
 import { deckRepository } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
+import { collector } from "../middlewares/metrics";
 
 class CardService {
   async create(
@@ -28,6 +29,8 @@ class CardService {
       state: emptyCard.state,
       due: emptyCard.due,
     });
+
+    collector.incrementBusiness("cardsCreated");
 
     return card;
   }

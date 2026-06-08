@@ -13,6 +13,15 @@ export const pool = new Pool({
   database: env.db.name,
 });
 
+export async function ping(): Promise<boolean> {
+  try {
+    await pool.query("SELECT 1");
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function runMigrations() {
   const sql = fs.readFileSync(path.join(__dirname, "migrations.sql"), "utf-8");
   await pool.query(sql);
