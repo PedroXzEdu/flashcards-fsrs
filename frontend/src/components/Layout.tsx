@@ -100,6 +100,7 @@ export default function Layout({
           {backTo ? (
             <button
               type="button"
+              aria-label={backLabel ? `Voltar para ${backLabel}` : "Voltar"}
               onClick={() => navigate(backTo)}
               onMouseEnter={() => setBackHover(true)}
               onMouseLeave={() => {
@@ -159,6 +160,7 @@ export default function Layout({
               type="button"
               onClick={() => navigate("/stats")}
               title="Estatísticas globais"
+              aria-label="Estatísticas globais"
               style={{
                 background: "none",
                 border: "none",

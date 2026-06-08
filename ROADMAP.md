@@ -15,7 +15,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 | Fase | Escopo |
 |---|---|
 | **01 — Observability & Monitoring** ✅ | Métricas, health check detalhado, logs enriquecidos |
-| **02 — UX Hardening** | Confirm dialogs, progresso, acessibilidade, responsivo, auto-save |
+| **02 — UX Hardening** ✅ | Confirm dialogs, progresso, acessibilidade, responsivo, auto-save |
 | **03 — Database Performance & Batch** | Índices, batch create, paginação, otimização de queries |
 | **04 — Testing & Quality** | Testes de frontend, regressão FSRS, integração, E2E, ESLint, segurança |
 | **05 — Production Readiness** | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |

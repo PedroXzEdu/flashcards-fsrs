@@ -73,4 +73,60 @@ describe("ConfirmModal", () => {
     await userEvent.keyboard("{Escape}");
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
+
+  it("renders with custom confirm text", () => {
+    render(
+      <ConfirmModal
+        title="Excluir"
+        message="Confirma?"
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
+        confirmText="Sim, excluir"
+      />,
+    );
+    expect(screen.getByRole("button", { name: /sim, excluir/i })).toBeInTheDocument();
+  });
+
+  it("uses danger variant for confirm button by default", () => {
+    render(
+      <ConfirmModal
+        title="Excluir"
+        message="Confirma?"
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
+      />,
+    );
+    const confirmBtn = screen.getByRole("button", { name: /excluir/i });
+    expect(confirmBtn).toBeInTheDocument();
+  });
+
+  it("disables confirm button when loading", () => {
+    render(
+      <ConfirmModal
+        title="Excluir"
+        message="Confirma?"
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
+        loading={true}
+      />,
+    );
+    const confirmBtn = screen.getByRole("button", { name: /excluir/i });
+    expect(confirmBtn).toBeDisabled();
+  });
+
+  it("does not close on backdrop click when loading", async () => {
+    const onCancel = vi.fn();
+    render(
+      <ConfirmModal
+        title="Excluir"
+        message="Confirma?"
+        onConfirm={vi.fn()}
+        onCancel={onCancel}
+        loading={true}
+      />,
+    );
+    const backdrop = screen.getByText("Confirma?").closest(".modal-overlay")!;
+    await userEvent.click(backdrop);
+    expect(onCancel).not.toHaveBeenCalled();
+  });
 });

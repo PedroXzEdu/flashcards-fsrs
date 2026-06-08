@@ -40,7 +40,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     return json.data as T;
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") {
-      throw new Error("Requisição excedeu o tempo limite", { cause: err });
+      throw new Error("O servidor não respondeu. Verifique sua conexão.", { cause: err });
+    }
+    if (err instanceof TypeError && err.message === "Failed to fetch") {
+      throw new Error("Sem conexão com o servidor. Verifique sua conexão.", { cause: err });
     }
     throw err;
   } finally {

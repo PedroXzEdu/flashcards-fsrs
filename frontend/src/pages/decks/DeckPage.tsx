@@ -56,7 +56,8 @@ export default function DeckPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [editingCard, setEditingCard] = useState<Card | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<Card | null>(null);
+  const [saveStatus, setSaveStatus] = useState<"saving" | "saved" | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [newCardsPerDay, setNewCardsPerDay] = useState(20);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -165,6 +166,7 @@ export default function DeckPage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    setSaveStatus("saving");
     try {
       if (editingCard) {
         const updated = await cardsApi.update(
@@ -182,9 +184,12 @@ export default function DeckPage() {
       setFront("");
       setBack("");
       setShowForm(false);
+      setSaveStatus("saved");
       toast.success("Card salvo");
+      setTimeout(() => setSaveStatus(null), 2000);
     } catch {
       setError("Erro ao salvar card.");
+      setSaveStatus(null);
       toast.error("Erro ao salvar card.");
     } finally {
       setSaving(false);
@@ -224,11 +229,11 @@ export default function DeckPage() {
     }
   }
 
-  async function handleDelete(cardId: number) {
+  async function handleDelete(card: Card) {
     setDeleting(true);
     try {
-      await cardsApi.delete(deckId, cardId);
-      setCards((p) => p.filter((c) => c.id !== cardId));
+      await cardsApi.delete(deckId, card.id);
+      setCards((p) => p.filter((c) => c.id !== card.id));
       toast.success("Card excluído");
       setConfirmDelete(null);
     } catch {
@@ -512,7 +517,11 @@ export default function DeckPage() {
       {confirmDelete !== null && (
         <ConfirmModal
           title="Excluir card"
-          message="Tem certeza que deseja excluir este card? O histórico de revisões também será removido."
+          message={
+            <>Tem certeza que deseja excluir o card abaixo? O histórico de revisões também será removido.<br /><br /><strong>Frente:</strong> {
+              confirmDelete.front.replace(/<[^>]*>/g, "").substring(0, 120)
+            }</>
+          }
           onConfirm={() => handleDelete(confirmDelete)}
           onCancel={() => setConfirmDelete(null)}
           loading={deleting}
@@ -910,7 +919,7 @@ export default function DeckPage() {
               />
             </div>
           </div>
-          <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
+          <div style={{ display: "flex", gap: "8px", marginTop: "16px", alignItems: "center" }}>
             <Button
               type="submit"
               size="sm"
@@ -921,6 +930,18 @@ export default function DeckPage() {
             <Button type="button" variant="secondary" size="sm" onClick={cancelForm}>
               Cancelar
             </Button>
+            {saveStatus === "saved" && (
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "var(--success)",
+                  fontWeight: 500,
+                  animation: "fadeIn 0.2s ease",
+                }}
+              >
+                Salvo ✓
+              </span>
+            )}
           </div>
         </form>
       )}
@@ -1159,7 +1180,7 @@ export default function DeckPage() {
                     variant="ghost"
                     size="sm"
                     icon={<Trash2 size={13} />}
-                    onClick={() => setConfirmDelete(card.id)}
+                    onClick={() => setConfirmDelete(card)}
                     style={{ color: "var(--danger)" }}
                     aria-label="Excluir card"
                   />

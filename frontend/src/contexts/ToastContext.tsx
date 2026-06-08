@@ -13,6 +13,7 @@ type ToastContextType = {
     success: (msg: string) => void;
     error: (msg: string) => void;
     info: (msg: string) => void;
+    networkError: (msg: string) => void;
   };
 };
 
@@ -21,20 +22,26 @@ const ToastContext = createContext<ToastContextType | null>(null);
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const addToast = useCallback((type: Toast["type"], message: string) => {
+  const addToast = useCallback((type: Toast["type"], message: string, duration?: number) => {
     const id = Date.now() + Math.random();
-    const newToast: Toast = { id, type, message };
-    setToasts((prev) => [...prev, newToast]);
-    const duration = type === "error" ? 5000 : 2000;
+    const added = { id, type, message };
+    setToasts((prev) => {
+      if (prev.length > 0 && prev[prev.length - 1].message === message && prev[prev.length - 1].type === type) {
+        return prev;
+      }
+      return [...prev, added];
+    });
+    const ms = duration ?? (type === "error" ? 8000 : 2000);
     setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, duration);
+      setToasts((p) => p.filter((t) => t.id !== id));
+    }, ms);
   }, []);
 
   const toast = {
     success: (msg: string) => addToast("success", msg),
     error: (msg: string) => addToast("error", msg),
     info: (msg: string) => addToast("info", msg),
+    networkError: (msg: string) => addToast("error", msg, 8000),
   };
 
   return (
@@ -42,7 +49,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       {children}
       <div className="toast-container" aria-live="polite" aria-atomic="false">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast toast-${t.type}`}>
+          <div key={t.id} className={`toast toast-${t.type}`} role="status">
             {" "}
             {t.message}{" "}
           </div>

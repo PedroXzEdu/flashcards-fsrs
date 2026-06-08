@@ -7,6 +7,7 @@ import { X, Sun, Moon, Check, RotateCcw, Shuffle, LogOut } from "lucide-react";
 import Tooltip from "../../components/Tooltip";
 import CardContent from "../../components/CardContent";
 import ConfirmModal from "../../components/ConfirmModal";
+import ProgressBar from "../../components/ProgressBar";
 import EmptyState from "../../components/EmptyState";
 import { SkeletonReviewCard } from "../../components/SkeletonCard";
 
@@ -417,7 +418,6 @@ export default function ReviewPage() {
     );
 
   const card = cards[index];
-  const progress = (index / cards.length) * 100;
 
   return (
     <div
@@ -493,17 +493,10 @@ export default function ReviewPage() {
               />
             ))}
           </div>
-          <span
-            style={{
-              fontSize: "12px",
-              color: "var(--text-muted)",
-              fontFamily: "JetBrains Mono, monospace",
-            }}
-          >
-            {index + 1} / {cards.length}
-          </span>
+
           <button
             type="button"
+            aria-label="Embaralhar ordem dos cards"
             onClick={() => {
               setShuffled((s) => !s);
               setCards((prev) =>
@@ -530,6 +523,7 @@ export default function ReviewPage() {
           </button>
           <button
             type="button"
+            aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
             onClick={toggle}
             style={{
               background: "var(--bg-card)",
@@ -548,15 +542,8 @@ export default function ReviewPage() {
       </header>
 
       {/* Progress bar */}
-      <div style={{ height: "3px", background: "var(--border)" }}>
-        <div
-          style={{
-            height: "100%",
-            background: "var(--accent)",
-            width: `${progress}%`,
-            transition: "width 0.5s ease",
-          }}
-        />
+      <div style={{ padding: "12px 24px 0" }}>
+        <ProgressBar current={index} total={cards.length} />
       </div>
 
       {/* Card area */}
@@ -583,6 +570,15 @@ export default function ReviewPage() {
               {/* Frente */}
               <div
                 className="card-face"
+                tabIndex={flipped ? undefined : 0}
+                role="button"
+                aria-label={flipped ? "Card virado" : "Clique para virar o card"}
+                onKeyDown={(e) => {
+                  if (e.key === " ") {
+                    e.preventDefault();
+                    handleFlip();
+                  }
+                }}
                 style={{
                   background: "var(--bg-card)",
                   border: "1px solid var(--border)",
@@ -804,6 +800,17 @@ export default function ReviewPage() {
           .rating-grid {
             grid-template-columns: repeat(2, 1fr) !important;
           }
+          .card-flip-container {
+            width: 100% !important;
+          }
+        }
+        @media (max-width: 360px) {
+          .rating-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        .card-face {
+          min-height: clamp(200px, 40vh, 280px) !important;
         }
       `}</style>
     </div>

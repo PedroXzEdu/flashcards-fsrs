@@ -5,7 +5,7 @@ import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface Props {
   title: string;
-  message: string;
+  message: React.ReactNode;
   onConfirm: () => void;
   onCancel: () => void;
   confirmText?: string;
