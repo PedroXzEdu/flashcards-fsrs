@@ -114,7 +114,13 @@ O projeto segue uma arquitetura separada entre frontend e backend.
 flashfsrs/
 ├── frontend/          # React + Vite
 ├── backend/           # Express + PostgreSQL
+├── e2e/               # Playwright (E2E)
+├── .plans/            # Planos de desenvolvimento
+├── .graphify/         # Knowledge graph
+├── .husky/            # Git hooks
 ├── docker-compose.yml
+├── Dockerfile
+├── package.json
 ├── AGENTS.md
 └── README.md
 ```
@@ -125,12 +131,18 @@ Estrutura baseada em camadas:
 
 ```txt
 src/
-├── controllers/
-├── services/
-├── middlewares/
-├── routes/
-├── database/
+├── app.ts
+├── server.ts
 ├── config/
+├── controllers/
+├── database/
+├── middlewares/
+├── repositories/
+├── routes/
+├── schemas/
+├── services/
+├── tests/
+├── types/
 └── utils/
 ```
 
@@ -140,10 +152,16 @@ Estrutura baseada em páginas e componentes:
 
 ```txt
 src/
+├── main.tsx
+├── App.tsx
+├── api/
+├── assets/
 ├── components/
-├── pages/
 ├── contexts/
+├── hooks/
+├── pages/
 ├── services/
+├── test/
 └── types/
 ```
 
@@ -158,8 +176,8 @@ O projeto usa três arquivos de ambiente no diretório `backend/`:
 | Arquivo        | Finalidade                           | `DB_HOST`              |
 | -------------- | ------------------------------------ | ---------------------- |
 | `.env`         | Fonte de verdade para Docker Compose | `db` (nome do serviço) |
-| `.env.local`   | Execução local sem Docker            | `localhost`            |
-| `.env.example` | Template público para onboarding     | `localhost`            |
+| `.env.example` | Template para execução local         | `localhost`            |
+| `.env.test`    | Ambiente de testes (docker)          | `db-test`              |
 
 **Regra importante:** Nunca use `localhost` como hostname do Postgres dentro de containers Docker. Dentro da rede do Docker, o banco é acessível pelo nome do serviço (`db`).
 
@@ -177,8 +195,8 @@ O projeto usa três arquivos de ambiente no diretório `backend/`:
 #### 1. Clone o repositório
 
 ```bash
-git clone [<url-do-repositorio>](https://github.com/PedroXzEdu/flashfsrs)
-cd flashcards-fsrs
+git clone https://github.com/PedroXzEdu/flashfsrs
+cd flashfsrs
 ```
 
 #### 2. Suba os containers
@@ -188,6 +206,7 @@ docker compose up
 ```
 
 O backend usa `backend/.env` (`DB_HOST=db`) e o Postgres sobe automaticamente com health check.
+O `docker compose.yml` também define os serviços `tools` (utilitários CLI) e `db-test` (banco de testes).
 
 #### 3. Acesse a aplicação
 
@@ -207,10 +226,10 @@ Health: `http://localhost:3000/health`
 #### 1. Configure o ambiente local
 
 ```bash
-cp backend/.env.local backend/.env
+cp backend/.env.example backend/.env
 ```
 
-Isso copia o arquivo com `DB_HOST=localhost` para o backend.
+Edite `DB_HOST=localhost` e ajuste as credenciais do seu PostgreSQL local.
 
 #### 2. Instale as dependências
 
@@ -313,10 +332,22 @@ O projeto possui testes automatizados para:
 
 - Auth, ErrorHandler, RateLimiter, RequestId, Validate
 
-Executar:
+### E2E (Playwright)
+
+- Autenticação (login, registro)
+- Importação `.apkg`
+- Revisão FSRS
+
+Executar testes unitários do backend:
 
 ```bash
 docker compose exec backend npm test
+```
+
+Executar testes E2E:
+
+```bash
+npm run test:e2e
 ```
 
 ---

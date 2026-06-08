@@ -25,14 +25,13 @@ Separação por camadas no backend: Controller → Service → Repository.
 
 ### Convenção de Ambientes `.env`
 
-Quatro arquivos em `backend/` definem a configuração do backend:
+Três arquivos em `backend/` definem a configuração do backend:
 
 | Arquivo        | Uso                                                   | `DB_HOST`   |
 | -------------- | ----------------------------------------------------- | ----------- |
 | `.env`         | Fonte de verdade para Docker Compose (via `env_file`) | `db`        |
-| `.env.local`   | Execução local sem Docker (copiar para `.env`)        | `localhost` |
+| `.env.example` | Template para execução local (copiar para `.env`)     | `localhost` |
 | `.env.test`    | Testes de integração (via Vitest `dotenv` option)     | `db-test`   |
-| `.env.example` | Template público com valores placeholder              | `localhost` |
 
 **Regra:** Dentro de containers Docker, o Postgres é acessível pelo nome do serviço (`db` ou `db-test`), nunca por `localhost`.
 

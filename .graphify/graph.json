@@ -6060,374 +6060,6 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "relation": "contains",
-      "source": "workspace_README",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::flashfsrs"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::funcionalidades"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::autenticação"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::gestão_de_baralhos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::gestão_de_cards"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::sistema_de_revisão__fsrs"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::estatísticas"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::funcionalidades",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::qualidade_e_engenharia"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::stack_tecnológica"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::stack_tecnológica",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::frontend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::stack_tecnológica",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::stack_tecnológica",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::infraestrutura"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::stack_tecnológica",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::qualidade"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::arquitetura"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::arquitetura",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::arquitetura",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::frontend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::como_executar_o_projeto"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::como_executar_o_projeto",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::ambientes__env"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::como_executar_o_projeto",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::docker__recomendado"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::docker__recomendado",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::pré_requisitos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::docker__recomendado",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::1__clone_o_repositório"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::docker__recomendado",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::2__suba_os_containers"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::docker__recomendado",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::3__acesse_a_aplicação"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::como_executar_o_projeto",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::local__sem_docker"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::local__sem_docker",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::pré_requisitos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::local__sem_docker",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::1__configure_o_ambiente_local"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::local__sem_docker",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::2__instale_as_dependências"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::local__sem_docker",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::3__execute_o_backend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::scripts_úteis"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::scripts_úteis",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::frontend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::scripts_úteis",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::scripts_úteis",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::formatação"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::scripts_úteis",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::graphify___knowledge_graph"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::graphify___knowledge_graph",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::regenerar_o_grafo_manualmente"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::graphify___knowledge_graph",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::atualização_incremental"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::graphify___knowledge_graph",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::modo_watch"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::graphify___knowledge_graph",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::consultar_o_grafo"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::graphify___knowledge_graph",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::atualização_automática__pre_commit"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::testes"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::testes",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend___services__10_arquivos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::testes",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend___controllers__8_arquivos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::testes",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::backend___middlewares__5_arquivos"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::segurança"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::roadmap"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::autor"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_README::flashfsrs",
-      "source_file": "/workspace/README.md",
-      "target": "workspace_README::licença"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
       "source": "tasks_phase_01_observability",
       "source_file": "/workspace/.plans/tasks/phase_01_observability.md",
       "target": "tasks_phase_01_observability::phase_01___observability___monitoring"
@@ -9127,118 +8759,6 @@
       "source": "workspace_DECISIONS::18__custom_in_memory_metrics_collector_em_vez_de_prometheus_client",
       "source_file": "/workspace/DECISIONS.md",
       "target": "workspace_DECISIONS::quando_revisitar"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::architecture___flashfsrs"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::1__visão_geral"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::1__visão_geral",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::convenção_de_ambientes___env"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::2__estrutura_de_pastas"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::3__responsabilidades_por_camada"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::backend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::frontend"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::4__fluxos_importantes"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::revisão_fsrs"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::import__apkg"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::compartilhamento_de_deck"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::5__regras_arquiteturais"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::6__inconsistências_conhecidas"
-    },
-    {
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "relation": "contains",
-      "source": "workspace_ARCHITECTURE::6__inconsistências_conhecidas",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "target": "workspace_ARCHITECTURE::_importcontroller__faz_parsing_de_sqlite_do___apkg__diretamente"
     },
     {
       "confidence": "EXTRACTED",
@@ -15031,6 +14551,510 @@
       "source": "decks_DeckPage::cancelForm",
       "source_file": "/workspace/frontend/src/pages/decks/DeckPage.tsx",
       "target": "setback"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::architecture___flashfsrs"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::1__visão_geral"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::1__visão_geral",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::convenção_de_ambientes___env"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::2__estrutura_de_pastas"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::3__responsabilidades_por_camada"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::backend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::frontend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::4__fluxos_importantes"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::revisão_fsrs"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::import__apkg"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::4__fluxos_importantes",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::compartilhamento_de_deck"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::5__regras_arquiteturais"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::6__inconsistências_conhecidas"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_ARCHITECTURE::6__inconsistências_conhecidas",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "target": "workspace_ARCHITECTURE::_importcontroller__faz_parsing_de_sqlite_do___apkg__diretamente"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::flashfsrs"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::preview"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::funcionalidades"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::autenticação"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::gestão_de_baralhos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::gestão_de_cards"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::sistema_de_revisão__fsrs"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::estatísticas"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::funcionalidades",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::qualidade_e_engenharia"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::stack_tecnológica"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::stack_tecnológica",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::frontend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::stack_tecnológica",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::stack_tecnológica",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::infraestrutura"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::stack_tecnológica",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::qualidade"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::arquitetura"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::arquitetura",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::arquitetura",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::frontend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::como_executar_o_projeto"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::como_executar_o_projeto",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::ambientes__env"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::como_executar_o_projeto",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::docker__recomendado"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::docker__recomendado",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::pré_requisitos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::docker__recomendado",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::1__clone_o_repositório"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::docker__recomendado",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::2__suba_os_containers"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::docker__recomendado",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::3__acesse_a_aplicação"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::como_executar_o_projeto",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::local__sem_docker"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::local__sem_docker",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::pré_requisitos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::local__sem_docker",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::1__configure_o_ambiente_local"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::local__sem_docker",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::2__instale_as_dependências"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::local__sem_docker",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::3__execute_o_backend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::scripts_úteis"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::scripts_úteis",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::frontend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::scripts_úteis",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::scripts_úteis",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::formatação"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::scripts_úteis",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::graphify___knowledge_graph"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::graphify___knowledge_graph",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::regenerar_o_grafo_manualmente"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::graphify___knowledge_graph",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::atualização_incremental"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::graphify___knowledge_graph",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::modo_watch"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::graphify___knowledge_graph",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::consultar_o_grafo"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::graphify___knowledge_graph",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::atualização_automática__pre_commit"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::testes"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::testes",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend___services__10_arquivos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::testes",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend___controllers__8_arquivos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::testes",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::backend___middlewares__5_arquivos"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::testes",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::e2e__playwright"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::segurança"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::roadmap"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.8,
+      "relation": "references",
+      "source": "workspace_README",
+      "source_file": "/workspace/README.md",
+      "target": "roadmap"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::autor"
+    },
+    {
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "relation": "contains",
+      "source": "workspace_README::flashfsrs",
+      "source_file": "/workspace/README.md",
+      "target": "workspace_README::licença"
     }
   ],
   "nodes": [
@@ -15170,7 +15194,7 @@
       "source_line": 128
     },
     {
-      "community": 290,
+      "community": 297,
       "docstring": null,
       "file_type": "document",
       "id": "agents_reviewer::formato_obrigatório_da_review",
@@ -15179,7 +15203,7 @@
       "source_line": 132
     },
     {
-      "community": 290,
+      "community": 297,
       "docstring": null,
       "file_type": "document",
       "id": "agents_reviewer::review___arquivo_s__ou_escopo",
@@ -15215,7 +15239,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "stub",
       "id": "zod",
@@ -15233,7 +15257,7 @@
       "source_line": null
     },
     {
-      "community": 369,
+      "community": 595,
       "docstring": null,
       "file_type": "code",
       "id": "config_logger",
@@ -15242,7 +15266,7 @@
       "source_line": null
     },
     {
-      "community": 369,
+      "community": 595,
       "docstring": null,
       "file_type": "stub",
       "id": "pino",
@@ -15251,7 +15275,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 386,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController",
@@ -15260,7 +15284,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 390,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController::getRetentionRate",
@@ -15269,7 +15293,7 @@
       "source_line": 7
     },
     {
-      "community": 578,
+      "community": 391,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController::getReviewHeatmap",
@@ -15278,7 +15302,7 @@
       "source_line": 24
     },
     {
-      "community": 578,
+      "community": 388,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController::getForgettingCurve",
@@ -15287,7 +15311,7 @@
       "source_line": 41
     },
     {
-      "community": 578,
+      "community": 389,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController::getPredictedRecall",
@@ -15305,7 +15329,7 @@
       "source_line": 75
     },
     {
-      "community": 578,
+      "community": 387,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_analyticsController::getDailyQueue",
@@ -15314,7 +15338,7 @@
       "source_line": 103
     },
     {
-      "community": 578,
+      "community": 684,
       "docstring": null,
       "file_type": "stub",
       "id": "___middlewares_auth",
@@ -15323,7 +15347,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 386,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_analyticsservice",
@@ -15332,7 +15356,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 386,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_priorityqueueservice",
@@ -15341,7 +15365,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "stub",
       "id": "json",
@@ -15368,7 +15392,7 @@
       "source_line": null
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "stub",
       "id": "max",
@@ -15386,7 +15410,7 @@
       "source_line": null
     },
     {
-      "community": 393,
+      "community": 112,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_authController",
@@ -15395,7 +15419,7 @@
       "source_line": null
     },
     {
-      "community": 395,
+      "community": 112,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_authController::AuthController",
@@ -15404,7 +15428,7 @@
       "source_line": 4
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_authController::AuthController::register",
@@ -15422,7 +15446,7 @@
       "source_line": 22
     },
     {
-      "community": 393,
+      "community": 112,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_authservice",
@@ -15440,7 +15464,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 398,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_cardController",
@@ -15449,7 +15473,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_cardController::createCard",
@@ -15458,7 +15482,7 @@
       "source_line": 4
     },
     {
-      "community": 578,
+      "community": 398,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_cardController::getCards",
@@ -15476,7 +15500,7 @@
       "source_line": 45
     },
     {
-      "community": 636,
+      "community": 578,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_cardController::deleteCard",
@@ -15485,7 +15509,7 @@
       "source_line": 67
     },
     {
-      "community": 578,
+      "community": 398,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_cardservice",
@@ -15494,7 +15518,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "stub",
       "id": "repositories_cardRepository::CardRepository::create",
@@ -15503,7 +15527,7 @@
       "source_line": null
     },
     {
-      "community": 718,
+      "community": 719,
       "docstring": null,
       "file_type": "stub",
       "id": "services_cardService::CardService::list",
@@ -15521,7 +15545,7 @@
       "source_line": null
     },
     {
-      "community": 636,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "repositories_cardRepository::CardRepository::delete",
@@ -15530,7 +15554,7 @@
       "source_line": null
     },
     {
-      "community": 636,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "send",
@@ -15539,7 +15563,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 419,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewController",
@@ -15548,7 +15572,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 419,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewController::getReviewCards",
@@ -15557,7 +15581,7 @@
       "source_line": 6
     },
     {
-      "community": 578,
+      "community": 421,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewController::previewReview",
@@ -15566,7 +15590,7 @@
       "source_line": 26
     },
     {
-      "community": 578,
+      "community": 422,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewController::submitReview",
@@ -15575,7 +15599,7 @@
       "source_line": 46
     },
     {
-      "community": 578,
+      "community": 419,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_reviewservice",
@@ -15593,7 +15617,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 423,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewLogsController",
@@ -15611,7 +15635,7 @@
       "source_line": 4
     },
     {
-      "community": 578,
+      "community": 425,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewLogsController::getDailyStats",
@@ -15620,7 +15644,7 @@
       "source_line": 21
     },
     {
-      "community": 578,
+      "community": 428,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewLogsController::getStreak",
@@ -15629,7 +15653,7 @@
       "source_line": 38
     },
     {
-      "community": 578,
+      "community": 424,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewLogsController::getActivity",
@@ -15638,7 +15662,7 @@
       "source_line": 55
     },
     {
-      "community": 578,
+      "community": 426,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_reviewLogsController::getGlobalStats",
@@ -15647,7 +15671,7 @@
       "source_line": 72
     },
     {
-      "community": 578,
+      "community": 423,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_reviewlogsservice",
@@ -15656,7 +15680,7 @@
       "source_line": null
     },
     {
-      "community": 751,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "services_reviewLogsService::ReviewLogsService::getRecent",
@@ -15728,7 +15752,7 @@
       "source_line": null
     },
     {
-      "community": 172,
+      "community": 164,
       "docstring": null,
       "file_type": "stub",
       "id": "______utils_apperror",
@@ -16115,7 +16139,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 567,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_requestId",
@@ -16124,7 +16148,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 578,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_requestId::requestId",
@@ -16133,7 +16157,7 @@
       "source_line": 9
     },
     {
-      "community": 436,
+      "community": 567,
       "docstring": null,
       "file_type": "stub",
       "id": "crypto",
@@ -16142,7 +16166,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "randomuuid",
@@ -16151,7 +16175,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "setheader",
@@ -16196,7 +16220,7 @@
       "source_line": null
     },
     {
-      "community": 203,
+      "community": 205,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___errorHandler.test",
@@ -16205,7 +16229,7 @@
       "source_line": null
     },
     {
-      "community": 203,
+      "community": 205,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___errorHandler.test::createReq",
@@ -16223,7 +16247,7 @@
       "source_line": 18
     },
     {
-      "community": 203,
+      "community": 205,
       "docstring": null,
       "file_type": "stub",
       "id": "___errorhandler",
@@ -16232,7 +16256,7 @@
       "source_line": null
     },
     {
-      "community": 227,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___rateLimiter.test",
@@ -16241,7 +16265,7 @@
       "source_line": null
     },
     {
-      "community": 227,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "___ratelimiter",
@@ -16250,7 +16274,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 228,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___requestId.test",
@@ -16259,7 +16283,7 @@
       "source_line": null
     },
     {
-      "community": 436,
+      "community": 228,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___requestId.test::createReq",
@@ -16277,7 +16301,7 @@
       "source_line": 9
     },
     {
-      "community": 436,
+      "community": 228,
       "docstring": null,
       "file_type": "stub",
       "id": "___requestid",
@@ -16286,7 +16310,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 251,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___validate.test",
@@ -16295,7 +16319,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 251,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___validate.test::createReq",
@@ -16313,7 +16337,7 @@
       "source_line": 9
     },
     {
-      "community": 1107,
+      "community": 251,
       "docstring": null,
       "file_type": "stub",
       "id": "___validate",
@@ -16367,7 +16391,7 @@
       "source_line": 45
     },
     {
-      "community": 818,
+      "community": 627,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_analyticsRepository::AnalyticsRepository::getWorkloadForecast",
@@ -16385,7 +16409,7 @@
       "source_line": 82
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "stub",
       "id": "slice",
@@ -16394,7 +16418,7 @@
       "source_line": null
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository",
@@ -16403,7 +16427,7 @@
       "source_line": null
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository",
@@ -16412,7 +16436,7 @@
       "source_line": 3
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::create",
@@ -16421,7 +16445,7 @@
       "source_line": 4
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::findByUser",
@@ -16430,7 +16454,7 @@
       "source_line": 15
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::findById",
@@ -16439,7 +16463,7 @@
       "source_line": 29
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::update",
@@ -16448,7 +16472,7 @@
       "source_line": 42
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::delete",
@@ -16457,7 +16481,7 @@
       "source_line": 54
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::exists",
@@ -16466,7 +16490,7 @@
       "source_line": 65
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::getCardStats",
@@ -16475,7 +16499,7 @@
       "source_line": 76
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::getReviewStats",
@@ -16484,7 +16508,7 @@
       "source_line": 95
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::findByIdRaw",
@@ -16493,7 +16517,7 @@
       "source_line": 128
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::updateShareToken",
@@ -16502,7 +16526,7 @@
       "source_line": 139
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::removeShareToken",
@@ -16511,7 +16535,7 @@
       "source_line": 151
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::findByShareToken",
@@ -16520,7 +16544,7 @@
       "source_line": 163
     },
     {
-      "community": 645,
+      "community": 654,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::getSharedDeckPreview",
@@ -16529,7 +16553,7 @@
       "source_line": 174
     },
     {
-      "community": 645,
+      "community": 723,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_deckRepository::DeckRepository::createCopy",
@@ -16565,7 +16589,7 @@
       "source_line": 4
     },
     {
-      "community": 660,
+      "community": 578,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_reviewLogRepository::ReviewLogRepository::findRecent",
@@ -16583,7 +16607,7 @@
       "source_line": 62
     },
     {
-      "community": 818,
+      "community": 666,
       "docstring": null,
       "file_type": "code",
       "id": "repositories_reviewLogRepository::ReviewLogRepository::getReviewDays",
@@ -16610,7 +16634,7 @@
       "source_line": 116
     },
     {
-      "community": 939,
+      "community": 666,
       "docstring": null,
       "file_type": "stub",
       "id": "tostring",
@@ -16655,7 +16679,7 @@
       "source_line": 12
     },
     {
-      "community": 51,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___cardRepository.test",
@@ -16664,7 +16688,7 @@
       "source_line": null
     },
     {
-      "community": 51,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "___cardrepository",
@@ -16691,7 +16715,7 @@
       "source_line": null
     },
     {
-      "community": 683,
+      "community": 690,
       "docstring": null,
       "file_type": "code",
       "id": "routes_authRoutes",
@@ -16700,7 +16724,7 @@
       "source_line": null
     },
     {
-      "community": 683,
+      "community": 690,
       "docstring": null,
       "file_type": "stub",
       "id": "___controllers_authcontroller",
@@ -16709,7 +16733,7 @@
       "source_line": null
     },
     {
-      "community": 683,
+      "community": 690,
       "docstring": null,
       "file_type": "stub",
       "id": "___middlewares_ratelimiter",
@@ -16718,7 +16742,7 @@
       "source_line": null
     },
     {
-      "community": 684,
+      "community": 690,
       "docstring": null,
       "file_type": "stub",
       "id": "___middlewares_validate",
@@ -16727,7 +16751,7 @@
       "source_line": null
     },
     {
-      "community": 683,
+      "community": 690,
       "docstring": null,
       "file_type": "stub",
       "id": "___schemas_authschema",
@@ -16763,7 +16787,7 @@
       "source_line": null
     },
     {
-      "community": 576,
+      "community": 686,
       "docstring": null,
       "file_type": "code",
       "id": "routes_importRoutes",
@@ -16772,7 +16796,7 @@
       "source_line": null
     },
     {
-      "community": 576,
+      "community": 686,
       "docstring": null,
       "file_type": "stub",
       "id": "multer",
@@ -16781,7 +16805,7 @@
       "source_line": null
     },
     {
-      "community": 576,
+      "community": 686,
       "docstring": null,
       "file_type": "stub",
       "id": "___controllers_importcontroller",
@@ -16808,7 +16832,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "schemas_authSchema",
@@ -16817,7 +16841,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "schemas_cardSchema",
@@ -16862,7 +16886,7 @@
       "source_line": null
     },
     {
-      "community": 305,
+      "community": 789,
       "docstring": null,
       "file_type": "stub",
       "id": "catch",
@@ -16871,7 +16895,7 @@
       "source_line": null
     },
     {
-      "community": 789,
+      "community": 828,
       "docstring": null,
       "file_type": "stub",
       "id": "then",
@@ -16898,7 +16922,7 @@
       "source_line": null
     },
     {
-      "community": 677,
+      "community": 828,
       "docstring": null,
       "file_type": "stub",
       "id": "settimeout",
@@ -16925,7 +16949,7 @@
       "source_line": null
     },
     {
-      "community": 92,
+      "community": 706,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService",
@@ -16934,7 +16958,7 @@
       "source_line": 2
     },
     {
-      "community": 92,
+      "community": 706,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService::getRetentionRate",
@@ -16943,7 +16967,7 @@
       "source_line": 3
     },
     {
-      "community": 92,
+      "community": 391,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService::getReviewHeatmap",
@@ -16952,7 +16976,7 @@
       "source_line": 7
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService::getForgettingCurve",
@@ -16961,7 +16985,7 @@
       "source_line": 11
     },
     {
-      "community": 92,
+      "community": 706,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService::getWorkloadForecast",
@@ -16970,7 +16994,7 @@
       "source_line": 33
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsService::AnalyticsService::getPredictedRecall",
@@ -16988,7 +17012,7 @@
       "source_line": null
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "stub",
       "id": "exp",
@@ -16997,7 +17021,7 @@
       "source_line": null
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "stub",
       "id": "number",
@@ -17006,7 +17030,7 @@
       "source_line": null
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "stub",
       "id": "tofixed",
@@ -17024,7 +17048,7 @@
       "source_line": null
     },
     {
-      "community": 710,
+      "community": 182,
       "docstring": null,
       "file_type": "code",
       "id": "services_authService",
@@ -17069,7 +17093,7 @@
       "source_line": 43
     },
     {
-      "community": 315,
+      "community": 182,
       "docstring": null,
       "file_type": "stub",
       "id": "bcryptjs",
@@ -17078,7 +17102,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "___utils_sanitize",
@@ -17087,7 +17111,7 @@
       "source_line": null
     },
     {
-      "community": 710,
+      "community": 182,
       "docstring": null,
       "file_type": "stub",
       "id": "___repositories_userrepository",
@@ -17177,7 +17201,7 @@
       "source_line": null
     },
     {
-      "community": 723,
+      "community": 759,
       "docstring": null,
       "file_type": "stub",
       "id": "release",
@@ -17186,7 +17210,7 @@
       "source_line": null
     },
     {
-      "community": 739,
+      "community": 738,
       "docstring": null,
       "file_type": "code",
       "id": "services_fsrsService",
@@ -17195,7 +17219,7 @@
       "source_line": null
     },
     {
-      "community": 739,
+      "community": 738,
       "docstring": null,
       "file_type": "code",
       "id": "services_fsrsService::FsrsService",
@@ -17204,7 +17228,7 @@
       "source_line": 12
     },
     {
-      "community": 739,
+      "community": 738,
       "docstring": null,
       "file_type": "code",
       "id": "services_fsrsService::FsrsService::preview",
@@ -17213,7 +17237,7 @@
       "source_line": 13
     },
     {
-      "community": 739,
+      "community": 740,
       "docstring": null,
       "file_type": "code",
       "id": "services_fsrsService::FsrsService::review",
@@ -17222,7 +17246,7 @@
       "source_line": 17
     },
     {
-      "community": 739,
+      "community": 740,
       "docstring": null,
       "file_type": "stub",
       "id": "repeat",
@@ -17231,7 +17255,7 @@
       "source_line": null
     },
     {
-      "community": 745,
+      "community": 746,
       "docstring": null,
       "file_type": "code",
       "id": "services_priorityQueueService",
@@ -17240,7 +17264,7 @@
       "source_line": null
     },
     {
-      "community": 745,
+      "community": 746,
       "docstring": null,
       "file_type": "code",
       "id": "services_priorityQueueService::PriorityQueueService",
@@ -17249,7 +17273,7 @@
       "source_line": 3
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "code",
       "id": "services_priorityQueueService::PriorityQueueService::getDailyQueue",
@@ -17258,7 +17282,7 @@
       "source_line": 8
     },
     {
-      "community": 753,
+      "community": 705,
       "docstring": null,
       "file_type": "stub",
       "id": "sort",
@@ -17276,7 +17300,7 @@
       "source_line": null
     },
     {
-      "community": 751,
+      "community": 750,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewLogsService::ReviewLogsService",
@@ -17285,7 +17309,7 @@
       "source_line": 2
     },
     {
-      "community": 751,
+      "community": 750,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewLogsService::ReviewLogsService::getDailyStats",
@@ -17294,7 +17318,7 @@
       "source_line": 12
     },
     {
-      "community": 818,
+      "community": 753,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewLogsService::ReviewLogsService::getStreak",
@@ -17303,7 +17327,7 @@
       "source_line": 18
     },
     {
-      "community": 751,
+      "community": 424,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewLogsService::ReviewLogsService::getActivity",
@@ -17312,7 +17336,7 @@
       "source_line": 73
     },
     {
-      "community": 751,
+      "community": 750,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewLogsService::ReviewLogsService::getGlobalStats",
@@ -17330,7 +17354,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "stub",
       "id": "toisostring",
@@ -17339,7 +17363,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 579,
       "docstring": null,
       "file_type": "stub",
       "id": "now",
@@ -17348,7 +17372,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 182,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___authService.test",
@@ -17357,7 +17381,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 182,
       "docstring": null,
       "file_type": "stub",
       "id": "___authservice",
@@ -17366,7 +17390,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 182,
       "docstring": null,
       "file_type": "stub",
       "id": "______repositories_userrepository",
@@ -17402,7 +17426,7 @@
       "source_line": null
     },
     {
-      "community": 196,
+      "community": 220,
       "docstring": null,
       "file_type": "stub",
       "id": "______repositories_deckrepository",
@@ -17411,7 +17435,7 @@
       "source_line": null
     },
     {
-      "community": 196,
+      "community": 73,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___deckImportService.test",
@@ -17420,7 +17444,7 @@
       "source_line": null
     },
     {
-      "community": 196,
+      "community": 73,
       "docstring": null,
       "file_type": "stub",
       "id": "___deckimportservice",
@@ -17447,7 +17471,7 @@
       "source_line": 5
     },
     {
-      "community": 249,
+      "community": 206,
       "docstring": null,
       "file_type": "stub",
       "id": "___fsrsservice",
@@ -17501,7 +17525,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsService.test",
@@ -17510,7 +17534,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsService.test::today",
@@ -17519,7 +17543,7 @@
       "source_line": 16
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsService.test::yesterday",
@@ -17528,7 +17552,7 @@
       "source_line": 20
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsService.test::daysAgo",
@@ -17537,7 +17561,7 @@
       "source_line": 24
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "stub",
       "id": "___reviewlogsservice",
@@ -17546,7 +17570,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 244,
       "docstring": null,
       "file_type": "stub",
       "id": "______repositories_reviewlogrepository",
@@ -17555,7 +17579,7 @@
       "source_line": null
     },
     {
-      "community": 540,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "integration_auth.integration.test",
@@ -17564,7 +17588,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 837,
       "docstring": null,
       "file_type": "stub",
       "id": "supertest",
@@ -17573,7 +17597,7 @@
       "source_line": null
     },
     {
-      "community": 540,
+      "community": 21,
       "docstring": null,
       "file_type": "stub",
       "id": "______app",
@@ -17582,7 +17606,7 @@
       "source_line": null
     },
     {
-      "community": 540,
+      "community": 148,
       "docstring": null,
       "file_type": "stub",
       "id": "__helpers_db",
@@ -17591,7 +17615,7 @@
       "source_line": null
     },
     {
-      "community": 524,
+      "community": 525,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_db",
@@ -17600,7 +17624,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 525,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_db::getTestPool",
@@ -17609,7 +17633,7 @@
       "source_line": 6
     },
     {
-      "community": 524,
+      "community": 525,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_db::runMigrations",
@@ -17618,7 +17642,7 @@
       "source_line": 19
     },
     {
-      "community": 315,
+      "community": 525,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_db::cleanDatabase",
@@ -17627,7 +17651,7 @@
       "source_line": 26
     },
     {
-      "community": 524,
+      "community": 525,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_db::closePool",
@@ -17636,7 +17660,7 @@
       "source_line": 31
     },
     {
-      "community": 524,
+      "community": 525,
       "docstring": null,
       "file_type": "stub",
       "id": "resolve",
@@ -17645,7 +17669,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 527,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_factories",
@@ -17654,7 +17678,7 @@
       "source_line": null
     },
     {
-      "community": 315,
+      "community": 714,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_factories::createUser",
@@ -17663,7 +17687,7 @@
       "source_line": 3
     },
     {
-      "community": 315,
+      "community": 527,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_factories::createDeck",
@@ -17672,7 +17696,7 @@
       "source_line": 19
     },
     {
-      "community": 315,
+      "community": 527,
       "docstring": null,
       "file_type": "code",
       "id": "helpers_factories::createCard",
@@ -17681,7 +17705,7 @@
       "source_line": 38
     },
     {
-      "community": 315,
+      "community": 527,
       "docstring": null,
       "file_type": "stub",
       "id": "__db",
@@ -17690,7 +17714,7 @@
       "source_line": null
     },
     {
-      "community": 540,
+      "community": 837,
       "docstring": null,
       "file_type": "code",
       "id": "integration_review.integration.test",
@@ -17708,7 +17732,7 @@
       "source_line": null
     },
     {
-      "community": 961,
+      "community": 960,
       "docstring": null,
       "file_type": "code",
       "id": "utils_AppError",
@@ -17717,7 +17741,7 @@
       "source_line": null
     },
     {
-      "community": 961,
+      "community": 960,
       "docstring": null,
       "file_type": "code",
       "id": "utils_AppError::AppError",
@@ -17726,7 +17750,7 @@
       "source_line": 0
     },
     {
-      "community": 961,
+      "community": 836,
       "docstring": null,
       "file_type": "code",
       "id": "utils_AppError::AppError::constructor",
@@ -17735,7 +17759,7 @@
       "source_line": 3
     },
     {
-      "community": 344,
+      "community": 836,
       "docstring": null,
       "file_type": "stub",
       "id": "super",
@@ -17870,7 +17894,7 @@
       "source_line": null
     },
     {
-      "community": 306,
+      "community": 589,
       "docstring": null,
       "file_type": "stub",
       "id": "___types",
@@ -17879,7 +17903,7 @@
       "source_line": null
     },
     {
-      "community": 306,
+      "community": 589,
       "docstring": null,
       "file_type": "code",
       "id": "api_cards",
@@ -17906,7 +17930,7 @@
       "source_line": null
     },
     {
-      "community": 259,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "components_Button.test",
@@ -17915,7 +17939,7 @@
       "source_line": null
     },
     {
-      "community": 259,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "_testing_library_react",
@@ -17924,7 +17948,7 @@
       "source_line": null
     },
     {
-      "community": 380,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "_testing_library_user_event",
@@ -17933,7 +17957,7 @@
       "source_line": null
     },
     {
-      "community": 341,
+      "community": 328,
       "docstring": null,
       "file_type": "stub",
       "id": "__button",
@@ -18077,7 +18101,7 @@
       "source_line": null
     },
     {
-      "community": 145,
+      "community": 342,
       "docstring": null,
       "file_type": "code",
       "id": "components_ErrorBoundary.test",
@@ -18086,7 +18110,7 @@
       "source_line": null
     },
     {
-      "community": 145,
+      "community": 342,
       "docstring": null,
       "file_type": "code",
       "id": "components_ErrorBoundary.test::ProblemChild",
@@ -18095,7 +18119,7 @@
       "source_line": 4
     },
     {
-      "community": 145,
+      "community": 342,
       "docstring": null,
       "file_type": "stub",
       "id": "__errorboundary",
@@ -18104,7 +18128,7 @@
       "source_line": null
     },
     {
-      "community": 364,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "components_SkeletonCard.test",
@@ -18113,7 +18137,7 @@
       "source_line": null
     },
     {
-      "community": 364,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__skeletoncard",
@@ -18122,7 +18146,7 @@
       "source_line": null
     },
     {
-      "community": 366,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "components_Tooltip.test",
@@ -18131,7 +18155,7 @@
       "source_line": null
     },
     {
-      "community": 366,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__tooltip",
@@ -18140,7 +18164,7 @@
       "source_line": null
     },
     {
-      "community": 373,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_AuthContext.test",
@@ -18149,7 +18173,7 @@
       "source_line": null
     },
     {
-      "community": 373,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__authcontext",
@@ -18158,7 +18182,7 @@
       "source_line": null
     },
     {
-      "community": 380,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_ThemeContext.test",
@@ -18167,7 +18191,7 @@
       "source_line": null
     },
     {
-      "community": 381,
+      "community": 384,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_ThemeContext.test::TestComponent",
@@ -18176,7 +18200,7 @@
       "source_line": 5
     },
     {
-      "community": 380,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__themecontext",
@@ -18185,7 +18209,7 @@
       "source_line": null
     },
     {
-      "community": 381,
+      "community": 384,
       "docstring": null,
       "file_type": "stub",
       "id": "contexts_ThemeContext::useTheme",
@@ -18194,7 +18218,7 @@
       "source_line": null
     },
     {
-      "community": 762,
+      "community": 382,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_ThemeContext",
@@ -18203,7 +18227,7 @@
       "source_line": null
     },
     {
-      "community": 762,
+      "community": 382,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_ThemeContext::ThemeProvider",
@@ -18212,7 +18236,7 @@
       "source_line": 17
     },
     {
-      "community": 808,
+      "community": 382,
       "docstring": null,
       "file_type": "code",
       "id": "contexts_ThemeContext::toggle",
@@ -18221,7 +18245,7 @@
       "source_line": 31
     },
     {
-      "community": 762,
+      "community": 382,
       "docstring": null,
       "file_type": "stub",
       "id": "matchmedia",
@@ -18230,7 +18254,7 @@
       "source_line": null
     },
     {
-      "community": 762,
+      "community": 382,
       "docstring": null,
       "file_type": "stub",
       "id": "setattribute",
@@ -18239,7 +18263,7 @@
       "source_line": null
     },
     {
-      "community": 808,
+      "community": 382,
       "docstring": null,
       "file_type": "stub",
       "id": "settheme",
@@ -18284,7 +18308,7 @@
       "source_line": null
     },
     {
-      "community": 822,
+      "community": 826,
       "docstring": null,
       "file_type": "stub",
       "id": "__components_errorboundary",
@@ -18302,7 +18326,7 @@
       "source_line": null
     },
     {
-      "community": 459,
+      "community": 460,
       "docstring": null,
       "file_type": "code",
       "id": "decks_StatsPage",
@@ -18320,7 +18344,7 @@
       "source_line": 41
     },
     {
-      "community": 459,
+      "community": 460,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_activityheatmap",
@@ -18410,7 +18434,7 @@
       "source_line": null
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi",
@@ -18419,7 +18443,7 @@
       "source_line": null
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getRetentionRate",
@@ -18428,7 +18452,7 @@
       "source_line": 36
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getHeatmap",
@@ -18437,7 +18461,7 @@
       "source_line": 40
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getForgettingCurve",
@@ -18446,7 +18470,7 @@
       "source_line": 44
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getPredictedRecall",
@@ -18455,7 +18479,7 @@
       "source_line": 48
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getWorkloadForecast",
@@ -18464,7 +18488,7 @@
       "source_line": 52
     },
     {
-      "community": 696,
+      "community": 702,
       "docstring": null,
       "file_type": "code",
       "id": "services_analyticsApi::getDailyQueue",
@@ -18545,7 +18569,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "code",
       "id": "plugins_graphify",
@@ -18554,7 +18578,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "stub",
       "id": "fs",
@@ -18563,7 +18587,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "stub",
       "id": "path",
@@ -18581,7 +18605,7 @@
       "source_line": null
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_deckController::createDeck",
@@ -18662,7 +18686,7 @@
       "source_line": 155
     },
     {
-      "community": 578,
+      "community": 558,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_deckController::importSharedDeck",
@@ -18725,7 +18749,7 @@
       "source_line": null
     },
     {
-      "community": 798,
+      "community": 578,
       "docstring": null,
       "file_type": "stub",
       "id": "updatesettings",
@@ -18761,7 +18785,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_importController",
@@ -18779,7 +18803,7 @@
       "source_line": 19
     },
     {
-      "community": 624,
+      "community": 543,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_importController::processMidiaRefs",
@@ -18788,7 +18812,7 @@
       "source_line": 104
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "stub",
       "id": "unzipper",
@@ -18806,7 +18830,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "___utils_apperror",
@@ -18815,7 +18839,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "stub",
       "id": "___services_importservice",
@@ -18887,7 +18911,7 @@
       "source_line": null
     },
     {
-      "community": 613,
+      "community": 543,
       "docstring": null,
       "file_type": "stub",
       "id": "readfilesync",
@@ -18896,7 +18920,7 @@
       "source_line": null
     },
     {
-      "community": 543,
+      "community": 1109,
       "docstring": null,
       "file_type": "stub",
       "id": "parse",
@@ -18986,7 +19010,7 @@
       "source_line": null
     },
     {
-      "community": 624,
+      "community": 543,
       "docstring": null,
       "file_type": "stub",
       "id": "replace",
@@ -19004,7 +19028,7 @@
       "source_line": null
     },
     {
-      "community": 545,
+      "community": 555,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_auth",
@@ -19022,7 +19046,7 @@
       "source_line": 9
     },
     {
-      "community": 545,
+      "community": 555,
       "docstring": null,
       "file_type": "stub",
       "id": "jsonwebtoken",
@@ -19049,7 +19073,7 @@
       "source_line": null
     },
     {
-      "community": 558,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_errorHandler",
@@ -19085,7 +19109,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_validate",
@@ -19094,7 +19118,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_validate::validate",
@@ -19175,7 +19199,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 148,
       "docstring": null,
       "file_type": "code",
       "id": "integration_decks.integration.test",
@@ -19184,7 +19208,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 148,
       "docstring": null,
       "file_type": "stub",
       "id": "__helpers_factories",
@@ -19292,384 +19316,6 @@
       "source_line": null
     },
     {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README",
-      "label": "README.md",
-      "source_file": "/workspace/README.md",
-      "source_line": null
-    },
-    {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::flashfsrs",
-      "label": "FlashFSRS",
-      "source_file": "/workspace/README.md",
-      "source_line": 1
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::funcionalidades",
-      "label": "Funcionalidades",
-      "source_file": "/workspace/README.md",
-      "source_line": 15
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::autenticação",
-      "label": "Autenticação",
-      "source_file": "/workspace/README.md",
-      "source_line": 17
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::gestão_de_baralhos",
-      "label": "Gestão de Baralhos",
-      "source_file": "/workspace/README.md",
-      "source_line": 25
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::gestão_de_cards",
-      "label": "Gestão de Cards",
-      "source_file": "/workspace/README.md",
-      "source_line": 32
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::sistema_de_revisão__fsrs",
-      "label": "Sistema de Revisão (FSRS)",
-      "source_file": "/workspace/README.md",
-      "source_line": 39
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::estatísticas",
-      "label": "Estatísticas",
-      "source_file": "/workspace/README.md",
-      "source_line": 50
-    },
-    {
-      "community": 1074,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::qualidade_e_engenharia",
-      "label": "Qualidade e Engenharia",
-      "source_file": "/workspace/README.md",
-      "source_line": 58
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::stack_tecnológica",
-      "label": "Stack Tecnológica",
-      "source_file": "/workspace/README.md",
-      "source_line": 71
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::frontend",
-      "label": "Frontend",
-      "source_file": "/workspace/README.md",
-      "source_line": 73
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::backend",
-      "label": "Backend",
-      "source_file": "/workspace/README.md",
-      "source_line": 84
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::infraestrutura",
-      "label": "Infraestrutura",
-      "source_file": "/workspace/README.md",
-      "source_line": 94
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::qualidade",
-      "label": "Qualidade",
-      "source_file": "/workspace/README.md",
-      "source_line": 99
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::arquitetura",
-      "label": "Arquitetura",
-      "source_file": "/workspace/README.md",
-      "source_line": 109
-    },
-    {
-      "community": 1067,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::como_executar_o_projeto",
-      "label": "Como Executar o Projeto",
-      "source_file": "/workspace/README.md",
-      "source_line": 152
-    },
-    {
-      "community": 1067,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::ambientes__env",
-      "label": "Ambientes .env",
-      "source_file": "/workspace/README.md",
-      "source_line": 154
-    },
-    {
-      "community": 1069,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::docker__recomendado",
-      "label": "Docker (recomendado)",
-      "source_file": "/workspace/README.md",
-      "source_line": 168
-    },
-    {
-      "community": 1069,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::pré_requisitos",
-      "label": "Pré-requisitos",
-      "source_file": "/workspace/README.md",
-      "source_line": 170
-    },
-    {
-      "community": 1069,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::1__clone_o_repositório",
-      "label": "1. Clone o repositório",
-      "source_file": "/workspace/README.md",
-      "source_line": 177
-    },
-    {
-      "community": 1069,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::2__suba_os_containers",
-      "label": "2. Suba os containers",
-      "source_file": "/workspace/README.md",
-      "source_line": 184
-    },
-    {
-      "community": 1069,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::3__acesse_a_aplicação",
-      "label": "3. Acesse a aplicação",
-      "source_file": "/workspace/README.md",
-      "source_line": 192
-    },
-    {
-      "community": 1080,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::local__sem_docker",
-      "label": "Local (sem Docker)",
-      "source_file": "/workspace/README.md",
-      "source_line": 200
-    },
-    {
-      "community": 1080,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::1__configure_o_ambiente_local",
-      "label": "1. Configure o ambiente local",
-      "source_file": "/workspace/README.md",
-      "source_line": 207
-    },
-    {
-      "community": 1080,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::2__instale_as_dependências",
-      "label": "2. Instale as dependências",
-      "source_file": "/workspace/README.md",
-      "source_line": 215
-    },
-    {
-      "community": 1080,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::3__execute_o_backend",
-      "label": "3. Execute o backend",
-      "source_file": "/workspace/README.md",
-      "source_line": 221
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::scripts_úteis",
-      "label": "Scripts Úteis",
-      "source_file": "/workspace/README.md",
-      "source_line": 231
-    },
-    {
-      "community": 1063,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::formatação",
-      "label": "Formatação",
-      "source_file": "/workspace/README.md",
-      "source_line": 250
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::graphify___knowledge_graph",
-      "label": "Graphify — Knowledge Graph",
-      "source_file": "/workspace/README.md",
-      "source_line": 257
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::regenerar_o_grafo_manualmente",
-      "label": "Regenerar o grafo manualmente",
-      "source_file": "/workspace/README.md",
-      "source_line": 261
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::atualização_incremental",
-      "label": "Atualização incremental",
-      "source_file": "/workspace/README.md",
-      "source_line": 269
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::modo_watch",
-      "label": "Modo watch",
-      "source_file": "/workspace/README.md",
-      "source_line": 277
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::consultar_o_grafo",
-      "label": "Consultar o grafo",
-      "source_file": "/workspace/README.md",
-      "source_line": 285
-    },
-    {
-      "community": 1077,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::atualização_automática__pre_commit",
-      "label": "Atualização automática (pre-commit)",
-      "source_file": "/workspace/README.md",
-      "source_line": 293
-    },
-    {
-      "community": 1091,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::testes",
-      "label": "Testes",
-      "source_file": "/workspace/README.md",
-      "source_line": 299
-    },
-    {
-      "community": 1091,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::backend___services__10_arquivos",
-      "label": "Backend — Services (10 arquivos)",
-      "source_file": "/workspace/README.md",
-      "source_line": 303
-    },
-    {
-      "community": 1091,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::backend___controllers__8_arquivos",
-      "label": "Backend — Controllers (8 arquivos)",
-      "source_file": "/workspace/README.md",
-      "source_line": 308
-    },
-    {
-      "community": 1091,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::backend___middlewares__5_arquivos",
-      "label": "Backend — Middlewares (5 arquivos)",
-      "source_file": "/workspace/README.md",
-      "source_line": 312
-    },
-    {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::segurança",
-      "label": "Segurança",
-      "source_file": "/workspace/README.md",
-      "source_line": 324
-    },
-    {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::roadmap",
-      "label": "Roadmap",
-      "source_file": "/workspace/README.md",
-      "source_line": 338
-    },
-    {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::autor",
-      "label": "Autor",
-      "source_file": "/workspace/README.md",
-      "source_line": 344
-    },
-    {
-      "community": 1071,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_README::licença",
-      "label": "Licença",
-      "source_file": "/workspace/README.md",
-      "source_line": 352
-    },
-    {
       "community": 848,
       "docstring": null,
       "file_type": "document",
@@ -19724,7 +19370,7 @@
       "source_line": 24
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::tarefas",
@@ -19733,7 +19379,7 @@
       "source_line": 30
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::task_1_1___criar_middleware_de_métricas",
@@ -19742,7 +19388,7 @@
       "source_line": 32
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::subtarefas",
@@ -19751,7 +19397,7 @@
       "source_line": 41
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::critérios_de_aceitação",
@@ -19760,7 +19406,7 @@
       "source_line": 48
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::arquivos_impactados",
@@ -19769,7 +19415,7 @@
       "source_line": 55
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::task_1_2___endpoint___metrics",
@@ -19778,7 +19424,7 @@
       "source_line": 63
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::task_1_3___health_check_detalhado",
@@ -19787,7 +19433,7 @@
       "source_line": 89
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::task_1_4___logs_enriquecidos_com_métricas",
@@ -19796,7 +19442,7 @@
       "source_line": 115
     },
     {
-      "community": 841,
+      "community": 854,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_01_observability::task_1_5___métricas_de_negócio__cardinal_count",
@@ -20048,7 +19694,7 @@
       "source_line": 25
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::tarefas",
@@ -20057,7 +19703,7 @@
       "source_line": 32
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_1___testes_de_páginas_do_frontend",
@@ -20066,7 +19712,7 @@
       "source_line": 34
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::subtarefas",
@@ -20075,7 +19721,7 @@
       "source_line": 38
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::critérios_de_aceitação",
@@ -20084,7 +19730,7 @@
       "source_line": 47
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::arquivos_impactados",
@@ -20093,7 +19739,7 @@
       "source_line": 55
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_2___testes_de_regressão_fsrs",
@@ -20102,7 +19748,7 @@
       "source_line": 63
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_3___testes_de_integração_para_import_e_analytics",
@@ -20111,7 +19757,7 @@
       "source_line": 94
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_4___testes_e2e_expandidos",
@@ -20120,7 +19766,7 @@
       "source_line": 124
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_5___eslint___qualidade_de_código",
@@ -20129,7 +19775,7 @@
       "source_line": 153
     },
     {
-      "community": 908,
+      "community": 909,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_04_testing_quality::task_4_6___testes_de_segurança",
@@ -20219,7 +19865,7 @@
       "source_line": 26
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::tarefas",
@@ -20228,7 +19874,7 @@
       "source_line": 33
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_1___csp_enforcement",
@@ -20237,7 +19883,7 @@
       "source_line": 35
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::subtarefas",
@@ -20246,7 +19892,7 @@
       "source_line": 39
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::critérios_de_aceitação",
@@ -20255,7 +19901,7 @@
       "source_line": 49
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::arquivos_impactados",
@@ -20264,7 +19910,7 @@
       "source_line": 57
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_2___pwa_funcional",
@@ -20273,7 +19919,7 @@
       "source_line": 63
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_3___hardening_de_segurança_adicional",
@@ -20282,7 +19928,7 @@
       "source_line": 93
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_4___build_otimizado",
@@ -20291,7 +19937,7 @@
       "source_line": 123
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_5___docker_compose_de_produção",
@@ -20300,7 +19946,7 @@
       "source_line": 155
     },
     {
-      "community": 930,
+      "community": 931,
       "docstring": null,
       "file_type": "document",
       "id": "tasks_phase_05_production_readiness::task_5_6___documentação_de_deploy___verificação_final",
@@ -20345,7 +19991,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "schemas_reviewSchema",
@@ -20372,7 +20018,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewSchema.test",
@@ -20381,7 +20027,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 1109,
       "docstring": null,
       "file_type": "stub",
       "id": "___reviewschema",
@@ -20390,7 +20036,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 181,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___authSchema.test",
@@ -20399,7 +20045,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 181,
       "docstring": null,
       "file_type": "stub",
       "id": "___authschema",
@@ -20408,7 +20054,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 201,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___deckSchema.test",
@@ -20417,7 +20063,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 201,
       "docstring": null,
       "file_type": "stub",
       "id": "___deckschema",
@@ -20426,7 +20072,7 @@
       "source_line": null
     },
     {
-      "community": 559,
+      "community": 563,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_metrics",
@@ -20435,7 +20081,7 @@
       "source_line": null
     },
     {
-      "community": 559,
+      "community": 563,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_metrics::MetricsCollector",
@@ -20453,7 +20099,7 @@
       "source_line": 27
     },
     {
-      "community": 717,
+      "community": 743,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_metrics::MetricsCollector::incrementBusiness",
@@ -20462,7 +20108,7 @@
       "source_line": 50
     },
     {
-      "community": 559,
+      "community": 563,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_metrics::MetricsCollector::getBusiness",
@@ -20480,7 +20126,7 @@
       "source_line": 58
     },
     {
-      "community": 818,
+      "community": 579,
       "docstring": null,
       "file_type": "code",
       "id": "middlewares_metrics::metricsMiddleware",
@@ -20525,7 +20171,7 @@
       "source_line": null
     },
     {
-      "community": 818,
+      "community": 579,
       "docstring": null,
       "file_type": "stub",
       "id": "on",
@@ -20570,7 +20216,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "routes_metricsRoutes",
@@ -20579,7 +20225,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "___middlewares_metrics",
@@ -20588,7 +20234,7 @@
       "source_line": null
     },
     {
-      "community": 486,
+      "community": 189,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___cardRoutes.test",
@@ -20597,7 +20243,7 @@
       "source_line": null
     },
     {
-      "community": 486,
+      "community": 189,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___cardRoutes.test::getRoutes",
@@ -20606,7 +20252,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 189,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___cardRoutes.test::getRoute",
@@ -20615,7 +20261,7 @@
       "source_line": 7
     },
     {
-      "community": 486,
+      "community": 189,
       "docstring": null,
       "file_type": "stub",
       "id": "___cardroutes",
@@ -20633,7 +20279,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 21,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___metricsRoutes.test",
@@ -20642,7 +20288,7 @@
       "source_line": null
     },
     {
-      "community": 968,
+      "community": 21,
       "docstring": null,
       "file_type": "stub",
       "id": "______middlewares_metrics",
@@ -20651,7 +20297,7 @@
       "source_line": null
     },
     {
-      "community": 101,
+      "community": 240,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsRoutes.test",
@@ -20660,7 +20306,7 @@
       "source_line": null
     },
     {
-      "community": 101,
+      "community": 240,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsRoutes.test::getRoutes",
@@ -20669,7 +20315,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 240,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogsRoutes.test::getRoute",
@@ -20678,7 +20324,7 @@
       "source_line": 7
     },
     {
-      "community": 101,
+      "community": 240,
       "docstring": null,
       "file_type": "stub",
       "id": "___reviewlogsroutes",
@@ -20705,7 +20351,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 217,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___importRoutes.test::getRoute",
@@ -20741,7 +20387,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 198,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___deckRoutes.test::getRoute",
@@ -20795,7 +20441,7 @@
       "source_line": null
     },
     {
-      "community": 168,
+      "community": 41,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___analyticsRoutes.test",
@@ -20804,7 +20450,7 @@
       "source_line": null
     },
     {
-      "community": 168,
+      "community": 41,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___analyticsRoutes.test::getRoutes",
@@ -20813,7 +20459,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 41,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___analyticsRoutes.test::getRoute",
@@ -20822,7 +20468,7 @@
       "source_line": 7
     },
     {
-      "community": 168,
+      "community": 41,
       "docstring": null,
       "file_type": "stub",
       "id": "___analyticsroutes",
@@ -20831,7 +20477,7 @@
       "source_line": null
     },
     {
-      "community": 178,
+      "community": 179,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___authRoutes.test",
@@ -20840,7 +20486,7 @@
       "source_line": null
     },
     {
-      "community": 178,
+      "community": 179,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___authRoutes.test::getRoutes",
@@ -20849,7 +20495,7 @@
       "source_line": 3
     },
     {
-      "community": 486,
+      "community": 179,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___authRoutes.test::getRoute",
@@ -20858,7 +20504,7 @@
       "source_line": 7
     },
     {
-      "community": 178,
+      "community": 179,
       "docstring": null,
       "file_type": "stub",
       "id": "___authroutes",
@@ -20912,7 +20558,7 @@
       "source_line": null
     },
     {
-      "community": 466,
+      "community": 464,
       "docstring": null,
       "file_type": "code",
       "id": "e2e_helpers",
@@ -20921,7 +20567,7 @@
       "source_line": null
     },
     {
-      "community": 466,
+      "community": 464,
       "docstring": null,
       "file_type": "code",
       "id": "e2e_helpers::uniqueUser",
@@ -20930,7 +20576,7 @@
       "source_line": 4
     },
     {
-      "community": 543,
+      "community": 464,
       "docstring": null,
       "file_type": "code",
       "id": "e2e_helpers::sampleApkgPath",
@@ -20975,7 +20621,7 @@
       "source_line": null
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS",
@@ -20984,7 +20630,7 @@
       "source_line": null
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::decisions___flashfsrs",
@@ -20993,7 +20639,7 @@
       "source_line": 1
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::1__raw_sql___pg___em_vez_de_prisma_orm",
@@ -21002,7 +20648,7 @@
       "source_line": 8
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::contexto",
@@ -21011,7 +20657,7 @@
       "source_line": 10
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::escolha",
@@ -21020,7 +20666,7 @@
       "source_line": 14
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::justificativa",
@@ -21029,7 +20675,7 @@
       "source_line": 18
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::trade_offs",
@@ -21038,7 +20684,7 @@
       "source_line": 25
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::quando_revisitar",
@@ -21047,7 +20693,7 @@
       "source_line": 31
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::2__express_em_vez_de_nestjs___fastify",
@@ -21056,7 +20702,7 @@
       "source_line": 37
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::3__monólito_modular_em_vez_de_microsserviços",
@@ -21065,7 +20711,7 @@
       "source_line": 66
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::4___ts_fsrs__em_vez_de_implementação_própria",
@@ -21074,7 +20720,7 @@
       "source_line": 95
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::5__docker_compose_como_ambiente_padrão",
@@ -21083,7 +20729,7 @@
       "source_line": 124
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::6__jwt_stateless__sem_refresh_token",
@@ -21092,7 +20738,7 @@
       "source_line": 154
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::7__rich_text_preservado_no_backend__sem_strip_html",
@@ -21101,7 +20747,7 @@
       "source_line": 183
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::8__sanitização_no_frontend_em_vez_do_backend",
@@ -21110,7 +20756,7 @@
       "source_line": 211
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::9__tailwind___catppuccin_em_vez_de_component_library",
@@ -21119,7 +20765,7 @@
       "source_line": 241
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::10__fetch_api_em_vez_de_axios",
@@ -21128,7 +20774,7 @@
       "source_line": 271
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::11__csp_em__reportonly",
@@ -21137,7 +20783,7 @@
       "source_line": 300
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::12__rate_limiting_granular_por_rota",
@@ -21146,7 +20792,7 @@
       "source_line": 329
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::13__zod_middleware_validation",
@@ -21155,7 +20801,7 @@
       "source_line": 358
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::14__controller___service___repository_pattern",
@@ -21164,7 +20810,7 @@
       "source_line": 386
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::15__testes_de_frontend_com_vitest___testing_library",
@@ -21173,7 +20819,7 @@
       "source_line": 415
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::16__subagent___doc__para_revisão_de_documentação",
@@ -21182,7 +20828,7 @@
       "source_line": 446
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::17__e2e_tests_com_playwright",
@@ -21191,148 +20837,13 @@
       "source_line": 476
     },
     {
-      "community": 1049,
+      "community": 1045,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_DECISIONS::18__custom_in_memory_metrics_collector_em_vez_de_prometheus_client",
       "label": "18. Custom In-Memory Metrics Collector em vez de Prometheus Client",
       "source_file": "/workspace/DECISIONS.md",
       "source_line": 512
-    },
-    {
-      "community": 1018,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE",
-      "label": "ARCHITECTURE.md",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": null
-    },
-    {
-      "community": 1018,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::architecture___flashfsrs",
-      "label": "ARCHITECTURE — FlashFSRS",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 1
-    },
-    {
-      "community": 1021,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::1__visão_geral",
-      "label": "1. Visão Geral",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 7
-    },
-    {
-      "community": 1021,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::convenção_de_ambientes___env",
-      "label": "Convenção de Ambientes `.env`",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 26
-    },
-    {
-      "community": 1018,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::2__estrutura_de_pastas",
-      "label": "2. Estrutura de Pastas",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 41
-    },
-    {
-      "community": 1019,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
-      "label": "3. Responsabilidades por Camada",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 189
-    },
-    {
-      "community": 1019,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::backend",
-      "label": "Backend",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 191
-    },
-    {
-      "community": 1019,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::frontend",
-      "label": "Frontend",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 222
-    },
-    {
-      "community": 1014,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::4__fluxos_importantes",
-      "label": "4. Fluxos Importantes",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 235
-    },
-    {
-      "community": 1014,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::revisão_fsrs",
-      "label": "Revisão FSRS",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 237
-    },
-    {
-      "community": 1014,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::import__apkg",
-      "label": "Import .apkg",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 251
-    },
-    {
-      "community": 1014,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::compartilhamento_de_deck",
-      "label": "Compartilhamento de Deck",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 265
-    },
-    {
-      "community": 1018,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::5__regras_arquiteturais",
-      "label": "5. Regras Arquiteturais",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 277
-    },
-    {
-      "community": 1017,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::6__inconsistências_conhecidas",
-      "label": "6. Inconsistências Conhecidas",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 294
-    },
-    {
-      "community": 1017,
-      "docstring": null,
-      "file_type": "document",
-      "id": "workspace_ARCHITECTURE::_importcontroller__faz_parsing_de_sqlite_do___apkg__diretamente",
-      "label": "`importController` faz parsing de SQLite do `.apkg` diretamente",
-      "source_file": "/workspace/ARCHITECTURE.md",
-      "source_line": 296
     },
     {
       "community": 277,
@@ -21461,7 +20972,7 @@
       "source_line": 128
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_cardService",
@@ -21470,7 +20981,7 @@
       "source_line": null
     },
     {
-      "community": 718,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_cardService::CardService",
@@ -21479,7 +20990,7 @@
       "source_line": 6
     },
     {
-      "community": 717,
+      "community": 743,
       "docstring": null,
       "file_type": "code",
       "id": "services_cardService::CardService::create",
@@ -21488,7 +20999,7 @@
       "source_line": 7
     },
     {
-      "community": 718,
+      "community": 720,
       "docstring": null,
       "file_type": "code",
       "id": "services_cardService::CardService::update",
@@ -21506,7 +21017,7 @@
       "source_line": 70
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "ts_fsrs",
@@ -21515,7 +21026,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "___repositories_cardrepository",
@@ -21524,7 +21035,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "___repositories_deckrepository",
@@ -21533,7 +21044,7 @@
       "source_line": null
     },
     {
-      "community": 718,
+      "community": 720,
       "docstring": null,
       "file_type": "stub",
       "id": "findbyid",
@@ -21542,7 +21053,7 @@
       "source_line": null
     },
     {
-      "community": 717,
+      "community": 743,
       "docstring": null,
       "file_type": "stub",
       "id": "createemptycard",
@@ -21551,7 +21062,7 @@
       "source_line": null
     },
     {
-      "community": 718,
+      "community": 719,
       "docstring": null,
       "file_type": "stub",
       "id": "findbydeckid",
@@ -21560,7 +21071,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_importService",
@@ -21569,7 +21080,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_importService::ImportService",
@@ -21578,7 +21089,7 @@
       "source_line": 10
     },
     {
-      "community": 717,
+      "community": 743,
       "docstring": null,
       "file_type": "code",
       "id": "services_importService::ImportService::createDeckFromAnki",
@@ -21587,7 +21098,7 @@
       "source_line": 11
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_reviewService",
@@ -21632,7 +21143,7 @@
       "source_line": 122
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "stub",
       "id": "__fsrsservice",
@@ -21668,7 +21179,7 @@
       "source_line": null
     },
     {
-      "community": 758,
+      "community": 675,
       "docstring": null,
       "file_type": "stub",
       "id": "preview",
@@ -21740,7 +21251,7 @@
       "source_line": null
     },
     {
-      "community": 196,
+      "community": 202,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___deckService.test",
@@ -21749,7 +21260,7 @@
       "source_line": null
     },
     {
-      "community": 196,
+      "community": 202,
       "docstring": null,
       "file_type": "stub",
       "id": "___deckservice",
@@ -21758,7 +21269,7 @@
       "source_line": null
     },
     {
-      "community": 715,
+      "community": 741,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService",
@@ -21767,7 +21278,7 @@
       "source_line": null
     },
     {
-      "community": 727,
+      "community": 732,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService",
@@ -21785,7 +21296,7 @@
       "source_line": 8
     },
     {
-      "community": 727,
+      "community": 731,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::list",
@@ -21803,7 +21314,7 @@
       "source_line": 39
     },
     {
-      "community": 727,
+      "community": 732,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::delete",
@@ -21812,7 +21323,7 @@
       "source_line": 54
     },
     {
-      "community": 608,
+      "community": 728,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::generateShareToken",
@@ -21839,7 +21350,7 @@
       "source_line": 83
     },
     {
-      "community": 939,
+      "community": 951,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::share",
@@ -21848,7 +21359,7 @@
       "source_line": 99
     },
     {
-      "community": 789,
+      "community": 734,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::unshare",
@@ -21857,7 +21368,7 @@
       "source_line": 119
     },
     {
-      "community": 513,
+      "community": 732,
       "docstring": null,
       "file_type": "code",
       "id": "services_deckService::DeckService::previewSharedDeck",
@@ -21866,7 +21377,7 @@
       "source_line": 131
     },
     {
-      "community": 727,
+      "community": 731,
       "docstring": null,
       "file_type": "stub",
       "id": "findbyuser",
@@ -21875,7 +21386,7 @@
       "source_line": null
     },
     {
-      "community": 608,
+      "community": 728,
       "docstring": null,
       "file_type": "stub",
       "id": "randombytes",
@@ -21911,7 +21422,7 @@
       "source_line": null
     },
     {
-      "community": 939,
+      "community": 951,
       "docstring": null,
       "file_type": "stub",
       "id": "updatesharetoken",
@@ -21920,7 +21431,7 @@
       "source_line": null
     },
     {
-      "community": 789,
+      "community": 734,
       "docstring": null,
       "file_type": "stub",
       "id": "removesharetoken",
@@ -21929,7 +21440,7 @@
       "source_line": null
     },
     {
-      "community": 513,
+      "community": 732,
       "docstring": null,
       "file_type": "stub",
       "id": "getshareddeckpreview",
@@ -21956,7 +21467,7 @@
       "source_line": null
     },
     {
-      "community": 74,
+      "community": 197,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___deckRepository.test",
@@ -21965,7 +21476,7 @@
       "source_line": null
     },
     {
-      "community": 74,
+      "community": 197,
       "docstring": null,
       "file_type": "stub",
       "id": "___deckrepository",
@@ -22001,7 +21512,7 @@
       "source_line": null
     },
     {
-      "community": 234,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___reviewLogRepository.test",
@@ -22010,7 +21521,7 @@
       "source_line": null
     },
     {
-      "community": 234,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "___reviewlogrepository",
@@ -22019,7 +21530,7 @@
       "source_line": null
     },
     {
-      "community": 1107,
+      "community": 1109,
       "docstring": null,
       "file_type": "code",
       "id": "schemas_deckSchema",
@@ -22028,7 +21539,7 @@
       "source_line": null
     },
     {
-      "community": 416,
+      "community": 531,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_healthController",
@@ -22037,7 +21548,7 @@
       "source_line": null
     },
     {
-      "community": 952,
+      "community": 544,
       "docstring": null,
       "file_type": "code",
       "id": "controllers_healthController::healthCheck",
@@ -22055,7 +21566,7 @@
       "source_line": null
     },
     {
-      "community": 952,
+      "community": 544,
       "docstring": null,
       "file_type": "stub",
       "id": "memoryusage",
@@ -22064,7 +21575,7 @@
       "source_line": null
     },
     {
-      "community": 952,
+      "community": 544,
       "docstring": null,
       "file_type": "stub",
       "id": "uptime",
@@ -22073,7 +21584,7 @@
       "source_line": null
     },
     {
-      "community": 80,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___healthController.test",
@@ -22082,7 +21593,7 @@
       "source_line": null
     },
     {
-      "community": 80,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "__tests___healthController.test::createReq",
@@ -22100,7 +21611,7 @@
       "source_line": 26
     },
     {
-      "community": 80,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "___healthcontroller",
@@ -22118,7 +21629,7 @@
       "source_line": null
     },
     {
-      "community": 613,
+      "community": 543,
       "docstring": null,
       "file_type": "code",
       "id": "database_db::runMigrations",
@@ -22163,7 +21674,7 @@
       "source_line": null
     },
     {
-      "community": 613,
+      "community": 543,
       "docstring": null,
       "file_type": "stub",
       "id": "info",
@@ -22199,7 +21710,7 @@
       "source_line": 37
     },
     {
-      "community": 687,
+      "community": 685,
       "docstring": null,
       "file_type": "stub",
       "id": "express",
@@ -22316,7 +21827,7 @@
       "source_line": null
     },
     {
-      "community": 824,
+      "community": 940,
       "docstring": null,
       "file_type": "stub",
       "id": "includes",
@@ -22487,7 +21998,7 @@
       "source_line": null
     },
     {
-      "community": 341,
+      "community": 328,
       "docstring": null,
       "file_type": "code",
       "id": "components_ErrorBoundary",
@@ -22496,7 +22007,7 @@
       "source_line": null
     },
     {
-      "community": 344,
+      "community": 836,
       "docstring": null,
       "file_type": "code",
       "id": "components_ErrorBoundary::constructor",
@@ -22505,7 +22016,7 @@
       "source_line": 13
     },
     {
-      "community": 341,
+      "community": 328,
       "docstring": null,
       "file_type": "code",
       "id": "components_ErrorBoundary::getDerivedStateFromError",
@@ -22595,7 +22106,7 @@
       "source_line": 24
     },
     {
-      "community": 785,
+      "community": 586,
       "docstring": null,
       "file_type": "code",
       "id": "components_ActivityHeatmap::getLast365Days",
@@ -22622,7 +22133,7 @@
       "source_line": null
     },
     {
-      "community": 785,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "sethours",
@@ -22631,7 +22142,7 @@
       "source_line": null
     },
     {
-      "community": 785,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "setdate",
@@ -22640,7 +22151,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "getdate",
@@ -22649,7 +22160,7 @@
       "source_line": null
     },
     {
-      "community": 785,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "push",
@@ -22721,7 +22232,7 @@
       "source_line": null
     },
     {
-      "community": 306,
+      "community": 789,
       "docstring": null,
       "file_type": "code",
       "id": "components_ShareModal",
@@ -22730,7 +22241,7 @@
       "source_line": null
     },
     {
-      "community": 306,
+      "community": 789,
       "docstring": null,
       "file_type": "code",
       "id": "components_ShareModal::handleKey",
@@ -22829,7 +22340,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal",
@@ -22838,7 +22349,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::ImportModal",
@@ -22847,7 +22358,7 @@
       "source_line": 28
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::handleKey",
@@ -22856,7 +22367,7 @@
       "source_line": 40
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::handleFile",
@@ -22865,7 +22376,7 @@
       "source_line": 47
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::handleDrop",
@@ -22874,7 +22385,7 @@
       "source_line": 56
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::handleImport",
@@ -22883,7 +22394,7 @@
       "source_line": 63
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "code",
       "id": "components_ImportModal::handleFinish",
@@ -22892,7 +22403,7 @@
       "source_line": 81
     },
     {
-      "community": 587,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "___api_decks",
@@ -22901,7 +22412,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "___contexts_toastcontext",
@@ -22919,7 +22430,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "usestate",
@@ -22928,7 +22439,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "usetoast",
@@ -22937,7 +22448,7 @@
       "source_line": null
     },
     {
-      "community": 534,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "useref",
@@ -22946,7 +22457,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "stub",
       "id": "useeffect",
@@ -22955,7 +22466,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "onclose",
@@ -22964,7 +22475,7 @@
       "source_line": null
     },
     {
-      "community": 534,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "addeventlistener",
@@ -22973,7 +22484,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "stub",
       "id": "removeeventlistener",
@@ -22982,7 +22493,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "endswith",
@@ -22991,7 +22502,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "seterror",
@@ -23000,7 +22511,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "setselectedfile",
@@ -23009,7 +22520,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "stub",
       "id": "preventdefault",
@@ -23018,7 +22529,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "stub",
       "id": "setdragover",
@@ -23027,7 +22538,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "setstatus",
@@ -23036,7 +22547,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "importapkg",
@@ -23045,7 +22556,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "setresult",
@@ -23063,7 +22574,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 957,
       "docstring": null,
       "file_type": "stub",
       "id": "onsuccess",
@@ -23126,7 +22637,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DashboardPage::fillWorkloadDays",
@@ -23135,7 +22646,7 @@
       "source_line": 33
     },
     {
-      "community": 801,
+      "community": 441,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DashboardPage::handleKey",
@@ -23144,7 +22655,7 @@
       "source_line": 145
     },
     {
-      "community": 814,
+      "community": 813,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DashboardPage::loadWorkload",
@@ -23153,7 +22664,7 @@
       "source_line": 161
     },
     {
-      "community": 441,
+      "community": 772,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DashboardPage::loadDecks",
@@ -23198,7 +22709,7 @@
       "source_line": null
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______api_cards",
@@ -23216,7 +22727,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______contexts_toastcontext",
@@ -23234,7 +22745,7 @@
       "source_line": null
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_confirmmodal",
@@ -23243,7 +22754,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_skeletoncard",
@@ -23288,7 +22799,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "set",
@@ -23297,7 +22808,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "getfullyear",
@@ -23306,7 +22817,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "padstart",
@@ -23315,7 +22826,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "string",
@@ -23324,7 +22835,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "getmonth",
@@ -23333,7 +22844,7 @@
       "source_line": null
     },
     {
-      "community": 833,
+      "community": 586,
       "docstring": null,
       "file_type": "stub",
       "id": "tolocaledatestring",
@@ -23342,7 +22853,7 @@
       "source_line": null
     },
     {
-      "community": 801,
+      "community": 782,
       "docstring": null,
       "file_type": "stub",
       "id": "setshowform",
@@ -23351,7 +22862,7 @@
       "source_line": null
     },
     {
-      "community": 801,
+      "community": 441,
       "docstring": null,
       "file_type": "stub",
       "id": "setshowimport",
@@ -23360,7 +22871,7 @@
       "source_line": null
     },
     {
-      "community": 814,
+      "community": 813,
       "docstring": null,
       "file_type": "stub",
       "id": "setworkloadloading",
@@ -23369,7 +22880,7 @@
       "source_line": null
     },
     {
-      "community": 814,
+      "community": 813,
       "docstring": null,
       "file_type": "stub",
       "id": "setworkloaderror",
@@ -23378,7 +22889,7 @@
       "source_line": null
     },
     {
-      "community": 814,
+      "community": 813,
       "docstring": null,
       "file_type": "stub",
       "id": "getworkloadforecast",
@@ -23387,7 +22898,7 @@
       "source_line": null
     },
     {
-      "community": 814,
+      "community": 813,
       "docstring": null,
       "file_type": "stub",
       "id": "setworkload",
@@ -23396,7 +22907,7 @@
       "source_line": null
     },
     {
-      "community": 773,
+      "community": 772,
       "docstring": null,
       "file_type": "stub",
       "id": "setdecks",
@@ -23405,7 +22916,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 772,
       "docstring": null,
       "file_type": "stub",
       "id": "streak",
@@ -23414,7 +22925,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 772,
       "docstring": null,
       "file_type": "stub",
       "id": "setstreak",
@@ -23423,7 +22934,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 789,
       "docstring": null,
       "file_type": "stub",
       "id": "forreview",
@@ -23432,7 +22943,7 @@
       "source_line": null
     },
     {
-      "community": 441,
+      "community": 772,
       "docstring": null,
       "file_type": "stub",
       "id": "setduecounts",
@@ -23486,7 +22997,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 789,
       "docstring": null,
       "file_type": "code",
       "id": "auth_RegisterPage",
@@ -23495,7 +23006,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 789,
       "docstring": null,
       "file_type": "code",
       "id": "auth_RegisterPage::handleSubmit",
@@ -23504,7 +23015,7 @@
       "source_line": 18
     },
     {
-      "community": 780,
+      "community": 789,
       "docstring": null,
       "file_type": "stub",
       "id": "register",
@@ -23513,7 +23024,7 @@
       "source_line": null
     },
     {
-      "community": 549,
+      "community": 789,
       "docstring": null,
       "file_type": "stub",
       "id": "login",
@@ -23531,7 +23042,7 @@
       "source_line": null
     },
     {
-      "community": 549,
+      "community": 789,
       "docstring": null,
       "file_type": "code",
       "id": "auth_LoginPage::handleSubmit",
@@ -23567,7 +23078,7 @@
       "source_line": null
     },
     {
-      "community": 308,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_button",
@@ -23576,7 +23087,7 @@
       "source_line": null
     },
     {
-      "community": 549,
+      "community": 789,
       "docstring": null,
       "file_type": "stub",
       "id": "navigate",
@@ -23594,7 +23105,7 @@
       "source_line": null
     },
     {
-      "community": 353,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "react_router_dom",
@@ -23639,7 +23150,7 @@
       "source_line": null
     },
     {
-      "community": 610,
+      "community": 534,
       "docstring": null,
       "file_type": "code",
       "id": "hooks_useFocusTrap",
@@ -23648,7 +23159,7 @@
       "source_line": null
     },
     {
-      "community": 780,
+      "community": 534,
       "docstring": null,
       "file_type": "code",
       "id": "hooks_useFocusTrap::handleKey",
@@ -23675,7 +23186,7 @@
       "source_line": null
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS",
@@ -23684,7 +23195,7 @@
       "source_line": null
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::project_overview",
@@ -23720,7 +23231,7 @@
       "source_line": 23
     },
     {
-      "community": 1005,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::database",
@@ -23747,7 +23258,7 @@
       "source_line": 38
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::architecture_principles",
@@ -23810,7 +23321,7 @@
       "source_line": 127
     },
     {
-      "community": 996,
+      "community": 978,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::current_priorities",
@@ -23819,7 +23330,7 @@
       "source_line": 133
     },
     {
-      "community": 996,
+      "community": 978,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::high_priority",
@@ -23828,7 +23339,7 @@
       "source_line": 135
     },
     {
-      "community": 996,
+      "community": 978,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::medium_priority",
@@ -23837,7 +23348,7 @@
       "source_line": 141
     },
     {
-      "community": 996,
+      "community": 978,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::low_priority",
@@ -23846,7 +23357,7 @@
       "source_line": 147
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::backend_rules",
@@ -23855,7 +23366,7 @@
       "source_line": 154
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::api_contract",
@@ -23864,7 +23375,7 @@
       "source_line": 156
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::security_baseline__already_implemented",
@@ -23873,7 +23384,7 @@
       "source_line": 182
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::environment_variables",
@@ -23882,7 +23393,7 @@
       "source_line": 201
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::fsrs_rules",
@@ -23891,7 +23402,7 @@
       "source_line": 232
     },
     {
-      "community": 983,
+      "community": 975,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::upload_rules___apkg",
@@ -23900,7 +23411,7 @@
       "source_line": 250
     },
     {
-      "community": 996,
+      "community": 988,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::frontend_rules",
@@ -23909,7 +23420,7 @@
       "source_line": 260
     },
     {
-      "community": 996,
+      "community": 988,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::forms",
@@ -23918,7 +23429,7 @@
       "source_line": 280
     },
     {
-      "community": 996,
+      "community": 988,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::theme",
@@ -23927,7 +23438,7 @@
       "source_line": 296
     },
     {
-      "community": 996,
+      "community": 988,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::language",
@@ -23954,7 +23465,7 @@
       "source_line": 334
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::manual_validation",
@@ -23963,7 +23474,7 @@
       "source_line": 342
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::regression_policy",
@@ -23972,7 +23483,7 @@
       "source_line": 364
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::change_scope_rules",
@@ -23981,7 +23492,7 @@
       "source_line": 378
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::expected_agent_behavior",
@@ -23990,7 +23501,7 @@
       "source_line": 397
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::troubleshooting___change_discipline",
@@ -23999,7 +23510,7 @@
       "source_line": 420
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::reviewer_subagent____reviewer",
@@ -24008,7 +23519,7 @@
       "source_line": 432
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::roadmap_md",
@@ -24017,7 +23528,7 @@
       "source_line": 473
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::architecture_md",
@@ -24026,7 +23537,7 @@
       "source_line": 493
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_AGENTS::decisions_md",
@@ -24035,7 +23546,7 @@
       "source_line": 515
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "stub",
       "id": "roadmap",
@@ -24044,7 +23555,7 @@
       "source_line": null
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "stub",
       "id": "architecture",
@@ -24053,7 +23564,7 @@
       "source_line": null
     },
     {
-      "community": 996,
+      "community": 970,
       "docstring": null,
       "file_type": "stub",
       "id": "decisions",
@@ -24071,7 +23582,7 @@
       "source_line": null
     },
     {
-      "community": 259,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "components_ProgressBar.test",
@@ -24080,7 +23591,7 @@
       "source_line": null
     },
     {
-      "community": 259,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__progressbar",
@@ -24098,7 +23609,7 @@
       "source_line": null
     },
     {
-      "community": 1098,
+      "community": 1100,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::roadmap___flashfsrs",
@@ -24107,7 +23618,7 @@
       "source_line": 1
     },
     {
-      "community": 1098,
+      "community": 1100,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::status_atual",
@@ -24116,7 +23627,7 @@
       "source_line": 7
     },
     {
-      "community": 1098,
+      "community": 1100,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::funcionalidades_concluídas",
@@ -24125,7 +23636,7 @@
       "source_line": 25
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::polimentos_concluídos",
@@ -24134,7 +23645,7 @@
       "source_line": 46
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::sessão_anterior",
@@ -24143,7 +23654,7 @@
       "source_line": 48
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::sessão_atual",
@@ -24152,7 +23663,7 @@
       "source_line": 59
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::sessão_de_testes_e_normalização",
@@ -24161,7 +23672,7 @@
       "source_line": 70
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::testes",
@@ -24170,7 +23681,7 @@
       "source_line": 80
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::sessão_de_ui_ux",
@@ -24179,7 +23690,7 @@
       "source_line": 92
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::sessão_de_e2e_e_automação",
@@ -24188,7 +23699,7 @@
       "source_line": 103
     },
     {
-      "community": 1097,
+      "community": 1099,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::fase_01___observability___monitoring",
@@ -24197,7 +23708,7 @@
       "source_line": 112
     },
     {
-      "community": 1098,
+      "community": 1100,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::melhorias_futuras__pós_fases_atuais",
@@ -24206,7 +23717,7 @@
       "source_line": 123
     },
     {
-      "community": 1098,
+      "community": 1100,
       "docstring": null,
       "file_type": "document",
       "id": "workspace_ROADMAP::idéias_relacionadas_ao_tcc_fsrs__para_a_monografia",
@@ -24395,7 +23906,7 @@
       "source_line": 217
     },
     {
-      "community": 305,
+      "community": 304,
       "docstring": null,
       "file_type": "code",
       "id": "api_client",
@@ -24404,7 +23915,7 @@
       "source_line": null
     },
     {
-      "community": 305,
+      "community": 304,
       "docstring": null,
       "file_type": "code",
       "id": "api_client::getToken",
@@ -24413,7 +23924,7 @@
       "source_line": 2
     },
     {
-      "community": 305,
+      "community": 558,
       "docstring": null,
       "file_type": "code",
       "id": "api_client::request",
@@ -24422,7 +23933,7 @@
       "source_line": 8
     },
     {
-      "community": 305,
+      "community": 304,
       "docstring": null,
       "file_type": "stub",
       "id": "getitem",
@@ -24431,7 +23942,7 @@
       "source_line": null
     },
     {
-      "community": 305,
+      "community": 558,
       "docstring": null,
       "file_type": "stub",
       "id": "abort",
@@ -24440,7 +23951,7 @@
       "source_line": null
     },
     {
-      "community": 305,
+      "community": 558,
       "docstring": null,
       "file_type": "stub",
       "id": "fetch",
@@ -24449,7 +23960,7 @@
       "source_line": null
     },
     {
-      "community": 305,
+      "community": 558,
       "docstring": null,
       "file_type": "stub",
       "id": "cleartimeout",
@@ -24467,7 +23978,7 @@
       "source_line": null
     },
     {
-      "community": 335,
+      "community": 968,
       "docstring": null,
       "file_type": "code",
       "id": "components_ConfirmModal.test",
@@ -24476,7 +23987,7 @@
       "source_line": null
     },
     {
-      "community": 335,
+      "community": 968,
       "docstring": null,
       "file_type": "stub",
       "id": "__confirmmodal",
@@ -24485,7 +23996,7 @@
       "source_line": null
     },
     {
-      "community": 353,
+      "community": 610,
       "docstring": null,
       "file_type": "code",
       "id": "components_Layout",
@@ -24494,7 +24005,7 @@
       "source_line": null
     },
     {
-      "community": 353,
+      "community": 610,
       "docstring": null,
       "file_type": "stub",
       "id": "___contexts_authcontext",
@@ -24503,7 +24014,7 @@
       "source_line": null
     },
     {
-      "community": 353,
+      "community": 610,
       "docstring": null,
       "file_type": "stub",
       "id": "___contexts_themecontext",
@@ -24512,7 +24023,7 @@
       "source_line": null
     },
     {
-      "community": 336,
+      "community": 550,
       "docstring": null,
       "file_type": "code",
       "id": "components_ConfirmModal",
@@ -24521,7 +24032,7 @@
       "source_line": null
     },
     {
-      "community": 336,
+      "community": 550,
       "docstring": null,
       "file_type": "code",
       "id": "components_ConfirmModal::handleKey",
@@ -24530,7 +24041,7 @@
       "source_line": 35
     },
     {
-      "community": 336,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "lucide_react",
@@ -24539,7 +24050,7 @@
       "source_line": null
     },
     {
-      "community": 336,
+      "community": 550,
       "docstring": null,
       "file_type": "stub",
       "id": "___hooks_usefocustrap",
@@ -24548,7 +24059,7 @@
       "source_line": null
     },
     {
-      "community": 336,
+      "community": 550,
       "docstring": null,
       "file_type": "stub",
       "id": "oncancel",
@@ -24557,7 +24068,7 @@
       "source_line": null
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "code",
       "id": "review_ReviewPage",
@@ -24566,7 +24077,7 @@
       "source_line": null
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "code",
       "id": "review_ReviewPage::formatDays",
@@ -24620,7 +24131,7 @@
       "source_line": 212
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_tooltip",
@@ -24629,7 +24140,7 @@
       "source_line": null
     },
     {
-      "community": 673,
+      "community": 449,
       "docstring": null,
       "file_type": "stub",
       "id": "______components_progressbar",
@@ -24638,7 +24149,7 @@
       "source_line": null
     },
     {
-      "community": 789,
+      "community": 677,
       "docstring": null,
       "file_type": "stub",
       "id": "setdone",
@@ -24665,7 +24176,7 @@
       "source_line": null
     },
     {
-      "community": 675,
+      "community": 677,
       "docstring": null,
       "file_type": "stub",
       "id": "setflipped",
@@ -24737,7 +24248,7 @@
       "source_line": 84
     },
     {
-      "community": 801,
+      "community": 779,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DeckPage::handleKey",
@@ -24791,7 +24302,7 @@
       "source_line": 231
     },
     {
-      "community": 778,
+      "community": 782,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DeckPage::handleEdit",
@@ -24800,7 +24311,7 @@
       "source_line": 246
     },
     {
-      "community": 778,
+      "community": 782,
       "docstring": null,
       "file_type": "code",
       "id": "decks_DeckPage::cancelForm",
@@ -24854,7 +24365,7 @@
       "source_line": null
     },
     {
-      "community": 801,
+      "community": 452,
       "docstring": null,
       "file_type": "stub",
       "id": "setshowmoremenu",
@@ -24863,7 +24374,7 @@
       "source_line": null
     },
     {
-      "community": 801,
+      "community": 940,
       "docstring": null,
       "file_type": "stub",
       "id": "setshowbulk",
@@ -24881,7 +24392,7 @@
       "source_line": null
     },
     {
-      "community": 801,
+      "community": 779,
       "docstring": null,
       "file_type": "stub",
       "id": "seteditingtitle",
@@ -24944,7 +24455,7 @@
       "source_line": null
     },
     {
-      "community": 778,
+      "community": 782,
       "docstring": null,
       "file_type": "stub",
       "id": "seteditingcard",
@@ -24953,7 +24464,7 @@
       "source_line": null
     },
     {
-      "community": 795,
+      "community": 940,
       "docstring": null,
       "file_type": "stub",
       "id": "create",
@@ -24962,7 +24473,7 @@
       "source_line": null
     },
     {
-      "community": 778,
+      "community": 782,
       "docstring": null,
       "file_type": "stub",
       "id": "setfront",
@@ -24971,7 +24482,7 @@
       "source_line": null
     },
     {
-      "community": 778,
+      "community": 782,
       "docstring": null,
       "file_type": "stub",
       "id": "setback",
@@ -25005,6 +24516,537 @@
       "label": "delete",
       "source_file": "/workspace/frontend/src/pages/decks/DeckPage.tsx",
       "source_line": null
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE",
+      "label": "ARCHITECTURE.md",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": null
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::architecture___flashfsrs",
+      "label": "ARCHITECTURE — FlashFSRS",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 1
+    },
+    {
+      "community": 1021,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::1__visão_geral",
+      "label": "1. Visão Geral",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 7
+    },
+    {
+      "community": 1021,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::convenção_de_ambientes___env",
+      "label": "Convenção de Ambientes `.env`",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 26
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::2__estrutura_de_pastas",
+      "label": "2. Estrutura de Pastas",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 40
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::3__responsabilidades_por_camada",
+      "label": "3. Responsabilidades por Camada",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 188
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::backend",
+      "label": "Backend",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 190
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::frontend",
+      "label": "Frontend",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 221
+    },
+    {
+      "community": 1020,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::4__fluxos_importantes",
+      "label": "4. Fluxos Importantes",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 234
+    },
+    {
+      "community": 1020,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::revisão_fsrs",
+      "label": "Revisão FSRS",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 236
+    },
+    {
+      "community": 1020,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::import__apkg",
+      "label": "Import .apkg",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 250
+    },
+    {
+      "community": 1020,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::compartilhamento_de_deck",
+      "label": "Compartilhamento de Deck",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 264
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::5__regras_arquiteturais",
+      "label": "5. Regras Arquiteturais",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 276
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::6__inconsistências_conhecidas",
+      "label": "6. Inconsistências Conhecidas",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 293
+    },
+    {
+      "community": 1018,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_ARCHITECTURE::_importcontroller__faz_parsing_de_sqlite_do___apkg__diretamente",
+      "label": "`importController` faz parsing de SQLite do `.apkg` diretamente",
+      "source_file": "/workspace/ARCHITECTURE.md",
+      "source_line": 295
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README",
+      "label": "README.md",
+      "source_file": "/workspace/README.md",
+      "source_line": null
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::flashfsrs",
+      "label": "FlashFSRS",
+      "source_file": "/workspace/README.md",
+      "source_line": 1
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::preview",
+      "label": "Preview",
+      "source_file": "/workspace/README.md",
+      "source_line": 5
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::funcionalidades",
+      "label": "Funcionalidades",
+      "source_file": "/workspace/README.md",
+      "source_line": 15
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::autenticação",
+      "label": "Autenticação",
+      "source_file": "/workspace/README.md",
+      "source_line": 17
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::gestão_de_baralhos",
+      "label": "Gestão de Baralhos",
+      "source_file": "/workspace/README.md",
+      "source_line": 25
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::gestão_de_cards",
+      "label": "Gestão de Cards",
+      "source_file": "/workspace/README.md",
+      "source_line": 32
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::sistema_de_revisão__fsrs",
+      "label": "Sistema de Revisão (FSRS)",
+      "source_file": "/workspace/README.md",
+      "source_line": 39
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::estatísticas",
+      "label": "Estatísticas",
+      "source_file": "/workspace/README.md",
+      "source_line": 50
+    },
+    {
+      "community": 1075,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::qualidade_e_engenharia",
+      "label": "Qualidade e Engenharia",
+      "source_file": "/workspace/README.md",
+      "source_line": 58
+    },
+    {
+      "community": 1092,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::stack_tecnológica",
+      "label": "Stack Tecnológica",
+      "source_file": "/workspace/README.md",
+      "source_line": 71
+    },
+    {
+      "community": 1074,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::frontend",
+      "label": "Frontend",
+      "source_file": "/workspace/README.md",
+      "source_line": 73
+    },
+    {
+      "community": 1074,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::backend",
+      "label": "Backend",
+      "source_file": "/workspace/README.md",
+      "source_line": 84
+    },
+    {
+      "community": 1092,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::infraestrutura",
+      "label": "Infraestrutura",
+      "source_file": "/workspace/README.md",
+      "source_line": 94
+    },
+    {
+      "community": 1092,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::qualidade",
+      "label": "Qualidade",
+      "source_file": "/workspace/README.md",
+      "source_line": 99
+    },
+    {
+      "community": 1074,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::arquitetura",
+      "label": "Arquitetura",
+      "source_file": "/workspace/README.md",
+      "source_line": 109
+    },
+    {
+      "community": 1067,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::como_executar_o_projeto",
+      "label": "Como Executar o Projeto",
+      "source_file": "/workspace/README.md",
+      "source_line": 170
+    },
+    {
+      "community": 1067,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::ambientes__env",
+      "label": "Ambientes .env",
+      "source_file": "/workspace/README.md",
+      "source_line": 172
+    },
+    {
+      "community": 1069,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::docker__recomendado",
+      "label": "Docker (recomendado)",
+      "source_file": "/workspace/README.md",
+      "source_line": 186
+    },
+    {
+      "community": 1081,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::pré_requisitos",
+      "label": "Pré-requisitos",
+      "source_file": "/workspace/README.md",
+      "source_line": 188
+    },
+    {
+      "community": 1069,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::1__clone_o_repositório",
+      "label": "1. Clone o repositório",
+      "source_file": "/workspace/README.md",
+      "source_line": 195
+    },
+    {
+      "community": 1069,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::2__suba_os_containers",
+      "label": "2. Suba os containers",
+      "source_file": "/workspace/README.md",
+      "source_line": 202
+    },
+    {
+      "community": 1069,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::3__acesse_a_aplicação",
+      "label": "3. Acesse a aplicação",
+      "source_file": "/workspace/README.md",
+      "source_line": 211
+    },
+    {
+      "community": 1081,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::local__sem_docker",
+      "label": "Local (sem Docker)",
+      "source_file": "/workspace/README.md",
+      "source_line": 219
+    },
+    {
+      "community": 1081,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::1__configure_o_ambiente_local",
+      "label": "1. Configure o ambiente local",
+      "source_file": "/workspace/README.md",
+      "source_line": 226
+    },
+    {
+      "community": 1081,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::2__instale_as_dependências",
+      "label": "2. Instale as dependências",
+      "source_file": "/workspace/README.md",
+      "source_line": 234
+    },
+    {
+      "community": 1081,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::3__execute_o_backend",
+      "label": "3. Execute o backend",
+      "source_file": "/workspace/README.md",
+      "source_line": 240
+    },
+    {
+      "community": 1074,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::scripts_úteis",
+      "label": "Scripts Úteis",
+      "source_file": "/workspace/README.md",
+      "source_line": 250
+    },
+    {
+      "community": 1074,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::formatação",
+      "label": "Formatação",
+      "source_file": "/workspace/README.md",
+      "source_line": 269
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::graphify___knowledge_graph",
+      "label": "Graphify — Knowledge Graph",
+      "source_file": "/workspace/README.md",
+      "source_line": 276
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::regenerar_o_grafo_manualmente",
+      "label": "Regenerar o grafo manualmente",
+      "source_file": "/workspace/README.md",
+      "source_line": 280
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::atualização_incremental",
+      "label": "Atualização incremental",
+      "source_file": "/workspace/README.md",
+      "source_line": 288
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::modo_watch",
+      "label": "Modo watch",
+      "source_file": "/workspace/README.md",
+      "source_line": 296
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::consultar_o_grafo",
+      "label": "Consultar o grafo",
+      "source_file": "/workspace/README.md",
+      "source_line": 304
+    },
+    {
+      "community": 1078,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::atualização_automática__pre_commit",
+      "label": "Atualização automática (pre-commit)",
+      "source_file": "/workspace/README.md",
+      "source_line": 312
+    },
+    {
+      "community": 1093,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::testes",
+      "label": "Testes",
+      "source_file": "/workspace/README.md",
+      "source_line": 318
+    },
+    {
+      "community": 1093,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::backend___services__10_arquivos",
+      "label": "Backend — Services (10 arquivos)",
+      "source_file": "/workspace/README.md",
+      "source_line": 322
+    },
+    {
+      "community": 1093,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::backend___controllers__8_arquivos",
+      "label": "Backend — Controllers (8 arquivos)",
+      "source_file": "/workspace/README.md",
+      "source_line": 327
+    },
+    {
+      "community": 1093,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::backend___middlewares__5_arquivos",
+      "label": "Backend — Middlewares (5 arquivos)",
+      "source_file": "/workspace/README.md",
+      "source_line": 331
+    },
+    {
+      "community": 1093,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::e2e__playwright",
+      "label": "E2E (Playwright)",
+      "source_file": "/workspace/README.md",
+      "source_line": 335
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::segurança",
+      "label": "Segurança",
+      "source_file": "/workspace/README.md",
+      "source_line": 355
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::roadmap",
+      "label": "Roadmap",
+      "source_file": "/workspace/README.md",
+      "source_line": 369
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::autor",
+      "label": "Autor",
+      "source_file": "/workspace/README.md",
+      "source_line": 375
+    },
+    {
+      "community": 1072,
+      "docstring": null,
+      "file_type": "document",
+      "id": "workspace_README::licença",
+      "label": "Licença",
+      "source_file": "/workspace/README.md",
+      "source_line": 383
     }
   ]
 }
