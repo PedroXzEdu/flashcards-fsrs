@@ -1,11 +1,27 @@
 import { api } from "./client";
 import type { Card, PreviewRatings } from "../types";
 
+export interface PaginatedResponse<T> {
+  cards: T[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 export const cardsApi = {
-  list: (deckId: number) => api.get<Card[]>(`/decks/${deckId}/cards`),
+  list: (deckId: number, page = 1, limit = 20) =>
+    api.get<PaginatedResponse<Card>>(
+      `/decks/${deckId}/cards?page=${page}&limit=${limit}`,
+    ),
 
   create: (deckId: number, front: string, back: string) =>
     api.post<Card>(`/decks/${deckId}/cards`, { front, back }),
+
+  createBatch: (deckId: number, cards: { front: string; back: string }[]) =>
+    api.post<Card[]>(`/decks/${deckId}/cards/batch`, { cards }),
 
   update: (deckId: number, cardId: number, front: string, back: string) =>
     api.put<Card>(`/decks/${deckId}/cards/${cardId}`, { front, back }),

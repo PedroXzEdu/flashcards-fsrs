@@ -9,6 +9,7 @@ vi.mock("../../repositories/cardRepository", () => ({
   cardRepository: {
     create: vi.fn(),
     findByDeckId: vi.fn(),
+    findByDeckIdPaginated: vi.fn(),
     update: vi.fn(),
     delete: vi.fn(),
   },
@@ -72,14 +73,24 @@ describe("CardService", () => {
   });
 
   describe("list", () => {
-    it("deve listar cards do deck", async () => {
+    it("deve listar cards do deck com paginação", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
-      vi.mocked(cardRepository.findByDeckId).mockResolvedValue([mockCard]);
+      vi.mocked(cardRepository.findByDeckIdPaginated).mockResolvedValue({
+        rows: [mockCard],
+        total: 1,
+      });
 
       const result = await cardService.list("1", 1);
 
-      expect(result).toEqual([mockCard]);
-      expect(cardRepository.findByDeckId).toHaveBeenCalledWith("1");
+      expect(result).toEqual({
+        cards: [mockCard],
+        pagination: { total: 1, page: 1, limit: 20, totalPages: 1 },
+      });
+      expect(cardRepository.findByDeckIdPaginated).toHaveBeenCalledWith(
+        "1",
+        1,
+        20,
+      );
     });
 
     it("deve lançar erro se deck não existe", async () => {

@@ -69,7 +69,9 @@ export default function ActivityHeatmap() {
   }
 
   useEffect(() => {
-    loadActivity();
+    void (async () => {
+      await loadActivity();
+    })();
   }, []);
 
   const days = getLast365Days();
@@ -122,7 +124,10 @@ export default function ActivityHeatmap() {
         }}
       >
         <span>{error}</span>
-        <button type="button" onClick={loadActivity} aria-label="Tentar novamente"
+        <button
+          type="button"
+          onClick={loadActivity}
+          aria-label="Tentar novamente"
           style={{
             background: "none",
             border: "1px solid var(--danger)",

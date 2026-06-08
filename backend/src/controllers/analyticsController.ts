@@ -11,7 +11,12 @@ export async function getRetentionRate(
   next: NextFunction,
 ) {
   try {
-    const result = await analyticsService.getRetentionRate(req.userId!);
+    const months = Math.min(
+      Math.max(parseInt(req.query.months as string) || 12, 1),
+      120,
+    );
+
+    const result = await analyticsService.getRetentionRate(req.userId!, months);
 
     return res.json({
       success: true,
@@ -28,7 +33,12 @@ export async function getReviewHeatmap(
   next: NextFunction,
 ) {
   try {
-    const result = await analyticsService.getReviewHeatmap(req.userId!);
+    const months = Math.min(
+      Math.max(parseInt(req.query.months as string) || 12, 1),
+      120,
+    );
+
+    const result = await analyticsService.getReviewHeatmap(req.userId!, months);
 
     return res.json({
       success: true,

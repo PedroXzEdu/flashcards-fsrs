@@ -27,8 +27,9 @@ const mockCard = {
 function createReq(
   params: Record<string, string> = {},
   body: Record<string, unknown> = {},
+  query: Record<string, string> = {},
 ) {
-  return { params, body, userId: 1 } as any;
+  return { params, body, query, userId: 1 } as any;
 }
 
 function createRes() {
@@ -89,8 +90,12 @@ describe("CardController", () => {
   });
 
   describe("getCards", () => {
-    it("deve listar cards e retornar 200 com success/data", async () => {
-      vi.mocked(cardService.list).mockResolvedValue([mockCard]);
+    it("deve listar cards e retornar 200 com success/data/pagination", async () => {
+      const paginatedResult = {
+        cards: [mockCard],
+        pagination: { total: 1, page: 1, limit: 20, totalPages: 1 },
+      };
+      vi.mocked(cardService.list).mockResolvedValue(paginatedResult);
 
       const req = createReq({ deck_id: "1" });
       const res = createRes();
@@ -98,10 +103,10 @@ describe("CardController", () => {
 
       await getCards(req, res, next);
 
-      expect(cardService.list).toHaveBeenCalledWith("1", 1);
+      expect(cardService.list).toHaveBeenCalledWith("1", 1, 1, 20);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
-        data: [mockCard],
+        data: paginatedResult,
       });
       expect(res.status).not.toHaveBeenCalled();
       expect(next).not.toHaveBeenCalled();

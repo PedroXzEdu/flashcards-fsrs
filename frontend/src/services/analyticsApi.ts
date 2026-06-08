@@ -34,12 +34,12 @@ export interface DailyQueueCard {
   predicted_recall: number;
 }
 
-export async function getRetentionRate() {
-  return api.get<RetentionRate>("/analytics/retention-rate");
+export async function getRetentionRate(months = 12) {
+  return api.get<RetentionRate>(`/analytics/retention-rate?months=${months}`);
 }
 
-export async function getHeatmap() {
-  return api.get<HeatmapDay[]>("/analytics/review-heatmap");
+export async function getHeatmap(months = 12) {
+  return api.get<HeatmapDay[]>(`/analytics/review-heatmap?months=${months}`);
 }
 
 export async function getForgettingCurve() {

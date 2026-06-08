@@ -59,7 +59,7 @@ describe("CardRepository", () => {
       expect(result).toHaveLength(1);
       expect(pool.query).toHaveBeenCalledWith(
         expect.stringContaining("c.due <= NOW()"),
-        ["1", 1],
+        ["1", 1, 200],
       );
     });
 
@@ -82,7 +82,7 @@ describe("CardRepository", () => {
       expect(result[0].state).toBe(2);
       expect(result[1].state).toBe(0);
       expect(pool.query).toHaveBeenCalledWith(
-        expect.stringContaining("CASE WHEN c.state != 0 THEN 0 ELSE 1 END"),
+        expect.stringContaining("CASE WHEN c.state = 0 THEN 1 ELSE 0 END"),
         expect.anything(),
       );
     });

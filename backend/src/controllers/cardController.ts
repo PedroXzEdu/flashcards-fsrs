@@ -23,20 +23,49 @@ export async function createCard(
   }
 }
 
+export async function createCardsBatch(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const cards = await cardService.createBatch(
+      req.params.deck_id as string,
+      req.userId!,
+      req.body.cards,
+    );
+
+    res.status(201).json({
+      success: true,
+      data: cards,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getCards(
   req: AuthRequest,
   res: Response,
   next: NextFunction,
 ) {
   try {
-    const cards = await cardService.list(
+    const page = Math.max(parseInt(req.query.page as string) || 1, 1);
+    const limit = Math.max(parseInt(req.query.limit as string) || 20, 1);
+
+    const result = await cardService.list(
       req.params.deck_id as string,
       req.userId!,
+      page,
+      limit,
     );
 
     res.json({
       success: true,
-      data: cards,
+      data: {
+        cards: result.cards,
+        pagination: result.pagination,
+      },
     });
   } catch (err) {
     next(err);

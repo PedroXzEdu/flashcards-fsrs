@@ -148,7 +148,7 @@ describe("AnalyticsService", () => {
       const result = await analyticsService.getRetentionRate(1);
 
       expect(result.retention_rate).toBe("80.00");
-      expect(analyticsRepository.getRetentionRate).toHaveBeenCalledWith(1);
+      expect(analyticsRepository.getRetentionRate).toHaveBeenCalledWith(1, 12);
     });
 
     it("getWorkloadForecast delega ao repository", async () => {
@@ -169,7 +169,7 @@ describe("AnalyticsService", () => {
       const result = await analyticsService.getReviewHeatmap(1);
 
       expect(result).toEqual([]);
-      expect(analyticsRepository.getReviewHeatmap).toHaveBeenCalledWith(1);
+      expect(analyticsRepository.getReviewHeatmap).toHaveBeenCalledWith(1, 12);
     });
   });
 });

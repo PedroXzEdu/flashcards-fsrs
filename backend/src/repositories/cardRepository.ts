@@ -13,6 +13,29 @@ class CardRepository {
     return result.rows;
   }
 
+  async findByDeckIdPaginated(deckId: string, page = 1, limit = 20) {
+    const offset = (page - 1) * limit;
+
+    const countResult = await pool.query(
+      `SELECT COUNT(*) as total FROM cards WHERE deck_id = $1`,
+      [deckId],
+    );
+
+    const result = await pool.query(
+      `SELECT *
+       FROM cards
+       WHERE deck_id = $1
+       ORDER BY created_at DESC
+       LIMIT $2 OFFSET $3`,
+      [deckId, limit, offset],
+    );
+
+    return {
+      rows: result.rows,
+      total: parseInt(countResult.rows[0].total, 10),
+    };
+  }
+
   async findDailyQueue(userId: number, limit = 50) {
     const result = await pool.query(
       `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
@@ -27,7 +50,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async findDueByDeck(deckId: string, userId: number) {
+  async findDueByDeck(deckId: string, userId: number, limit = 200) {
     const result = await pool.query(
       `SELECT c.*
        FROM cards c
@@ -36,10 +59,11 @@ class CardRepository {
          AND d.user_id = $2
          AND c.due <= NOW()
        ORDER BY
-         CASE WHEN c.state != 0 THEN 0 ELSE 1 END,
+         CASE WHEN c.state = 0 THEN 1 ELSE 0 END,
          c.due ASC,
-         c.created_at ASC`,
-      [deckId, userId],
+         c.created_at ASC
+       LIMIT $3`,
+      [deckId, userId, limit],
     );
 
     return result.rows;
@@ -84,6 +108,61 @@ class CardRepository {
     );
 
     return result.rows[0];
+  }
+
+  async createBatch(
+    deckId: number,
+    cards: {
+      front: string;
+      back: string;
+      stability: number;
+      difficulty: number;
+      elapsed_days: number;
+      scheduled_days: number;
+      reps: number;
+      lapses: number;
+      state: number;
+      due: Date;
+    }[],
+    client?: PoolClient,
+  ) {
+    const db = client ?? pool;
+    if (cards.length === 0) return [];
+
+    const now = new Date();
+    const values: unknown[] = [];
+    const placeholders: string[] = [];
+
+    cards.forEach((card, i) => {
+      const base = i * 12;
+      placeholders.push(
+        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12})`,
+      );
+      values.push(
+        deckId,
+        card.front,
+        card.back,
+        card.stability,
+        card.difficulty,
+        card.elapsed_days,
+        card.scheduled_days,
+        card.reps,
+        card.lapses,
+        card.state,
+        card.due,
+        now,
+      );
+    });
+
+    const result = await db.query(
+      `INSERT INTO cards
+        (deck_id, front, back, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due, created_at)
+       VALUES ${placeholders.join(", ")}
+       RETURNING *`,
+      values,
+    );
+
+    return result.rows;
   }
 
   async updateFsrsData(client: PoolClient, cardId: string, data: any) {

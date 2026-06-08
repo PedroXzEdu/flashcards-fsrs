@@ -2,7 +2,7 @@ import { pool } from "../database/db";
 import { logger } from "../config/logger";
 
 class AnalyticsRepository {
-  async getRetentionRate(userId: number) {
+  async getRetentionRate(userId: number, months = 12) {
     const result = await pool.query(
       `SELECT
         COUNT(*) AS total_reviews,
@@ -21,23 +21,25 @@ class AnalyticsRepository {
         ) AS retention_rate
 
        FROM review_logs
-       WHERE user_id = $1`,
-      [userId],
+       WHERE user_id = $1
+         AND review >= NOW() - INTERVAL '1 month' * $2`,
+      [userId, months],
     );
 
     return result.rows[0];
   }
 
-  async getReviewHeatmap(userId: number) {
+  async getReviewHeatmap(userId: number, months = 12) {
     const result = await pool.query(
       `SELECT
         DATE(review) AS day,
         COUNT(*)::int AS reviews
        FROM review_logs
        WHERE user_id = $1
+         AND review >= NOW() - INTERVAL '1 month' * $2
        GROUP BY day
        ORDER BY day`,
-      [userId],
+      [userId, months],
     );
 
     return result.rows;

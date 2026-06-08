@@ -49,6 +49,9 @@ export default function DeckPage() {
   const [deck, setDeck] = useState<Deck | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [dueCount, setDueCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [front, setFront] = useState("");
@@ -108,12 +111,14 @@ export default function DeckPage() {
     try {
       const [deckData, cardsData, reviewData] = await Promise.all([
         decksApi.get(deckId),
-        cardsApi.list(deckId),
+        cardsApi.list(deckId, 1, 20),
         cardsApi.forReview(deckId),
       ]);
       setDeck(deckData);
       setNewCardsPerDay(deckData.new_cards_per_day ?? 20);
-      setCards(cardsData);
+      setCards(cardsData.cards);
+      setPage(1);
+      setHasMore(cardsData.pagination.page < cardsData.pagination.totalPages);
       setDueCount(reviewData.total);
     } catch {
       setError("Erro ao carregar baralho.");
@@ -121,6 +126,21 @@ export default function DeckPage() {
       setLoading(false);
     }
   }, [deckId]);
+
+  async function loadMore() {
+    setLoadingMore(true);
+    try {
+      const nextPage = page + 1;
+      const data = await cardsApi.list(deckId, nextPage, 20);
+      setCards((prev) => [...prev, ...data.cards]);
+      setPage(nextPage);
+      setHasMore(nextPage < data.pagination.totalPages);
+    } catch {
+      toast.error("Erro ao carregar mais cards.");
+    } finally {
+      setLoadingMore(false);
+    }
+  }
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -214,9 +234,7 @@ export default function DeckPage() {
         return;
       }
 
-      const created = await Promise.all(
-        pairs.map((p) => cardsApi.create(deckId, p.front, p.back)),
-      );
+      const created = await cardsApi.createBatch(deckId, pairs);
       setCards((prev) => [...created, ...prev]);
       toast.success("Cards criados");
       setBulkText("");
@@ -518,9 +536,14 @@ export default function DeckPage() {
         <ConfirmModal
           title="Excluir card"
           message={
-            <>Tem certeza que deseja excluir o card abaixo? O histórico de revisões também será removido.<br /><br /><strong>Frente:</strong> {
-              confirmDelete.front.replace(/<[^>]*>/g, "").substring(0, 120)
-            }</>
+            <>
+              Tem certeza que deseja excluir o card abaixo? O histórico de
+              revisões também será removido.
+              <br />
+              <br />
+              <strong>Frente:</strong>{" "}
+              {confirmDelete.front.replace(/<[^>]*>/g, "").substring(0, 120)}
+            </>
           }
           onConfirm={() => handleDelete(confirmDelete)}
           onCancel={() => setConfirmDelete(null)}
@@ -739,11 +762,7 @@ export default function DeckPage() {
             />
           </div>
           <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-            <Button
-              type="submit"
-              size="sm"
-              loading={renaming}
-            >
+            <Button type="submit" size="sm" loading={renaming}>
               Salvar
             </Button>
             <Button
@@ -919,15 +938,23 @@ export default function DeckPage() {
               />
             </div>
           </div>
-          <div style={{ display: "flex", gap: "8px", marginTop: "16px", alignItems: "center" }}>
-            <Button
-              type="submit"
-              size="sm"
-              loading={saving}
-            >
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              marginTop: "16px",
+              alignItems: "center",
+            }}
+          >
+            <Button type="submit" size="sm" loading={saving}>
               {saving ? "Salvando..." : editingCard ? "Salvar" : "Criar"}
             </Button>
-            <Button type="button" variant="secondary" size="sm" onClick={cancelForm}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={cancelForm}
+            >
               Cancelar
             </Button>
             {saveStatus === "saved" && (
@@ -1060,11 +1087,7 @@ export default function DeckPage() {
               >
                 Cancelar
               </button>
-              <Button
-                type="submit"
-                size="sm"
-                loading={bulkSaving}
-              >
+              <Button type="submit" size="sm" loading={bulkSaving}>
                 {bulkSaving ? "Criando..." : "Criar cards"}
               </Button>
             </div>
@@ -1188,6 +1211,19 @@ export default function DeckPage() {
               </div>
             );
           })}
+          {hasMore && (
+            <div style={{ textAlign: "center", padding: "20px 0" }}>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={loadMore}
+                loading={loadingMore}
+                type="button"
+              >
+                {loadingMore ? "Carregando..." : "Carregar mais"}
+              </Button>
+            </div>
+          )}
         </div>
       )}
       <style>{`

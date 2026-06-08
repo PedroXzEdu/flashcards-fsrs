@@ -12,8 +12,12 @@ function getRoute(path: string, method: string) {
 }
 
 describe("cardRoutes", () => {
-  it("deve registrar 4 rotas", () => {
-    expect(getRoutes()).toHaveLength(4);
+  it("deve registrar 5 rotas", () => {
+    expect(getRoutes()).toHaveLength(5);
+  });
+
+  it("POST /batch tem 3 middlewares (rateLimiter + validate + controller)", () => {
+    expect(getRoute("/batch", "post").route.stack).toHaveLength(3);
   });
 
   it("POST / tem 3 middlewares (rateLimiter + validate + controller)", () => {

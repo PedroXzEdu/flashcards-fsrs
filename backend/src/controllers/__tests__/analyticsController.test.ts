@@ -83,7 +83,7 @@ describe("AnalyticsController", () => {
 
       await getRetentionRate(req, res, next);
 
-      expect(analyticsService.getRetentionRate).toHaveBeenCalledWith(1);
+      expect(analyticsService.getRetentionRate).toHaveBeenCalledWith(1, 12);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockRetention,
@@ -118,7 +118,7 @@ describe("AnalyticsController", () => {
 
       await getReviewHeatmap(req, res, next);
 
-      expect(analyticsService.getReviewHeatmap).toHaveBeenCalledWith(1);
+      expect(analyticsService.getReviewHeatmap).toHaveBeenCalledWith(1, 12);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockHeatmap,

@@ -28,7 +28,9 @@ export function DailyQueue() {
   }
 
   useEffect(() => {
-    loadQueue();
+    void (async () => {
+      await loadQueue();
+    })();
   }, []);
 
   function getRecallStyle(retention: number) {
@@ -119,7 +121,10 @@ export function DailyQueue() {
           >
             {error}
           </p>
-          <button type="button" onClick={loadQueue} aria-label="Tentar novamente"
+          <button
+            type="button"
+            onClick={loadQueue}
+            aria-label="Tentar novamente"
             style={{
               background: "none",
               border: "1px solid var(--danger)",

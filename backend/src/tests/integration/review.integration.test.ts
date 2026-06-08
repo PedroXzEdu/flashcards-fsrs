@@ -114,7 +114,7 @@ describe("Review Integration", () => {
       .get(`/decks/${deckId}/cards`)
       .set("Authorization", `Bearer ${token}`);
 
-    const cardAfter = cardsRes.body.data.find(
+    const cardAfter = cardsRes.body.data.cards.find(
       (c: { id: number }) => c.id === cardId,
     );
     expect(cardAfter.due).toBe(originalDue);

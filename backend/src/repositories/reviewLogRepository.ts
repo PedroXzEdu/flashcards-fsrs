@@ -84,13 +84,14 @@ class ReviewLogRepository {
     return result.rows;
   }
 
-  async getReviewDays(userId: number) {
+  async getReviewDays(userId: number, months = 12) {
     const result = await client.query(
       `SELECT DISTINCT DATE(review) as day
        FROM review_logs
        WHERE user_id = $1
+         AND review >= NOW() - INTERVAL '1 month' * $2
        ORDER BY day DESC`,
-      [userId],
+      [userId, months],
     );
 
     return result.rows.map((r: { day: string }) =>

@@ -1,12 +1,12 @@
 import { analyticsRepository } from "../repositories/analyticsRepository";
 
 class AnalyticsService {
-  async getRetentionRate(userId: number) {
-    return analyticsRepository.getRetentionRate(userId);
+  async getRetentionRate(userId: number, months = 12) {
+    return analyticsRepository.getRetentionRate(userId, months);
   }
 
-  async getReviewHeatmap(userId: number) {
-    return analyticsRepository.getReviewHeatmap(userId);
+  async getReviewHeatmap(userId: number, months = 12) {
+    return analyticsRepository.getReviewHeatmap(userId, months);
   }
 
   async getForgettingCurve(userId: number) {

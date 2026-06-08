@@ -35,13 +35,64 @@ class CardService {
     return card;
   }
 
-  async list(deckId: string, userId: number) {
+  async createBatch(
+    deckId: string,
+    userId: number,
+    cards: { front: string; back: string }[],
+  ) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
       throw new AppError("Baralho não encontrado.", 404);
     }
 
-    return cardRepository.findByDeckId(deckId);
+    const emptyCard = createEmptyCard();
+    const cardsData = cards.map((c) => ({
+      front: c.front,
+      back: c.back,
+      stability: emptyCard.stability,
+      difficulty: emptyCard.difficulty,
+      elapsed_days: emptyCard.elapsed_days,
+      scheduled_days: emptyCard.scheduled_days,
+      reps: emptyCard.reps,
+      lapses: emptyCard.lapses,
+      state: emptyCard.state,
+      due: emptyCard.due,
+    }));
+
+    const created = await cardRepository.createBatch(
+      parseInt(deckId),
+      cardsData,
+    );
+
+    for (let i = 0; i < created.length; i++) {
+      collector.incrementBusiness("cardsCreated");
+    }
+
+    return created;
+  }
+
+  async list(deckId: string, userId: number, page = 1, limit = 20) {
+    const deck = await deckRepository.findById(deckId, userId);
+    if (!deck) {
+      throw new AppError("Baralho não encontrado.", 404);
+    }
+
+    const clampedLimit = Math.min(Math.max(limit, 1), 100);
+    const result = await cardRepository.findByDeckIdPaginated(
+      deckId,
+      page,
+      clampedLimit,
+    );
+
+    return {
+      cards: result.rows,
+      pagination: {
+        total: result.total,
+        page,
+        limit: clampedLimit,
+        totalPages: Math.ceil(result.total / clampedLimit),
+      },
+    };
   }
 
   async update(

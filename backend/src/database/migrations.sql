@@ -56,3 +56,16 @@ CREATE INDEX IF NOT EXISTS idx_cards_deck_id ON cards (deck_id);
 CREATE INDEX IF NOT EXISTS idx_cards_deck_id_due ON cards (deck_id, due);
 CREATE INDEX IF NOT EXISTS idx_review_logs_user_id ON review_logs (user_id);
 CREATE INDEX IF NOT EXISTS idx_review_logs_card_id ON review_logs (card_id);
+
+-- Índices compostos da Fase 03
+CREATE INDEX IF NOT EXISTS idx_cards_deck_state_due
+  ON cards (deck_id, state, due);
+
+CREATE INDEX IF NOT EXISTS idx_review_logs_user_id_review
+  ON review_logs (user_id, review);
+
+CREATE INDEX IF NOT EXISTS idx_review_logs_card_id_review
+  ON review_logs (card_id, review);
+
+CREATE INDEX IF NOT EXISTS idx_decks_user_id_created_at
+  ON decks (user_id, created_at);

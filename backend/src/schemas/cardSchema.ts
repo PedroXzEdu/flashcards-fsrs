@@ -19,3 +19,15 @@ export const updateCardSchema = z.object({
   front: cardField,
   back: cardField,
 });
+
+export const createCardsBatchSchema = z.object({
+  cards: z
+    .array(
+      z.object({
+        front: cardField,
+        back: cardField,
+      }),
+    )
+    .min(1, "Informe pelo menos um card.")
+    .max(50, "Máximo de 50 cards por lote."),
+});
