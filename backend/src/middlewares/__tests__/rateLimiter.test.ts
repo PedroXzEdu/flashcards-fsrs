@@ -6,6 +6,7 @@ import {
   createDeckRateLimiter,
   createCardRateLimiter,
   importRateLimiter,
+  globalRateLimiter,
 } from "../rateLimiter";
 
 vi.mock("express-rate-limit", () => ({
@@ -35,8 +36,12 @@ describe("RateLimiter", () => {
     expect(importRateLimiter).toBeInstanceOf(Function);
   });
 
-  it("deve chamar rateLimit 4 vezes", () => {
-    expect(rateLimitCalls).toHaveLength(4);
+  it("globalRateLimiter deve ser uma função middleware", () => {
+    expect(globalRateLimiter).toBeInstanceOf(Function);
+  });
+
+  it("deve chamar rateLimit 5 vezes", () => {
+    expect(rateLimitCalls).toHaveLength(5);
   });
 
   it("authRateLimiter: max 10, janela 15min, mensagem de erro", () => {
@@ -88,6 +93,19 @@ describe("RateLimiter", () => {
       message: {
         success: false,
         error: "Muitas importações. Tente novamente mais tarde.",
+      },
+    });
+  });
+
+  it("globalRateLimiter: max 1000, janela 15min, pula health", () => {
+    expect(rateLimitCalls[4][0]).toMatchObject({
+      windowMs: 15 * 60 * 1000,
+      max: 1000,
+      standardHeaders: true,
+      legacyHeaders: false,
+      message: {
+        success: false,
+        error: "Muitas requisições. Tente novamente mais tarde.",
       },
     });
   });

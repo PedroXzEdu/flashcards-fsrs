@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { authController } from "../controllers/authController";
 import { authRateLimiter } from "../middlewares/rateLimiter";
+import { bruteForceProtection } from "../middlewares/bruteForce";
 import { validate } from "../middlewares/validate";
 import { registerSchema, loginSchema } from "../schemas/authSchema";
 
@@ -17,6 +18,7 @@ authRoutes.post(
 authRoutes.post(
   "/login",
   authRateLimiter,
+  bruteForceProtection(),
   validate(loginSchema),
   authController.login,
 );

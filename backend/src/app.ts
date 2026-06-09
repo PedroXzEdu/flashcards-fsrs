@@ -10,25 +10,31 @@ import analyticsRoutes from "./routes/analyticsRoutes";
 import { healthCheck } from "./controllers/healthController";
 import { requestId } from "./middlewares/requestId";
 import { metricsMiddleware } from "./middlewares/metrics";
+import { globalRateLimiter } from "./middlewares/rateLimiter";
 import { errorHandler } from "./middlewares/errorHandler";
 import { logger } from "./config/logger";
 import { env } from "./config/env";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(
   helmet({
     contentSecurityPolicy: {
-      reportOnly: true,
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", "data:"],
-        fontSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        imgSrc: ["'self'", "data:", "http:", "https:"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
         connectSrc: ["'self'"],
         baseUri: ["'none'"],
         formAction: ["'self'"],
+        frameAncestors: ["'none'"],
+        workerSrc: ["'self'"],
+        manifestSrc: ["'self'"],
+        reportUri: ["/api/csp-report"],
       },
     },
   }),
@@ -47,6 +53,26 @@ app.use(
 );
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+
+app.post(
+  "/api/csp-report",
+  express.text({
+    type: ["application/csp-report", "application/reports+json"],
+    limit: "10kb",
+  }),
+  (req, res) => {
+    try {
+      const body =
+        typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+      if (body && typeof body === "object") {
+        logger.warn({ cspReport: body }, "CSP Violation Report");
+      }
+    } catch {
+      // ignore malformed reports
+    }
+    res.status(204).end();
+  },
+);
 app.use(
   compression({
     threshold: 0,
@@ -54,6 +80,13 @@ app.use(
 );
 
 app.use(requestId);
+
+app.use((_req, res, next) => {
+  res.setHeader("X-Robots-Tag", "noindex");
+  next();
+});
+
+app.use(globalRateLimiter);
 
 app.use(metricsMiddleware);
 
@@ -85,7 +118,9 @@ app.use(
     },
     autoLogging: {
       ignore: function (req) {
-        return (req as any).url === "/health" || (req as any).url === "/metrics";
+        return (
+          (req as any).url === "/health" || (req as any).url === "/metrics"
+        );
       },
     },
   }),

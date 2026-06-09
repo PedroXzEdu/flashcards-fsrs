@@ -50,3 +50,15 @@ export const importRateLimiter = rateLimit({
     error: "Muitas importações. Tente novamente mais tarde.",
   },
 });
+
+export const globalRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 1000,
+  skip: (req) => process.env.NODE_ENV === "test" || req.path === "/health",
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: "Muitas requisições. Tente novamente mais tarde.",
+  },
+});

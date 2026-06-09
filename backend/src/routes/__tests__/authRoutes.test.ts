@@ -20,7 +20,7 @@ describe("authRoutes", () => {
     expect(getRoute("/register", "post").route.stack).toHaveLength(3);
   });
 
-  it("POST /login com 3 middlewares", () => {
-    expect(getRoute("/login", "post").route.stack).toHaveLength(3);
+  it("POST /login com 4 middlewares (rateLimiter, bruteForce, validate, controller)", () => {
+    expect(getRoute("/login", "post").route.stack).toHaveLength(4);
   });
 });

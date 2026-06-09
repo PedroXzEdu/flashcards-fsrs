@@ -9,11 +9,13 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png"],
+      injectRegister: null,
+      includeAssets: ["favicon.svg", "apple-touch-icon.png", "icons.svg"],
       manifest: {
         name: "FlashFSRS",
         short_name: "FlashFSRS",
         description: "Aplicativo de flashcards com repetição espaçada FSRS",
+        lang: "pt-BR",
         theme_color: "#7c3aed",
         background_color: "#f9fafb",
         display: "standalone",
@@ -39,15 +41,18 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        navigateFallback: "/offline.html",
+        navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
-            urlPattern: /^http:\/\/localhost:3000\/.*/i,
+            urlPattern:
+              /\/(?:auth|decks|import|review-logs|metrics|analytics|health|media)\b/,
             handler: "NetworkFirst",
             options: {
               cacheName: "api-cache",
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24, // 24 horas
+                maxAgeSeconds: 60 * 60 * 24,
               },
               cacheableResponse: {
                 statuses: [0, 200],

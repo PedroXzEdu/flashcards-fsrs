@@ -15,6 +15,7 @@
     "graphify": "npx @nodesify/graphify run .",
     "graphify:update": "npx @nodesify/graphify update .",
     "graphify:watch": "npx @nodesify/graphify watch .",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
     "format": "prettier --write '**/*.{ts,tsx,js,json,css,md}'",
     "format:check": "prettier --check '**/*.{ts,tsx,js,json,css,md}'",
     "prepare": "husky",
