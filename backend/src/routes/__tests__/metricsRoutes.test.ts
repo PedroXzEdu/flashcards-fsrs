@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
 import request from "supertest";
+import express from "express";
 
-vi.mock("../../routes/importRoutes", () => ({ default: require("express").Router() }));
+vi.mock("../../routes/importRoutes", () => ({ default: express.Router() }));
 
 import { app } from "../../app";
 import { collector } from "../../middlewares/metrics";

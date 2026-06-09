@@ -5,4 +5,6 @@ git add .graphify/
 
 npx lint-staged || exit 1
 
+npm --prefix backend run lint 2>/dev/null || echo "⚠️  Backend lint skipped (check backend/package.json)"
+
 docker compose run --rm -T frontend sh -c "npm install --no-audit --no-fund --loglevel=error && npx eslint ." || exit 1

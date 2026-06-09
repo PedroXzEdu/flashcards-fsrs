@@ -61,3 +61,27 @@ export async function createCard(
   );
   return result.rows[0];
 }
+
+export async function createReviewLog(
+  cardId: number,
+  userId: number,
+  overrides: Record<string, unknown> = {},
+) {
+  const p = getTestPool();
+  const result = await p.query(
+    `INSERT INTO review_logs (card_id, user_id, rating, state, stability, difficulty, elapsed_days, scheduled_days)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+     RETURNING *`,
+    [
+      cardId,
+      userId,
+      overrides.rating ?? 3,
+      overrides.state ?? 2,
+      overrides.stability ?? 5,
+      overrides.difficulty ?? 0,
+      overrides.elapsed_days ?? 1,
+      overrides.scheduled_days ?? 1,
+    ],
+  );
+  return result.rows[0];
+}

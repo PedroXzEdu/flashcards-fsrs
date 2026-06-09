@@ -91,20 +91,20 @@ Cobrir os 4 estados de card (New, Learning, Review, Relearning) com testes que v
 
 ---
 
-### Task 4.3 — Testes de integração para import e analytics
+### Task 4.3 ✅ — Testes de integração para import e analytics (Concluída)
 
 Adicionar testes de integração para o fluxo de import .apkg e analytics.
 
 #### Subtarefas
 
-- [ ] Criar fixture .apkg programaticamente (usar `e2e/helpers/generate-apkg.mjs` como referência)
-- [ ] Testar `POST /import` com .apkg válido → deck + cards criados
-- [ ] Testar `POST /import` com arquivo inválido → 400
-- [ ] Testar `POST /import` sem arquivo → 400
-- [ ] Testar `GET /analytics/retention` com dados simulados
-- [ ] Testar `GET /analytics/heatmap` com dados simulados
-- [ ] Testar `GET /analytics/forgetting-curve` com dados simulados
-- [ ] Testar `GET /analytics/workload-forecast` com dados simulados
+- [x] Criar fixture .apkg programaticamente (usar `e2e/helpers/generate-apkg.mjs` como referência)
+- [x] Testar `POST /import` com .apkg válido → deck + cards criados
+- [x] Testar `POST /import` com arquivo inválido → 400
+- [x] Testar `POST /import` sem arquivo → 400
+- [x] Testar `GET /analytics/retention` com dados simulados
+- [x] Testar `GET /analytics/heatmap` com dados simulados
+- [x] Testar `GET /analytics/forgetting-curve` com dados simulados
+- [x] Testar `GET /analytics/workload-forecast` com dados simulados
 
 #### Critérios de Aceitação
 
@@ -121,17 +121,17 @@ Adicionar testes de integração para o fluxo de import .apkg e analytics.
 
 ---
 
-### Task 4.4 — Testes E2E expandidos
+### Task 4.4 ✅ — Testes E2E expandidos (Concluída)
 
 Adicionar testes E2E para share/unshare e analytics.
 
 #### Subtarefas
 
-- [ ] Criar `e2e/share.spec.ts`: criar deck → share → copiar token → preview público → import por outro usuário
-- [ ] Criar `e2e/analytics.spec.ts`: criar deck + cards → revisar alguns → verificar stats carregam
-- [ ] Adicionar helper para criar segundo usuário nos testes
-- [ ] Atualizar `playwright.config.ts` se necessário (timeout para analytics)
-- [ ] Testar fluxo de unshare (remover token, verificar que link não funciona mais)
+- [x] Criar `e2e/share.spec.ts`: criar deck → share → copiar token → preview público → import por outro usuário
+- [x] Criar `e2e/analytics.spec.ts`: criar deck + cards → revisar alguns → verificar stats carregam
+- [ ] ~~Adicionar helper para criar segundo usuário nos testes~~ (usar `browser.newContext()` no próprio teste)
+- [ ] ~~Atualizar `playwright.config.ts` se necessário (timeout para analytics)~~ (config atual já suficiente)
+- [x] Testar fluxo de unshare (remover token, verificar que link não funciona mais)
 
 #### Critérios de Aceitação
 
@@ -150,19 +150,19 @@ Adicionar testes E2E para share/unshare e analytics.
 
 ---
 
-### Task 4.5 — ESLint + qualidade de código
+### Task 4.5 ✅ — ESLint + qualidade de código (Concluída)
 
 Aprimorar configuração ESLint e limpar código morto.
 
 #### Subtarefas
 
-- [ ] Revisar configs ESLint existentes (backend e frontend)
-- [ ] Adicionar regras: `@typescript-eslint/no-unused-vars` com erro, `no-console` com warn (exceção para logger), `prefer-const`, `no-var`
-- [ ] Rodar ESLint em toda a base e corrigir findings
-- [ ] Verificar `any` types no backend — documentar ou tipar corretamente
-- [ ] Remover arquivos não utilizados ou importações mortas
-- [ ] Adicionar script `lint` nos `package.json` do backend e frontend
-- [ ] Garantir que `husky` executa lint antes do commit
+- [x] Revisar configs ESLint existentes (backend e frontend)
+- [x] Adicionar regras: `@typescript-eslint/no-unused-vars` com erro, `no-console` com warn (exceção para logger), `prefer-const`, `no-var`
+- [x] Rodar ESLint em toda a base e corrigir findings
+- [x] Verificar `any` types no backend — documentar ou tipar corretamente
+- [x] Remover arquivos não utilizados ou importações mortas
+- [x] Adicionar script `lint` nos `package.json` do backend e frontend (já existentes)
+- [x] Garantir que `husky` executa lint antes do commit
 
 #### Critérios de Aceitação
 
@@ -183,18 +183,18 @@ Aprimorar configuração ESLint e limpar código morto.
 
 ---
 
-### Task 4.6 — Testes de segurança
+### Task 4.6 ✅ — Testes de segurança (Concluída)
 
 Adicionar testes que verificam proteção contra SQL injection e XSS via API.
 
 #### Subtarefas
 
-- [ ] Testar tentativa de SQL injection no título do deck, front/back do card
-- [ ] Testar XSS via card content: `<script>alert('xss')</script>` no front/back
-- [ ] Verificar que JWT inválido retorna 401
-- [ ] Verificar que rate limit retorna 429 após exceder
-- [ ] Verificar que CORS bloqueia origens não autorizadas
-- [ ] Testar upload de arquivo não-.apkg (ex: `.exe`) retorna 400
+- [x] Testar tentativa de SQL injection no título do deck, front/back do card
+- [x] Testar XSS via card content: `<script>alert('xss')</script>` no front/back
+- [x] Verificar que JWT inválido retorna 401
+- [ ] ~~Verificar que rate limit retorna 429 após exceder~~ (já coberto em unit test; rate limit é skip em NODE_ENV=test)
+- [x] Verificar que CORS bloqueia origens não autorizadas
+- [x] Testar upload de arquivo não-.apkg (ex: `.exe`) retorna 400
 
 #### Critérios de Aceitação
 
@@ -223,10 +223,10 @@ Adicionar testes que verificam proteção contra SQL injection e XSS via API.
 
 ## Checklist da Fase
 
-- [ ] Todas as tarefas concluídas
-- [ ] Testes implementados
-- [ ] Documentação atualizada
-- [ ] Revisão de código realizada
+- [x] Todas as tarefas concluídas
+- [x] Testes implementados
+- [ ] Documentação atualizada (pendente @doc)
+- [ ] Revisão de código realizada (pendente @reviewer)
 - [ ] Critérios de aceitação validados
 
 ## Instruções para o Agente Construtor

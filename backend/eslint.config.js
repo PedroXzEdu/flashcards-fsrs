@@ -7,10 +7,7 @@ export default defineConfig([
   globalIgnores(["dist", "uploads"]),
   {
     files: ["**/*.ts"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommended],
     languageOptions: {
       globals: globals.node,
     },
@@ -20,6 +17,9 @@ export default defineConfig([
         "error",
         { argsIgnorePattern: "^_" },
       ],
+      "no-console": "warn",
+      "prefer-const": "error",
+      "no-var": "error",
     },
   },
 ]);
