@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { ZodError } from "zod";
-import { createCardSchema, updateCardSchema } from "../cardSchema";
+import {
+  createCardSchema,
+  updateCardSchema,
+  createCardsBatchSchema,
+} from "../cardSchema";
 
 describe("createCardSchema", () => {
   it("aceita dados válidos", () => {
@@ -107,5 +111,55 @@ describe("updateCardSchema", () => {
     });
     expect(data.front).toBe("texto");
     expect(data.back).toBe("texto");
+  });
+});
+
+describe("createCardsBatchSchema", () => {
+  it("aceita array de cards válidos", () => {
+    const data = createCardsBatchSchema.parse({
+      cards: [
+        { front: "Front 1", back: "Back 1" },
+        { front: "Front 2", back: "Back 2" },
+      ],
+    });
+    expect(data.cards).toHaveLength(2);
+    expect(data.cards[0].front).toBe("Front 1");
+    expect(data.cards[1].back).toBe("Back 2");
+  });
+
+  it("rejeita array vazio", () => {
+    expect(() => createCardsBatchSchema.parse({ cards: [] })).toThrow(ZodError);
+  });
+
+  it("rejeita mais de 50 cards", () => {
+    const cards = Array.from({ length: 51 }, (_, i) => ({
+      front: `Front ${i}`,
+      back: `Back ${i}`,
+    }));
+    expect(() => createCardsBatchSchema.parse({ cards })).toThrow(ZodError);
+  });
+
+  it("rejeita card com front vazio no array", () => {
+    expect(() =>
+      createCardsBatchSchema.parse({
+        cards: [{ front: "", back: "Back" }],
+      }),
+    ).toThrow(ZodError);
+  });
+
+  it("rejeita card com front acima de 10K caracteres no array", () => {
+    expect(() =>
+      createCardsBatchSchema.parse({
+        cards: [{ front: "a".repeat(10_001), back: "Back" }],
+      }),
+    ).toThrow(ZodError);
+  });
+
+  it("faz trim nos cards do array", () => {
+    const data = createCardsBatchSchema.parse({
+      cards: [{ front: "  text  ", back: "  other  " }],
+    });
+    expect(data.cards[0].front).toBe("text");
+    expect(data.cards[0].back).toBe("other");
   });
 });

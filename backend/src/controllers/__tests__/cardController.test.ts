@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   createCard,
+  createCardsBatch,
   getCards,
   updateCard,
   deleteCard,
@@ -11,6 +12,7 @@ import { AppError } from "../../utils/AppError";
 vi.mock("../../services/cardService", () => ({
   cardService: {
     create: vi.fn(),
+    createBatch: vi.fn(),
     list: vi.fn(),
     update: vi.fn(),
     delete: vi.fn(),
@@ -82,6 +84,54 @@ describe("CardController", () => {
       const next = vi.fn();
 
       await createCard(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(res.status).not.toHaveBeenCalled();
+      expect(res.json).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("createCardsBatch", () => {
+    it("deve criar cards em lote e retornar 201 com success/data array", async () => {
+      const mockCards = [
+        { id: 1, deck_id: 1, front: "F1", back: "B1" },
+        { id: 2, deck_id: 1, front: "F2", back: "B2" },
+      ];
+      vi.mocked(cardService.createBatch).mockResolvedValue(mockCards);
+
+      const req = createReq(
+        { deck_id: "1" },
+        { cards: [{ front: "F1", back: "B1" }, { front: "F2", back: "B2" }] },
+      );
+      const res = createRes();
+      const next = vi.fn();
+
+      await createCardsBatch(req, res, next);
+
+      expect(cardService.createBatch).toHaveBeenCalledWith("1", 1, [
+        { front: "F1", back: "B1" },
+        { front: "F2", back: "B2" },
+      ]);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        data: mockCards,
+      });
+      expect(next).not.toHaveBeenCalled();
+    });
+
+    it("deve chamar next(err) se cardService.createBatch lançar erro", async () => {
+      const error = new AppError("Baralho não encontrado.", 404);
+      vi.mocked(cardService.createBatch).mockRejectedValue(error);
+
+      const req = createReq(
+        { deck_id: "999" },
+        { cards: [{ front: "F1", back: "B1" }] },
+      );
+      const res = createRes();
+      const next = vi.fn();
+
+      await createCardsBatch(req, res, next);
 
       expect(next).toHaveBeenCalledWith(error);
       expect(res.status).not.toHaveBeenCalled();

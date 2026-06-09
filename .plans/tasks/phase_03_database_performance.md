@@ -37,15 +37,15 @@ Analisar EXPLAIN ANALYZE das queries mais frequentes e adicionar índices onde f
 
 #### Subtarefas
 
-- [ ] Rodar EXPLAIN ANALYZE nas queries: `findDueByDeck`, `findDailyQueue`, `getReviewHeatmap`, `getRetentionRate`, `getWorkloadForecast`, `getDeckStats`
-- [ ] Identificar scans sequenciais em tabelas grandes (cards, review_logs)
-- [ ] Adicionar índices em `migrations.sql`:
+- [x] Rodar EXPLAIN ANALYZE nas queries: `findDueByDeck`, `findDailyQueue`, `getReviewHeatmap`, `getRetentionRate`, `getWorkloadForecast`, `getDeckStats`
+- [x] Identificar scans sequenciais em tabelas grandes (cards, review_logs)
+- [x] Adicionar índices em `migrations.sql`:
   - `(deck_id, state, due)` para due cards
   - `(user_id, review)` para review_logs (heatmap)
   - `(card_id, review)` para review_logs (histórico por card)
   - `(user_id, created_at)` para decks
-- [ ] Implementar migration incremental (ALTER TABLE ADD INDEX IF NOT EXISTS)
-- [ ] Testar via integração que queries usam os índices
+- [x] Implementar migration incremental (ALTER TABLE ADD INDEX IF NOT EXISTS)
+- [x] Testar via integração que queries usam os índices
 
 #### Critérios de Aceitação
 
@@ -70,14 +70,14 @@ Endpoint para criar múltiplos cards em uma única requisição.
 
 #### Subtarefas
 
-- [ ] Criar schema `createCardsBatchSchema` que aceita array de cards
-- [ ] Limitar batch a 50 cards por requisição (validar no schema)
-- [ ] Criar `cardRepository.createBatch(deckId, cards[], client?)` com INSERT múltiplo (`INSERT INTO cards (...) VALUES (...), (...), (...)` com `RETURNING *`)
-- [ ] Criar `cardService.createBatch` que chama repositório
-- [ ] Adicionar rota `POST /decks/:id/cards/batch`
-- [ ] Atualizar frontend (DeckPage) com botão "Adicionar múltiplos" que abre formulário simples (front/back repetido) ou área de texto para colar pares
-- [ ] Validar via schema que cada card tem front/back dentro do limite de caracteres
-- [ ] Testar via supertest + integration + testing-library
+- [x] Criar schema `createCardsBatchSchema` que aceita array de cards
+- [x] Limitar batch a 50 cards por requisição (validar no schema)
+- [x] Criar `cardRepository.createBatch(deckId, cards[], client?)` com INSERT múltiplo (`INSERT INTO cards (...) VALUES (...), (...), (...)` com `RETURNING *`)
+- [x] Criar `cardService.createBatch` que chama repositório
+- [x] Adicionar rota `POST /decks/:id/cards/batch`
+- [x] Atualizar frontend (DeckPage) com botão "Adicionar múltiplos" que abre formulário simples (front/back repetido) ou área de texto para colar pares
+- [x] Validar via schema que cada card tem front/back dentro do limite de caracteres
+- [x] Testar via supertest + integration + testing-library
 
 #### Critérios de Aceitação
 
@@ -105,12 +105,12 @@ Adicionar paginação server-side na listagem de cards de um baralho.
 
 #### Subtarefas
 
-- [ ] Adicionar parâmetros `page` e `limit` (default 20, max 100) em `GET /decks/:id/cards`
-- [ ] Adicionar `OFFSET` + `LIMIT` no `cardRepository.findByDeck`
-- [ ] Retornar metadados de paginação: `{ total, page, limit, totalPages }`
-- [ ] Atualizar frontend para carregar cards paginados (scroll infinito ou "Carregar mais")
-- [ ] Atualizar client.ts com parâmetros de paginação
-- [ ] Testar via supertest + integration
+- [x] Adicionar parâmetros `page` e `limit` (default 20, max 100) em `GET /decks/:id/cards`
+- [x] Adicionar `OFFSET` + `LIMIT` no `cardRepository.findByDeck`
+- [x] Retornar metadados de paginação: `{ total, page, limit, totalPages }`
+- [x] Atualizar frontend para carregar cards paginados (scroll infinito ou "Carregar mais")
+- [x] Atualizar client.ts com parâmetros de paginação
+- [x] Testar via supertest + integration
 
 #### Critérios de Aceitação
 
@@ -135,12 +135,12 @@ Revisar a query `findDueByDeck` para garantir que usa índices corretamente e re
 
 #### Subtarefas
 
-- [ ] Rodar EXPLAIN ANALYZE da query atual com 5000+ cards
-- [ ] Verificar se o `ORDER BY` está usando índice
-- [ ] Se necessário, reescrever a query para usar o índice `(deck_id, state, due)`
-- [ ] Limitar resultado a um número máximo (ex: 200 cards por vez)
-- [ ] Adicionar teste de integração que verifica performance com carga
-- [ ] Verificar que `PriorityQueueService` continua funcionando com a query otimizada
+- [x] Rodar EXPLAIN ANALYZE da query atual com 5000+ cards
+- [x] Verificar se o `ORDER BY` está usando índice
+- [x] Reescrever a query para usar o índice `(deck_id, state, due)`
+- [x] Limitar resultado a um número máximo (ex: 200 cards por vez)
+- [x] Adicionar teste de integração que verifica performance com carga
+- [x] Verificar que `PriorityQueueService` continua funcionando com a query otimizada
 
 #### Critérios de Aceitação
 
@@ -162,12 +162,12 @@ Revisar queries analíticas que agregam dados históricos.
 
 #### Subtarefas
 
-- [ ] Rodar EXPLAIN ANALYZE em: `getRetentionRate`, `getReviewHeatmap`, `getForgettingCurve`, `getWorkloadForecast`, `getGlobalStats`
-- [ ] Adicionar índices onde necessário (ver Task 3.1)
-- [ ] Limitar escopo temporal das queries (ex: últimos 12 meses por padrão)
-- [ ] Adicionar parâmetro `months` nos endpoints de analytics com default 12
-- [ ] Verificar se `getWorkloadForecast` pode ser simplificada
-- [ ] Testar via integração com dados históricos simulados
+- [x] Rodar EXPLAIN ANALYZE em: `getRetentionRate`, `getReviewHeatmap`, `getForgettingCurve`, `getWorkloadForecast`, `getGlobalStats`
+- [x] Adicionar índices onde necessário (ver Task 3.1)
+- [x] Limitar escopo temporal das queries (ex: últimos 12 meses por padrão)
+- [x] Adicionar parâmetro `months` nos endpoints de analytics com default 12
+- [x] Verificar se `getWorkloadForecast` pode ser simplificada
+- [x] Testar via integração com dados históricos simulados
 
 #### Critérios de Aceitação
 
@@ -195,11 +195,11 @@ Revisar queries analíticas que agregam dados históricos.
 
 ## Checklist da Fase
 
-- [ ] Todas as tarefas concluídas
-- [ ] Testes implementados
-- [ ] Documentação atualizada
-- [ ] Revisão de código realizada
-- [ ] Critérios de aceitação validados
+- [x] Todas as tarefas concluídas
+- [x] Testes implementados
+- [x] Documentação atualizada
+- [x] Revisão de código realizada
+- [x] Critérios de aceitação validados
 
 ## Instruções para o Agente Construtor
 

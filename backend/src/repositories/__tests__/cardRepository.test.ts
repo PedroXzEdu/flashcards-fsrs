@@ -50,6 +50,45 @@ describe("CardRepository", () => {
     });
   });
 
+  describe("findByDeckIdPaginated", () => {
+    it("deve retornar cards com total", async () => {
+      (pool.query as any)
+        .mockResolvedValueOnce({ rows: [{ total: "1" }] })
+        .mockResolvedValueOnce({ rows: [mockCard] });
+
+      const result = await cardRepository.findByDeckIdPaginated("1", 1, 20);
+
+      expect(result.total).toBe(1);
+      expect(result.rows).toHaveLength(1);
+    });
+
+    it("deve calcular OFFSET corretamente", async () => {
+      (pool.query as any)
+        .mockResolvedValueOnce({ rows: [{ total: "50" }] })
+        .mockResolvedValueOnce({ rows: [mockCard] });
+
+      await cardRepository.findByDeckIdPaginated("1", 3, 10);
+
+      expect(pool.query).toHaveBeenCalledWith(
+        expect.stringContaining("LIMIT $2 OFFSET $3"),
+        ["1", 10, 20],
+      );
+    });
+
+    it("deve ordenar por created_at DESC", async () => {
+      (pool.query as any)
+        .mockResolvedValueOnce({ rows: [{ total: "1" }] })
+        .mockResolvedValueOnce({ rows: [mockCard] });
+
+      await cardRepository.findByDeckIdPaginated("1", 1, 20);
+
+      expect(pool.query).toHaveBeenCalledWith(
+        expect.stringContaining("ORDER BY created_at DESC"),
+        expect.anything(),
+      );
+    });
+  });
+
   describe("findDueByDeck", () => {
     it("deve retornar cards devidos ordenados", async () => {
       (pool.query as any).mockResolvedValue({ rows: [mockCard] });
@@ -144,6 +183,51 @@ describe("CardRepository", () => {
       );
 
       expect(result.stability).toBe(0);
+    });
+  });
+
+  describe("createBatch", () => {
+    it("deve inserir múltiplos cards e retornar array", async () => {
+      const newCards = [mockCard, { ...mockCard, id: 2 }];
+      (pool.query as any).mockResolvedValue({ rows: newCards });
+
+      const result = await cardRepository.createBatch(1, [
+        {
+          front: "F1",
+          back: "B1",
+          stability: 2.5,
+          difficulty: 0.5,
+          elapsed_days: 0,
+          scheduled_days: 0,
+          reps: 0,
+          lapses: 0,
+          state: 0,
+          due: new Date(),
+        },
+        {
+          front: "F2",
+          back: "B2",
+          stability: 2.5,
+          difficulty: 0.5,
+          elapsed_days: 0,
+          scheduled_days: 0,
+          reps: 0,
+          lapses: 0,
+          state: 0,
+          due: new Date(),
+        },
+      ]);
+
+      expect(result).toHaveLength(2);
+      expect(pool.query).toHaveBeenCalledWith(
+        expect.stringContaining("INSERT INTO cards"),
+        expect.arrayContaining([1, "F1", "B1", "F2", "B2"]),
+      );
+    });
+
+    it("deve retornar array vazio se lista vazia", async () => {
+      const result = await cardRepository.createBatch(1, []);
+      expect(result).toEqual([]);
     });
   });
 

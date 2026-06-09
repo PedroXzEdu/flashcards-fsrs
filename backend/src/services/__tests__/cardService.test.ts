@@ -8,6 +8,7 @@ import { deckRepository } from "../../repositories/deckRepository";
 vi.mock("../../repositories/cardRepository", () => ({
   cardRepository: {
     create: vi.fn(),
+    createBatch: vi.fn(),
     findByDeckId: vi.fn(),
     findByDeckIdPaginated: vi.fn(),
     update: vi.fn(),
@@ -68,6 +69,39 @@ describe("CardService", () => {
 
       await expect(
         cardService.create("999", 1, { front: "F", back: "B" }),
+      ).rejects.toThrow("Baralho não encontrado.");
+    });
+  });
+
+  describe("createBatch", () => {
+    it("deve criar múltiplos cards em lote", async () => {
+      vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
+      vi.mocked(cardRepository.createBatch).mockResolvedValue([
+        mockCard,
+        { ...mockCard, id: 2, front: "Front 2", back: "Back 2" },
+      ]);
+
+      const cards = [
+        { front: "Frente", back: "Verso" },
+        { front: "Front 2", back: "Back 2" },
+      ];
+      const result = await cardService.createBatch("1", 1, cards);
+
+      expect(result).toHaveLength(2);
+      expect(deckRepository.findById).toHaveBeenCalledWith("1", 1);
+      expect(cardRepository.createBatch).toHaveBeenCalledWith(
+        1,
+        expect.arrayContaining([
+          expect.objectContaining({ front: "Frente", back: "Verso" }),
+        ]),
+      );
+    });
+
+    it("deve lançar erro se deck não existe", async () => {
+      vi.mocked(deckRepository.findById).mockResolvedValue(null);
+
+      await expect(
+        cardService.createBatch("999", 1, [{ front: "F", back: "B" }]),
       ).rejects.toThrow("Baralho não encontrado.");
     });
   });

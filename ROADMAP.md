@@ -16,7 +16,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 |---|---|
 | **01 — Observability & Monitoring** ✅ | Métricas, health check detalhado, logs enriquecidos |
 | **02 — UX Hardening** ✅ | Confirm dialogs, progresso, acessibilidade, responsivo, auto-save |
-| **03 — Database Performance & Batch** | Índices, batch create, paginação, otimização de queries |
+| **03 — Database Performance & Batch** ✅ | Índices, batch create, paginação, otimização de queries |
 | **04 — Testing & Quality** | Testes de frontend, regressão FSRS, integração, E2E, ESLint, segurança |
 | **05 — Production Readiness** | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |
 
@@ -117,6 +117,17 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] Logs enriquecidos via `pino-http`: customLogLevel (info/warn/error), customProps com `userId`, responseTime
 - [x] Business metrics: `decksCreated`, `cardsCreated`, `reviewsSubmitted`, `importsCompleted` (incrementados nos services)
 - [x] `ping()` function em `db.ts` para health check do banco
+
+---
+
+### Fase 03 — Database Performance & Batch
+
+- [x] Índices compostos: `idx_cards_deck_state_due`, `idx_review_logs_user_id_review`, `idx_review_logs_card_id_review`, `idx_decks_user_id_created_at`
+- [x] Batch create: `POST /decks/:id/cards/batch` (até 50 cards, schema Zod)
+- [x] Paginação server-side em `GET /decks/:id/cards` com `page`/`limit` e metadados
+- [x] "Carregar mais" no frontend (DeckPage com paginação incremental)
+- [x] `findDueByDeck` com `LIMIT 200` e `CASE` ordering refinado
+- [x] Analytics queries filtradas por `months` (default 12, max 120)
 
 ---
 
