@@ -31,18 +31,18 @@ Expandir a cobertura de testes para áreas críticas atualmente não testadas, a
 
 ## Tarefas
 
-### Task 4.1 — Testes de páginas do frontend
+### Task 4.1 ✅ — Testes de páginas do frontend
 
-Adicionar testes para as páginas principais: Dashboard, Review, StatsGlobal, SharedDeck.
+Adicionar testes para as páginas principais: Dashboard, Review, StatsGlobal, SharedDeck. (Concluída)
 
 #### Subtarefas
 
-- [ ] Criar `frontend/src/pages/__tests__/DashboardPage.test.tsx` — testar renderização com dados mockados, empty state, erro ao carregar
-- [ ] Criar `frontend/src/pages/__tests__/ReviewPage.test.tsx` — testar fluxo de preview, mostrar resposta, rating, conclusão
-- [ ] Criar `frontend/src/pages/__tests__/StatsGlobalPage.test.tsx` — testar renderização de métricas
-- [ ] Adicionar mocks para `api/client.ts` nos testes
-- [ ] Verificar que loading skeletons aparecem durante carregamento
-- [ ] Verificar que empty states aparecem quando não há dados
+- [x] Criar `frontend/src/pages/__tests__/DashboardPage.test.tsx` — testar renderização com dados mockados, empty state, erro ao carregar
+- [x] Criar `frontend/src/pages/__tests__/ReviewPage.test.tsx` — testar fluxo de preview, mostrar resposta, rating, conclusão
+- [x] Criar `frontend/src/pages/__tests__/StatsGlobalPage.test.tsx` — testar renderização de métricas
+- [x] Adicionar mocks para `api/client.ts` nos testes
+- [x] Verificar que loading skeletons aparecem durante carregamento
+- [x] Verificar que empty states aparecem quando não há dados
 
 #### Critérios de Aceitação
 
@@ -60,21 +60,21 @@ Adicionar testes para as páginas principais: Dashboard, Review, StatsGlobal, Sh
 
 ---
 
-### Task 4.2 — Testes de regressão FSRS
+### Task 4.2 ✅ — Testes de regressão FSRS (Concluída)
 
 Cobrir os 4 estados de card (New, Learning, Review, Relearning) com testes que verificam comportamento correto do preview, submit, e agendamento.
 
 #### Subtarefas
 
-- [ ] Criar `backend/src/services/__tests__/reviewService.fsrs.test.ts`
-- [ ] Testar: New → Again (vai para Learning), New → Good (vai para Review)
-- [ ] Testar: Review → Again (vai para Relearning), Review → Good (permanece Review)
-- [ ] Testar: Relearning → Again (permanece Relearning, penalty)
-- [ ] Testar: Learning → Easy (vai para Review)
-- [ ] Verificar que `stability`, `difficulty`, `scheduled_days` são atualizados corretamente
-- [ ] Testar transação: se `create` review_log falhar, card NÃO é atualizado
-- [ ] Testar preview (GET /review) retorna cards na ordem correta
-- [ ] Testar limite de `new_cards_per_day` é respeitado
+- [x] Criar `backend/src/services/__tests__/reviewService.fsrs.test.ts`
+- [x] Testar: New → Again (vai para Learning), New → Good (vai para Review via learning steps)
+- [x] Testar: Review → Again (vai para Relearning), Review → Good (permanece Review)
+- [x] Testar: Relearning → Again (permanece Relearning), Relearning → Good → Review
+- [x] Testar: Learning → Easy (vai para Review)
+- [x] Verificar que `stability`, `difficulty`, `scheduled_days` são atualizados corretamente
+- [x] Testar transação: se `create` review_log falhar, card NÃO é atualizado (já coberto em reviewService.test.ts)
+- [x] Testar preview (GET /review) retorna cards na ordem correta (já coberto em reviewService.test.ts)
+- [x] Testar limite de `new_cards_per_day` é respeitado (já coberto em reviewService.test.ts)
 
 #### Critérios de Aceitação
 

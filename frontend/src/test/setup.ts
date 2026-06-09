@@ -32,6 +32,14 @@ Object.defineProperty(globalThis, "matchMedia", {
   }),
 });
 
+globalThis.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
+
+globalThis.scrollTo = vi.fn();
+
 beforeEach(() => {
   vi.clearAllMocks();
   localStorageMock.clear();
