@@ -2,10 +2,10 @@
 
 ## Estado Atual
 
-- **Situação**: Não iniciada
+- **Situação**: Concluída
 - **Task pai**: [Phase 05 — Production Readiness](./phase_05_production_readiness.md) (subtask de Task 5.6)
 - **Dependências**: Task 5.5b (Docker Compose Prod)
-- **Último checkpoint**: N/A
+- **Último checkpoint**: Commit `f58e619` — `.env.prod.example` criado
 - **Critério explícito de conclusão**: `.env.prod.example` criado com todas as variáveis necessárias para produção
 
 ## Objetivo
@@ -54,11 +54,11 @@ cat .env.prod.example
 
 ## Definition of Done
 
-- [ ] `.env.prod.example` criado
-- [ ] Todas as variáveis documentadas
-- [ ] Placeholders seguros
-- [ ] `@reviewer` aprovou
-- [ ] Commit criado
+- [x] `.env.prod.example` criado (DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET, PORT, CORS_ORIGIN)
+- [x] Todas as variáveis documentadas com comentários
+- [x] Placeholders seguros (`change-me-to-a-secure-password`, `change-me-to-a-random-64-char-hex-string`)
+- [x] `@reviewer` aprovou
+- [x] Commit criado (`f58e619`)
 
 ## Commit Sugerido
 

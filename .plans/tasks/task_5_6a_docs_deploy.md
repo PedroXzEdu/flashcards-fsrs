@@ -2,10 +2,10 @@
 
 ## Estado Atual
 
-- **Situação**: Não iniciada
+- **Situação**: Concluída
 - **Task pai**: [Phase 05 — Production Readiness](./phase_05_production_readiness.md) (subtask de Task 5.6)
 - **Dependências**: Task 5.5b (Docker Compose Prod)
-- **Último checkpoint**: N/A
+- **Último checkpoint**: Commit `f58e619` — seção Deploy adicionada ao README
 - **Critério explícito de conclusão**: README.md atualizado com seção "Deploy" contendo pré-requisitos, passos e variáveis de ambiente
 
 ## Objetivo
@@ -54,10 +54,10 @@ cat README.md | grep -A 20 "## Deploy"
 
 ## Definition of Done
 
-- [ ] README.md atualizado com seção Deploy
-- [ ] Instruções claras e reproduzíveis
-- [ ] `@reviewer` aprovou
-- [ ] Commit criado
+- [x] README.md atualizado com seção Deploy (pré-requisitos, passos, variáveis, portas)
+- [x] Instruções claras e reproduzíveis
+- [x] `@reviewer` aprovou
+- [x] Commit criado (`f58e619`)
 
 ## Commit Sugerido
 

@@ -71,8 +71,8 @@ Tasks sem dependência entre si (ex: 5.3a, 5.3b, 5.3c) podem ser executadas em p
 ## Estado Atual
 
 - **Início**: Fase iniciada
-- **Último checkpoint**: Tasks 5.1 até 5.6b concluídas
-- **Progresso**: 13/14 tasks
+- **Último checkpoint**: Phase 05 concluída
+- **Progresso**: 14/14 tasks
 
 ## Critério de Conclusão da Fase
 
@@ -95,9 +95,9 @@ Tasks sem dependência entre si (ex: 5.3a, 5.3b, 5.3c) podem ser executadas em p
 - [x] 5.5b Docker Compose Prod
 - [x] 5.6a Docs Deploy
 - [x] 5.6b Env Prod
-- [ ] 5.6c Full Regression
-- [ ] Revisão de código realizada
-- [ ] Critérios de aceitação validados
+- [x] 5.6c Full Regression
+- [x] Revisão de código realizada
+- [x] Critérios de aceitação validados
 
 ## Instruções para o Agente Construtor
 

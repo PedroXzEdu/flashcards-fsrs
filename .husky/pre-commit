@@ -1,10 +1,9 @@
 #!/usr/bin/env sh
+set -e
 
-docker compose run --rm -T tools sh -c "npx -y @nodesify/graphify update ." || exit 1
+docker compose run --rm --no-TTY tools sh -c "npx -y @nodesify/graphify update ."
+
 git add .graphify/
 
-npx lint-staged || exit 1
-
-npm --prefix backend run lint 2>/dev/null || echo "⚠️  Backend lint skipped (check backend/package.json)"
-
-docker compose run --rm -T frontend sh -c "npm install --no-audit --no-fund --loglevel=error && npx eslint ." || exit 1
+docker compose run --rm --no-TTY backend npm run lint
+docker compose run --rm --no-TTY frontend npm run lint
