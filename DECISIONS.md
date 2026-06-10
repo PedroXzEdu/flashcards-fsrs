@@ -538,3 +538,145 @@ Classe `MetricsCollector` customizada em `backend/src/middlewares/metrics.ts`, a
 ### Quando revisitar
 
 Se houver necessidade de métricas históricas, monitoramento contínuo (Grafana), ou deploy em produção com múltiplas instâncias — migrar para `prom-client` com exportação Prometheus real e scraper externo.
+
+---
+
+## 19. Multi-stage Docker + nginx para produção
+
+### Contexto
+
+O ambiente de dev usa `docker compose up` com Vite dev server e hot reload. Produção precisa de build otimizado, static serving e proxy reverso.
+
+### Escolha
+
+`Dockerfile` (backend) e `Dockerfile.frontend` (frontend) separados com multi-stage build. Frontend servido por nginx:alpine. API proxy via nginx com roteamento por método HTTP + header `X-Requested-With`.
+
+### Justificativa
+
+- nginx é mais eficiente que Node.js para servir arquivos estáticos
+- Separação de responsabilidades: nginx gerencia compressão, cache, headers de segurança
+- Multi-stage reduz drasticamente o tamanho da imagem final (devDependencies isoladas no stage de build)
+- Três stages no backend: deps (`npm ci --omit=dev`), build (compilação TS), runtime (node:20-alpine + tini)
+
+### Trade-offs
+
+- Complexidade adicional: duas Dockerfiles + nginx.conf + docker-compose.prod.yml
+- nginx adiciona uma camada de proxy (latência mínima, mas mais um ponto de falha)
+- Precisa sincronizar rotas do nginx com as rotas reais do backend (risco de mismatch)
+
+### Quando revisitar
+
+Se o deploy migrar para PaaS (Railway, Render, Fly.io) que gerencia static serving automaticamente.
+
+---
+
+## 20. Brute Force Protection in-memory
+
+### Contexto
+
+Proteção contra ataques de força bruta no login, além do rate limit existente (`authRateLimiter`: 10 req/15min).
+
+### Escolha
+
+Middleware `bruteForce.ts` com armazenamento em `Map<string, Record>` (memória do processo). 5 tentativas falhas consecutivas em 15min → bloqueio de 30min por IP. Reset automático após login bem-sucedido (status 200).
+
+### Justificativa
+
+- Complementa o rate limiter: rate limit protege volume, brute force protege contra tentativas de senha
+- Em memória é suficiente para MVP — dados resetam ao restart, aceitável para o escopo
+- Evita dependência externa (Redis, banco de dados) para um recurso de segurança
+- Cleanup periódico a cada 60s remove registros expirados
+
+### Trade-offs
+
+- Bloqueios não persistem entre restarts do servidor
+- Apenas por IP (não por usuário) — atacante em mesma NAT afeta outros usuários
+- Escala: Map em memória não funciona com múltiplas instâncias (horizontal scaling)
+
+### Quando revisitar
+
+Se houver deploy multi-instância ou necessidade de persistência de bloqueios entre restarts — migrar para Redis ou tabela no PostgreSQL.
+
+---
+
+## 21. Global Rate Limiter (defense-in-depth)
+
+### Contexto
+
+4 rate limiters granulares existiam (auth, createDeck, createCard, import), mas sem proteção global contra abuso em rotas não-limitadas.
+
+### Escolha
+
+`globalRateLimiter` (1000 req/15min) aplicado antes dos limiters granulares no pipeline de middlewares, com exceção do `/health` e `NODE_ENV=test`.
+
+### Justificativa
+
+- Defense-in-depth: se um limiter granular for mal configurado ou surgir um novo endpoint sem limiter, o global atua como rede de segurança
+- `/health` excluído para permitir monitoramento externo sem risco de rate limit
+- Ignorado em testes (`NODE_ENV=test`) para não interferir em suítes que fazem muitas requisições
+
+### Trade-offs
+
+- Pode mascarar problemas de configuração de limiters granulares (devs podem não perceber que um endpoint específico está desprotegido)
+- 1000 req/15min é generoso — ataques DDoS de baixo volume passam
+- Duas camadas de rate limit adicionam complexidade de debug quando 429 aparece
+
+### Quando revisitar
+
+Se houver evidência de abuso específico em rotas não-limitadas (GET /decks, GET /cards) — ajustar limites ou adicionar limiters granulares adicionais.
+
+---
+
+## 22. JSON Logger em Produção
+
+### Contexto
+
+Logger usava `pino-pretty` (formatação colorida para terminal) em todos os ambientes.
+
+### Escolha
+
+`NODE_ENV=production` → pino em modo JSON puro (sem transporte pretty). `NODE_ENV!=production` → `pino-pretty` formatado com timestamp e cores.
+
+### Justificativa
+
+- Logs JSON são parseáveis por ferramentas de produção (ELK, Datadog, Papertrail, Grafana Loki)
+- pino-pretty é útil apenas para desenvolvimento local (legibilidade humana)
+- Mudança minimal: condicional `isDev` no `logger.ts` decide se usa transporte pretty
+
+### Trade-offs
+
+- JSON é menos legível em `docker logs` direto (sem pipeline de formatação)
+- Operador de produção precisa de ferramenta de log aggregation para visualizar
+
+### Quando revisitar
+
+Se houver investimento em observabilidade — adicionar pino-transport para envio remoto (ex: pino-datadog, pino-loki).
+
+---
+
+## 23. PWA com Service Worker Manual
+
+### Contexto
+
+PWA adicionado para tornar o app instalável e funcional offline. Alternativas: gerar SW automático via `vite-plugin-pwa` com `injectRegister: 'auto'`.
+
+### Escolha
+
+`injectRegister: null` (registro manual do SW em `main.tsx` via `registerSW()`), `navigateFallback: "/offline.html"`, caching NetworkFirst para rotas de API, CacheFirst para assets estáticos.
+
+### Justificativa
+
+- Registro manual dá controle sobre o ciclo de vida do SW (callback `onOfflineReady`)
+- Offline page (`offline.html`) fornece UX consistente em vez de tela branca
+- NetworkFirst para API cache garante dados frescos com fallback offline
+- CacheFirst para assets com hash imutável (pasta `/assets/`) otimiza carregamento
+
+### Trade-offs
+
+- SW adiciona complexidade de debug (cache pode servir versão antiga durante desenvolvimento)
+- Estratégia NetworkFirst para API adiciona latência em conexões lentas (StaleWhileRevalidate pode ser mais adequado)
+- `navigateFallback` cobre navegação SPA, mas não cacheia páginas específicas para offline total
+
+### Quando revisitar
+
+Se houver requisito de funcionalidade offline completa (revisar cards sem internet) — migrar para estratégia mais agressiva de cache e sincronização em background.

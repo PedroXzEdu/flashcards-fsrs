@@ -18,7 +18,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 | **02 — UX Hardening** ✅                 | Confirm dialogs, progresso, acessibilidade, responsivo, auto-save        |
 | **03 — Database Performance & Batch** ✅ | Índices, batch create, paginação, otimização de queries                  |
 | **04 — Testing & Quality** ✅            | Testes de frontend, regressão FSRS, integração, E2E, ESLint, segurança   |
-| **05 — Production Readiness**            | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |
+| **05 — Production Readiness** ✅          | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |
 
 ---
 
@@ -120,7 +120,18 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 
 ---
 
-### Fase 03 — Database Performance & Batch
+### Fase 05 — Production Readiness
+
+- [x] CSP Enforcement (helmet, report-uri, cobre KaTeX/Tiptap)
+- [x] PWA: Manifest & Icons, Service Worker, Offline Page
+- [x] Hardening: Global Rate Limit, Brute Force Login, Security Headers
+- [x] Build Pipeline (tsc + vite build, chunk splitting, PWA SW)
+- [x] Production Runtime (logger JSON, VITE_API_URL configurável)
+- [x] Docker multi-stage (backend node:20-alpine + tini, frontend nginx:alpine)
+- [x] docker-compose.prod.yml (db → backend → frontend, volumes, healthchecks)
+- [x] Deploy docs (README + .env.prod.example)
+
+---
 
 - [x] Índices compostos: `idx_cards_deck_state_due`, `idx_review_logs_user_id_review`, `idx_review_logs_card_id_review`, `idx_decks_user_id_created_at`
 - [x] Batch create: `POST /decks/:id/cards/batch` (até 50 cards, schema Zod)

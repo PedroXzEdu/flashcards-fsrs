@@ -9,15 +9,17 @@
 FlashFSRS é um monólito modular de três camadas (frontend + backend + banco) rodando via Docker Compose.
 
 ```
-frontend (React + Vite) → HTTP/JSON → backend (Express) → SQL → PostgreSQL
+Produção: browser → nginx (proxy reverso) → backend (Express) → SQL → PostgreSQL
+Desenvolvimento: browser → Vite dev server → backend (Express) → SQL → PostgreSQL
 ```
 
-- **Frontend**: React 19, Vite, Tailwind v4, Catppuccin, Tiptap (rich text), KaTeX, vitest + testing-library (testes)
+- **Frontend**: React 19, Vite, Tailwind v4, Catppuccin, Tiptap (rich text), KaTeX, PWA (service worker + offline page), vitest + testing-library (testes)
 - **Backend**: Node.js, Express 5, TypeScript, `pg` (raw SQL), Zod, ts-fsrs
 - **Banco**: PostgreSQL 16 (Alpine)
-- **Infra**: Docker Compose (Node 20, serviços frontend/backend/db/db-test/tools)
+- **Infra**: Docker Compose — dev (frontend/backend/db/db-test/tools), prod (frontend nginx:alpine + backend node:20-alpine + db)
 - **Auth**: JWT stateless (7d expiry)
-- **Logger**: Pino estruturado com requestId
+- **Logger**: Pino estruturado com requestId (JSON em produção, pretty-print em dev)
+- **Segurança**: helmet (CSP enforce + security headers), global rate limit (1000/15min), brute force protection (5 falhas → 30min block)
 
 Separação por camadas no backend: Controller → Service → Repository.
 
@@ -45,7 +47,12 @@ Três arquivos em `backend/` definem a configuração do backend:
 ├── AGENTS.md
 ├── ROADMAP.md
 ├── DECISIONS.md
-├── docker-compose.yml
+├── Dockerfile                 → Multi-stage backend (3 stages: deps/build/runtime)
+├── Dockerfile.frontend        → Multi-stage frontend (build → nginx:alpine)
+├── .dockerignore
+├── docker-compose.yml         → Dev
+├── docker-compose.prod.yml    → Produção (nginx + backend node + postgres)
+├── .env.prod.example          → Template de ambiente de produção
 ├── e2e/
 │   ├── playwright.config.ts
 │   ├── helpers.ts
@@ -99,7 +106,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   ├── middlewares/
 │   │   │   ├── auth.ts             → JWT verify
 │   │   │   ├── errorHandler.ts     → Centralized error handler
-│   │   │   ├── rateLimiter.ts      → 4 rate limiters
+│   │   │   ├── rateLimiter.ts      → 5 limiters (4 granulares + 1 global)
+│   │   │   ├── bruteForce.ts       → 5 tentativas → 30min block (in-memory)
 │   │   │   ├── requestId.ts        → UUID per request
 │   │   │   ├── validate.ts         → Zod middleware
 │   │   │   ├── metrics.ts          → MetricsCollector + middleware (contadores, histograma)
@@ -138,6 +146,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │       └── media/                  → Mídia extraída de .apkg
 │
 ├── frontend/
+│   ├── nginx.conf                → Proxy reverso para produção
 │   ├── vitest.config.ts          → Test config (jsdom, globals, setup)
 │   ├── src/
 │   │   ├── main.tsx               → Entry point (providers wrappers)
@@ -180,7 +189,12 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   └── setup.ts          → Vitest global setup (localStorage + matchMedia mocks)
 │   │   └── styles/
 │   │       └── index.css          → Tailwind + Catppuccin + animations + design tokens
-│   └── public/
+│       └── public/
+        ├── offline.html           → Página offline do PWA
+        ├── pwa-192x192.png        → Ícone PWA
+        ├── pwa-512x512.png        → Ícone PWA
+        ├── apple-touch-icon.png
+        └── favicon.svg
 ```
 
 ---
@@ -213,7 +227,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 
 - `auth`: verifica JWT, seta `req.userId`
 - `validate(schema)`: valida req.body com Zod
-- `rateLimiter`: 4 limiters granulares
+- `rateLimiter`: 5 limiters (4 granulares + 1 global `1000/15min`)
+- `bruteForce`: bloqueia IP após 5 tentativas de login inválidas em 15min (30min de block), armazenamento in-memory
 - `requestId`: UUID + header X-Request-Id
 - `errorHandler`: centraliza erros (AppError, ZodError, Multer, genérico)
 - `metrics`: coleta métricas de requisição (contadores por rota, histograma de duração, erros), expõe singleton `collector` para incrementos de métricas de negócio nos services
@@ -228,6 +243,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 **State** → local (useState/useEffect), sem Redux/Zustand
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
 **E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 3 suites (auth, review, import)
+
+**Infra adicional (produção):** nginx atua como proxy reverso: serve arquivos estáticos do frontend, faz proxy de requisições API (`/auth|decks|import|review-logs|analytics|metrics|health`) para o backend, e gerencia cache, compressão e headers de segurança. O build multi-stage usa `Dockerfile` (backend, 3 stages: deps/build/runtime) e `Dockerfile.frontend` (build → nginx:alpine).
 
 ---
 
@@ -285,7 +302,7 @@ POST /decks/shared/:token/import  → cópia transactional
 - **Evitar lógica complexa em routes** — routes só registram middleware + controller
 - **Transações** via `PoolClient` adquirido com `pool.connect()`
 - **Respostas seguem padrão** `{ success: true, data: {} }`
-- **CSP em reportOnly** — violações logadas mas não bloqueadas
+- **CSP enforcement** — helmet ativo, violações reportadas via `/api/csp-report`
 - **JWT sem refresh token** — stateless, 7d expiry
 
 ---
