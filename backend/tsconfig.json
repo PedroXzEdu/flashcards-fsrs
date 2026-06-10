@@ -8,13 +8,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+
     "esModuleInterop": true,
     "skipLibCheck": true,
 
-    "moduleResolution": "bundler"
+    "moduleResolution": "node",
+    "types": ["node"]
   },
 
   "include": ["src"],
 
-  "typeRoots": ["./node_modules/@types", "./src/types"]
+  "exclude": ["tests", "**/*.test.ts", "**/__tests__/**"]
 }

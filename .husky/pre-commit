@@ -1,9 +1,5 @@
 #!/usr/bin/env sh
 set -e
 
-docker compose run --rm --no-TTY tools sh -c "npx -y @nodesify/graphify update ."
-
+npx -y @nodesify/graphify update .
 git add .graphify/
-
-docker compose run --rm --no-TTY backend npm run lint
-docker compose run --rm --no-TTY frontend npm run lint
