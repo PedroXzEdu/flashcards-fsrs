@@ -18,6 +18,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
       signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
       },
