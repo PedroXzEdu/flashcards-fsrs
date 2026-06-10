@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "node --watch -r ts-node/register src/server.ts",
-    "build": "tsc -p tsconfig.json && copyfiles -u 1 src/database/migrations.sql dist/database",
+    "build": "tsc -p tsconfig.json && copyfiles -u 1 src/database/migrations.sql dist/",
     "start": "node dist/server.js",
     "start:prod": "node dist/server.js",
     "test": "vitest --project unit",
