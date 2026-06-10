@@ -1,5 +1,7 @@
 # Phase 05 — Production Readiness
 
+> **Arquivo índice / master.** Cada task abaixo tem seu próprio arquivo de microtask com detalhes completos.
+
 ## Objetivo
 
 Preparar o FlashFSRS para implantação em produção: CSP enforcement, PWA funcional, hardening de segurança, otimização de build, documentação de deploy, e garantia de que o projeto pode rodar com configuração mínima fora do Docker Compose.
@@ -30,191 +32,32 @@ Preparar o FlashFSRS para implantação em produção: CSP enforcement, PWA func
 - Docker Compose funcional
 - `tsc --noEmit` passando em backend e frontend
 
-## Tarefas
+## Tasks (Índice)
 
-### Task 5.1 — CSP enforcement
+| ID | Microtask | Arquivo | Dependências |
+|---|---|---|---|
+| 5.1 | CSP Enforcement | [`task_5_1_csp_enforcement.md`](./task_5_1_csp_enforcement.md) | — |
+| 5.2a | PWA — Manifest & Icons | [`task_5_2a_manifest_icons.md`](./task_5_2a_manifest_icons.md) | — |
+| 5.2b | PWA — Service Worker | [`task_5_2b_service_worker.md`](./task_5_2b_service_worker.md) | 5.2a |
+| 5.2c | PWA — Offline Page | [`task_5_2c_offline_page.md`](./task_5_2c_offline_page.md) | 5.2b |
+| 5.3a | Hardening — Global Rate Limit | [`task_5_3a_global_rate_limit.md`](./task_5_3a_global_rate_limit.md) | — |
+| 5.3b | Hardening — Brute Force Login | [`task_5_3b_bruteforce_login.md`](./task_5_3b_bruteforce_login.md) | — |
+| 5.3c | Hardening — Security Headers | [`task_5_3c_security_headers.md`](./task_5_3c_security_headers.md) | — |
+| 5.4a | Build — Pipeline | [`task_5_4a_build_pipeline.md`](./task_5_4a_build_pipeline.md) | — |
+| 5.4b | Build — Production Runtime | [`task_5_4b_production_runtime.md`](./task_5_4b_production_runtime.md) | 5.4a |
+| 5.5a | Docker — Prod Dockerfiles | [`task_5_5a_prod_dockerfiles.md`](./task_5_5a_prod_dockerfiles.md) | 5.4a, 5.4b |
+| 5.5b | Docker — Compose Prod | [`task_5_5b_docker_compose_prod.md`](./task_5_5b_docker_compose_prod.md) | 5.5a |
+| 5.6a | Deploy — Documentação | [`task_5_6a_docs_deploy.md`](./task_5_6a_docs_deploy.md) | 5.5b |
+| 5.6b | Deploy — Env Prod | [`task_5_6b_env_prod.md`](./task_5_6b_env_prod.md) | 5.5b |
+| 5.6c | Verificação Final | [`task_5_6c_full_regression.md`](./task_5_6c_full_regression.md) | todas anteriores |
 
-Migrar CSP de `reportOnly` para modo enforcement, resolvendo violações conhecidas.
+## Ordem de Execução
 
-#### Subtarefas
+```
+5.1 → 5.2a → 5.2b → 5.2c → 5.3a → 5.3b → 5.3c → 5.4a → 5.4b → 5.5a → 5.5b → 5.6a → 5.6b → 5.6c
+```
 
-- [ ] Revisar relatórios de violação CSP atuais (se houver)
-- [ ] Garantir que todas as fontes de script, style, font, img estão no CSP
-- [ ] Adicionar `'nonce'` para scripts inline do Tiptap/KaTeX se necessário
-- [ ] Mudar `helmet.contentSecurityPolicy` de `reportOnly: true` para ativo
-- [ ] Testar manualmente: login, register, criar card com rich text, revisar
-- [ ] Verificar que KaTeX render funciona (requer `'unsafe-inline'` para styles ou hash)
-- [ ] Testar via E2E que nenhum recurso é bloqueado
-
-#### Critérios de Aceitação
-
-- Nenhum recurso first-party é bloqueado pelo CSP
-- KaTeX render funciona corretamente
-- Tiptap editor carrega sem erros
-- CSP headers incluem `report-uri` para logging
-- Navegação completa do app funciona sem violações no console
-
-#### Arquivos Impactados
-
-- `backend/src/app.ts` (configuração do helmet CSP)
-
----
-
-### Task 5.2 — PWA funcional
-
-Completar configuração PWA para que o app seja instalável e funcione offline minimamente.
-
-#### Subtarefas
-
-- [ ] Verificar `manifest.json` gerado pelo `vite-plugin-pwa` — icones, nome, short_name, theme_color
-- [ ] Adicionar ícones PWA (pelo menos 192x192 e 512x512) em `frontend/public/`
-- [ ] Configurar service worker com NetworkFirst para API, CacheFirst para assets
-- [ ] Adicionar página offline básica (offline.html ou via service worker)
-- [ ] Testar via Lighthouse PWA audit (ou Chrome DevTools > Application > Manifest)
-- [ ] Verificar que app pode ser instalada ("Add to Home Screen")
-
-#### Critérios de Aceitação
-
-- Lighthouse PWA audit passa em todos os checks de "Installable"
-- Manifest contém `name`, `short_name`, `icons`, `start_url`, `display`, `theme_color`
-- Service worker registra sem erros
-- App offline mostra página informativa (não tela branca)
-- Ícones aparecem corretamente no prompt de instalação
-
-#### Arquivos Impactados
-
-- `frontend/vite.config.ts` (config PWA)
-- `frontend/public/icons/*` (novos)
-- `frontend/src/main.tsx` (register SW)
-- `frontend/index.html` (meta tags, theme-color)
-
----
-
-### Task 5.3 — Hardening de segurança adicional
-
-Adicionar camadas extras de segurança: rate limit global, brute force protection, headers de segurança.
-
-#### Subtarefas
-
-- [ ] Adicionar rate limit global (1000 requests/15min) como fallback — **exceto** em NODE_ENV=test
-- [ ] Implementar brute force protection no login: após 5 tentativas falhas em 15min, bloquear IP por 30min (in-memory Map)
-- [ ] Verificar headers de segurança: `X-Frame-Options`, `X-Content-Type-Options`, `Strict-Transport-Security` (se HTTPS)
-- [ ] Garantir que `helmet` já configura todos (revisar configuração atual)
-- [ ] Adicionar `X-Robots-Tag: noindex` em todas as rotas (evitar indexação de conteúdo de estudo)
-- [ ] Testar via supertest que headers estão presentes
-
-#### Critérios de Aceitação
-
-- Rate limit global retorna 429 após 1000 requests em 15min
-- Brute force: 5 falhas de login consecutivas bloqueiam IP por 30min
-- Headers de segurança presentes em todas as respostas
-- Brute force é resetado após login bem-sucedido
-- Rate limiters não atrapalham testes (NODE_ENV=test)
-
-#### Arquivos Impactados
-
-- `backend/src/app.ts`
-- `backend/src/middlewares/rateLimiter.ts`
-- `backend/src/middlewares/bruteForce.ts` (novo)
-- `backend/src/controllers/authController.ts`
-
----
-
-### Task 5.4 — Build otimizado
-
-Configurar build de produção para frontend e backend.
-
-#### Subtarefas
-
-- [ ] Verificar `vite build` no frontend — minificação, tree-shaking, chunk splitting
-- [ ] Verificar `tsc` no backend — compilação para `dist/`
-- [ ] Adicionar script `build` no backend (`tsc`)
-- [ ] Garantir que `npm run build` no root faz build de ambos
-- [ ] Verificar que `NODE_ENV=production` desativa logs verbose, pretty-print
-- [ ] Verificar que frontend buildado usa variáveis de ambiente do Vite (`VITE_API_URL`)
-- [ ] Testar com `npm run preview` (frontend) apontando para backend de produção
-
-#### Critérios de Aceitação
-
-- `npm run build` no root compila backend + frontend sem erros
-- Frontend buildado em `frontend/dist/` (~500KB gzipped)
-- Backend compilado em `backend/dist/`
-- `NODE_ENV=production` usa logger JSON (não pretty-print)
-- Preview do frontend funciona com API real
-
-#### Arquivos Impactados
-
-- `backend/package.json`
-- `frontend/package.json`
-- `package.json` (root)
-- `frontend/vite.config.ts`
-- `backend/src/config/logger.ts`
-
----
-
-### Task 5.5 — Docker Compose de produção
-
-Criar `docker-compose.prod.yml` com configuração otimizada para produção.
-
-#### Subtarefas
-
-- [ ] Criar `docker-compose.prod.yml` baseado no de dev
-- [ ] Serviço frontend: usar imagem multi-stage (build → nginx/alpine para servir static)
-- [ ] Serviço backend: usar `npm run build` + `node dist/server.js`
-- [ ] Serviço db: adicionar volume persistente, healthcheck
-- [ ] Remover services de dev desnecessários (db-test, tools)
-- [ ] Adicionar variáveis de ambiente para produção (CORS_ORIGIN, JWT_SECRET)
-- [ ] Adicionar `restart: unless-stopped` nos serviços
-- [ ] Testar que `docker compose -f docker-compose.prod.yml up` funciona
-
-#### Critérios de Aceitação
-
-- `docker compose -f docker-compose.prod.yml build` completa sem erros
-- Frontend servido via nginx (porta 80 ou 8080)
-- Backend rodando com `NODE_ENV=production`
-- Banco de dados persiste entre restart
-- Serviços iniciam na ordem correta (db → backend → frontend)
-
-#### Arquivos Impactados
-
-- `docker-compose.prod.yml` (novo)
-- `Dockerfile` (atualizar para multi-stage)
-- `Dockerfile.frontend` (novo, opcional) ou usar `Dockerfile` existente
-
----
-
-### Task 5.6 — Documentação de deploy + verificação final
-
-Documentar procedimento de deploy e executar verificação de regressão completa.
-
-#### Subtarefas
-
-- [ ] Atualizar `README.md` com seção "Deploy" (pré-requisitos, passos, variáveis de ambiente)
-- [ ] Criar `.env.prod.example` com variáveis para produção
-- [ ] Rodar todos os testes: `vitest --project unit && vitest --project integration`
-- [ ] Rodar testes E2E: `npm run test:e2e`
-- [ ] Rodar `tsc --noEmit` em backend e frontend
-- [ ] Verificar build de produção: `npm run build`
-- [ ] Atualizar ROADMAP.md com status final
-- [ ] Invocar `@doc` para revisar documentação
-
-#### Critérios de Aceitação
-
-- README.md tem instruções claras de deploy (Docker Compose)
-- `.env.prod.example` contém todas as variáveis necessárias
-- Todos os testes (unit + integration + E2E) passam
-- Build de produção compila sem erros
-- ROADMAP reflete estado final do projeto
-- `@doc` aprova documentação
-
-#### Arquivos Impactados
-
-- `README.md`
-- `.env.prod.example` (novo)
-- `ROADMAP.md`
-- Potencialmente `ARCHITECTURE.md`, `DECISIONS.md`
-
----
+Tasks sem dependência entre si (ex: 5.3a, 5.3b, 5.3c) podem ser executadas em paralelo.
 
 ## Riscos e Pontos de Atenção
 
@@ -225,20 +68,44 @@ Documentar procedimento de deploy e executar verificação de regressão complet
 - nginx para frontend requer configuração de proxy reverso para API
 - Verificação final deve ser feita com `docker compose down -v` + `up` para garantir estado limpo
 
+## Estado Atual
+
+- **Início**: Fase iniciada
+- **Último checkpoint**: Tasks 5.1 até 5.5a concluídas
+- **Progresso**: 10/14 tasks
+
+## Critério de Conclusão da Fase
+
+- Todas as 14 microtasks concluídas e verificadas
+- Task 5.6c (full regression) executada com sucesso
+- `@doc` aprovou documentação
+
 ## Checklist da Fase
 
-- [ ] Todas as tarefas concluídas
-- [ ] Testes implementados
-- [ ] Documentação atualizada
+- [x] 5.1 CSP Enforcement
+- [x] 5.2a Manifest & Icons
+- [x] 5.2b Service Worker
+- [x] 5.2c Offline Page
+- [x] 5.3a Global Rate Limit
+- [x] 5.3b Brute Force Login
+- [x] 5.3c Security Headers
+- [x] 5.4a Build Pipeline
+- [x] 5.4b Production Runtime
+- [x] 5.5a Prod Dockerfiles
+- [ ] 5.5b Docker Compose Prod
+- [ ] 5.6a Docs Deploy
+- [ ] 5.6b Env Prod
+- [ ] 5.6c Full Regression
 - [ ] Revisão de código realizada
 - [ ] Critérios de aceitação validados
 
 ## Instruções para o Agente Construtor
 
-1. Execute as tarefas na ordem definida (5.1 → 5.2 → 5.3 → 5.4 → 5.5 → 5.6).
-2. Não avance para a próxima fase sem concluir os critérios de aceitação.
-3. Atualize este documento conforme o progresso.
-4. Registre desvios ou decisões arquiteturais relevantes.
-5. Gere commits pequenos e focados por tarefa.
-6. Após cada task, rode `tsc --noEmit` (backend) ou `tsc -b --noEmit` (frontend) conforme aplicável, e invoque `@reviewer` antes de commitar.
-7. **Task 5.6 é a verificação final**: não declare a fase concluída sem todos os testes verdes e `@doc` aprovado.
+1. Execute as tasks na ordem definida (ou paralelize quando não houver dependência).
+2. Para cada task, abra o arquivo de microtask correspondente e siga seu checklist.
+3. Não avance para a próxima fase sem concluir os critérios de aceitação.
+4. Atualize o checklist acima conforme o progresso.
+5. Registre desvios ou decisões arquiteturais relevantes.
+6. Gere commits pequenos e focados por microtask.
+7. Após cada microtask, rode `tsc --noEmit` (backend) ou `tsc -b --noEmit` (frontend) conforme aplicável, e invoque `@reviewer` antes de commitar.
+8. **Task 5.6c é a verificação final**: não declare a fase concluída sem todos os testes verdes e `@doc` aprovado.
