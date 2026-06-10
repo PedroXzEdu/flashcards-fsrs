@@ -366,6 +366,86 @@ O projeto implementa medidas básicas de segurança para um MVP:
 
 ---
 
+## Deploy (Produção)
+
+### Pré-requisitos
+
+- Docker
+- Docker Compose
+- Node.js 20 (apenas para build local, opcional)
+
+### Variáveis de Ambiente
+
+Antes do deploy, copie o template e ajuste os valores:
+
+```bash
+cp .env.prod.example backend/.env
+```
+
+As variáveis reconhecidas são:
+
+| Variável | Descrição | Obrigatória | Default |
+|---|---|---|---|
+| `DB_HOST` | Host do PostgreSQL (Docker: `db`) | Não | `db` |
+| `DB_PORT` | Porta do PostgreSQL | Não | `5432` |
+| `DB_USER` | Usuário do PostgreSQL | Não | `admin` |
+| `DB_PASSWORD` | Senha do PostgreSQL | Sim | — |
+| `DB_NAME` | Nome do banco de dados | Não | `flashcards_fsrs` |
+| `JWT_SECRET` | Chave secreta para tokens JWT (troque para produção!) | Sim | — |
+| `PORT` | Porta do servidor backend | Não | `3000` |
+| `CORS_ORIGIN` | Origem permitida para CORS | Não | `http://localhost` |
+
+> A senha em `backend/.env` DEVE ser a mesma usada pelo banco (definida via `DB_PASSWORD` no shell ou no `.env`).
+> Consulte `.env.prod.example` para um template completo com comentários.
+
+### Passos para Deploy
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/PedroXzEdu/flashfsrs
+cd flashfsrs
+
+# 2. Configure as variáveis de produção
+cp .env.prod.example backend/.env
+# Edite backend/.env: ajuste DB_PASSWORD e JWT_SECRET
+# A senha em backend/.env DEVE ser a mesma usada pelo banco
+
+# 3. (Opcional) Defina a senha do banco via variável de ambiente do shell
+#    (usada pelo serviço db no docker-compose.prod.yml):
+export DB_PASSWORD=sua-senha-segura
+
+# 4. Build e inicie os serviços
+docker compose -f docker-compose.prod.yml up --build -d
+
+# 5. Verifique se os serviços estão rodando
+docker compose -f docker-compose.prod.yml ps
+
+# 6. Acompanhe os logs
+docker compose -f docker-compose.prod.yml logs -f
+```
+
+### Portas Expostas
+
+| Serviço | Porta Interna | Porta Publicada |
+|---|---|---|
+| Frontend (nginx) | 80 | 80 |
+| Backend (API) | 3000 | 3000 |
+| PostgreSQL | 5432 | — (apenas rede interna) |
+
+> Em produção, recomenda-se usar um reverse proxy (nginx, Caddy, Traefik) na porta 80/443 para gerenciar SSL/TLS e apontar para a porta 80 do serviço `frontend`.
+
+### Parar e Limpar
+
+```bash
+# Parar serviços (mantém dados do banco)
+docker compose -f docker-compose.prod.yml down
+
+# Parar serviços e remover volumes (apaga dados do banco)
+docker compose -f docker-compose.prod.yml down -v
+```
+
+---
+
 ## Roadmap
 
 Consulte o arquivo [`ROADMAP.md`](./ROADMAP.md) para o status atual, funcionalidades concluídas e próximas prioridades.
