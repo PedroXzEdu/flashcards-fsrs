@@ -9,7 +9,7 @@
 MVP funcional com as features principais entregues. O que falta é
 **consistência e acabamento**, não funcionalidade nova.
 
-O projeto segue agora um plano de execução estruturado em 5 fases,
+O projeto segue agora um plano de execução estruturado em 8 fases,
 detalhado em [`.plans/tasks/`](.plans/tasks/):
 
 | Fase                                     | Escopo                                                                   |
@@ -19,6 +19,9 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 | **03 — Database Performance & Batch** ✅ | Índices, batch create, paginação, otimização de queries                  |
 | **04 — Testing & Quality** ✅            | Testes de frontend, regressão FSRS, integração, E2E, ESLint, segurança   |
 | **05 — Production Readiness** ✅          | CSP enforcement, PWA, hardening, build, docker-compose prod, deploy docs |
+| **06 — Type Hardening** 🟡              | Tipar `any` em produção, tsconfig strict frontend, ESLint cleanup        |
+| **07 — Test Coverage Expansion** 🟡     | Testes bruteForce, componentes frontend, API layer, contextos            |
+| **08 — UX Consistency & Fixes** 🟡      | Dead code, z-index toast, click-outside, spinner, setTimeout remoção     |
 
 ---
 
@@ -142,7 +145,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 
 ---
 
-## Melhorias Futuras (pós-fases atuais)
+## Melhorias Futuras (além das 8 fases)
 
 Itens não cobertos pelas fases planejadas:
 
