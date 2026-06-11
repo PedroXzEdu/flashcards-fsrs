@@ -145,9 +145,13 @@ Docker Compose com 5 serviços: frontend, backend, db, db-test, tools.
 - Hot reload via polling (CHOKIDAR_USEPOLLING) — mais lento
 - Complexidade adicional se o dev já tem Node/PostgreSQL local
 
+### Status atual
+
+O projeto está deployado em produção via Vercel (frontend) + Render (backend + PostgreSQL). Docker Compose permanece como ambiente de desenvolvimento padrão (idêntico ao descrito acima). A produção ativa não usa Docker — `docker-compose.prod.yml` é mantido como alternativa para deploy autogerenciado.
+
 ### Quando revisitar
 
-Se o projeto for deployado em produção (substituir por Dockerfile único ou PaaS).
+Condição atingida. Docker Compose é agora exclusivamente ambiente de desenvolvimento. Se o projeto precisar de ambientes de staging/QA adicionais ou se houver necessidade de replicar produção localmente, revisitar configuração de serviços Docker.
 
 ---
 
@@ -564,9 +568,13 @@ O ambiente de dev usa `docker compose up` com Vite dev server e hot reload. Prod
 - nginx adiciona uma camada de proxy (latência mínima, mas mais um ponto de falha)
 - Precisa sincronizar rotas do nginx com as rotas reais do backend (risco de mismatch)
 
+### Status atual
+
+A produção ativa migrou para PaaS — frontend no Vercel (static serving + SPA routing gerenciados pela plataforma) e backend no Render. O nginx + Docker descrito acima não é mais usado em produção. A configuração Docker + nginx é mantida como alternativa autogerenciada em `docker-compose.prod.yml` e documentada para referência.
+
 ### Quando revisitar
 
-Se o deploy migrar para PaaS (Railway, Render, Fly.io) que gerencia static serving automaticamente.
+Condição atingida — produção migrou para Vercel + Render. O multi-stage Docker + nginx é agora uma alternativa opcional. Revisitar se houver necessidade de reverter para deploy autogerenciado ou se a configuração de PaaS atual mostrar limitações (ex: necessidade de custom headers, proxy rules).
 
 ---
 

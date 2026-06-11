@@ -1,11 +1,13 @@
 # FlashFSRS
 
+> **Deploy ativo:** [flashfsrs.vercel.app](https://flashfsrs.vercel.app/) (frontend) · [flashfsrs.onrender.com](https://flashfsrs.onrender.com/) (backend)
+
 Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free Spaced Repetition Scheduler)** para revisão espaçada, importação de decks `.apkg`, compartilhamento de baralhos e estatísticas de aprendizagem.
 
 ## Preview
 
-- Dashboard
-- Revisão FSRS
+- [flashfsrs.vercel.app](https://flashfsrs.vercel.app/) — Dashboard
+- Revisão FSRS online
 - Estatísticas
 - Compartilhamento de decks
 - Importação `.apkg`
@@ -93,8 +95,10 @@ Sistema de flashcards inteligente inspirado no Anki, com algoritmo **FSRS (Free 
 
 ### Infraestrutura
 
-- Docker
-- Docker Compose
+- Docker (desenvolvimento)
+- Docker Compose (desenvolvimento)
+- Vercel (frontend em produção)
+- Render (backend + PostgreSQL em produção)
 
 ### Qualidade
 
@@ -368,13 +372,25 @@ O projeto implementa medidas básicas de segurança para um MVP:
 
 ## Deploy (Produção)
 
-### Pré-requisitos
+O projeto está ativamente deployado em:
+
+| Plataforma | Serviço | URL |
+|---|---|---|
+| **Vercel** | Frontend (SPA estático) | [flashfsrs.vercel.app](https://flashfsrs.vercel.app/) |
+| **Render** | Backend (Express API) | [flashfsrs.onrender.com](https://flashfsrs.onrender.com/) |
+| **Render** | PostgreSQL gerenciado | — |
+
+### Deploy Alternativo (Docker autogerenciado)
+
+Caso prefira fazer seu próprio deploy com Docker:
+
+#### Pré-requisitos
 
 - Docker
 - Docker Compose
 - Node.js 20 (apenas para build local, opcional)
 
-### Variáveis de Ambiente
+#### Variáveis de Ambiente
 
 Antes do deploy, copie o template e ajuste os valores:
 
@@ -398,7 +414,7 @@ As variáveis reconhecidas são:
 > A senha em `backend/.env` DEVE ser a mesma usada pelo banco (definida via `DB_PASSWORD` no shell ou no `.env`).
 > Consulte `.env.prod.example` para um template completo com comentários.
 
-### Passos para Deploy
+#### Passos
 
 ```bash
 # 1. Clone o repositório
@@ -424,7 +440,7 @@ docker compose -f docker-compose.prod.yml ps
 docker compose -f docker-compose.prod.yml logs -f
 ```
 
-### Portas Expostas
+#### Portas Expostas
 
 | Serviço | Porta Interna | Porta Publicada |
 |---|---|---|
@@ -434,7 +450,7 @@ docker compose -f docker-compose.prod.yml logs -f
 
 > Em produção, recomenda-se usar um reverse proxy (nginx, Caddy, Traefik) na porta 80/443 para gerenciar SSL/TLS e apontar para a porta 80 do serviço `frontend`.
 
-### Parar e Limpar
+#### Parar e Limpar
 
 ```bash
 # Parar serviços (mantém dados do banco)

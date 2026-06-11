@@ -6,17 +6,18 @@
 
 ## 1. Visão Geral
 
-FlashFSRS é um monólito modular de três camadas (frontend + backend + banco) rodando via Docker Compose.
+FlashFSRS é um monólito modular de três camadas (frontend + backend + banco).
 
 ```
-Produção: browser → nginx (proxy reverso) → backend (Express) → SQL → PostgreSQL
-Desenvolvimento: browser → Vite dev server → backend (Express) → SQL → PostgreSQL
+**Produção (ativo):** browser → Vercel (frontend estático) → Render (backend Express) → Render PostgreSQL
+**Produção (alternativa Docker):** browser → nginx (proxy reverso) → backend (Express) → PostgreSQL (via `docker-compose.prod.yml`)
+**Desenvolvimento:** browser → Vite dev server → backend (Express) → SQL → PostgreSQL (via `docker-compose.yml`)
 ```
 
 - **Frontend**: React 19, Vite, Tailwind v4, Catppuccin, Tiptap (rich text), KaTeX, PWA (service worker + offline page), vitest + testing-library (testes)
 - **Backend**: Node.js, Express 5, TypeScript, `pg` (raw SQL), Zod, ts-fsrs
 - **Banco**: PostgreSQL 16 (Alpine)
-- **Infra**: Docker Compose — dev (frontend/backend/db/db-test/tools), prod (frontend nginx:alpine + backend node:20-alpine + db)
+- **Infra**: Docker Compose para desenvolvimento (frontend/backend/db/db-test/tools); produção ativa em Vercel (frontend) + Render (backend + PostgreSQL); deploy Docker alternativo via `docker-compose.prod.yml`
 - **Auth**: JWT stateless (7d expiry)
 - **Logger**: Pino estruturado com requestId (JSON em produção, pretty-print em dev)
 - **Segurança**: helmet (CSP enforce + security headers), global rate limit (1000/15min), brute force protection (5 falhas → 30min block)
@@ -244,7 +245,9 @@ Três arquivos em `backend/` definem a configuração do backend:
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
 **E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 3 suites (auth, review, import)
 
-**Infra adicional (produção):** nginx atua como proxy reverso: serve arquivos estáticos do frontend, faz proxy de requisições API (`/auth|decks|import|review-logs|analytics|metrics|health`) para o backend, e gerencia cache, compressão e headers de segurança. O build multi-stage usa `Dockerfile` (backend, 3 stages: deps/build/runtime) e `Dockerfile.frontend` (build → nginx:alpine).
+**Infra adicional (produção ativa):** frontend servido como SPA estático no Vercel, backend Express no Render com PostgreSQL gerenciado. O Vercel faz o roteamento SPA e o proxy das requisições API para o backend no Render.
+
+**Infra alternativa (Docker):** `docker-compose.prod.yml` — nginx atua como proxy reverso: serve arquivos estáticos do frontend, faz proxy de requisições API para o backend, e gerencia cache, compressão e headers de segurança. O build multi-stage usa `Dockerfile` (backend, 3 stages: deps/build/runtime) e `Dockerfile.frontend` (build → nginx:alpine).
 
 ---
 
