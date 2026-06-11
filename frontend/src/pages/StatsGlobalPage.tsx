@@ -373,7 +373,7 @@ export default function StatsGlobalPage() {
                     }}
                   />
                   <Bar dataKey="value" name="Revisões" radius={[6, 6, 0, 0]}>
-                    {ratingData.map((entry, i) => (
+                    {ratingData.map((_, i) => (
                       <Cell key={i} fill={RATING_COLORS[i]} />
                     ))}
                   </Bar>

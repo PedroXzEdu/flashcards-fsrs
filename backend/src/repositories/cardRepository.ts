@@ -1,6 +1,32 @@
 import { pool } from "../database/db";
 import { PoolClient } from "pg";
 
+interface CreateCardInput {
+  deck_id: number;
+  front: string;
+  back: string;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  due: Date;
+}
+
+interface FsrsUpdateData {
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  due: Date;
+  last_review?: Date;
+}
+
 class CardRepository {
   async findByDeckId(deckId: string) {
     const result = await pool.query(
@@ -69,7 +95,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async create(data: any, client?: PoolClient) {
+  async create(data: CreateCardInput, client?: PoolClient) {
     const db = client ?? pool;
     const result = await db.query(
       `INSERT INTO cards
@@ -165,7 +191,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async updateFsrsData(client: PoolClient, cardId: string, data: any) {
+  async updateFsrsData(client: PoolClient, cardId: string, data: FsrsUpdateData) {
     const result = await client.query(
       `UPDATE cards
        SET

@@ -110,16 +110,16 @@ app.use(
     },
     customProps: function (req) {
       return {
-        userId: (req as any).userId,
+        userId: req.userId,
       };
     },
     genReqId: function (req) {
-      return (req as any).requestId;
+      return req.requestId;
     },
     autoLogging: {
       ignore: function (req) {
         return (
-          (req as any).url === "/health" || (req as any).url === "/metrics"
+          req.url === "/health" || req.url === "/metrics"
         );
       },
     },

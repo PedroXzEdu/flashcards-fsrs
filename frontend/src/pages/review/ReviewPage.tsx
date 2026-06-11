@@ -148,7 +148,7 @@ export default function ReviewPage() {
 
   useEffect(() => {
     loadCards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- shuffled não deve causar re-fetch
   }, [deckId]);
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function ReviewPage() {
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleFlip/handleRate estáveis o suficiente
   }, [flipped, submitting, index]);
 
   async function loadCards() {

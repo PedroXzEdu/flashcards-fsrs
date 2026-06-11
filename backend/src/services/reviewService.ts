@@ -1,4 +1,4 @@
-import { Grade, Rating } from "ts-fsrs";
+import { Grade, Rating, RecordLogItem } from "ts-fsrs";
 
 import { pool } from "../database/db";
 
@@ -120,7 +120,7 @@ class ReviewService {
     }
   }
 
-  private formatPreview(item: any) {
+  private formatPreview(item: RecordLogItem) {
     return {
       due: item.card.due,
       scheduled_days: item.card.scheduled_days,

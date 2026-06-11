@@ -26,11 +26,11 @@ Reduzir o uso de `any` no código de produção, ativar opções strict no front
 
 ## Tasks (Índice)
 
-| ID | Microtask | Arquivo | Dependências |
-|---|---|---|---|
-| 6.1 | Tipar `any` em produção (backend) | [`task_6_1_production_any_types.md`](./task_6_1_production_any_types.md) | — |
-| 6.2 | Frontend tsconfig strict options | [`task_6_2_frontend_tsconfig_strict.md`](./task_6_2_frontend_tsconfig_strict.md) | — |
-| 6.3 | Remover `console.log` e supressões ESLint | [`task_6_3_eslint_cleanup.md`](./task_6_3_eslint_cleanup.md) | — |
+| ID | Microtask | Arquivo | Dependências | Status |
+|---|---|---|---|---|---|
+| 6.1 | Tipar `any` em produção (backend) | [`task_6_1_production_any_types.md`](./task_6_1_production_any_types.md) | — | ✅ |
+| 6.2 | Frontend tsconfig strict options | [`task_6_2_frontend_tsconfig_strict.md`](./task_6_2_frontend_tsconfig_strict.md) | — | ✅ |
+| 6.3 | Remover `console.log` e supressões ESLint | [`task_6_3_eslint_cleanup.md`](./task_6_3_eslint_cleanup.md) | — | ✅ |
 
 ## Ordem de Execução
 
@@ -49,7 +49,7 @@ Tasks sem dependência podem ser executadas em paralelo.
 ## Estado Atual
 
 - **Início**: Fase não iniciada
-- **Progresso**: 0/3 tasks
+- **Progresso**: 3/3 tasks
 
 ## Critério de Conclusão da Fase
 
@@ -59,8 +59,8 @@ Tasks sem dependência podem ser executadas em paralelo.
 
 ## Checklist da Fase
 
-- [ ] 6.1 Tipar `any` em produção (backend)
-- [ ] 6.2 Frontend tsconfig strict
-- [ ] 6.3 ESLint cleanup
-- [ ] Revisão de código realizada
-- [ ] Critérios de aceitação validados
+- [x] 6.1 Tipar `any` em produção (backend)
+- [x] 6.2 Frontend tsconfig strict
+- [x] 6.3 ESLint cleanup
+- [x] Revisão de código realizada
+- [x] Critérios de aceitação validados

@@ -143,7 +143,7 @@ export default function DeckPage() {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- padrão de data fetching controlado
     loadData();
   }, [loadData]);
 

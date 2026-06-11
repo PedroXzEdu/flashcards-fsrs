@@ -1,5 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useCallback } from "react";
+/* eslint-disable react-refresh/only-export-components -- hook useToast + componente ToastProvider no mesmo arquivo */
+import { createContext, useContext, useState, useCallback } from "react";
 import type { ReactNode } from "react";
 
 type Toast = {

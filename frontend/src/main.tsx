@@ -11,7 +11,7 @@ import "./index.css";
 
 registerSW({
   onOfflineReady() {
-    console.log("App pronto para uso offline");
+    /* App pronto para uso offline */
   },
 });
 
