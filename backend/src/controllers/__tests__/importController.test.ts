@@ -140,8 +140,8 @@ describe("ImportController", () => {
         "my_deck",
         [
           {
-            front: 'Front <audio controls src="/media/1"></audio>',
-            back: 'Back <img src="/media/foto.png"/>',
+            front: 'Front <audio controls src="http://localhost:3000/media/1"></audio>',
+            back: 'Back <img src="http://localhost:3000/media/foto.png"/>',
           },
         ],
       );

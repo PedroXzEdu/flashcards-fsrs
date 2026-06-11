@@ -208,6 +208,7 @@ Source of truth:
 - DB_PASSWORD
 - DB_NAME
 - JWT_SECRET
+- MEDIA_BASE_URL
 
 Optional:
 

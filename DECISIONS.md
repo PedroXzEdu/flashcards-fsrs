@@ -680,3 +680,32 @@ PWA adicionado para tornar o app instalável e funcional offline. Alternativas: 
 ### Quando revisitar
 
 Se houver requisito de funcionalidade offline completa (revisar cards sem internet) — migrar para estratégia mais agressiva de cache e sincronização em background.
+
+---
+
+## 24. URLs Absolutas de Mídia Armazenadas no Banco (em vez de Relativas)
+
+### Contexto
+
+Ao importar decks `.apkg` do Anki, `processMidiaRefs()` convertia referências de mídia para caminhos relativos (`/media/foto.png`). Isso assumia que frontend e backend estariam no mesmo origin, o que não é garantido em produção (ex: backend em Render, frontend em Vercel).
+
+### Escolha
+
+`processMidiaRefs()` gera URLs absolutas usando `MEDIA_BASE_URL` como prefixo, resultando em `<img src="https://api.exemplo.com/media/foto.png">` armazenado diretamente no banco.
+
+### Justificativa
+
+- Funciona independentemente do origin do frontend (sem lógica extra de resolução no cliente)
+- HTML no banco é auto-contido e renderizável sem pós-processamento
+- Frontend não precisa saber resolver caminhos de mídia
+- Variável obrigatória força configuração explícita
+
+### Trade-offs
+
+- Se `MEDIA_BASE_URL` mudar, cards importados anteriormente quebram (não há resolução dinâmica)
+- Dados do banco contêm referências a um domínio específico, dificultando migração entre ambientes
+- Abordagem alternativa (relativas + resolução no frontend) seria mais portátil, mas exigiria pós-processamento
+
+### Quando revisitar
+
+Se houver necessidade de portar dados entre ambientes regularmente — considerar armazenar caminhos relativos e resolver no frontend via `CardContent.tsx`.

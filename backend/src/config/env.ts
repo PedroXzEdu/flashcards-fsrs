@@ -65,6 +65,7 @@ const envSchema = z.object({
       message:
         "JWT_SECRET uses a common or weak value. Generate a strong random string.",
     }),
+  MEDIA_BASE_URL: z.string().min(1, "MEDIA_BASE_URL is required"),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
@@ -88,4 +89,5 @@ export const env = {
     name: parsedEnv.data.DB_NAME,
   },
   jwtSecret: parsedEnv.data.JWT_SECRET,
+  mediaBaseUrl: parsedEnv.data.MEDIA_BASE_URL,
 };

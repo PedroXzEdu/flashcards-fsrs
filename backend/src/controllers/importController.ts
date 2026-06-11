@@ -6,6 +6,7 @@ import unzipper from "unzipper";
 import Database from "better-sqlite3";
 import { AppError } from "../utils/AppError";
 import { importService } from "../services/importService";
+import { env } from "../config/env";
 
 interface AnkiNote {
   id: number;
@@ -103,16 +104,18 @@ export async function importApkg(
 }
 
 function processMidiaRefs(text: string): string {
+  const mediaUrl = (path: string) => `${env.mediaBaseUrl}/media/${path}`;
+
   // Converte [sound:arquivo.mp3] em tag de áudio HTML
   let result = text.replace(
     /\[sound:(.*?)\]/g,
-    (_, filename) => `<audio controls src="/media/${filename}"></audio>`,
+    (_, filename) => `<audio controls src="${mediaUrl(filename)}"></audio>`,
   );
 
   // Garante que imagens já em HTML apontem para /media/
   result = result.replace(
     /<img([^>]*?)src="(?!http|\/media)(.*?)"([^>]*?)>/g,
-    (_, before, src, after) => `<img${before}src="/media/${src}"${after}>`,
+    (_, before, src, after) => `<img${before}src="${mediaUrl(src)}"${after}>`,
   );
 
   return result;
