@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getDailyQueue } from "../services/analyticsApi";
 import { Calendar } from "lucide-react";
 import { SkeletonQueueItem } from "./SkeletonCard";
+import CardContent from "./CardContent";
 
 interface DailyQueueCard {
   id: number;
@@ -193,7 +194,8 @@ export function DailyQueue() {
               ...getRecallStyle(card.predicted_recall),
             }}
           >
-            <span
+            <CardContent
+              html={card.front}
               style={{
                 fontSize: "12px",
                 color: "var(--text)",
@@ -202,10 +204,9 @@ export function DailyQueue() {
                 whiteSpace: "nowrap",
                 flex: 1,
                 marginRight: "10px",
+                lineHeight: 1.4,
               }}
-            >
-              {card.front}
-            </span>
+            />
             <span
               style={{
                 fontWeight: 700,
