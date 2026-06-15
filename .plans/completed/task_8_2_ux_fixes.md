@@ -2,7 +2,7 @@
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 08 — UX Consistency & Fixes](./phase_08_ux_consistency.md)
 - **Dependências**: Nenhuma
 

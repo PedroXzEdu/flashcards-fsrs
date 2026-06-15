@@ -1220,7 +1220,7 @@ export default function DeckPage() {
                 loading={loadingMore}
                 type="button"
               >
-                {loadingMore ? "Carregando..." : "Carregar mais"}
+                Carregar mais
               </Button>
             </div>
           )}

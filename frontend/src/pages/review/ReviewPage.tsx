@@ -224,7 +224,7 @@ export default function ReviewPage() {
       } else {
         setFlipped(false);
         setPreview(null);
-        setTimeout(() => setIndex(next), 50);
+        setIndex(next);
       }
     } catch (err: unknown) {
       setError(

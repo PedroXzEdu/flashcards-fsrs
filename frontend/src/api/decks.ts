@@ -1,5 +1,4 @@
 import { api } from "./client";
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 import type { Deck, DeckStats, GlobalStats } from "../types";
 
 export const decksApi = {
@@ -43,27 +42,18 @@ export const decksApi = {
 
 export const importApi = {
   importApkg: async (file: File) => {
-    const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("file", file);
-
-    const res = await fetch(`${BASE_URL}/import`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-
-    if (!res.ok) {
-      const error = await res
-        .json()
-        .catch(() => ({ error: "Erro desconhecido" }));
-      throw new Error(error.error || "Erro ao importar.");
-    }
-
-    const json = await res.json();
-    return json.data;
-  },
+    return api.postFormData("/import", formData) as Promise<ImportResult>;
+  }
 };
+
+interface ImportResult {
+  deck: { id: number; title: string };
+  imported: number;
+  skipped: number;
+  message: string;
+}
 
 export const statsApi = {
   streak: () =>

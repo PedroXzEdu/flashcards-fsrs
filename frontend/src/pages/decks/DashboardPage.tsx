@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { decksApi } from "../../api/decks";
 import { cardsApi } from "../../api/cards";
@@ -130,6 +130,7 @@ export default function DashboardPage() {
   const [workloadLoading, setWorkloadLoading] = useState(false);
   const [workloadError, setWorkloadError] = useState(false);
   const toast = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const filledWorkload = fillWorkloadDays(workload, workloadDays);
   const allWorkloadZero = filledWorkload.every(
@@ -178,6 +179,19 @@ export default function DashboardPage() {
       cancelled = true;
     };
   }, [workloadDays]);
+
+  useEffect(() => {
+    if (!showForm) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setShowForm(false);
+        setTitle("");
+        setDescription("");
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showForm]);
 
   async function loadDecks() {
     try {
@@ -465,6 +479,7 @@ export default function DashboardPage() {
 
       {showForm && (
         <form
+          ref={formRef}
           onSubmit={handleCreate}
           className="animate-fade-in"
           style={{

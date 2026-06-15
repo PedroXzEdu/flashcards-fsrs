@@ -17,7 +17,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
       ...options,
       signal: controller.signal,
       headers: {
-        "Content-Type": "application/json",
+        ...(options.body instanceof FormData
+          ? {}
+          : { "Content-Type": "application/json" }),
         "X-Requested-With": "XMLHttpRequest",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
@@ -61,4 +63,6 @@ export const api = {
   delete: <T>(path: string) => request<T>(path, { method: "DELETE" }),
   patch: <T>(path: string, body: unknown) =>
     request<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
+  postFormData: <T>(path: string, body: FormData) =>
+    request<T>(path, { method: "POST", body }),
 };

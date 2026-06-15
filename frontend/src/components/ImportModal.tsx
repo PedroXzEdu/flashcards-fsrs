@@ -269,7 +269,7 @@ export default function ImportModal({ onClose, onSuccess }: Props) {
                       color: "var(--text-muted)",
                     }}
                   >
-                    ou clique para selecionar · .apkg até 100MB
+                    ou clique para selecionar · .apkg até 50MB
                   </p>
                 </>
               )}

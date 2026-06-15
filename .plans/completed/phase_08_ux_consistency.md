@@ -48,8 +48,8 @@ Corrigir inconsistências de UX, remover dead code, alinhar limites de upload, e
 
 ## Estado Atual
 
-- **Início**: Fase não iniciada
-- **Progresso**: 0/2 tasks
+- **Início**: Fase concluída
+- **Progresso**: 2/2 tasks
 
 ## Critério de Conclusão da Fase
 
@@ -59,7 +59,7 @@ Corrigir inconsistências de UX, remover dead code, alinhar limites de upload, e
 
 ## Checklist da Fase
 
-- [ ] 8.1 Dead code + ImportApi refactor
-- [ ] 8.2 UX fixes
-- [ ] Revisão de código realizada
-- [ ] Critérios de aceitação validados
+- [x] 8.1 Dead code + ImportApi refactor
+- [x] 8.2 UX fixes
+- [x] Revisão de código realizada
+- [x] Critérios de aceitação validados
