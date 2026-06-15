@@ -49,8 +49,8 @@ Tasks sem dependência podem ser executadas em paralelo.
 
 ## Estado Atual
 
-- **Em andamento**: Task 7.1 concluída
-- **Progresso**: 1/3 tasks
+- **Em andamento**: Tasks 7.1 e 7.2 concluídas
+- **Progresso**: 2/3 tasks
 
 ## Critério de Conclusão da Fase
 
@@ -61,7 +61,7 @@ Tasks sem dependência podem ser executadas em paralelo.
 ## Checklist da Fase
 
 - [x] 7.1 Testes bruteForce.ts
-- [ ] 7.2 Testes componentes frontend
+- [x] 7.2 Testes componentes frontend
 - [ ] 7.3 Testes API layer e contextos
 - [ ] Revisão de código realizada
 - [ ] Critérios de aceitação validados
