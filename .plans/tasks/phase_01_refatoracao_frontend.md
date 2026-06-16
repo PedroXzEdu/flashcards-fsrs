@@ -1,7 +1,7 @@
 # Fase 01 — Refatoração Frontend
 
 ## Objetivo
-Extrair componentes monolíticos em componentes menores e focados. Reduzir os 3 maiores arquivos do frontend (DeckPage: 1239 linhas, ReviewPage: 818 linhas, DashboardPage: 881 linhas) para componentes de no máximo 200-300 linhas cada.
+Extrair componentes monolíticos em componentes menores e focados. Reduzir os 3 maiores arquivos do frontend (DeckPage: 1239 → 895 linhas, ReviewPage: 818 linhas, DashboardPage: 881 linhas) para componentes de no máximo 200-300 linhas cada.
 
 ## Justificativa
 Esta é a maior dívida técnica do projeto. Três arquivos concentram quase toda a lógica do frontend. Isso dificulta:
@@ -28,7 +28,7 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 ## Tarefas
 
-### [ ] T01.01 — Extrair `CardForm` (criação/edição de card)
+### [x] T01.01 — Extrair `CardForm` (criação/edição de card)
 
 **Descrição:** Extrair o formulário de criação/edição de card (linhas 869-973 de `DeckPage.tsx`) em um componente `CardForm.tsx` com props `initialValues`, `onSave`, `onCancel`, `saving`, `editMode`.
 
@@ -38,16 +38,18 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 **Estimativa:** 4-6 horas
 
+**Real:** ~30 min
+
 **Subtarefas:**
-- [ ] Criar `frontend/src/components/CardForm.tsx` com o formulário extraído
-- [ ] Tipar props: `CardFormProps { initialValues?: {front, back}, onSave: (front, back) => Promise<void>, onCancel: () => void }`
-- [ ] Substituir bloco `{showForm && (...)}` em `DeckPage` por `<CardForm>`
-- [ ] Ajustar `handleSave` no `DeckPage` para ser passado como prop
-- [ ] Garantir que `handleBulkCreate` não seja afetado
+- [x] Criar `frontend/src/components/CardForm.tsx` com o formulário extraído
+- [x] Tipar props: `CardFormProps { initialValues?: {front, back}, onSave: (front, back) => Promise<void>, onCancel: () => void }`
+- [x] Substituir bloco `{showForm && (...)}` em `DeckPage` por `<CardForm>`
+- [x] Ajustar `handleSave` no `DeckPage` para ser passado como prop
+- [x] Garantir que `handleBulkCreate` não seja afetado
 
 ---
 
-### [ ] T01.02 — Extrair `BulkCreateForm`
+### [x] T01.02 — Extrair `BulkCreateForm`
 
 **Descrição:** Extrair o formulário de criação em lote (linhas 976-1096 de `DeckPage.tsx`) em `BulkCreateForm.tsx`.
 
@@ -57,14 +59,16 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 **Estimativa:** 2-3 horas
 
+**Real:** ~15 min
+
 **Subtarefas:**
-- [ ] Criar `frontend/src/components/BulkCreateForm.tsx`
-- [ ] Mover lógica de parse (separador `|` e `\t`) para o componente
-- [ ] Substituir bloco `{showBulk && (...)}` em DeckPage
+- [x] Criar `frontend/src/components/BulkCreateForm.tsx`
+- [x] Mover lógica de parse (separador `|` e `\t`) para o componente
+- [x] Substituir bloco `{showBulk && (...)}` em DeckPage
 
 ---
 
-### [ ] T01.03 — Extrair `CardListItem` (linha de card na lista)
+### [x] T01.03 — Extrair `CardListItem` (linha de card na lista)
 
 **Descrição:** Extrair o card individual da lista (linhas 1119-1212 de `DeckPage.tsx`) em `CardListItem.tsx`.
 
@@ -74,11 +78,13 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 **Estimativa:** 2-3 horas
 
+**Real:** ~15 min
+
 **Subtarefas:**
-- [ ] Criar `frontend/src/components/CardListItem.tsx`
-- [ ] Props: `card: Card`, `onEdit: (card) => void`, `onDelete: (card) => void`
-- [ ] Mover lógica de hover, state badge, formatação para o componente
-- [ ] Extrair também o botão "Carregar mais" para componente separado `LoadMoreButton`
+- [x] Criar `frontend/src/components/CardListItem.tsx`
+- [x] Props: `card: Card`, `onEdit: (card) => void`, `onDelete: (card) => void`
+- [x] Mover lógica de hover, state badge, formatação para o componente
+- [x] Extrair também o botão "Carregar mais" para componente separado `LoadMoreButton`
 
 ---
 

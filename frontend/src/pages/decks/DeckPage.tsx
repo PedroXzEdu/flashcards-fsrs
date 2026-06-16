@@ -8,10 +8,12 @@ import Layout from "../../components/Layout";
 import EmptyState from "../../components/EmptyState";
 import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonCardItem } from "../../components/SkeletonCard";
-import CardContent from "../../components/CardContent";
+import CardListItem from "../../components/CardListItem";
+import LoadMoreButton from "../../components/LoadMoreButton";
 import Button from "../../components/Button";
+import CardForm from "../../components/CardForm";
+import BulkCreateForm from "../../components/BulkCreateForm";
 import ShareModal from "../../components/ShareModal";
-import RichTextEditor from "../../components/RichTextEditor";
 import {
   BarChart2,
   FileText,
@@ -22,24 +24,8 @@ import {
   Settings,
   Search,
   Share2,
-  Trash2,
   MoreVertical,
 } from "lucide-react";
-
-const STATE = [
-  { label: "Novo", color: "var(--info)", bg: "rgba(137,180,250,0.12)" },
-  {
-    label: "Aprendendo",
-    color: "var(--warning)",
-    bg: "rgba(249,226,175,0.12)",
-  },
-  { label: "Revisão", color: "var(--success)", bg: "rgba(166,227,161,0.12)" },
-  {
-    label: "Reaprendendo",
-    color: "var(--danger)",
-    bg: "rgba(243,139,168,0.12)",
-  },
-];
 
 export default function DeckPage() {
   const { id } = useParams<{ id: string }>();
@@ -54,13 +40,10 @@ export default function DeckPage() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [front, setFront] = useState("");
-  const [back, setBack] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [editingCard, setEditingCard] = useState<Card | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Card | null>(null);
-  const [saveStatus, setSaveStatus] = useState<"saving" | "saved" | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [newCardsPerDay, setNewCardsPerDay] = useState(20);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -74,7 +57,6 @@ export default function DeckPage() {
       card.back.toLowerCase().includes(search.toLowerCase()),
   );
   const [showBulk, setShowBulk] = useState(false);
-  const [bulkText, setBulkText] = useState("");
   const [bulkSaving, setBulkSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const toast = useToast();
@@ -183,10 +165,8 @@ export default function DeckPage() {
     }
   }
 
-  async function handleSave(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSave(front: string, back: string) {
     setSaving(true);
-    setSaveStatus("saving");
     try {
       if (editingCard) {
         const updated = await cardsApi.update(
@@ -201,43 +181,26 @@ export default function DeckPage() {
         const card = await cardsApi.create(deckId, front, back);
         setCards((p) => [card, ...p]);
       }
-      setFront("");
-      setBack("");
       setShowForm(false);
-      setSaveStatus("saved");
       toast.success("Card salvo");
-      setTimeout(() => setSaveStatus(null), 2000);
     } catch {
       setError("Erro ao salvar card.");
-      setSaveStatus(null);
       toast.error("Erro ao salvar card.");
     } finally {
       setSaving(false);
     }
   }
 
-  async function handleBulkCreate(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleBulkCreate(pairs: { front: string; back: string }[]) {
+    if (pairs.length === 0) {
+      setError("Nenhum par válido encontrado. Use o formato: frente | verso");
+      return;
+    }
     setBulkSaving(true);
     try {
-      const lines = bulkText.split("\n").filter((l) => l.trim());
-      const pairs = lines
-        .map((l) => {
-          const sep = l.includes("\t") ? "\t" : "|";
-          const [front, ...rest] = l.split(sep);
-          return { front: front?.trim(), back: rest.join(sep).trim() };
-        })
-        .filter((p) => p.front && p.back);
-
-      if (pairs.length === 0) {
-        setError("Nenhum par válido encontrado. Use o formato: frente | verso");
-        return;
-      }
-
       const created = await cardsApi.createBatch(deckId, pairs);
       setCards((prev) => [...created, ...prev]);
       toast.success("Cards criados");
-      setBulkText("");
       setShowBulk(false);
     } catch {
       setError("Erro ao criar cards em lote.");
@@ -264,16 +227,12 @@ export default function DeckPage() {
 
   function handleEdit(card: Card) {
     setEditingCard(card);
-    setFront(card.front);
-    setBack(card.back);
     setShowForm(true);
   }
 
   function cancelForm() {
     setShowForm(false);
     setEditingCard(null);
-    setFront("");
-    setBack("");
   }
 
   const dropdownItemStyle: React.CSSProperties = {
@@ -867,232 +826,25 @@ export default function DeckPage() {
       </div>
 
       {showForm && (
-        <form
-          onSubmit={handleSave}
-          className="animate-fade-in"
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "16px",
-            padding: "24px",
-            marginBottom: "20px",
-            boxShadow: "var(--shadow-sm)",
-          }}
-        >
-          <h2
-            style={{
-              margin: "0 0 16px",
-              fontSize: "15px",
-              fontWeight: 600,
-              color: "var(--text)",
-            }}
-          >
-            {editingCard ? "Editar card" : "Novo card"}
-          </h2>
-          <div
-            className="card-form-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "12px",
-            }}
-          >
-            <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Frente
-              </label>
-              <RichTextEditor
-                content={front}
-                onChange={setFront}
-                placeholder="Pergunta ou conceito..."
-              />
-            </div>
-            <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Verso
-              </label>
-              <RichTextEditor
-                content={back}
-                onChange={setBack}
-                placeholder="Resposta ou definição..."
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              marginTop: "16px",
-              alignItems: "center",
-            }}
-          >
-            <Button type="submit" size="sm" loading={saving}>
-              {saving ? "Salvando..." : editingCard ? "Salvar" : "Criar"}
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              onClick={cancelForm}
-            >
-              Cancelar
-            </Button>
-            {saveStatus === "saved" && (
-              <span
-                style={{
-                  fontSize: "12px",
-                  color: "var(--success)",
-                  fontWeight: 500,
-                  animation: "fadeIn 0.2s ease",
-                }}
-              >
-                Salvo ✓
-              </span>
-            )}
-          </div>
-        </form>
+        <CardForm
+          initialValues={
+            editingCard
+              ? { front: editingCard.front, back: editingCard.back }
+              : undefined
+          }
+          onSave={handleSave}
+          onCancel={cancelForm}
+          saving={saving}
+          editMode={editingCard !== null}
+        />
       )}
 
       {showBulk && (
-        <form
-          onSubmit={handleBulkCreate}
-          className="animate-fade-in"
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "16px",
-            padding: "24px",
-            marginBottom: "20px",
-            boxShadow: "var(--shadow-sm)",
-          }}
-        >
-          <h2
-            style={{
-              margin: "0 0 6px",
-              fontSize: "15px",
-              fontWeight: 600,
-              color: "var(--text)",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <ListPlus size={15} /> Criar cards em lote
-          </h2>
-          <p
-            style={{
-              margin: "0 0 14px",
-              fontSize: "12px",
-              color: "var(--text-muted)",
-            }}
-          >
-            Uma linha por card. Separe frente e verso com{" "}
-            <code
-              style={{
-                background: "var(--bg)",
-                padding: "1px 5px",
-                borderRadius: "4px",
-                fontFamily: "JetBrains Mono, monospace",
-              }}
-            >
-              |
-            </code>{" "}
-            ou{" "}
-            <code
-              style={{
-                background: "var(--bg)",
-                padding: "1px 5px",
-                borderRadius: "4px",
-                fontFamily: "JetBrains Mono, monospace",
-              }}
-            >
-              Tab
-            </code>
-          </p>
-          <textarea
-            value={bulkText}
-            onChange={(e) => setBulkText(e.target.value)}
-            placeholder={"Hello | Olá\nGoodbye | Tchau\nThank you | Obrigado"}
-            rows={6}
-            required
-            style={{
-              width: "100%",
-              background: "var(--bg)",
-              border: "1px solid var(--border)",
-              borderRadius: "10px",
-              padding: "10px 14px",
-              fontSize: "13px",
-              color: "var(--text)",
-              outline: "none",
-              fontFamily: "JetBrains Mono, monospace",
-              resize: "vertical",
-              transition: "border-color 0.2s",
-            }}
-            onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
-            onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
-          />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: "12px",
-            }}
-          >
-            <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>
-              {
-                bulkText
-                  .split("\n")
-                  .filter((l) => l.includes("|") || l.includes("\t")).length
-              }{" "}
-              cards detectados
-            </span>
-            <div style={{ display: "flex", gap: "8px" }}>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowBulk(false);
-                  setBulkText("");
-                }}
-                style={{
-                  background: "none",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                  color: "var(--text-muted)",
-                  fontSize: "13px",
-                  padding: "8px 16px",
-                  cursor: "pointer",
-                  fontFamily: "Outfit, sans-serif",
-                }}
-              >
-                Cancelar
-              </button>
-              <Button type="submit" size="sm" loading={bulkSaving}>
-                {bulkSaving ? "Criando..." : "Criar cards"}
-              </Button>
-            </div>
-          </div>
-        </form>
+        <BulkCreateForm
+          onSave={handleBulkCreate}
+          onCancel={() => setShowBulk(false)}
+          saving={bulkSaving}
+        />
       )}
 
       {cards.length === 0 ? (
@@ -1116,113 +868,17 @@ export default function DeckPage() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          {filteredCards.map((card, i) => {
-            const s = STATE[card.state] ?? STATE[0];
-            return (
-              <div
-                key={card.id}
-                className="animate-slide-in"
-                style={{
-                  animationDelay: `${i * 30}ms`,
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "12px",
-                  padding: "16px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "16px",
-                  transition: "border-color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--border-sub)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--border)")
-                }
-              >
-                <span
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    padding: "3px 8px",
-                    borderRadius: "6px",
-                    color: s.color,
-                    background: s.bg,
-                    whiteSpace: "nowrap",
-                    minWidth: "80px",
-                    textAlign: "center",
-                  }}
-                >
-                  {s.label}
-                </span>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <CardContent
-                    html={card.front}
-                    style={{
-                      margin: 0,
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "var(--text)",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  />
-                  <CardContent
-                    html={card.back}
-                    style={{
-                      margin: "2px 0 0",
-                      fontSize: "13px",
-                      color: "var(--text-muted)",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  />
-                </div>
-                {card.reps > 0 && (
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      color: "var(--text-muted)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {card.reps} rev.
-                  </span>
-                )}
-                <div style={{ display: "flex", gap: "4px" }}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<Pencil size={13} />}
-                    onClick={() => handleEdit(card)}
-                    aria-label="Editar card"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<Trash2 size={13} />}
-                    onClick={() => setConfirmDelete(card)}
-                    style={{ color: "var(--danger)" }}
-                    aria-label="Excluir card"
-                  />
-                </div>
-              </div>
-            );
-          })}
+          {filteredCards.map((card, i) => (
+            <CardListItem
+              key={card.id}
+              card={card}
+              index={i}
+              onEdit={handleEdit}
+              onDelete={(c) => setConfirmDelete(c)}
+            />
+          ))}
           {hasMore && (
-            <div style={{ textAlign: "center", padding: "20px 0" }}>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={loadMore}
-                loading={loadingMore}
-                type="button"
-              >
-                Carregar mais
-              </Button>
-            </div>
+            <LoadMoreButton onClick={loadMore} loading={loadingMore} />
           )}
         </div>
       )}
