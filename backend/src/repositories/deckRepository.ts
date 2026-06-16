@@ -1,9 +1,9 @@
-import { pool as client } from "../database/db";
+import { pool } from "../database/db";
 import { PoolClient } from "pg";
 
 class DeckRepository {
   async create(data: any) {
-    const result = await client.query(
+    const result = await pool.query(
       `INSERT INTO decks (user_id, title, description, is_public)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
@@ -14,7 +14,7 @@ class DeckRepository {
   }
 
   async findByUser(userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT d.*, COUNT(c.id) AS card_count
        FROM decks d
        LEFT JOIN cards c ON c.deck_id = d.id
@@ -28,7 +28,7 @@ class DeckRepository {
   }
 
   async findById(id: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT d.*, COUNT(c.id) AS card_count
        FROM decks d
        LEFT JOIN cards c ON c.deck_id = d.id
@@ -41,7 +41,7 @@ class DeckRepository {
   }
 
   async update(id: number, userId: number, data: any) {
-    const result = await client.query(
+    const result = await pool.query(
       `UPDATE decks
        SET title = $1, description = $2, is_public = $3
        WHERE id = $4 AND user_id = $5
@@ -53,7 +53,7 @@ class DeckRepository {
   }
 
   async delete(id: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `DELETE FROM decks
        WHERE id = $1 AND user_id = $2
        RETURNING id`,
@@ -64,7 +64,7 @@ class DeckRepository {
   }
 
   async exists(id: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT id
        FROM decks
        WHERE id = $1 AND user_id = $2`,
@@ -75,7 +75,7 @@ class DeckRepository {
   }
 
   async getCardStats(deckId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT
         COUNT(*)                                  AS total,
         COUNT(*) FILTER (WHERE state = 0)         AS new_cards,
@@ -94,7 +94,7 @@ class DeckRepository {
   }
 
   async getReviewStats(deckId: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT
         COUNT(*)                                            AS total_reviews,
         COUNT(*) FILTER (WHERE rating = 1)                 AS again_count,
@@ -115,7 +115,7 @@ class DeckRepository {
   }
 
   async updateSettings(id: number, userId: number, newCardsPerDay: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `UPDATE decks
        SET new_cards_per_day = $1
        WHERE id = $2 AND user_id = $3
@@ -127,7 +127,7 @@ class DeckRepository {
   }
 
   async findByIdRaw(id: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT *
        FROM decks
        WHERE id = $1 AND user_id = $2`,
@@ -138,7 +138,7 @@ class DeckRepository {
   }
 
   async updateShareToken(deckId: number, token: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `UPDATE decks
        SET share_token = $1
        WHERE id = $2
@@ -150,7 +150,7 @@ class DeckRepository {
   }
 
   async removeShareToken(deckId: number, userId: number) {
-    const result = await client.query(
+    const result = await pool.query(
       `UPDATE decks
        SET share_token = NULL
        WHERE id = $1 AND user_id = $2
@@ -162,7 +162,7 @@ class DeckRepository {
   }
 
   async findByShareToken(token: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT *
        FROM decks
        WHERE share_token = $1`,
@@ -173,7 +173,7 @@ class DeckRepository {
   }
 
   async getSharedDeckPreview(token: string) {
-    const result = await client.query(
+    const result = await pool.query(
       `SELECT
         d.title,
         d.description,
@@ -189,12 +189,12 @@ class DeckRepository {
   }
 
   async createCopy(
-    client: PoolClient,
+    txClient: PoolClient,
     userId: number,
     title: string,
     description: string,
   ) {
-    const result = await client.query(
+    const result = await txClient.query(
       `INSERT INTO decks
         (
           user_id,
