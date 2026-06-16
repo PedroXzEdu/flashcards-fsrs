@@ -56,7 +56,7 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 
 ---
 
-### [ ] T00.03 — Extrair lógica de transação para helper reutilizável
+### [x] T00.03 — Extrair lógica de transação para helper reutilizável
 
 **Descrição:** Criar uma função `withTransaction<T>(fn: (client: PoolClient) => Promise<T>): Promise<T>` que encapsule `pool.connect()`, `BEGIN`, `COMMIT`, `ROLLBACK` e `release()`.
 
@@ -67,9 +67,9 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 3-4 horas
 
 **Subtarefas:**
-- [ ] Criar `backend/src/utils/transaction.ts` com a função `withTransaction`
-- [ ] Refatorar `reviewService.submitReview` para usar o helper
-- [ ] Verificar se há outros pontos com transação manual (importService, deckImportService)
+- [x] Criar `backend/src/utils/transaction.ts` com a função `withTransaction`
+- [x] Refatorar `reviewService.submitReview` para usar o helper
+- [x] Verificar se há outros pontos com transação manual (importService, deckImportService)
 
 ---
 

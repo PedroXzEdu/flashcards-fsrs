@@ -1,7 +1,5 @@
 import { Grade, Rating, RecordLogItem } from "ts-fsrs";
 
-import { pool } from "../database/db";
-
 import { fsrsService } from "./fsrsService";
 
 import { cardRepository } from "../repositories/cardRepository";
@@ -11,6 +9,8 @@ import { reviewLogRepository } from "../repositories/reviewLogRepository";
 import { deckRepository } from "../repositories/deckRepository";
 
 import { AppError } from "../utils/AppError";
+
+import { withTransaction } from "../utils/transaction";
 
 import { logger } from "../config/logger";
 
@@ -64,11 +64,7 @@ class ReviewService {
 
     const scheduling = fsrsService.review(card, rating as Grade);
 
-    const client = await pool.connect();
-
-    try {
-      await client.query("BEGIN");
-
+    const result = await withTransaction(async (client) => {
       const updatedCard = await cardRepository.updateFsrsData(
         client,
         cardId,
@@ -101,8 +97,6 @@ class ReviewService {
         review: scheduling.log.review,
       });
 
-      await client.query("COMMIT");
-
       collector.incrementBusiness("reviewsSubmitted");
 
       return {
@@ -111,13 +105,9 @@ class ReviewService {
         next_review: updatedCard.due,
         scheduled_days: updatedCard.scheduled_days,
       };
-    } catch (err) {
-      await client.query("ROLLBACK");
+    });
 
-      throw err;
-    } finally {
-      client.release();
-    }
+    return result;
   }
 
   private formatPreview(item: RecordLogItem) {

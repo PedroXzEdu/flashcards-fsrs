@@ -5,7 +5,7 @@ import { deckRepository } from "../repositories/deckRepository";
 import { cardRepository } from "../repositories/cardRepository";
 
 import { AppError } from "../utils/AppError";
-import { pool } from "../database/db";
+import { withTransaction } from "../utils/transaction";
 
 class DeckImportService {
   async importSharedDeck(token: string, userId: number) {
@@ -23,11 +23,7 @@ class DeckImportService {
 
     const emptyCard = createEmptyCard();
 
-    const client = await pool.connect();
-
-    try {
-      await client.query("BEGIN");
-
+    const result = await withTransaction(async (client) => {
       const newDeck = await deckRepository.createCopy(
         client,
         userId,
@@ -55,20 +51,14 @@ class DeckImportService {
         );
       }
 
-      await client.query("COMMIT");
-
       return {
         deck: newDeck,
         cards_count: cards.length,
         message: `${cards.length} cards importados com sucesso!`,
       };
-    } catch (err) {
-      await client.query("ROLLBACK");
+    });
 
-      throw err;
-    } finally {
-      client.release();
-    }
+    return result;
   }
 }
 
