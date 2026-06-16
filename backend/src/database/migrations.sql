@@ -69,3 +69,6 @@ CREATE INDEX IF NOT EXISTS idx_review_logs_card_id_review
 
 CREATE INDEX IF NOT EXISTS idx_decks_user_id_created_at
   ON decks (user_id, created_at);
+
+CREATE INDEX IF NOT EXISTS idx_users_email
+  ON users (email);

@@ -92,7 +92,7 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 
 ---
 
-### [ ] T00.05 — Substituir `import { pool as client }` em `deckRepository.ts`
+### [x] T00.05 — Substituir `import { pool as client }` em `deckRepository.ts`
 
 **Descrição:** Renomear o import para `import { pool } from "../database/db"` em vez de `import { pool as client }`.
 
@@ -103,11 +103,11 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 5 minutos
 
 **Subtarefas:**
-- [ ] Substituir `import { pool as client }` por `import { pool }` em `deckRepository.ts`
+- [x] Substituir `import { pool as client }` por `import { pool }` em `deckRepository.ts`
 
 ---
 
-### [ ] T00.06 — Adicionar índice `idx_users_email` em `migrations.sql`
+### [x] T00.06 — Adicionar índice `idx_users_email` em `migrations.sql`
 
 **Descrição:** Adicionar `CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);` no arquivo de migração.
 
@@ -118,5 +118,5 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 5 minutos
 
 **Subtarefas:**
-- [ ] Adicionar o índice em `backend/src/database/migrations.sql`
+- [x] Adicionar o índice em `backend/src/database/migrations.sql`
 - [ ] Verificar outros índices faltantes (ex: `review_logs (user_id, card_id)`)
