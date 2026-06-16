@@ -85,18 +85,27 @@ class ReviewLogRepository {
   }
 
   async getReviewDays(userId: number, months = 12) {
-    const result = await client.query(
-      `SELECT DISTINCT DATE(review) as day
-       FROM review_logs
-       WHERE user_id = $1
-         AND review >= NOW() - INTERVAL '1 month' * $2
-       ORDER BY day DESC`,
-      [userId, months],
-    );
+    const [dates, days] = await Promise.all([
+      client.query(
+        `SELECT
+           CURRENT_DATE::text AS today,
+           (CURRENT_DATE - INTERVAL '1 day')::text AS yesterday`,
+      ),
+      client.query(
+        `SELECT DISTINCT DATE(review)::text AS day
+         FROM review_logs
+         WHERE user_id = $1
+           AND review >= NOW() - INTERVAL '1 month' * $2
+         ORDER BY day DESC`,
+        [userId, months],
+      ),
+    ]);
 
-    return result.rows.map((r: { day: string }) =>
-      r.day.toString().slice(0, 10),
-    );
+    return {
+      days: days.rows.map((r: { day: string }) => r.day),
+      today: dates.rows[0].today,
+      yesterday: dates.rows[0].yesterday,
+    };
   }
 
   async getActivity(userId: number) {

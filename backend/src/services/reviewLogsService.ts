@@ -17,16 +17,12 @@ class ReviewLogsService {
   }
 
   async getStreak(userId: number) {
-    const days = await reviewLogRepository.getReviewDays(userId);
+    const { days, today, yesterday } =
+      await reviewLogRepository.getReviewDays(userId);
 
     if (days.length === 0) {
       return { streak: 0, longest: 0, total_days: 0, last_review: null };
     }
-
-    const today = new Date().toISOString().slice(0, 10);
-    const yesterday = new Date(Date.now() - 86400000)
-      .toISOString()
-      .slice(0, 10);
 
     if (days[0] !== today && days[0] !== yesterday) {
       return {

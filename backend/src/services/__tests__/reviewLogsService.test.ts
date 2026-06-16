@@ -102,8 +102,16 @@ describe("ReviewLogsService", () => {
   });
 
   describe("getStreak", () => {
+    function mockDays(days: string[]) {
+      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue({
+        days,
+        today: today(),
+        yesterday: yesterday(),
+      });
+    }
+
     it("deve retornar zeros se não há revisões", async () => {
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([]);
+      mockDays([]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -117,9 +125,7 @@ describe("ReviewLogsService", () => {
 
     it("deve retornar zeros se último review não é hoje nem ontem", async () => {
       const threeDaysAgo = daysAgo(3);
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([
-        threeDaysAgo,
-      ]);
+      mockDays([threeDaysAgo]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -133,11 +139,7 @@ describe("ReviewLogsService", () => {
 
     it("deve calcular streak ativo (hoje)", async () => {
       const d = today();
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([
-        d,
-        daysAgo(1),
-        daysAgo(2),
-      ]);
+      mockDays([d, daysAgo(1), daysAgo(2)]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -149,11 +151,7 @@ describe("ReviewLogsService", () => {
 
     it("deve calcular streak ativo (ontem)", async () => {
       const y = yesterday();
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([
-        y,
-        daysAgo(2),
-        daysAgo(3),
-      ]);
+      mockDays([y, daysAgo(2), daysAgo(3)]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -163,13 +161,7 @@ describe("ReviewLogsService", () => {
 
     it("deve calcular longest streak maior que streak atual", async () => {
       const t = today();
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([
-        t,
-        daysAgo(1),
-        daysAgo(3),
-        daysAgo(4),
-        daysAgo(5),
-      ]);
+      mockDays([t, daysAgo(1), daysAgo(3), daysAgo(4), daysAgo(5)]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -179,7 +171,7 @@ describe("ReviewLogsService", () => {
     });
 
     it("deve tratar dia único (hoje) como streak 1", async () => {
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([today()]);
+      mockDays([today()]);
 
       const result = await reviewLogsService.getStreak(1);
 
@@ -189,9 +181,7 @@ describe("ReviewLogsService", () => {
     });
 
     it("deve tratar dia único (ontem) como streak 1", async () => {
-      vi.mocked(reviewLogRepository.getReviewDays).mockResolvedValue([
-        yesterday(),
-      ]);
+      mockDays([yesterday()]);
 
       const result = await reviewLogsService.getStreak(1);
 
