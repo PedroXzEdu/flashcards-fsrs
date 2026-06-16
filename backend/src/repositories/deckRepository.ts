@@ -27,7 +27,7 @@ class DeckRepository {
     return result.rows;
   }
 
-  async findById(id: string, userId: number) {
+  async findById(id: number, userId: number) {
     const result = await client.query(
       `SELECT d.*, COUNT(c.id) AS card_count
        FROM decks d
@@ -40,7 +40,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async update(id: string, userId: number, data: any) {
+  async update(id: number, userId: number, data: any) {
     const result = await client.query(
       `UPDATE decks
        SET title = $1, description = $2, is_public = $3
@@ -52,7 +52,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async delete(id: string, userId: number) {
+  async delete(id: number, userId: number) {
     const result = await client.query(
       `DELETE FROM decks
        WHERE id = $1 AND user_id = $2
@@ -63,7 +63,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async exists(id: string, userId: number) {
+  async exists(id: number, userId: number) {
     const result = await client.query(
       `SELECT id
        FROM decks
@@ -74,7 +74,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async getCardStats(deckId: string) {
+  async getCardStats(deckId: number) {
     const result = await client.query(
       `SELECT
         COUNT(*)                                  AS total,
@@ -93,7 +93,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async getReviewStats(deckId: string, userId: number) {
+  async getReviewStats(deckId: number, userId: number) {
     const result = await client.query(
       `SELECT
         COUNT(*)                                            AS total_reviews,
@@ -114,7 +114,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async updateSettings(id: string, userId: number, newCardsPerDay: number) {
+  async updateSettings(id: number, userId: number, newCardsPerDay: number) {
     const result = await client.query(
       `UPDATE decks
        SET new_cards_per_day = $1
@@ -126,7 +126,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async findByIdRaw(id: string, userId: number) {
+  async findByIdRaw(id: number, userId: number) {
     const result = await client.query(
       `SELECT *
        FROM decks
@@ -137,7 +137,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async updateShareToken(deckId: string, token: string) {
+  async updateShareToken(deckId: number, token: string) {
     const result = await client.query(
       `UPDATE decks
        SET share_token = $1
@@ -149,7 +149,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async removeShareToken(deckId: string, userId: number) {
+  async removeShareToken(deckId: number, userId: number) {
     const result = await client.query(
       `UPDATE decks
        SET share_token = NULL

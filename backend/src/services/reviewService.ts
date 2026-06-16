@@ -17,7 +17,7 @@ import { logger } from "../config/logger";
 import { collector } from "../middlewares/metrics";
 
 class ReviewService {
-  async getDueCards(deckId: string, userId: number) {
+  async getDueCards(deckId: number, userId: number) {
     const [cards, deck] = await Promise.all([
       cardRepository.findDueByDeck(deckId, userId),
       deckRepository.findByIdRaw(deckId, userId),
@@ -38,7 +38,7 @@ class ReviewService {
     };
   }
 
-  async previewReview(cardId: string, userId: number) {
+  async previewReview(cardId: number, userId: number) {
     const card = await cardRepository.findById(cardId, userId);
 
     if (!card) {
@@ -55,7 +55,7 @@ class ReviewService {
     };
   }
 
-  async submitReview(cardId: string, userId: number, rating: Rating) {
+  async submitReview(cardId: number, userId: number, rating: Rating) {
     const card = await cardRepository.findById(cardId, userId);
 
     if (!card) {

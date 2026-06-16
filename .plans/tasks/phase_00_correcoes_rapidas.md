@@ -22,7 +22,7 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 
 ## Tarefas
 
-### [ ] T00.01 — Validar `cardId` e `deckId` com Zod nas rotas
+### [x] T00.01 — Validar `cardId` e `deckId` com Zod nas rotas
 
 **Descrição:** Adicionar validação de path params `cardId` e `deckId` como números inteiros positivos usando `z.coerce.number().int().positive()` nas rotas que recebem esses parâmetros.
 
@@ -33,10 +33,10 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 1-2 horas
 
 **Subtarefas:**
-- [ ] Criar schemas `z.object({ deck_id: z.coerce.number().int().positive() })` em `cardSchema.ts` ou novo arquivo `paramsSchema.ts`
-- [ ] Aplicar nos controllers de card, review, deck
-- [ ] Ajustar chamadas nos services para receber `number` em vez de `string`
-- [ ] Verificar se `cardService.ts:20` (parseInt) pode ser substituído
+- [x] Criar `backend/src/schemas/paramsSchema.ts` com schemas `deckIdParams`, `cardParams`, `cardIdCamelParams`, `numericIdParams`
+- [x] Aplicar nos controllers de card, review, deck via `schema.parse(req.params)`
+- [x] Ajustar signatures de services e repositórios para `number` em vez de `string`
+- [x] Remover `parseInt(deckId)` de `cardService.ts` (agora `deckId` já é `number`)
 
 ---
 

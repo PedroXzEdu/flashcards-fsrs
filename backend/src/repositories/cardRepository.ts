@@ -28,7 +28,7 @@ interface FsrsUpdateData {
 }
 
 class CardRepository {
-  async findByDeckId(deckId: string) {
+  async findByDeckId(deckId: number) {
     const result = await pool.query(
       `SELECT *
        FROM cards
@@ -39,7 +39,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async findByDeckIdPaginated(deckId: string, page = 1, limit = 20) {
+  async findByDeckIdPaginated(deckId: number, page = 1, limit = 20) {
     const offset = (page - 1) * limit;
 
     const countResult = await pool.query(
@@ -76,7 +76,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async findDueByDeck(deckId: string, userId: number, limit = 200) {
+  async findDueByDeck(deckId: number, userId: number, limit = 200) {
     const result = await pool.query(
       `SELECT c.*
        FROM cards c
@@ -191,7 +191,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async updateFsrsData(client: PoolClient, cardId: string, data: FsrsUpdateData) {
+  async updateFsrsData(client: PoolClient, cardId: number, data: FsrsUpdateData) {
     const result = await client.query(
       `UPDATE cards
        SET
@@ -223,7 +223,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async findById(id: string, userId: number) {
+  async findById(id: number, userId: number) {
     const result = await pool.query(
       `SELECT c.*
      FROM cards c
@@ -237,7 +237,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async update(deckId: string, cardId: string, front: string, back: string) {
+  async update(deckId: number, cardId: number, front: string, back: string) {
     const result = await pool.query(
       `UPDATE cards SET front = $1, back = $2
        WHERE id = $3 AND deck_id = $4
@@ -248,7 +248,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async delete(deckId: string, cardId: string) {
+  async delete(deckId: number, cardId: number) {
     const result = await pool.query(
       `DELETE FROM cards WHERE id = $1 AND deck_id = $2 RETURNING id`,
       [cardId, deckId],

@@ -48,13 +48,13 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
       vi.mocked(cardRepository.create).mockResolvedValue(mockCard);
 
-      const result = await cardService.create("1", 1, {
+      const result = await cardService.create(1, 1, {
         front: "Frente",
         back: "Verso",
       });
 
       expect(result).toEqual(mockCard);
-      expect(deckRepository.findById).toHaveBeenCalledWith("1", 1);
+      expect(deckRepository.findById).toHaveBeenCalledWith(1, 1);
       expect(cardRepository.create).toHaveBeenCalledWith(
         expect.objectContaining({
           deck_id: 1,
@@ -68,7 +68,7 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
       await expect(
-        cardService.create("999", 1, { front: "F", back: "B" }),
+        cardService.create(999, 1, { front: "F", back: "B" }),
       ).rejects.toThrow("Baralho não encontrado.");
     });
   });
@@ -85,10 +85,10 @@ describe("CardService", () => {
         { front: "Frente", back: "Verso" },
         { front: "Front 2", back: "Back 2" },
       ];
-      const result = await cardService.createBatch("1", 1, cards);
+      const result = await cardService.createBatch(1, 1, cards);
 
       expect(result).toHaveLength(2);
-      expect(deckRepository.findById).toHaveBeenCalledWith("1", 1);
+      expect(deckRepository.findById).toHaveBeenCalledWith(1, 1);
       expect(cardRepository.createBatch).toHaveBeenCalledWith(
         1,
         expect.arrayContaining([
@@ -101,7 +101,7 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
       await expect(
-        cardService.createBatch("999", 1, [{ front: "F", back: "B" }]),
+        cardService.createBatch(999, 1, [{ front: "F", back: "B" }]),
       ).rejects.toThrow("Baralho não encontrado.");
     });
   });
@@ -114,14 +114,14 @@ describe("CardService", () => {
         total: 1,
       });
 
-      const result = await cardService.list("1", 1);
+      const result = await cardService.list(1, 1);
 
       expect(result).toEqual({
         cards: [mockCard],
         pagination: { total: 1, page: 1, limit: 20, totalPages: 1 },
       });
       expect(cardRepository.findByDeckIdPaginated).toHaveBeenCalledWith(
-        "1",
+        1,
         1,
         20,
       );
@@ -130,7 +130,7 @@ describe("CardService", () => {
     it("deve lançar erro se deck não existe", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
-      await expect(cardService.list("999", 1)).rejects.toThrow(
+      await expect(cardService.list(999, 1)).rejects.toThrow(
         "Baralho não encontrado.",
       );
     });
@@ -141,15 +141,15 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
       vi.mocked(cardRepository.update).mockResolvedValue(mockCard);
 
-      const result = await cardService.update("1", "1", 1, {
+      const result = await cardService.update(1, 1, 1, {
         front: "Nova Frente",
         back: "Novo Verso",
       });
 
       expect(result).toEqual(mockCard);
       expect(cardRepository.update).toHaveBeenCalledWith(
-        "1",
-        "1",
+        1,
+        1,
         "Nova Frente",
         "Novo Verso",
       );
@@ -159,7 +159,7 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
       await expect(
-        cardService.update("999", "1", 1, { front: "F", back: "B" }),
+        cardService.update(999, 1, 1, { front: "F", back: "B" }),
       ).rejects.toThrow("Baralho não encontrado.");
     });
 
@@ -168,7 +168,7 @@ describe("CardService", () => {
       vi.mocked(cardRepository.update).mockResolvedValue(null);
 
       await expect(
-        cardService.update("1", "999", 1, { front: "F", back: "B" }),
+        cardService.update(1, 999, 1, { front: "F", back: "B" }),
       ).rejects.toThrow("Card não encontrado.");
     });
   });
@@ -178,15 +178,15 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
       vi.mocked(cardRepository.delete).mockResolvedValue(mockCard);
 
-      await cardService.delete("1", "1", 1);
+      await cardService.delete(1, 1, 1);
 
-      expect(cardRepository.delete).toHaveBeenCalledWith("1", "1");
+      expect(cardRepository.delete).toHaveBeenCalledWith(1, 1);
     });
 
     it("deve lançar erro se deck não existe", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
-      await expect(cardService.delete("999", "1", 1)).rejects.toThrow(
+      await expect(cardService.delete(999, 1, 1)).rejects.toThrow(
         "Baralho não encontrado.",
       );
     });
@@ -195,7 +195,7 @@ describe("CardService", () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
       vi.mocked(cardRepository.delete).mockResolvedValue(null);
 
-      await expect(cardService.delete("1", "999", 1)).rejects.toThrow(
+      await expect(cardService.delete(1, 999, 1)).rejects.toThrow(
         "Card não encontrado.",
       );
     });

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AuthRequest } from "../middlewares/auth";
 import { deckService } from "../services/deckService";
 import { deckImportService } from "../services/deckImportService";
+import { numericIdParams } from "../schemas/paramsSchema";
 
 export async function createDeck(
   req: AuthRequest,
@@ -46,7 +47,8 @@ export async function getDeck(
   next: NextFunction,
 ) {
   try {
-    const deck = await deckService.get(req.params.id as string, req.userId!);
+    const { id } = numericIdParams.parse(req.params);
+    const deck = await deckService.get(id, req.userId!);
 
     return res.json({
       success: true,
@@ -63,8 +65,9 @@ export async function updateDeck(
   next: NextFunction,
 ) {
   try {
+    const { id } = numericIdParams.parse(req.params);
     const deck = await deckService.update(
-      req.params.id as string,
+      id,
       req.userId!,
       req.body,
     );
@@ -84,7 +87,8 @@ export async function deleteDeck(
   next: NextFunction,
 ) {
   try {
-    await deckService.delete(req.params.id as string, req.userId!);
+    const { id } = numericIdParams.parse(req.params);
+    await deckService.delete(id, req.userId!);
 
     return res.status(204).send();
   } catch (err) {
@@ -98,8 +102,9 @@ export async function getDeckStats(
   next: NextFunction,
 ) {
   try {
+    const { id } = numericIdParams.parse(req.params);
     const stats = await deckService.getStats(
-      req.params.id as string,
+      id,
       req.userId!,
     );
 
@@ -118,8 +123,9 @@ export async function updateDeckSettings(
   next: NextFunction,
 ) {
   try {
+    const { id } = numericIdParams.parse(req.params);
     const deck = await deckService.updateSettings(
-      req.params.id as string,
+      id,
       req.userId!,
       req.body,
     );
@@ -139,8 +145,9 @@ export async function shareDeck(
   next: NextFunction,
 ) {
   try {
+    const { id } = numericIdParams.parse(req.params);
     const result = await deckService.share(
-      req.params.id as string,
+      id,
       req.userId!,
     );
 
@@ -159,8 +166,9 @@ export async function unshareDeck(
   next: NextFunction,
 ) {
   try {
+    const { id } = numericIdParams.parse(req.params);
     const result = await deckService.unshare(
-      req.params.id as string,
+      id,
       req.userId!,
     );
 

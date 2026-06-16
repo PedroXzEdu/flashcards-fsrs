@@ -67,7 +67,7 @@ describe("DeckService", () => {
     it("deve retornar um deck por id", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(mockDeck);
 
-      const result = await deckService.get("1", 1);
+      const result = await deckService.get(1, 1);
 
       expect(result).toEqual(mockDeck);
     });
@@ -75,7 +75,7 @@ describe("DeckService", () => {
     it("deve lançar erro se deck não existe", async () => {
       vi.mocked(deckRepository.findById).mockResolvedValue(null);
 
-      await expect(deckService.get("999", 1)).rejects.toThrow(
+      await expect(deckService.get(999, 1)).rejects.toThrow(
         "Baralho não encontrado.",
       );
     });
@@ -85,7 +85,7 @@ describe("DeckService", () => {
     it("deve atualizar um deck", async () => {
       vi.mocked(deckRepository.update).mockResolvedValue(mockDeck);
 
-      const result = await deckService.update("1", 1, {
+      const result = await deckService.update(1, 1, {
         title: "Meu Deck",
         description: "Nova descrição",
       });
@@ -98,7 +98,7 @@ describe("DeckService", () => {
       vi.mocked(deckRepository.update).mockResolvedValue(null);
 
       await expect(
-        deckService.update("999", 1, { title: "Novo" }),
+        deckService.update(999, 1, { title: "Novo" }),
       ).rejects.toThrow("Baralho não encontrado.");
     });
   });
@@ -107,15 +107,15 @@ describe("DeckService", () => {
     it("deve deletar um deck", async () => {
       vi.mocked(deckRepository.delete).mockResolvedValue(true);
 
-      await deckService.delete("1", 1);
+      await deckService.delete(1, 1);
 
-      expect(deckRepository.delete).toHaveBeenCalledWith("1", 1);
+      expect(deckRepository.delete).toHaveBeenCalledWith(1, 1);
     });
 
     it("deve lançar erro se deck não existe na exclusão", async () => {
       vi.mocked(deckRepository.delete).mockResolvedValue(null);
 
-      await expect(deckService.delete("999", 1)).rejects.toThrow(
+      await expect(deckService.delete(999, 1)).rejects.toThrow(
         "Baralho não encontrado.",
       );
     });
@@ -125,7 +125,7 @@ describe("DeckService", () => {
     it("deve atualizar configurações", async () => {
       vi.mocked(deckRepository.updateSettings).mockResolvedValue(mockDeck);
 
-      const result = await deckService.updateSettings("1", 1, {
+      const result = await deckService.updateSettings(1, 1, {
         new_cards_per_day: 10,
       });
 
@@ -136,7 +136,7 @@ describe("DeckService", () => {
       vi.mocked(deckRepository.updateSettings).mockResolvedValue(null);
 
       await expect(
-        deckService.updateSettings("999", 1, {
+        deckService.updateSettings(999, 1, {
           new_cards_per_day: 10,
         }),
       ).rejects.toThrow("Baralho não encontrado.");

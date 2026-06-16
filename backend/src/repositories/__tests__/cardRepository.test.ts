@@ -35,7 +35,7 @@ describe("CardRepository", () => {
     it("deve retornar cards do deck", async () => {
       (pool.query as any).mockResolvedValue({ rows: [mockCard] });
 
-      const result = await cardRepository.findByDeckId("1");
+      const result = await cardRepository.findByDeckId(1);
 
       expect(result).toHaveLength(1);
       expect(result[0].id).toBe(1);
@@ -44,7 +44,7 @@ describe("CardRepository", () => {
     it("deve retornar array vazio quando deck não tem cards", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await cardRepository.findByDeckId("1");
+      const result = await cardRepository.findByDeckId(1);
 
       expect(result).toEqual([]);
     });
@@ -56,7 +56,7 @@ describe("CardRepository", () => {
         .mockResolvedValueOnce({ rows: [{ total: "1" }] })
         .mockResolvedValueOnce({ rows: [mockCard] });
 
-      const result = await cardRepository.findByDeckIdPaginated("1", 1, 20);
+      const result = await cardRepository.findByDeckIdPaginated(1, 1, 20);
 
       expect(result.total).toBe(1);
       expect(result.rows).toHaveLength(1);
@@ -67,11 +67,11 @@ describe("CardRepository", () => {
         .mockResolvedValueOnce({ rows: [{ total: "50" }] })
         .mockResolvedValueOnce({ rows: [mockCard] });
 
-      await cardRepository.findByDeckIdPaginated("1", 3, 10);
+      await cardRepository.findByDeckIdPaginated(1, 3, 10);
 
       expect(pool.query).toHaveBeenCalledWith(
         expect.stringContaining("LIMIT $2 OFFSET $3"),
-        ["1", 10, 20],
+        [1, 10, 20],
       );
     });
 
@@ -80,7 +80,7 @@ describe("CardRepository", () => {
         .mockResolvedValueOnce({ rows: [{ total: "1" }] })
         .mockResolvedValueOnce({ rows: [mockCard] });
 
-      await cardRepository.findByDeckIdPaginated("1", 1, 20);
+      await cardRepository.findByDeckIdPaginated(1, 1, 20);
 
       expect(pool.query).toHaveBeenCalledWith(
         expect.stringContaining("ORDER BY created_at DESC"),
@@ -93,19 +93,19 @@ describe("CardRepository", () => {
     it("deve retornar cards devidos ordenados", async () => {
       (pool.query as any).mockResolvedValue({ rows: [mockCard] });
 
-      const result = await cardRepository.findDueByDeck("1", 1);
+      const result = await cardRepository.findDueByDeck(1, 1);
 
       expect(result).toHaveLength(1);
       expect(pool.query).toHaveBeenCalledWith(
         expect.stringContaining("c.due <= NOW()"),
-        ["1", 1, 200],
+        [1, 1, 200],
       );
     });
 
     it("deve retornar array vazio sem cards devidos", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await cardRepository.findDueByDeck("1", 1);
+      const result = await cardRepository.findDueByDeck(1, 1);
 
       expect(result).toEqual([]);
     });
@@ -116,7 +116,7 @@ describe("CardRepository", () => {
 
       (pool.query as any).mockResolvedValue({ rows: [reviewCard, newCard] });
 
-      const result = await cardRepository.findDueByDeck("1", 1);
+      const result = await cardRepository.findDueByDeck(1, 1);
 
       expect(result[0].state).toBe(2);
       expect(result[1].state).toBe(0);
@@ -131,7 +131,7 @@ describe("CardRepository", () => {
     it("deve retornar card quando existe e pertence ao usuário", async () => {
       (pool.query as any).mockResolvedValue({ rows: [mockCard] });
 
-      const result = await cardRepository.findById("1", 1);
+      const result = await cardRepository.findById(1, 1);
 
       expect(result).toEqual(mockCard);
     });
@@ -139,7 +139,7 @@ describe("CardRepository", () => {
     it("deve retornar undefined quando card não existe", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await cardRepository.findById("999", 1);
+      const result = await cardRepository.findById(999, 1);
 
       expect(result).toBeUndefined();
     });
@@ -147,7 +147,7 @@ describe("CardRepository", () => {
     it("deve retornar undefined quando card pertence a outro usuário", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await cardRepository.findById("1", 999);
+      const result = await cardRepository.findById(1, 999);
 
       expect(result).toBeUndefined();
     });
@@ -244,7 +244,7 @@ describe("CardRepository", () => {
 
       const result = await cardRepository.updateFsrsData(
         mockClient,
-        "1",
+        1,
         updatedCard,
       );
 
@@ -257,7 +257,7 @@ describe("CardRepository", () => {
 
       const result = await cardRepository.updateFsrsData(
         mockClient,
-        "999",
+        999,
         mockCard,
       );
 

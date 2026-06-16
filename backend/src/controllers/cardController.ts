@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { AuthRequest } from "../middlewares/auth";
 import { cardService } from "../services/cardService";
+import { deckIdParams, cardParams } from "../schemas/paramsSchema";
 
 export async function createCard(
   req: AuthRequest,
@@ -8,8 +9,9 @@ export async function createCard(
   next: NextFunction,
 ) {
   try {
+    const { deck_id } = deckIdParams.parse(req.params);
     const card = await cardService.create(
-      req.params.deck_id as string,
+      deck_id,
       req.userId!,
       req.body,
     );
@@ -29,8 +31,9 @@ export async function createCardsBatch(
   next: NextFunction,
 ) {
   try {
+    const { deck_id } = deckIdParams.parse(req.params);
     const cards = await cardService.createBatch(
-      req.params.deck_id as string,
+      deck_id,
       req.userId!,
       req.body.cards,
     );
@@ -53,8 +56,9 @@ export async function getCards(
     const page = Math.max(parseInt(req.query.page as string) || 1, 1);
     const limit = Math.max(parseInt(req.query.limit as string) || 20, 1);
 
+    const { deck_id } = deckIdParams.parse(req.params);
     const result = await cardService.list(
-      req.params.deck_id as string,
+      deck_id,
       req.userId!,
       page,
       limit,
@@ -78,9 +82,10 @@ export async function updateCard(
   next: NextFunction,
 ) {
   try {
+    const { deck_id, card_id } = cardParams.parse(req.params);
     const card = await cardService.update(
-      req.params.deck_id as string,
-      req.params.card_id as string,
+      deck_id,
+      card_id,
       req.userId!,
       req.body,
     );
@@ -100,9 +105,10 @@ export async function deleteCard(
   next: NextFunction,
 ) {
   try {
+    const { deck_id, card_id } = cardParams.parse(req.params);
     await cardService.delete(
-      req.params.deck_id as string,
-      req.params.card_id as string,
+      deck_id,
+      card_id,
       req.userId!,
     );
 

@@ -74,7 +74,7 @@ describe("ReviewController", () => {
 
       await getReviewCards(req, res, next);
 
-      expect(reviewService.getDueCards).toHaveBeenCalledWith("1", 1);
+      expect(reviewService.getDueCards).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockDueCards,
@@ -109,7 +109,7 @@ describe("ReviewController", () => {
 
       await previewReview(req, res, next);
 
-      expect(reviewService.previewReview).toHaveBeenCalledWith("1", 1);
+      expect(reviewService.previewReview).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockReviewPreview,
@@ -142,7 +142,7 @@ describe("ReviewController", () => {
 
       await submitReview(req, res, next);
 
-      expect(reviewService.submitReview).toHaveBeenCalledWith("1", 1, 3);
+      expect(reviewService.submitReview).toHaveBeenCalledWith(1, 1, 3);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockReviewResult,

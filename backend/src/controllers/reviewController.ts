@@ -3,6 +3,7 @@ import { Response, NextFunction } from "express";
 import { AuthRequest } from "../middlewares/auth";
 
 import { reviewService } from "../services/reviewService";
+import { deckIdParams, cardIdCamelParams } from "../schemas/paramsSchema";
 
 export async function getReviewCards(
   req: AuthRequest,
@@ -10,8 +11,9 @@ export async function getReviewCards(
   next: NextFunction,
 ) {
   try {
+    const { deck_id } = deckIdParams.parse(req.params);
     const result = await reviewService.getDueCards(
-      req.params.deck_id as string,
+      deck_id,
       req.userId!,
     );
 
@@ -30,8 +32,9 @@ export async function previewReview(
   next: NextFunction,
 ) {
   try {
+    const { cardId } = cardIdCamelParams.parse(req.params);
     const result = await reviewService.previewReview(
-      req.params.cardId as string,
+      cardId,
       req.userId!,
     );
 
@@ -50,8 +53,9 @@ export async function submitReview(
   next: NextFunction,
 ) {
   try {
+    const { cardId } = cardIdCamelParams.parse(req.params);
     const result = await reviewService.submitReview(
-      req.params.cardId as string,
+      cardId,
       req.userId!,
       req.body.rating,
     );

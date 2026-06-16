@@ -70,7 +70,7 @@ describe("ReviewService", () => {
       vi.mocked(cardRepository.findById).mockResolvedValue(null);
 
       await expect(
-        reviewService.submitReview("999", 1, Rating.Good),
+        reviewService.submitReview(999, 1, Rating.Good),
       ).rejects.toThrow("Card não encontrado.");
     });
 
@@ -100,18 +100,18 @@ describe("ReviewService", () => {
       const updatedCard = { ...mockCard, stability: 3.0, scheduled_days: 3 };
       vi.mocked(cardRepository.updateFsrsData).mockResolvedValue(updatedCard);
 
-      const result = await reviewService.submitReview("1", 1, Rating.Good);
+      const result = await reviewService.submitReview(1, 1, Rating.Good);
 
       expect(result.card.stability).toBe(3.0);
       expect(result.scheduled_days).toBe(3);
-      expect(cardRepository.findById).toHaveBeenCalledWith("1", 1);
+      expect(cardRepository.findById).toHaveBeenCalledWith(1, 1);
     });
 
     it("deve lançar erro se card pertence a outro usuário", async () => {
       vi.mocked(cardRepository.findById).mockResolvedValue(null);
 
       await expect(
-        reviewService.submitReview("1", 999, Rating.Good),
+        reviewService.submitReview(1, 999, Rating.Good),
       ).rejects.toThrow("Card não encontrado.");
     });
 
@@ -150,7 +150,7 @@ describe("ReviewService", () => {
       );
 
       await expect(
-        reviewService.submitReview("1", 1, Rating.Good),
+        reviewService.submitReview(1, 1, Rating.Good),
       ).rejects.toThrow("DB error");
 
       expect(mockQuery).toHaveBeenNthCalledWith(1, "BEGIN");
@@ -168,7 +168,7 @@ describe("ReviewService", () => {
         new_cards_per_day: 20,
       });
 
-      const result = await reviewService.getDueCards("1", 1);
+      const result = await reviewService.getDueCards(1, 1);
 
       expect(result.total).toBe(1);
       expect(result.cards).toEqual([mockCard]);
@@ -180,7 +180,7 @@ describe("ReviewService", () => {
         new_cards_per_day: 20,
       });
 
-      const result = await reviewService.getDueCards("1", 1);
+      const result = await reviewService.getDueCards(1, 1);
 
       expect(result.total).toBe(0);
       expect(result.cards).toEqual([]);
@@ -202,7 +202,7 @@ describe("ReviewService", () => {
         new_cards_per_day: 2,
       });
 
-      const result = await reviewService.getDueCards("1", 1);
+      const result = await reviewService.getDueCards(1, 1);
 
       expect(result.total).toBe(3);
       expect(result.cards.map((c: any) => c.id)).toEqual([4, 1, 2]);
@@ -220,7 +220,7 @@ describe("ReviewService", () => {
         new_cards_per_day: 0,
       });
 
-      const result = await reviewService.getDueCards("1", 1);
+      const result = await reviewService.getDueCards(1, 1);
 
       expect(result.total).toBe(1);
       expect(result.cards.map((c: any) => c.id)).toEqual([2]);
@@ -231,7 +231,7 @@ describe("ReviewService", () => {
     it("deve lançar 404 se card não existe", async () => {
       vi.mocked(cardRepository.findById).mockResolvedValue(null);
 
-      await expect(reviewService.previewReview("999", 1)).rejects.toThrow(
+      await expect(reviewService.previewReview(999, 1)).rejects.toThrow(
         "Card não encontrado.",
       );
     });

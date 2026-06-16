@@ -181,7 +181,7 @@ describe("DeckController", () => {
 
       await getDeck(req, res, next);
 
-      expect(deckService.get).toHaveBeenCalledWith("1", 1);
+      expect(deckService.get).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockDeck,
@@ -214,7 +214,7 @@ describe("DeckController", () => {
 
       await updateDeck(req, res, next);
 
-      expect(deckService.update).toHaveBeenCalledWith("1", 1, {
+      expect(deckService.update).toHaveBeenCalledWith(1, 1, {
         title: "Novo Título",
       });
       expect(res.json).toHaveBeenCalledWith({
@@ -249,7 +249,7 @@ describe("DeckController", () => {
 
       await deleteDeck(req, res, next);
 
-      expect(deckService.delete).toHaveBeenCalledWith("1", 1);
+      expect(deckService.delete).toHaveBeenCalledWith(1, 1);
       expect(res.status).toHaveBeenCalledWith(204);
       expect(res.send).toHaveBeenCalled();
       expect(res.json).not.toHaveBeenCalled();
@@ -282,7 +282,7 @@ describe("DeckController", () => {
 
       await getDeckStats(req, res, next);
 
-      expect(deckService.getStats).toHaveBeenCalledWith("1", 1);
+      expect(deckService.getStats).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockStats,
@@ -315,7 +315,7 @@ describe("DeckController", () => {
 
       await updateDeckSettings(req, res, next);
 
-      expect(deckService.updateSettings).toHaveBeenCalledWith("1", 1, {
+      expect(deckService.updateSettings).toHaveBeenCalledWith(1, 1, {
         new_cards_per_day: 10,
       });
       expect(res.json).toHaveBeenCalledWith({
@@ -350,7 +350,7 @@ describe("DeckController", () => {
 
       await shareDeck(req, res, next);
 
-      expect(deckService.share).toHaveBeenCalledWith("1", 1);
+      expect(deckService.share).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockShareResult,
@@ -383,7 +383,7 @@ describe("DeckController", () => {
 
       await unshareDeck(req, res, next);
 
-      expect(deckService.unshare).toHaveBeenCalledWith("1", 1);
+      expect(deckService.unshare).toHaveBeenCalledWith(1, 1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: mockUnshareResult,

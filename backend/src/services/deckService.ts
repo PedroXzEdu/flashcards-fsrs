@@ -27,7 +27,7 @@ class DeckService {
     return deckRepository.findByUser(userId);
   }
 
-  async get(id: string, userId: number) {
+  async get(id: number, userId: number) {
     const deck = await deckRepository.findById(id, userId);
 
     if (!deck) {
@@ -37,7 +37,7 @@ class DeckService {
     return deck;
   }
 
-  async update(id: string, userId: number, data: any) {
+  async update(id: number, userId: number, data: any) {
     const deck = await deckRepository.update(id, userId, {
       ...data,
       title: sanitizeInput(data.title),
@@ -52,7 +52,7 @@ class DeckService {
     return deck;
   }
 
-  async delete(id: string, userId: number) {
+  async delete(id: number, userId: number) {
     const deleted = await deckRepository.delete(id, userId);
 
     if (!deleted) {
@@ -64,7 +64,7 @@ class DeckService {
     return crypto.randomBytes(24).toString("hex");
   }
 
-  async getStats(deckId: string, userId: number) {
+  async getStats(deckId: number, userId: number) {
     const deckExists = await deckRepository.exists(deckId, userId);
 
     if (!deckExists) {
@@ -81,7 +81,7 @@ class DeckService {
     };
   }
 
-  async updateSettings(deckId: string, userId: number, data: any) {
+  async updateSettings(deckId: number, userId: number, data: any) {
     const { new_cards_per_day } = data;
 
     const deck = await deckRepository.updateSettings(
@@ -97,7 +97,7 @@ class DeckService {
     return deck;
   }
 
-  async share(deckId: string, userId: number) {
+  async share(deckId: number, userId: number) {
     const deck = await deckRepository.findByIdRaw(deckId, userId);
 
     if (!deck) {
@@ -117,7 +117,7 @@ class DeckService {
     return { token };
   }
 
-  async unshare(deckId: string, userId: number) {
+  async unshare(deckId: number, userId: number) {
     const result = await deckRepository.removeShareToken(deckId, userId);
 
     if (!result) {

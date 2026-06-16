@@ -82,7 +82,7 @@ describe("DeckRepository", () => {
     it("deve retornar deck com card_count quando existe", async () => {
       (pool.query as any).mockResolvedValue({ rows: [mockDeck] });
 
-      const result = await deckRepository.findById("1", 1);
+      const result = await deckRepository.findById(1, 1);
 
       expect(result).toEqual(mockDeck);
     });
@@ -90,7 +90,7 @@ describe("DeckRepository", () => {
     it("deve retornar undefined quando deck não existe", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.findById("999", 1);
+      const result = await deckRepository.findById(999, 1);
 
       expect(result).toBeUndefined();
     });
@@ -101,7 +101,7 @@ describe("DeckRepository", () => {
       const updatedDeck = { ...mockDeck, title: "Novo Título" };
       (pool.query as any).mockResolvedValue({ rows: [updatedDeck] });
 
-      const result = await deckRepository.update("1", 1, {
+      const result = await deckRepository.update(1, 1, {
         title: "Novo Título",
         description: "Descrição",
         is_public: false,
@@ -113,7 +113,7 @@ describe("DeckRepository", () => {
     it("deve retornar undefined quando deck não encontrado", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.update("999", 1, {
+      const result = await deckRepository.update(999, 1, {
         title: "Novo",
         description: null,
         is_public: false,
@@ -127,7 +127,7 @@ describe("DeckRepository", () => {
     it("deve deletar deck com sucesso", async () => {
       (pool.query as any).mockResolvedValue({ rows: [{ id: 1 }] });
 
-      const result = await deckRepository.delete("1", 1);
+      const result = await deckRepository.delete(1, 1);
 
       expect(result.id).toBe(1);
     });
@@ -135,7 +135,7 @@ describe("DeckRepository", () => {
     it("deve retornar undefined quando deck não encontrado", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.delete("999", 1);
+      const result = await deckRepository.delete(999, 1);
 
       expect(result).toBeUndefined();
     });
@@ -145,7 +145,7 @@ describe("DeckRepository", () => {
     it("deve retornar verdadeiro quando deck existe", async () => {
       (pool.query as any).mockResolvedValue({ rows: [{ id: 1 }] });
 
-      const result = await deckRepository.exists("1", 1);
+      const result = await deckRepository.exists(1, 1);
 
       expect(result).toBeDefined();
       expect(result.id).toBe(1);
@@ -154,7 +154,7 @@ describe("DeckRepository", () => {
     it("deve retornar undefined quando deck não existe", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.exists("999", 1);
+      const result = await deckRepository.exists(999, 1);
 
       expect(result).toBeUndefined();
     });
@@ -174,7 +174,7 @@ describe("DeckRepository", () => {
       };
       (pool.query as any).mockResolvedValue({ rows: [stats] });
 
-      const result = await deckRepository.getCardStats("1");
+      const result = await deckRepository.getCardStats(1);
 
       expect(result.total).toBe("10");
       expect(result.new_cards).toBe("3");
@@ -195,7 +195,7 @@ describe("DeckRepository", () => {
       };
       (pool.query as any).mockResolvedValue({ rows: [emptyStats] });
 
-      const result = await deckRepository.getCardStats("1");
+      const result = await deckRepository.getCardStats(1);
 
       expect(result.total).toBe("0");
       expect(result.avg_difficulty).toBeNull();
@@ -216,7 +216,7 @@ describe("DeckRepository", () => {
       };
       (pool.query as any).mockResolvedValue({ rows: [stats] });
 
-      const result = await deckRepository.getReviewStats("1", 1);
+      const result = await deckRepository.getReviewStats(1, 1);
 
       expect(result.total_reviews).toBe("10");
       expect(result.retention_rate).toBe("80.0");
@@ -233,7 +233,7 @@ describe("DeckRepository", () => {
       };
       (pool.query as any).mockResolvedValue({ rows: [emptyStats] });
 
-      const result = await deckRepository.getReviewStats("1", 1);
+      const result = await deckRepository.getReviewStats(1, 1);
 
       expect(result.total_reviews).toBe("0");
       expect(result.retention_rate).toBeNull();
@@ -245,7 +245,7 @@ describe("DeckRepository", () => {
       const updatedDeck = { ...mockDeck, new_cards_per_day: 10 };
       (pool.query as any).mockResolvedValue({ rows: [updatedDeck] });
 
-      const result = await deckRepository.updateSettings("1", 1, 10);
+      const result = await deckRepository.updateSettings(1, 1, 10);
 
       expect(result.new_cards_per_day).toBe(10);
     });
@@ -253,7 +253,7 @@ describe("DeckRepository", () => {
     it("deve retornar undefined quando deck não encontrado", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.updateSettings("999", 1, 10);
+      const result = await deckRepository.updateSettings(999, 1, 10);
 
       expect(result).toBeUndefined();
     });
@@ -263,7 +263,7 @@ describe("DeckRepository", () => {
     it("deve retornar deck sem JOIN", async () => {
       (pool.query as any).mockResolvedValue({ rows: [{ id: 1, title: "Raw" }] });
 
-      const result = await deckRepository.findByIdRaw("1", 1);
+      const result = await deckRepository.findByIdRaw(1, 1);
 
       expect(result.id).toBe(1);
       expect(result.title).toBe("Raw");
@@ -275,7 +275,7 @@ describe("DeckRepository", () => {
       const sharedDeck = { ...mockDeck, share_token: "abc123" };
       (pool.query as any).mockResolvedValue({ rows: [sharedDeck] });
 
-      const result = await deckRepository.updateShareToken("1", "abc123");
+      const result = await deckRepository.updateShareToken(1, "abc123");
 
       expect(result.share_token).toBe("abc123");
     });
@@ -283,7 +283,7 @@ describe("DeckRepository", () => {
     it("removeShareToken deve limpar token", async () => {
       (pool.query as any).mockResolvedValue({ rows: [{ id: 1 }] });
 
-      const result = await deckRepository.removeShareToken("1", 1);
+      const result = await deckRepository.removeShareToken(1, 1);
 
       expect(result.id).toBe(1);
     });
@@ -291,7 +291,7 @@ describe("DeckRepository", () => {
     it("removeShareToken deve retornar undefined se deck não encontrado", async () => {
       (pool.query as any).mockResolvedValue({ rows: [] });
 
-      const result = await deckRepository.removeShareToken("999", 1);
+      const result = await deckRepository.removeShareToken(999, 1);
 
       expect(result).toBeUndefined();
     });

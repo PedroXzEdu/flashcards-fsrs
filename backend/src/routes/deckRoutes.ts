@@ -34,7 +34,6 @@ router.get("/:id", getDeck);
 router.get("/:id/stats", getDeckStats);
 router.put("/:id", validate(updateDeckSchema), updateDeck);
 router.put("/:id/settings", validate(settingsSchema), updateDeckSettings);
-router.patch("/:id/settings", validate(settingsSchema), updateDeckSettings);
 router.delete("/:id", deleteDeck);
 router.post("/:id/share", shareDeck);
 router.delete("/:id/share", unshareDeck);

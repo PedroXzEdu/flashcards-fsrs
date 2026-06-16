@@ -60,7 +60,7 @@ describe("CardController", () => {
 
       await createCard(req, res, next);
 
-      expect(cardService.create).toHaveBeenCalledWith("1", 1, {
+      expect(cardService.create).toHaveBeenCalledWith(1, 1, {
         front: "Frente",
         back: "Verso",
       });
@@ -108,7 +108,7 @@ describe("CardController", () => {
 
       await createCardsBatch(req, res, next);
 
-      expect(cardService.createBatch).toHaveBeenCalledWith("1", 1, [
+      expect(cardService.createBatch).toHaveBeenCalledWith(1, 1, [
         { front: "F1", back: "B1" },
         { front: "F2", back: "B2" },
       ]);
@@ -153,7 +153,7 @@ describe("CardController", () => {
 
       await getCards(req, res, next);
 
-      expect(cardService.list).toHaveBeenCalledWith("1", 1, 1, 20);
+      expect(cardService.list).toHaveBeenCalledWith(1, 1, 1, 20);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
         data: paginatedResult,
@@ -190,7 +190,7 @@ describe("CardController", () => {
 
       await updateCard(req, res, next);
 
-      expect(cardService.update).toHaveBeenCalledWith("1", "1", 1, {
+      expect(cardService.update).toHaveBeenCalledWith(1, 1, 1, {
         front: "Nova Frente",
         back: "Novo Verso",
       });
@@ -227,7 +227,7 @@ describe("CardController", () => {
 
       await deleteCard(req, res, next);
 
-      expect(cardService.delete).toHaveBeenCalledWith("1", "1", 1);
+      expect(cardService.delete).toHaveBeenCalledWith(1, 1, 1);
       expect(res.status).toHaveBeenCalledWith(204);
       expect(res.send).toHaveBeenCalled();
       expect(res.json).not.toHaveBeenCalled();

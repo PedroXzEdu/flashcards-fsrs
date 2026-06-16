@@ -6,7 +6,7 @@ import { collector } from "../middlewares/metrics";
 
 class CardService {
   async create(
-    deckId: string,
+    deckId: number,
     userId: number,
     data: { front: string; back: string },
   ) {
@@ -17,7 +17,7 @@ class CardService {
 
     const emptyCard = createEmptyCard();
     const card = await cardRepository.create({
-      deck_id: parseInt(deckId),
+      deck_id: deckId,
       front: data.front,
       back: data.back,
       stability: emptyCard.stability,
@@ -36,7 +36,7 @@ class CardService {
   }
 
   async createBatch(
-    deckId: string,
+    deckId: number,
     userId: number,
     cards: { front: string; back: string }[],
   ) {
@@ -60,7 +60,7 @@ class CardService {
     }));
 
     const created = await cardRepository.createBatch(
-      parseInt(deckId),
+      deckId,
       cardsData,
     );
 
@@ -71,7 +71,7 @@ class CardService {
     return created;
   }
 
-  async list(deckId: string, userId: number, page = 1, limit = 20) {
+  async list(deckId: number, userId: number, page = 1, limit = 20) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
       throw new AppError("Baralho não encontrado.", 404);
@@ -96,8 +96,8 @@ class CardService {
   }
 
   async update(
-    deckId: string,
-    cardId: string,
+    deckId: number,
+    cardId: number,
     userId: number,
     data: { front: string; back: string },
   ) {
@@ -119,7 +119,7 @@ class CardService {
     return card;
   }
 
-  async delete(deckId: string, cardId: string, userId: number) {
+  async delete(deckId: number, cardId: number, userId: number) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
       throw new AppError("Baralho não encontrado.", 404);
