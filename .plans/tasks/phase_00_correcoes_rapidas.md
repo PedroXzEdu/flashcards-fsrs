@@ -73,7 +73,7 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 
 ---
 
-### [ ] T00.04 — Adicionar `useCallback` nos handlers do `ReviewPage` e remover `eslint-disable`
+### [x] T00.04 — Adicionar `useCallback` nos handlers do `ReviewPage` e remover `eslint-disable`
 
 **Descrição:** Envolver `handleFlip` e `handleRate` em `useCallback` para remover os comentários `eslint-disable-next-line react-hooks/exhaustive-deps`.
 
@@ -84,11 +84,11 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 1-2 horas
 
 **Subtarefas:**
-- [ ] Envolver `handleFlip` com `useCallback`
-- [ ] Envolver `handleRate` com `useCallback`
-- [ ] Atualizar dependências do `useEffect` do teclado
-- [ ] Verificar se `loadCards` também precisa de `useCallback`
-- [ ] Rodar `npx tsc -b --noEmit` no frontend
+- [x] Envolver `handleFlip` com `useCallback`
+- [x] Envolver `handleRate` com `useCallback`
+- [x] Atualizar dependências do `useEffect` do teclado
+- [x] Verificar se `loadCards` também precisa de `useCallback`
+- [x] Rodar `npx tsc -b --noEmit` no frontend
 
 ---
 

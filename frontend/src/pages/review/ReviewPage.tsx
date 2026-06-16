@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cardsApi } from "../../api/cards";
 import type { Card, PreviewRatings } from "../../types";
@@ -151,33 +151,6 @@ export default function ReviewPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- shuffled não deve causar re-fetch
   }, [deckId]);
 
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      // Ignora se estiver digitando em algum input
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      )
-        return;
-
-      if (!flipped) {
-        if (e.code === "Space" || e.code === "Enter") {
-          e.preventDefault();
-          handleFlip();
-        }
-      } else {
-        if (e.key === "1") handleRate(1);
-        if (e.key === "2") handleRate(2);
-        if (e.key === "3") handleRate(3);
-        if (e.key === "4") handleRate(4);
-      }
-    }
-
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleFlip/handleRate estáveis o suficiente
-  }, [flipped, submitting, index]);
-
   async function loadCards() {
     try {
       const data = await cardsApi.forReview(deckId);
@@ -199,7 +172,7 @@ export default function ReviewPage() {
     return a;
   }
 
-  async function handleFlip() {
+  const handleFlip = useCallback(async () => {
     if (flipped) return;
     setError("");
     setFlipped(true);
@@ -208,9 +181,9 @@ export default function ReviewPage() {
     } catch {
       /* preview opcional */
     }
-  }
+  }, [flipped, cards, index, deckId]);
 
-  async function handleRate(rating: number) {
+  const handleRate = useCallback(async (rating: number) => {
     if (submitting) return;
     setSubmitting(true);
     setError("");
@@ -235,7 +208,32 @@ export default function ReviewPage() {
     } finally {
       setSubmitting(false);
     }
-  }
+  }, [submitting, cards, index, deckId]);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+
+      if (!flipped) {
+        if (e.code === "Space" || e.code === "Enter") {
+          e.preventDefault();
+          handleFlip();
+        }
+      } else {
+        if (e.key === "1") handleRate(1);
+        if (e.key === "2") handleRate(2);
+        if (e.key === "3") handleRate(3);
+        if (e.key === "4") handleRate(4);
+      }
+    }
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [flipped, submitting, index, handleFlip, handleRate]);
 
   if (loading)
     return <SkeletonReviewCard />;
