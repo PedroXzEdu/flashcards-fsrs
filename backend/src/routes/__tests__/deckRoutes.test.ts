@@ -12,8 +12,8 @@ function getRoute(path: string, method: string) {
 }
 
 describe("deckRoutes", () => {
-  it("deve registrar 12 rotas", () => {
-    expect(getRoutes()).toHaveLength(12);
+  it("deve registrar 11 rotas", () => {
+    expect(getRoutes()).toHaveLength(11);
   });
 
   it("GET /shared/:token/preview é pública (1 middleware)", () => {
@@ -46,10 +46,6 @@ describe("deckRoutes", () => {
 
   it("PUT /:id/settings tem 2 middlewares", () => {
     expect(getRoute("/:id/settings", "put").route.stack).toHaveLength(2);
-  });
-
-  it("PATCH /:id/settings tem 2 middlewares", () => {
-    expect(getRoute("/:id/settings", "patch").route.stack).toHaveLength(2);
   });
 
   it("DELETE /:id tem 1 middleware", () => {

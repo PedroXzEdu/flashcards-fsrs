@@ -40,7 +40,7 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 
 ---
 
-### [ ] T00.02 — Remover duplicidade `PUT`/`PATCH` em `/decks/:id/settings`
+### [x] T00.02 — Remover duplicidade `PUT`/`PATCH` em `/decks/:id/settings`
 
 **Descrição:** Manter apenas `PUT /decks/:id/settings` e remover `PATCH` duplicado em `deckRoutes.ts`.
 
@@ -51,8 +51,9 @@ Todos os PRs desta fase merged e `tsc --noEmit` passando sem erros.
 **Estimativa:** 5 minutos
 
 **Subtarefas:**
-- [ ] Remover `router.patch("/:id/settings", ...)` em `deckRoutes.ts`
-- [ ] Verificar se o frontend usa `PATCH` em algum lugar (provavelmente não)
+- [x] Remover `router.patch("/:id/settings", ...)` em `deckRoutes.ts`
+- [x] Verificar se o frontend usa `PATCH` em algum lugar (provavelmente não)
+- [x] Atualizar teste `deckRoutes.test.ts` (11 rotas, sem PATCH)
 
 ---
 
