@@ -1,8 +1,21 @@
 import { pool } from "../database/db";
 import { PoolClient } from "pg";
 
+export interface CreateDeckInput {
+  userId: number;
+  title: string;
+  description: string | null;
+  is_public: boolean;
+}
+
+export interface UpdateDeckInput {
+  title: string;
+  description: string | null;
+  is_public: boolean;
+}
+
 class DeckRepository {
-  async create(data: any) {
+  async create(data: CreateDeckInput) {
     const result = await pool.query(
       `INSERT INTO decks (user_id, title, description, is_public)
        VALUES ($1, $2, $3, $4)
@@ -40,7 +53,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async update(id: number, userId: number, data: any) {
+  async update(id: number, userId: number, data: UpdateDeckInput) {
     const result = await pool.query(
       `UPDATE decks
        SET title = $1, description = $2, is_public = $3

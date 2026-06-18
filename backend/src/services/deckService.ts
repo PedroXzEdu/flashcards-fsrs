@@ -1,22 +1,37 @@
 import crypto from "crypto";
 
-import { deckRepository } from "../repositories/deckRepository";
+import { deckRepository, CreateDeckInput, UpdateDeckInput } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
 import { sanitizeInput } from "../utils/sanitize";
 import { collector } from "../middlewares/metrics";
 
+interface CreateDeckServiceInput {
+  title: string;
+  description?: string;
+  is_public?: boolean;
+  userId: number;
+}
+
+interface UpdateDeckServiceInput {
+  title?: string;
+  description?: string | null;
+  is_public?: boolean;
+}
+
 class DeckService {
-  async create(data: any) {
+  async create(data: CreateDeckServiceInput) {
     if (!data.title) {
       throw new AppError("O título é obrigatório.", 400);
     }
 
-    const deck = await deckRepository.create({
-      ...data,
+    const repoInput: CreateDeckInput = {
+      userId: data.userId,
       title: sanitizeInput(data.title),
       description: data.description ? sanitizeInput(data.description) : null,
-      is_public: data.is_public || false,
-    });
+      is_public: data.is_public ?? false,
+    };
+
+    const deck = await deckRepository.create(repoInput);
 
     collector.incrementBusiness("decksCreated");
 
@@ -37,13 +52,14 @@ class DeckService {
     return deck;
   }
 
-  async update(id: number, userId: number, data: any) {
-    const deck = await deckRepository.update(id, userId, {
-      ...data,
-      title: sanitizeInput(data.title),
+  async update(id: number, userId: number, data: UpdateDeckServiceInput) {
+    const repoInput: UpdateDeckInput = {
+      title: sanitizeInput(data.title ?? ""),
       description: data.description ? sanitizeInput(data.description) : null,
-      is_public: data.is_public || false,
-    });
+      is_public: data.is_public ?? false,
+    };
+
+    const deck = await deckRepository.update(id, userId, repoInput);
 
     if (!deck) {
       throw new AppError("Baralho não encontrado.", 404);
@@ -81,7 +97,7 @@ class DeckService {
     };
   }
 
-  async updateSettings(deckId: number, userId: number, data: any) {
+  async updateSettings(deckId: number, userId: number, data: { new_cards_per_day: number }) {
     const { new_cards_per_day } = data;
 
     const deck = await deckRepository.updateSettings(
