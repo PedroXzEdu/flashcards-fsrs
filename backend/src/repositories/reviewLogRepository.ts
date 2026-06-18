@@ -1,8 +1,21 @@
 import { PoolClient } from "pg";
 import { pool as client } from "../database/db";
+import { Rating } from "ts-fsrs";
+
+export interface CreateReviewLogInput {
+  user_id: number;
+  card_id: number;
+  rating: Rating;
+  state: number;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  review: Date;
+}
 
 class ReviewLogRepository {
-  async create(client: PoolClient, data: any) {
+  async create(client: PoolClient, data: CreateReviewLogInput) {
     const result = await client.query(
       `INSERT INTO review_logs
         (
