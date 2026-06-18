@@ -1,7 +1,7 @@
 import { pool } from "../database/db";
 import { PoolClient } from "pg";
 
-interface CreateCardInput {
+export interface CreateCardInput {
   deck_id: number;
   front: string;
   back: string;
@@ -15,7 +15,7 @@ interface CreateCardInput {
   due: Date;
 }
 
-interface FsrsUpdateData {
+export interface FsrsUpdateData {
   stability: number;
   difficulty: number;
   elapsed_days: number;
