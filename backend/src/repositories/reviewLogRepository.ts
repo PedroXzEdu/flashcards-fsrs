@@ -14,8 +14,91 @@ export interface CreateReviewLogInput {
   review: Date;
 }
 
+export interface ReviewLogRow {
+  id: number;
+  user_id: number;
+  card_id: number;
+  rating: number;
+  state: number;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  review: Date;
+}
+
+interface RecentReviewRow {
+  id: number;
+  rating: number;
+  state: number;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  review: Date;
+  front: string;
+  back: string;
+  deck_title: string;
+}
+
+interface DailyStatsRow {
+  date: string;
+  total_reviews: number;
+  again: number;
+  hard: number;
+  good: number;
+  easy: number;
+  retention_rate: number;
+}
+
+interface ActivityRow {
+  day: string;
+  count: number;
+}
+
+interface ReviewDaysResult {
+  days: string[];
+  today: string;
+  yesterday: string;
+}
+
+interface GlobalStatsCards {
+  total_cards: number;
+  new_cards: number;
+  learning: number;
+  reviewing: number;
+  due_today: number;
+  avg_difficulty: number;
+  avg_stability: number;
+}
+
+interface GlobalStatsReviews {
+  total_reviews: number;
+  again_count: number;
+  hard_count: number;
+  good_count: number;
+  easy_count: number;
+  retention_rate: number;
+}
+
+interface GlobalStatsDecks {
+  total_decks: number;
+}
+
+interface GlobalStatsDaily {
+  date: string;
+  total: number;
+}
+
+interface GlobalStatsResult {
+  cards: GlobalStatsCards;
+  reviews: GlobalStatsReviews;
+  decks: GlobalStatsDecks;
+  daily: GlobalStatsDaily[];
+}
+
 class ReviewLogRepository {
-  async create(client: PoolClient, data: CreateReviewLogInput) {
+  async create(client: PoolClient, data: CreateReviewLogInput): Promise<ReviewLogRow> {
     const result = await client.query(
       `INSERT INTO review_logs
         (
@@ -47,7 +130,7 @@ class ReviewLogRepository {
     return result.rows[0];
   }
 
-  async findRecent(userId: number) {
+  async findRecent(userId: number): Promise<RecentReviewRow[]> {
     const result = await client.query(
       `SELECT
         rl.id,
@@ -73,7 +156,7 @@ class ReviewLogRepository {
     return result.rows;
   }
 
-  async getDailyStats(userId: number) {
+  async getDailyStats(userId: number): Promise<DailyStatsRow[]> {
     const result = await client.query(
       `SELECT
         DATE(review)                                        AS date,
@@ -97,7 +180,7 @@ class ReviewLogRepository {
     return result.rows;
   }
 
-  async getReviewDays(userId: number, months = 12) {
+  async getReviewDays(userId: number, months = 12): Promise<ReviewDaysResult> {
     const [dates, days] = await Promise.all([
       client.query(
         `SELECT
@@ -121,7 +204,7 @@ class ReviewLogRepository {
     };
   }
 
-  async getActivity(userId: number) {
+  async getActivity(userId: number): Promise<ActivityRow[]> {
     const result = await client.query(
       `SELECT
         DATE(review) as day,
@@ -137,7 +220,7 @@ class ReviewLogRepository {
     return result.rows;
   }
 
-  async getGlobalStats(userId: number) {
+  async getGlobalStats(userId: number): Promise<GlobalStatsResult> {
     const cards = await client.query(
       `SELECT
         COUNT(*)                                      AS total_cards,

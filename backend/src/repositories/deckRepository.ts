@@ -14,8 +14,46 @@ export interface UpdateDeckInput {
   is_public: boolean;
 }
 
+export interface DeckRow {
+  id: number;
+  user_id: number;
+  title: string;
+  description: string | null;
+  is_public: boolean;
+  created_at: Date;
+  new_cards_per_day: number;
+  share_token: string | null;
+  card_count?: number;
+}
+
+interface CardStatsRow {
+  total: number;
+  new_cards: number;
+  learning: number;
+  reviewing: number;
+  due_today: number;
+  avg_difficulty: number;
+  avg_stability: number;
+  lapses: number;
+}
+
+interface ReviewStatsRow {
+  total_reviews: number;
+  again_count: number;
+  hard_count: number;
+  good_count: number;
+  easy_count: number;
+  retention_rate: number;
+}
+
+interface SharedDeckPreviewRow {
+  title: string;
+  description: string | null;
+  card_count: number;
+}
+
 class DeckRepository {
-  async create(data: CreateDeckInput) {
+  async create(data: CreateDeckInput): Promise<DeckRow> {
     const result = await pool.query(
       `INSERT INTO decks (user_id, title, description, is_public)
        VALUES ($1, $2, $3, $4)
@@ -26,7 +64,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async findByUser(userId: number) {
+  async findByUser(userId: number): Promise<DeckRow[]> {
     const result = await pool.query(
       `SELECT d.*, COUNT(c.id) AS card_count
        FROM decks d
@@ -40,7 +78,7 @@ class DeckRepository {
     return result.rows;
   }
 
-  async findById(id: number, userId: number) {
+  async findById(id: number, userId: number): Promise<DeckRow | undefined> {
     const result = await pool.query(
       `SELECT d.*, COUNT(c.id) AS card_count
        FROM decks d
@@ -53,7 +91,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async update(id: number, userId: number, data: UpdateDeckInput) {
+  async update(id: number, userId: number, data: UpdateDeckInput): Promise<DeckRow | undefined> {
     const result = await pool.query(
       `UPDATE decks
        SET title = $1, description = $2, is_public = $3
@@ -65,7 +103,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async delete(id: number, userId: number) {
+  async delete(id: number, userId: number): Promise<{ id: number } | undefined> {
     const result = await pool.query(
       `DELETE FROM decks
        WHERE id = $1 AND user_id = $2
@@ -76,7 +114,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async exists(id: number, userId: number) {
+  async exists(id: number, userId: number): Promise<{ id: number } | undefined> {
     const result = await pool.query(
       `SELECT id
        FROM decks
@@ -87,7 +125,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async getCardStats(deckId: number) {
+  async getCardStats(deckId: number): Promise<CardStatsRow> {
     const result = await pool.query(
       `SELECT
         COUNT(*)                                  AS total,
@@ -106,7 +144,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async getReviewStats(deckId: number, userId: number) {
+  async getReviewStats(deckId: number, userId: number): Promise<ReviewStatsRow> {
     const result = await pool.query(
       `SELECT
         COUNT(*)                                            AS total_reviews,
@@ -127,7 +165,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async updateSettings(id: number, userId: number, newCardsPerDay: number) {
+  async updateSettings(id: number, userId: number, newCardsPerDay: number): Promise<DeckRow | undefined> {
     const result = await pool.query(
       `UPDATE decks
        SET new_cards_per_day = $1
@@ -139,7 +177,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async findByIdRaw(id: number, userId: number) {
+  async findByIdRaw(id: number, userId: number): Promise<DeckRow | undefined> {
     const result = await pool.query(
       `SELECT *
        FROM decks
@@ -150,7 +188,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async updateShareToken(deckId: number, token: string) {
+  async updateShareToken(deckId: number, token: string): Promise<DeckRow> {
     const result = await pool.query(
       `UPDATE decks
        SET share_token = $1
@@ -162,7 +200,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async removeShareToken(deckId: number, userId: number) {
+  async removeShareToken(deckId: number, userId: number): Promise<{ id: number } | undefined> {
     const result = await pool.query(
       `UPDATE decks
        SET share_token = NULL
@@ -174,7 +212,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async findByShareToken(token: string) {
+  async findByShareToken(token: string): Promise<DeckRow | undefined> {
     const result = await pool.query(
       `SELECT *
        FROM decks
@@ -185,7 +223,7 @@ class DeckRepository {
     return result.rows[0];
   }
 
-  async getSharedDeckPreview(token: string) {
+  async getSharedDeckPreview(token: string): Promise<SharedDeckPreviewRow | undefined> {
     const result = await pool.query(
       `SELECT
         d.title,
@@ -205,8 +243,8 @@ class DeckRepository {
     txClient: PoolClient,
     userId: number,
     title: string,
-    description: string,
-  ) {
+    description: string | null,
+  ): Promise<DeckRow> {
     const result = await txClient.query(
       `INSERT INTO decks
         (

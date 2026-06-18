@@ -1,8 +1,36 @@
 import { pool } from "../database/db";
 import { logger } from "../config/logger";
 
+interface RetentionRateRow {
+  total_reviews: number;
+  successful_reviews: number;
+  retention_rate: number;
+}
+
+interface HeatmapRow {
+  day: string;
+  reviews: number;
+}
+
+interface AvgStabilityRow {
+  avg_stability: number;
+}
+
+interface WorkloadRow {
+  day: string;
+  review_cards: number;
+  new_cards: number;
+}
+
+interface RecallCardRow {
+  id: number;
+  front: string;
+  stability: number;
+  due: Date;
+}
+
 class AnalyticsRepository {
-  async getRetentionRate(userId: number, months = 12) {
+  async getRetentionRate(userId: number, months = 12): Promise<RetentionRateRow> {
     const result = await pool.query(
       `SELECT
         COUNT(*) AS total_reviews,
@@ -29,7 +57,7 @@ class AnalyticsRepository {
     return result.rows[0];
   }
 
-  async getReviewHeatmap(userId: number, months = 12) {
+  async getReviewHeatmap(userId: number, months = 12): Promise<HeatmapRow[]> {
     const result = await pool.query(
       `SELECT
         DATE(review) AS day,
@@ -45,7 +73,7 @@ class AnalyticsRepository {
     return result.rows;
   }
 
-  async getAverageStability(userId: number) {
+  async getAverageStability(userId: number): Promise<AvgStabilityRow> {
     const result = await pool.query(
       `SELECT
         AVG(stability)::float AS avg_stability
@@ -59,7 +87,7 @@ class AnalyticsRepository {
     return result.rows[0];
   }
 
-  async getWorkloadForecast(userId: number, days: number) {
+  async getWorkloadForecast(userId: number, days: number): Promise<WorkloadRow[]> {
     const result = await pool.query(
       `SELECT
         GREATEST(DATE(c.due), CURRENT_DATE)::text AS day,
@@ -82,7 +110,7 @@ class AnalyticsRepository {
     return result.rows;
   }
 
-  async getCardsForRecall(userId: number) {
+  async getCardsForRecall(userId: number): Promise<RecallCardRow[]> {
     const result = await pool.query(
       `SELECT
         c.id,

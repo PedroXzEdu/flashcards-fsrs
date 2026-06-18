@@ -15,6 +15,37 @@ export interface CreateCardInput {
   due: Date;
 }
 
+export interface CardRow {
+  id: number;
+  deck_id: number;
+  front: string;
+  back: string;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  due: Date;
+  last_review: Date | null;
+  created_at: Date;
+}
+
+export interface QueueCardRow {
+  id: number;
+  front: string;
+  back: string;
+  stability: number;
+  due: Date;
+  state: number;
+}
+
+export interface PaginatedCards {
+  rows: CardRow[];
+  total: number;
+}
+
 export interface FsrsUpdateData {
   stability: number;
   difficulty: number;
@@ -28,7 +59,7 @@ export interface FsrsUpdateData {
 }
 
 class CardRepository {
-  async findByDeckId(deckId: number) {
+  async findByDeckId(deckId: number): Promise<CardRow[]> {
     const result = await pool.query(
       `SELECT *
        FROM cards
@@ -39,7 +70,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async findByDeckIdPaginated(deckId: number, page = 1, limit = 20) {
+  async findByDeckIdPaginated(deckId: number, page = 1, limit = 20): Promise<PaginatedCards> {
     const offset = (page - 1) * limit;
 
     const countResult = await pool.query(
@@ -62,7 +93,7 @@ class CardRepository {
     };
   }
 
-  async findDailyQueue(userId: number, limit = 50) {
+  async findDailyQueue(userId: number, limit = 50): Promise<QueueCardRow[]> {
     const result = await pool.query(
       `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
        FROM cards c
@@ -76,7 +107,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async findDueByDeck(deckId: number, userId: number, limit = 200) {
+  async findDueByDeck(deckId: number, userId: number, limit = 200): Promise<CardRow[]> {
     const result = await pool.query(
       `SELECT c.*
        FROM cards c
@@ -95,7 +126,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async create(data: CreateCardInput, client?: PoolClient) {
+  async create(data: CreateCardInput, client?: PoolClient): Promise<CardRow> {
     const db = client ?? pool;
     const result = await db.query(
       `INSERT INTO cards
@@ -138,20 +169,9 @@ class CardRepository {
 
   async createBatch(
     deckId: number,
-    cards: {
-      front: string;
-      back: string;
-      stability: number;
-      difficulty: number;
-      elapsed_days: number;
-      scheduled_days: number;
-      reps: number;
-      lapses: number;
-      state: number;
-      due: Date;
-    }[],
+    cards: Omit<CreateCardInput, "deck_id">[],
     client?: PoolClient,
-  ) {
+  ): Promise<CardRow[]> {
     const db = client ?? pool;
     if (cards.length === 0) return [];
 
@@ -191,7 +211,7 @@ class CardRepository {
     return result.rows;
   }
 
-  async updateFsrsData(client: PoolClient, cardId: number, data: FsrsUpdateData) {
+  async updateFsrsData(client: PoolClient, cardId: number, data: FsrsUpdateData): Promise<CardRow> {
     const result = await client.query(
       `UPDATE cards
        SET
@@ -223,7 +243,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async findById(id: number, userId: number) {
+  async findById(id: number, userId: number): Promise<CardRow | undefined> {
     const result = await pool.query(
       `SELECT c.*
      FROM cards c
@@ -237,7 +257,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async update(deckId: number, cardId: number, front: string, back: string) {
+  async update(deckId: number, cardId: number, front: string, back: string): Promise<CardRow | undefined> {
     const result = await pool.query(
       `UPDATE cards SET front = $1, back = $2
        WHERE id = $3 AND deck_id = $4
@@ -248,7 +268,7 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async delete(deckId: number, cardId: number) {
+  async delete(deckId: number, cardId: number): Promise<{ id: number } | undefined> {
     const result = await pool.query(
       `DELETE FROM cards WHERE id = $1 AND deck_id = $2 RETURNING id`,
       [cardId, deckId],
