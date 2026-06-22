@@ -78,21 +78,17 @@ export default function DashboardPage() {
 
   async function loadDecks() {
     try {
-      const data = await decksApi.list();
+      const [data, streakData, dueCountsData] = await Promise.all([
+        decksApi.list(),
+        statsApi.streak(),
+        cardsApi.dueCounts(),
+      ]);
       setDecks(data);
-      const counts: Record<number, number> = {};
-      const streakData = await statsApi.streak();
       setStreak(streakData);
-      await Promise.all(
-        data.map(async (deck) => {
-          try {
-            const r = await cardsApi.forReview(deck.id);
-            counts[deck.id] = r.total;
-          } catch {
-            counts[deck.id] = 0;
-          }
-        }),
-      );
+      const counts: Record<number, number> = {};
+      for (const item of dueCountsData) {
+        counts[item.deck_id] = item.due_count;
+      }
       setDueCounts(counts);
     } catch {
       setError("Erro ao carregar baralhos.");

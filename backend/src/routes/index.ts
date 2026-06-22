@@ -3,7 +3,7 @@ import { Router } from "express";
 import authRoutes from "./authRoutes";
 import deckRoutes from "./deckRoutes";
 import cardRoutes from "./cardRoutes";
-import reviewRoutes from "./reviewRoutes";
+import { reviewRoutes, dueCountsRouter } from "./reviewRoutes";
 import reviewLogsRoutes from "./reviewLogsRoutes";
 import importRoutes from "./importRoutes";
 import metricsRoutes from "./metricsRoutes";
@@ -18,5 +18,6 @@ routes.use("/metrics", metricsRoutes);
 
 routes.use("/decks/:deck_id/cards", cardRoutes);
 routes.use("/decks/:deck_id/review", reviewRoutes);
+routes.use("/decks/review/due-counts", dueCountsRouter);
 
 export { routes };

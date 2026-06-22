@@ -2,7 +2,7 @@
 id: "T04.01"
 phase: "P04"
 title: "Criar Endpoint Agregado `GET /review/due-counts`"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -47,13 +47,16 @@ Criar endpoint que retorna contagem de cards para revisão por baralho em UMA qu
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- N+1 chamadas no dashboard substituídas por 1 chamada agregada
+- `forReview` ainda usado em DeckPage e ReviewPage — não removido, sem risco
+- Rota não colide com `/decks/:deck_id/review` (segmento `due-counts` vs `review`)
 
 ## Validation Scope
 
 ### Manual
 
-- (Listar fluxos manuais para validação)
+- Abrir dashboard e verificar due counts por baralho
+- Navegar para revisão de um baralho e verificar que os cards corretos aparecem
 
 ### Automated
 
@@ -63,20 +66,13 @@ Criar endpoint que retorna contagem de cards para revisão por baralho em UMA qu
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar método `getDueCountsByUser` em `cardRepository.ts`:
-  ```sql
-  SELECT c.deck_id, COUNT(*) AS due_count
-  FROM cards c
-  JOIN decks d ON d.id = c.deck_id
-  WHERE d.user_id = $1 AND c.due <= NOW()
-  GROUP BY c.deck_id
-  ```
-- [ ] 2. Criar `getDueCounts` em `reviewService.ts`
-- [ ] 3. Criar handler `getDueCounts` em `reviewController.ts`
-- [ ] 4. Adicionar rota `GET /decks/review/due-counts` protegida por auth
-- [ ] 5. Adicionar método `getDueCounts` em `frontend/src/api/cards.ts`
-- [ ] 6. Substituir `Promise.all(data.map(...cardsApi.forReview))` no DashboardPage
-- [ ] 7. Rodar `npx tsc --noEmit` (backend) e `npx tsc -b --noEmit` (frontend)
+- [x] 1. Criar método `getDueCountsByUser` em `cardRepository.ts`:
+- [x] 2. Criar `getDueCounts` em `reviewService.ts`
+- [x] 3. Criar handler `getDueCounts` em `reviewController.ts`
+- [x] 4. Adicionar rota `GET /decks/review/due-counts` protegida por auth
+- [x] 5. Adicionar método `getDueCounts` em `frontend/src/api/cards.ts`
+- [x] 6. Substituir `Promise.all(data.map(...cardsApi.forReview))` no DashboardPage
+- [x] 7. Rodar `npx tsc --noEmit` (backend) e `npx tsc -b --noEmit` (frontend)
 
 ## Critérios de Aceitação
 
@@ -95,10 +91,10 @@ npx vitest run
 
 ## Definition of Done
 
-- [ ] Endpoint criado e funcional
-- [ ] Dashboard usando endpoint agregado
-- [ ] `tsc` passando
-- [ ] `@reviewer` aprovou
+- [x] Endpoint criado e funcional
+- [x] Dashboard usando endpoint agregado
+- [x] `tsc` passando
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

@@ -5,18 +5,23 @@ import { validate } from "../middlewares/validate";
 import { reviewSchema } from "../schemas/reviewSchema";
 
 import {
+  getDueCounts,
   getReviewCards,
   previewReview,
   submitReview,
 } from "../controllers/reviewController";
 
-const router = Router({ mergeParams: true });
+const reviewRoutes = Router({ mergeParams: true });
 
-router.use(authMiddleware);
+reviewRoutes.use(authMiddleware);
 
 // Executa revisão
-router.get("/", getReviewCards);
-router.get("/:cardId/preview", previewReview);
-router.post("/:cardId", validate(reviewSchema), submitReview);
+reviewRoutes.get("/", getReviewCards);
+reviewRoutes.get("/:cardId/preview", previewReview);
+reviewRoutes.post("/:cardId", validate(reviewSchema), submitReview);
 
-export default router;
+const dueCountsRouter = Router();
+dueCountsRouter.use(authMiddleware);
+dueCountsRouter.get("/", getDueCounts);
+
+export { reviewRoutes, dueCountsRouter };

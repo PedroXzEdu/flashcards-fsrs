@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import reviewRoutes from "../reviewRoutes";
+import { reviewRoutes } from "../reviewRoutes";
 
 function getRoutes() {
   return reviewRoutes.stack.filter((l: any) => l.route);

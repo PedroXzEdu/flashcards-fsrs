@@ -38,7 +38,7 @@ Nenhuma
 
 ## Tarefas
 
-### [ ] [T04.01 — Criar endpoint agregado `GET /review/due-counts`](./task_04_01_endpoint_due_counts.md)
+### [x] [T04.01 — Criar endpoint agregado `GET /review/due-counts`](./task_04_01_endpoint_due_counts.md)
 
 **Descrição:** Criar endpoint que retorna contagem de cards para revisão por baralho em UMA query SQL, substituindo as N chamadas paralelas no frontend.
 

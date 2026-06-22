@@ -25,7 +25,13 @@ function toFsrsCard(row: CardRow): Card {
   };
 }
 
+type DueCountRow = { deck_id: number; due_count: number };
+
 class ReviewService {
+  async getDueCounts(userId: number): Promise<DueCountRow[]> {
+    return cardRepository.getDueCountsByUser(userId);
+  }
+
   async getDueCards(deckId: number, userId: number) {
     const [cards, deck] = await Promise.all([
       cardRepository.findDueByDeck(deckId, userId),

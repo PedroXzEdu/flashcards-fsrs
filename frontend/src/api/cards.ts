@@ -32,6 +32,9 @@ export const cardsApi = {
   forReview: (deckId: number) =>
     api.get<{ cards: Card[]; total: number }>(`/decks/${deckId}/review`),
 
+  dueCounts: () =>
+    api.get<{ deck_id: number; due_count: number }[]>("/decks/review/due-counts"),
+
   preview: (deckId: number, cardId: number) =>
     api.get<PreviewRatings>(`/decks/${deckId}/review/${cardId}/preview`),
 

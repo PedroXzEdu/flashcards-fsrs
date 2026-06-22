@@ -5,6 +5,22 @@ import { AuthRequest } from "../middlewares/auth";
 import { reviewService } from "../services/reviewService";
 import { deckIdParams, cardIdCamelParams } from "../schemas/paramsSchema";
 
+export async function getDueCounts(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const result = await reviewService.getDueCounts(req.userId!);
+    return res.json({
+      success: true,
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getReviewCards(
   req: AuthRequest,
   res: Response,

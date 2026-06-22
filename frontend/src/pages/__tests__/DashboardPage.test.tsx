@@ -12,7 +12,6 @@ import {
   getWorkloadForecast,
   getDailyQueue,
 } from "../../services/analyticsApi";
-import type { Card } from "../../types";
 
 vi.mock("../../api/decks", () => ({
   decksApi: {
@@ -28,6 +27,7 @@ vi.mock("../../api/decks", () => ({
 vi.mock("../../api/cards", () => ({
   cardsApi: {
     forReview: vi.fn(),
+    dueCounts: vi.fn(),
   },
 }));
 
@@ -86,7 +86,7 @@ describe("DashboardPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(decksApi.list).mockResolvedValue(mockDecks);
-    vi.mocked(cardsApi.forReview).mockResolvedValue({ cards: [], total: 0 });
+    vi.mocked(cardsApi.dueCounts).mockResolvedValue([]);
     vi.mocked(statsApi.streak).mockResolvedValue(mockStreak);
     vi.mocked(getWorkloadForecast).mockResolvedValue([]);
     vi.mocked(getDailyQueue).mockResolvedValue([]);
@@ -177,10 +177,9 @@ describe("DashboardPage", () => {
   });
 
   it("mostra due counts nos baralhos", async () => {
-    vi.mocked(cardsApi.forReview).mockImplementation(async (deckId) => {
-      if (deckId === 1) return { cards: [{ id: 1 } as Card], total: 3 };
-      return { cards: [], total: 0 };
-    });
+    vi.mocked(cardsApi.dueCounts).mockResolvedValue([
+      { deck_id: 1, due_count: 3 },
+    ]);
     renderDashboard();
     await waitFor(() => {
       expect(screen.getByText("3 hoje")).toBeInTheDocument();
