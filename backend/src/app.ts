@@ -37,8 +37,17 @@ app.use(
         reportUri: ["/api/csp-report"],
       },
     },
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
   }),
 );
+
+app.use((_req, res, next) => {
+  res.setHeader(
+    "Permissions-Policy",
+    "geolocation=(), microphone=(), camera=(), notifications=(), payment=()",
+  );
+  next();
+});
 app.use(
   cors({
     origin(origin, callback) {

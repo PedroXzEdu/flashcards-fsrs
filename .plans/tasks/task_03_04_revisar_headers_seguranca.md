@@ -2,7 +2,7 @@
 id: "T03.04"
 phase: "P03"
 title: "Revisar Headers de Segurança"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []

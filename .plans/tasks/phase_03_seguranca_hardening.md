@@ -111,7 +111,7 @@ Nenhuma
 
 ---
 
-### [ ] [T03.05 — Revisar headers de segurança](./task_03_04_revisar_headers_seguranca.md)
+### [x] [T03.05 — Revisar headers de segurança](./task_03_04_revisar_headers_seguranca.md)
 
 **Descrição:** Verificar se todos os headers de segurança recomendados estão presentes (X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy).
 
