@@ -1,130 +1,102 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cardsApi } from "../../api/cards";
 import type { Card, PreviewRatings } from "../../types";
 import { useTheme } from "../../contexts/ThemeContext";
-import { X, Sun, Moon, Check, RotateCcw, Shuffle, LogOut } from "lucide-react";
-import Tooltip from "../../components/Tooltip";
-import CardContent from "../../components/CardContent";
+import { LogOut, Check } from "lucide-react";
+import ReviewHeader from "../../components/review/ReviewHeader";
+import ReviewCard from "../../components/review/ReviewCard";
+import ReviewSessionProgress from "../../components/review/ReviewSessionProgress";
+import RatingButtons from "../../components/review/RatingButtons";
+import ReviewSessionSummary from "../../components/review/ReviewSessionSummary";
 import ConfirmModal from "../../components/ConfirmModal";
-import ProgressBar from "../../components/ProgressBar";
 import EmptyState from "../../components/EmptyState";
 import { SkeletonReviewCard } from "../../components/SkeletonCard";
 
-const RATINGS = [
-  {
-    value: 1,
-    label: "De novo",
-    key: "again",
-    color: "var(--danger)",
-    bg: "rgba(243,139,168,0.12)",
-    border: "rgba(243,139,168,0.4)",
-    tooltip: "Não lembrei. Voltar ao início.",
-  },
-  {
-    value: 2,
-    label: "Difícil",
-    key: "hard",
-    color: "var(--warning)",
-    bg: "rgba(249,226,175,0.12)",
-    border: "rgba(249,226,175,0.4)",
-    tooltip: "Lembrei com esforço. Intervalo curto.",
-  },
-  {
-    value: 3,
-    label: "Bom",
-    key: "good",
-    color: "var(--success)",
-    bg: "rgba(166,227,161,0.12)",
-    border: "rgba(166,227,161,0.4)",
-    tooltip: "Lembrei bem. Intervalo normal.",
-  },
-  {
-    value: 4,
-    label: "Fácil",
-    key: "easy",
-    color: "var(--info)",
-    bg: "rgba(137,180,250,0.12)",
-    border: "rgba(137,180,250,0.4)",
-    tooltip: "Muito fácil. Intervalo longo.",
-  },
-];
-
-function formatDays(days: number) {
-  if (days === 0) return "minutos";
-  if (days === 1) return "amanhã";
-  return `${days}d`;
+interface ReviewState {
+  cards: Card[];
+  index: number;
+  flipped: boolean;
+  preview: PreviewRatings | null;
+  loading: boolean;
+  submitting: boolean;
+  done: boolean;
+  error: string;
+  reviewed: number;
+  history: ("correct" | "wrong")[];
+  shuffled: boolean;
+  showExitConfirm: boolean;
 }
 
-function RatingButton({
-  r,
-  preview,
-  submitting,
-  onRate,
-}: {
-  r: (typeof RATINGS)[0];
-  preview: PreviewRatings | null;
-  submitting: boolean;
-  onRate: (v: number) => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  const days = preview?.[r.key as keyof PreviewRatings]?.scheduled_days ?? null;
+type ReviewAction =
+  | { type: "LOAD_CARDS"; cards: Card[] }
+  | { type: "FLIP" }
+  | { type: "SET_PREVIEW"; preview: PreviewRatings }
+  | { type: "RATE"; rating: number }
+  | { type: "SET_ERROR"; error: string }
+  | { type: "SET_SUBMITTING"; submitting: boolean }
+  | { type: "TOGGLE_SHUFFLE" }
+  | { type: "REORDER_CARDS"; cards: Card[] }
+  | { type: "SET_EXIT_CONFIRM"; show: boolean };
 
-  return (
-    <Tooltip text={r.tooltip}>
-      <button
-        type="button"
-        onClick={() => onRate(r.value)}
-        disabled={submitting}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => {
-          setHovered(false);
-          setPressed(false);
-        }}
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
-        style={{
-          width: "100%",
-          background: r.bg,
-          border: `1px solid ${hovered ? r.color : r.border}`,
-          borderRadius: "14px",
-          padding: "14px 8px",
-          cursor: submitting ? "not-allowed" : "pointer",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4px",
-          opacity: submitting ? 0.6 : 1,
-          transform: pressed
-            ? "scale(0.96)"
-            : hovered
-              ? "translateY(-2px)"
-              : "none",
-          boxShadow:
-            hovered && !submitting ? `0 6px 16px rgba(0,0,0,0.2)` : "none",
-          transition:
-            "transform 120ms ease, background-color 150ms ease, box-shadow 150ms ease",
-          fontFamily: "Outfit, sans-serif",
-        }}
-      >
-        <span style={{ fontSize: "13px", fontWeight: 600, color: r.color }}>
-          {r.label}
-        </span>
-        {days !== null && (
-          <span
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              fontFamily: "JetBrains Mono, monospace",
-            }}
-          >
-            {formatDays(days)}
-          </span>
-        )}
-      </button>
-    </Tooltip>
-  );
+function reviewReducer(state: ReviewState, action: ReviewAction): ReviewState {
+  switch (action.type) {
+    case "LOAD_CARDS":
+      return { ...state, cards: action.cards, loading: false, done: action.cards.length === 0 };
+    case "FLIP":
+      return { ...state, flipped: true, error: "" };
+    case "SET_PREVIEW":
+      return { ...state, preview: action.preview };
+    case "RATE": {
+      const newHistory: ("correct" | "wrong")[] = [...state.history, action.rating >= 3 ? "correct" : "wrong"];
+      const nextIndex = state.index + 1;
+      const isDone = nextIndex >= state.cards.length;
+      return {
+        ...state,
+        history: newHistory,
+        reviewed: state.reviewed + 1,
+        submitting: false,
+        ...(isDone
+          ? { done: true }
+          : { flipped: false, preview: null, index: nextIndex }
+        ),
+      };
+    }
+    case "SET_ERROR":
+      return { ...state, error: action.error, submitting: false };
+    case "SET_SUBMITTING":
+      return { ...state, submitting: action.submitting };
+    case "TOGGLE_SHUFFLE":
+      return { ...state, shuffled: !state.shuffled };
+    case "REORDER_CARDS":
+      return { ...state, cards: action.cards };
+    case "SET_EXIT_CONFIRM":
+      return { ...state, showExitConfirm: action.show };
+  }
+}
+
+const initialState: ReviewState = {
+  cards: [],
+  index: 0,
+  flipped: false,
+  preview: null,
+  loading: true,
+  submitting: false,
+  done: false,
+  error: "",
+  reviewed: 0,
+  history: [],
+  shuffled: false,
+  showExitConfirm: false,
+};
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 export default function ReviewPage() {
@@ -132,83 +104,62 @@ export default function ReviewPage() {
   const navigate = useNavigate();
   const { theme, toggle } = useTheme();
   const deckId = Number(id);
+  const [state, dispatch] = useReducer(reviewReducer, initialState);
 
-  const [cards, setCards] = useState<Card[]>([]);
-  const [index, setIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
-  const [preview, setPreview] = useState<PreviewRatings | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
-  const [error, setError] = useState("");
-  const [reviewed, setReviewed] = useState(0);
-  const [history, setHistory] = useState<("correct" | "wrong")[]>([]);
-  const [shuffled, setShuffled] = useState(false);
-  const [showExitConfirm, setShowExitConfirm] = useState(false);
+  async function loadCards() {
+    try {
+      const data = await cardsApi.forReview(deckId);
+      dispatch({
+        type: "LOAD_CARDS",
+        cards: state.shuffled ? shuffle(data.cards) : data.cards,
+      });
+    } catch {
+      navigate(`/decks/${deckId}`);
+    }
+  }
 
   useEffect(() => {
     loadCards();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- shuffled não deve causar re-fetch
   }, [deckId]);
 
-  async function loadCards() {
-    try {
-      const data = await cardsApi.forReview(deckId);
-      setCards(shuffled ? shuffle(data.cards) : data.cards);
-      if (data.cards.length === 0) setDone(true);
-    } catch {
-      navigate(`/decks/${deckId}`);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function shuffle<T>(arr: T[]): T[] {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
   const handleFlip = useCallback(async () => {
-    if (flipped) return;
-    setError("");
-    setFlipped(true);
+    if (state.flipped) return;
+    dispatch({ type: "FLIP" });
     try {
-      setPreview(await cardsApi.preview(deckId, cards[index].id));
+      const preview = await cardsApi.preview(deckId, state.cards[state.index].id);
+      dispatch({ type: "SET_PREVIEW", preview });
     } catch {
       /* preview opcional */
     }
-  }, [flipped, cards, index, deckId]);
+  }, [state.flipped, state.cards, state.index, deckId]);
 
   const handleRate = useCallback(async (rating: number) => {
-    if (submitting) return;
-    setSubmitting(true);
-    setError("");
+    if (state.submitting) return;
+    dispatch({ type: "SET_SUBMITTING", submitting: true });
     try {
-      await cardsApi.review(deckId, cards[index].id, rating);
-      setHistory((h) => [...h, rating >= 3 ? "correct" : "wrong"]);
-      setReviewed((r) => r + 1);
-      const next = index + 1;
-      if (next >= cards.length) {
-        setDone(true);
-      } else {
-        setFlipped(false);
-        setPreview(null);
-        setIndex(next);
-      }
+      await cardsApi.review(deckId, state.cards[state.index].id, rating);
+      dispatch({ type: "RATE", rating });
     } catch (err: unknown) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Erro ao salvar revisão. Tente novamente.",
-      );
-    } finally {
-      setSubmitting(false);
+      dispatch({
+        type: "SET_ERROR",
+        error:
+          err instanceof Error
+            ? err.message
+            : "Erro ao salvar revisão. Tente novamente.",
+      });
     }
-  }, [submitting, cards, index, deckId]);
+  }, [state.submitting, state.cards, state.index, deckId]);
+
+  const handleShuffleToggle = useCallback(() => {
+    dispatch({ type: "TOGGLE_SHUFFLE" });
+    dispatch({
+      type: "REORDER_CARDS",
+      cards: state.shuffled
+        ? [...state.cards].sort((a, b) => a.id - b.id)
+        : shuffle(state.cards),
+    });
+  }, [state.shuffled, state.cards]);
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -218,7 +169,7 @@ export default function ReviewPage() {
       )
         return;
 
-      if (!flipped) {
+      if (!state.flipped) {
         if (e.code === "Space" || e.code === "Enter") {
           e.preventDefault();
           handleFlip();
@@ -233,12 +184,12 @@ export default function ReviewPage() {
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [flipped, submitting, index, handleFlip, handleRate]);
+  }, [state.flipped, state.submitting, state.index, handleFlip, handleRate]);
 
-  if (loading)
+  if (state.loading)
     return <SkeletonReviewCard />;
 
-  if (!loading && cards.length === 0)
+  if (!state.loading && state.cards.length === 0)
     return (
       <div
         style={{
@@ -275,147 +226,17 @@ export default function ReviewPage() {
       </div>
     );
 
-  if (done)
+  if (state.done)
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "var(--bg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "24px",
-        }}
-      >
-        <div
-          className="animate-slide-up"
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "24px",
-            padding: "48px",
-            textAlign: "center",
-            maxWidth: "420px",
-            width: "100%",
-            boxShadow: "var(--shadow)",
-          }}
-        >
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              borderRadius: "20px",
-              background: "rgba(166,227,161,0.15)",
-              border: "1px solid rgba(166,227,161,0.3)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 20px",
-            }}
-          >
-            <Check size={28} color="var(--success)" />
-          </div>
-          <h1
-            style={{
-              margin: "0 0 8px",
-              fontSize: "22px",
-              fontWeight: 700,
-              color: "var(--text)",
-              letterSpacing: "-0.4px",
-            }}
-          >
-            Sessão concluída!
-          </h1>
-          <p
-            style={{
-              color: "var(--text-sub)",
-              margin: "0 0 6px",
-              fontSize: "14px",
-            }}
-          >
-            Você revisou{" "}
-            <span style={{ color: "var(--accent)", fontWeight: 600 }}>
-              {reviewed}
-            </span>{" "}
-            {reviewed === 1 ? "card" : "cards"} hoje.
-          </p>
-
-          {/* Histórico visual */}
-          <div
-            style={{
-              display: "flex",
-              gap: "4px",
-              justifyContent: "center",
-              margin: "16px 0 24px",
-              flexWrap: "wrap",
-            }}
-          >
-            {history.map((h, i) => (
-              <div
-                key={i}
-                style={{
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  background:
-                    h === "correct" ? "var(--success)" : "var(--danger)",
-                }}
-              />
-            ))}
-          </div>
-
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "13px",
-              margin: "0 0 28px",
-            }}
-          >
-            O FSRS agendou as próximas revisões automaticamente.
-          </p>
-          <div
-            style={{ display: "flex", gap: "10px", justifyContent: "center" }}
-          >
-            <button
-              type="button"
-              onClick={() => navigate("/")}
-              style={{
-                background: "none",
-                border: "1px solid var(--border)",
-                borderRadius: "10px",
-                color: "var(--text-muted)",
-                fontWeight: 600,
-                fontSize: "14px",
-                padding: "12px 24px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
-            >
-              Ir para o início
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate(`/decks/${deckId}`)}
-              style={{
-                background: "var(--accent)",
-                border: "none",
-                borderRadius: "10px",
-                color: "var(--bg)",
-                fontWeight: 600,
-                fontSize: "14px",
-                padding: "12px 24px",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-              }}
-            >
-              Voltar ao baralho
-            </button>
-          </div>
-        </div>
-      </div>
+      <ReviewSessionSummary
+        reviewed={state.reviewed}
+        history={state.history}
+        onGoHome={() => navigate("/")}
+        onGoToDeck={() => navigate(`/decks/${deckId}`)}
+      />
     );
 
-  const card = cards[index];
+  const card = state.cards[state.index];
 
   return (
     <div
@@ -426,125 +247,22 @@ export default function ReviewPage() {
         flexDirection: "column",
       }}
     >
-      {/* Header */}
-      <header
-        style={{
-          background: "var(--bg-alt)",
-          borderBottom: "1px solid var(--border)",
-          padding: "0 24px",
-          height: "56px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => setShowExitConfirm(true)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "var(--text-muted)",
-            fontSize: "13px",
-            padding: "7px 9px",
-            borderRadius: "6px",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            fontFamily: "Outfit, sans-serif",
-          }}
-        >
-          <X size={15} /> Encerrar
-        </button>
+      <ReviewHeader
+        onExit={() => dispatch({ type: "SET_EXIT_CONFIRM", show: true })}
+        history={state.history}
+        index={state.index}
+        total={state.cards.length}
+        shuffled={state.shuffled}
+        onShuffleToggle={handleShuffleToggle}
+        theme={theme}
+        onThemeToggle={toggle}
+      />
 
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          {/* Histórico inline */}
-          <div
-            style={{
-              display: "flex",
-              gap: "3px",
-              alignItems: "center",
-              overflow: "hidden",
-            }}
-          >
-            {cards.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  background:
-                    i < history.length
-                      ? history[i] === "correct"
-                        ? "var(--success)"
-                        : "var(--danger)"
-                      : i === index
-                        ? "var(--accent)"
-                        : "var(--border)",
-                  transition: "background 0.3s",
-                }}
-              />
-            ))}
-          </div>
+      <ReviewSessionProgress
+        current={state.index}
+        total={state.cards.length}
+      />
 
-          <button
-            type="button"
-            aria-label="Embaralhar ordem dos cards"
-            onClick={() => {
-              setShuffled((s) => !s);
-              setCards((prev) =>
-                shuffled
-                  ? [...prev].sort((a, b) => a.id - b.id)
-                  : shuffle(prev),
-              );
-            }}
-            title="Embaralhar"
-            style={{
-              background: shuffled
-                ? "rgba(203,166,247,0.15)"
-                : "var(--bg-card)",
-              border: `1px solid ${shuffled ? "var(--accent)" : "var(--border)"}`,
-              borderRadius: "6px",
-              cursor: "pointer",
-              padding: "5px 7px",
-              display: "flex",
-              alignItems: "center",
-              color: shuffled ? "var(--accent)" : "var(--text-sub)",
-            }}
-          >
-            <Shuffle size={13} />
-          </button>
-          <button
-            type="button"
-            aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
-            onClick={toggle}
-            style={{
-              background: "var(--bg-card)",
-              border: "1px solid var(--border)",
-              borderRadius: "6px",
-              cursor: "pointer",
-              padding: "5px 7px",
-              display: "flex",
-              alignItems: "center",
-              color: "var(--text-sub)",
-            }}
-          >
-            {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
-          </button>
-        </div>
-      </header>
-
-      {/* Progress bar */}
-      <div style={{ padding: "12px 24px 0" }}>
-        <ProgressBar current={index} total={cards.length} />
-      </div>
-
-      {/* Card area */}
       <main
         style={{
           flex: 1,
@@ -556,230 +274,23 @@ export default function ReviewPage() {
         }}
       >
         <div style={{ width: "100%", maxWidth: "640px" }}>
-          {/* Flip card */}
-          <div
-            className="card-flip-container"
-            style={{ marginBottom: "16px", minHeight: "280px" }}
-          >
-            <div
-              className={`card-flip-inner ${flipped ? "flipped" : ""}`}
-              style={{ minHeight: "280px" }}
-            >
-              {/* Frente */}
-              <div
-                className="card-face"
-                tabIndex={flipped ? undefined : 0}
-                role="button"
-                aria-label={flipped ? "Card virado" : "Clique para virar o card"}
-                onKeyDown={(e) => {
-                  if (e.key === " ") {
-                    e.preventDefault();
-                    handleFlip();
-                  }
-                }}
-                style={{
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "20px",
-                  padding: "clamp(24px, 5vw, 48px) clamp(16px, 4vw, 40px)",
-                  minHeight: "280px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-                onClick={handleFlip}
-              >
-                <span
-                  style={{
-                    fontSize: "10px",
-                    color: "var(--text-muted)",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    marginBottom: "20px",
-                    fontWeight: 500,
-                  }}
-                >
-                  FRENTE
-                </span>
-                <CardContent
-                  html={card?.front ?? ""}
-                  style={{
-                    margin: 0,
-                    fontSize: "22px",
-                    fontWeight: 500,
-                    color: "var(--text)",
-                    textAlign: "center",
-                  }}
-                />
-                {!flipped && (
-                  <p
-                    style={{
-                      margin: "24px 0 0",
-                      fontSize: "12px",
-                      color: "var(--text-muted)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                    }}
-                  >
-                    <RotateCcw size={11} /> Clique para virar
-                  </p>
-                )}
-              </div>
+          <ReviewCard
+            card={card}
+            flipped={state.flipped}
+            onFlip={handleFlip}
+          />
 
-              {/* Verso */}
-              <div
-                className="card-face card-face-back"
-                style={{
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--accent)",
-                  borderRadius: "20px",
-                  padding: "clamp(24px, 5vw, 48px) clamp(16px, 4vw, 40px)",
-                  minHeight: "280px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: `0 0 0 1px var(--accent), var(--shadow-sm)`,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "10px",
-                    color: "var(--accent)",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    marginBottom: "20px",
-                    fontWeight: 500,
-                  }}
-                >
-                  VERSO
-                </span>
-                <CardContent
-                  html={card?.back ?? ""}
-                  style={{
-                    margin: 0,
-                    fontSize: "17px",
-                    color: "var(--text-sub)",
-                    textAlign: "center",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Rating buttons */}
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              margin: "12px 0",
-              fontFamily: "JetBrains Mono, monospace",
-            }}
-          >
-            pressione{" "}
-            <kbd
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "4px",
-                padding: "1px 5px",
-                fontSize: "10px",
-              }}
-            >
-              1
-            </kbd>{" "}
-            <kbd
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "4px",
-                padding: "1px 5px",
-                fontSize: "10px",
-              }}
-            >
-              2
-            </kbd>{" "}
-            <kbd
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "4px",
-                padding: "1px 5px",
-                fontSize: "10px",
-              }}
-            >
-              3
-            </kbd>{" "}
-            <kbd
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "4px",
-                padding: "1px 5px",
-                fontSize: "10px",
-              }}
-            >
-              4
-            </kbd>{" "}
-            para avaliar ·{" "}
-            <kbd
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "4px",
-                padding: "1px 5px",
-                fontSize: "10px",
-              }}
-            >
-              espaço
-            </kbd>{" "}
-            para virar
-          </p>
-          {error && (
-            <div
-              role="alert"
-              style={{
-                background: "rgba(243,139,168,0.1)",
-                border: "1px solid var(--danger)",
-                color: "var(--danger)",
-                fontSize: "13px",
-                borderRadius: "10px",
-                padding: "10px 14px",
-                marginBottom: "12px",
-                textAlign: "center",
-              }}
-            >
-              {error}
-            </div>
-          )}
-          {flipped && (
-            <div
-              className="animate-fade-in rating-grid"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "10px",
-              }}
-            >
-              {RATINGS.map((r) => (
-                <RatingButton
-                  key={r.value}
-                  r={r}
-                  preview={preview}
-                  submitting={submitting}
-                  onRate={handleRate}
-                />
-              ))}
-            </div>
-          )}
+          <RatingButtons
+            preview={state.preview}
+            submitting={state.submitting}
+            onRate={handleRate}
+            flipped={state.flipped}
+            error={state.error}
+          />
         </div>
       </main>
-      {showExitConfirm && (
+
+      {state.showExitConfirm && (
         <ConfirmModal
           title="Encerrar revisão?"
           message="Você ainda não terminou todos os cards. O progresso desta sessão será perdido."
@@ -790,27 +301,9 @@ export default function ReviewPage() {
           iconColor="var(--accent)"
           buttonIcon={<LogOut size={13} />}
           onConfirm={() => navigate(`/decks/${deckId}`)}
-          onCancel={() => setShowExitConfirm(false)}
+          onCancel={() => dispatch({ type: "SET_EXIT_CONFIRM", show: false })}
         />
       )}
-      <style>{`
-        @media (max-width: 480px) {
-          .rating-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .card-flip-container {
-            width: 100% !important;
-          }
-        }
-        @media (max-width: 360px) {
-          .rating-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        .card-face {
-          min-height: clamp(200px, 40vh, 280px) !important;
-        }
-      `}</style>
     </div>
   );
 }

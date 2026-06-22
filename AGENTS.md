@@ -70,22 +70,7 @@ If a feature already works, prefer hardening over rewriting.
 
 ## Development Philosophy
 
-Work in small iterations:
-
-0. **consult plan** — leia a fase atual em `.plans/tasks/` antes de qualquer implementação
-1. analyze (use `graphify query "<pergunta>"` para navegar no grafo de código)
-2. implement minimal change
-3. `tsc --noEmit` (type check rápido)
-4. invoke @reviewer → valida (build + testes) e revisa
-5. fix findings if needed
-6. regression check
-7. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS/AGENTS precisam de update
-8. update plan progress — marcar tarefa concluída em `.plans/tasks/` e registrar desvios
-9. commit (Graphify atualiza automaticamente via pre-commit hook)
-10. move to next step
-
-> O passo 4 (`invoke @reviewer`) é **OBRIGATÓRIO** — veja a seção Mandatory Review Policy.
-> O passo 7 (`invoke @doc`) é **OBRIGATÓRIO** quando há mudanças estruturais (novas pastas, camadas, fluxos, dependências, contratos de API, subagentes, skills, plugins). Opcional para mudanças triviais.
+Work in small iterations following the Standard Workflow.
 
 Never batch unrelated changes together.
 
@@ -93,14 +78,34 @@ Always prioritize stability over elegance.
 
 > **Plan as source of truth:** antes de criar qualquer código, consulte ou atualize os arquivos de planejamento em `.plans/tasks/`. Nenhuma implementação deve começar sem que a fase e tarefa atuais estejam claramente documentadas.
 
+---
+
+## Standard Workflow
+
+This is the canonical process. Every change follows these steps:
+
+1. **Consult plan** — read current phase in `.plans/tasks/` before any implementation
+2. **Analyze** — use `graphify query "<question>"` to navigate the code graph
+3. **Implement** minimal change
+4. **Typecheck** — run `tsc --noEmit`
+5. **Invoke @reviewer** — validates (build + tests) and reviews
+6. **Address findings** — fix or justify, then regression check
+7. **Invoke @doc** — checks if ROADMAP/ARCHITECTURE/DECISIONS/AGENTS need update (mandatory for structural changes, optional for trivial)
+8. **Update plan progress** — mark task completed in `.plans/tasks/`, record deviations
+9. **Commit** (Graphify updates automatically via pre-commit hook)
+10. **Continue** to next step
+
+> Step 5 (`invoke @reviewer`) is **MANDATORY** — see Mandatory Review Policy.
+> Step 7 (`invoke @doc`) is **MANDATORY** for structural changes (new directories, layers, flows, dependencies, API contracts, subagents, skills, plugins). Optional for trivial changes.
+
 ### Before Completion Checklist
 
-Every task MUST pass this checklist before the agent signals completion:
+Every task MUST pass this checklist before signaling completion:
 
-- [ ] `@reviewer` executed (build + testes rodados dentro da review)
+- [ ] `@reviewer` executed (build + tests run within review)
 - [ ] Reviewer findings addressed (or justified)
 - [ ] Regression checklist verified
-- [ ] `@doc` invoked (ou justificado por que não necessário — opcional para mudanças triviais)
+- [ ] `@doc` invoked (or justified as unnecessary — optional for trivial changes)
 - [ ] Plan progress updated in `.plans/tasks/`
 
 ---
@@ -113,7 +118,7 @@ Every task MUST pass this checklist before the agent signals completion:
 - The primary agent MUST NOT finalize a task without review.
 - The primary agent MUST wait for the reviewer's output before suggesting a commit.
 - If the reviewer finds MEDIUM/HIGH risk or a potential regression, the primary agent MUST either fix the finding or provide an explicit justification for accepting the risk.
-- Only tasks with zero diff (e.g., answering questions, explaining code, debugging without edits) MAY skip review.
+- `@reviewer` is terminal — it MUST NOT invoke other agents.
 
 ### Exceptions
 
@@ -124,9 +129,7 @@ The only valid exceptions for skipping `@reviewer`:
 
 All other cases require review.
 
-### Recursion Guard
-
-`@reviewer` is a terminal agent — it MUST NOT invoke `@reviewer`, `@task`, or any other agent. It is read-only and never modifies files. This guarantees no infinite review loop.
+Full reviewer specification: `.opencode/agents/reviewer.md`
 
 ---
 
@@ -148,6 +151,36 @@ All other cases require review.
 
 - cosmetic refactors
 - architecture cleanup
+
+---
+
+## Engineering Priority Order
+
+When priorities conflict, higher items take precedence:
+
+1. Correctness
+2. Stability
+3. Security
+4. UX
+5. Performance
+6. Maintainability
+7. Elegance
+
+---
+
+## Decision Heuristics
+
+When multiple valid solutions exist, prefer:
+
+1. Smaller diff
+2. Lower regression risk
+3. Fewer files changed
+4. Existing project patterns
+5. Lower operational complexity
+6. Simpler implementation
+7. Easier rollback
+
+These heuristics never override correctness, security, or stability requirements.
 
 ---
 
@@ -395,139 +428,24 @@ Prefer:
 
 ---
 
-## Expected Agent Behavior
+## Subagents
 
-When proposing changes:
+### @reviewer
 
-1. consult `.plans/tasks/` para identificar a fase e tarefa atuais
-2. explain root cause
-3. implement smallest viable fix
-4. list files changed
-5. explain regression risks
-6. run `tsc --noEmit` (type check rápido)
-7. invoke @reviewer (roda build + testes e revisa)
-8. fix findings if needed (or justify if accepted)
-9. invoke @doc → verifica se ROADMAP/ARCHITECTURE/DECISIONS/AGENTS precisam de update
-10. preserve existing behavior
+Specification: `.opencode/agents/reviewer.md`
 
-If uncertain:
+### @doc
 
-Prefer conservative changes.
-
-Do not optimize prematurely.
+Specification: `.opencode/agents/doc.md`
 
 ---
 
-## Troubleshooting & Change Discipline
+## Documentation Governance
 
-1. **Don’t fight recurring errors blindly**: if the same error appears twice after attempted fixes, stop and reassess.
-2. **Document state and behavior**: before changing code, record observed behavior, attempted fixes, and hypotheses about root causes.
-3. **Fail-fast and isolate**: stop immediately if build or tests fail, and address issues locally rather than acumulatively.
-4. **Research and compare solutions**: check multiple credible sources (including official documentation), compare trade-offs, and pick the simplest reliable fix.
-5. **Validate thoroughly**: run automated tests and perform minimal manual verification in affected flows to confirm root cause is resolved.
-6. **Prefer minimal, incremental changes**: avoid broad refactors or premature optimizations.
-7. **Maintain a record of attempts**: keep a log of recurring errors and fixes to aid future troubleshooting and prevent repeated cycles.
+See `.docs/DOCUMENTATION_POLICY.md`
 
 ---
 
-## Reviewer Subagent (`@reviewer`)
+## Troubleshooting
 
-Um subagent especializado em **revisão de código** para o FlashFSRS.
-
-**Como invocar:**
-
-- digite `@reviewer` seguido do escopo da revisão
-- ou automaticamente pelo agente primário em tarefas de revisão
-
-**O que ele faz:**
-
-1. detecta regressões (contract mismatch, Docker breakage, FSRS edge cases, SQL risks, regression memory checklist)
-2. valida arquitetura (camadas backend/frontend, injeção de lógica em controller, `any`)
-3. revisa UX (layout, scroll, botões sem rota, feedback ausente)
-4. verifica qualidade (TypeScript strict, ESLint, build, dead code, TODOs)
-
-**O que ele NÃO faz:**
-
-- não modifica arquivos
-- não escreve código
-- não refatora
-- não adiciona dependências
-
-**Formato de saída:**
-
-Toda review segue o formato:
-
-1. **Summary** — veredito geral da análise
-2. **Risks** — riscos identificados com severidade (HIGH / MEDIUM / LOW)
-3. **Regressions** — regressões confirmadas ou prováveis
-4. **Minimal Fix Proposal** — menor correção possível (descritiva, sem implementar)
-5. **Validation Checklist** — lista de verificações (tsc, build, lint, testes, Docker, regression checklist)
-
-**Quando usar:**
-
-- antes de commitar uma mudança
-- após validar que a funcionalidade funciona
-- quando identificar código duvidoso durante implementação
-
----
-
-## ROADMAP.md
-
-[`ROADMAP.md`](./ROADMAP.md) é o único documento de roadmap e status do projeto.
-
-**Quando atualizar:**
-
-- funcionalidade concluída ou removida
-- mudança arquitetural relevante
-- dívida técnica descoberta que merece registro
-- prioridades mudam significativamente
-
-**Quando NÃO atualizar:**
-
-- correções triviais (digitação, formatação, refactor menor)
-- tarefas do dia — não é um quadro de sprint
-
-Mantenha curto e honesto. Um roadmap desatualizado é pior que nenhum.
-
----
-
-## ARCHITECTURE.md
-
-[`ARCHITECTURE.md`](./ARCHITECTURE.md) é o mapa real da estrutura do projeto.
-
-**Quando atualizar:**
-
-- estrutura de pastas muda (novo diretório relevante, reorganização)
-- responsabilidades de camada mudam
-- nova camada/layer aparece
-- fluxo importante muda (review, import, share)
-- inconsistências conhecidas são corrigidas
-
-**Quando NÃO atualizar:**
-
-- rename trivial de arquivo
-- refactor pequeno que não altera responsabilidade
-- adição de componente isolado
-
-Mantenha sincronizado com o código. Uma architecture desatualizada engana mais que ajuda.
-
----
-
-## DECISIONS.md
-
-[`DECISIONS.md`](./DECISIONS.md) é o registro de decisões técnicas não-óbvias e trade-offs.
-
-**Quando atualizar:**
-
-- decisão técnica não-óbvia é tomada
-- trade-off relevante surge (ex: escolha entre duas abordagens)
-- mudança arquitetural altera ou invalida uma decisão anterior
-- nova dependência significativa é adicionada
-
-**Quando NÃO atualizar:**
-
-- bugfix trivial
-- detalhe irrelevante (versão de patch, formatação)
-- preferência estética sem impacto técnico
-
-Cada decisão deve ter: contexto, escolha, justificativa, trade-offs, e quando revisitar. Se uma decisão for revertida, marque como obsoleta, não apague.
+See `.docs/TROUBLESHOOTING.md`

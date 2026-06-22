@@ -3,6 +3,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import type { Card } from "../types";
 import CardContent from "./CardContent";
 import Button from "./Button";
+import Badge from "./ui/Badge";
 
 interface CardListItemProps {
   card: Card;
@@ -11,12 +12,19 @@ interface CardListItemProps {
   index?: number;
 }
 
-const STATE_CONFIG = [
-  { label: "Novo", color: "var(--info)", bg: "rgba(137,180,250,0.12)" },
-  { label: "Aprendendo", color: "var(--warning)", bg: "rgba(249,226,175,0.12)" },
-  { label: "Revisão", color: "var(--success)", bg: "rgba(166,227,161,0.12)" },
-  { label: "Reaprendendo", color: "var(--danger)", bg: "rgba(243,139,168,0.12)" },
-];
+const STATE_MAP: Record<number, "new" | "learning" | "review" | "relearning"> = {
+  0: "new",
+  1: "learning",
+  2: "review",
+  3: "relearning",
+};
+
+const STATE_LABELS: Record<number, string> = {
+  0: "Novo",
+  1: "Aprendendo",
+  2: "Revisão",
+  3: "Reaprendendo",
+};
 
 export default function CardListItem({
   card,
@@ -25,7 +33,7 @@ export default function CardListItem({
   index = 0,
 }: CardListItemProps) {
   const [hovered, setHovered] = useState(false);
-  const s = STATE_CONFIG[card.state] ?? STATE_CONFIG[0];
+  const variant = STATE_MAP[card.state] ?? "new";
 
   return (
     <div
@@ -44,21 +52,7 @@ export default function CardListItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span
-        style={{
-          fontSize: "11px",
-          fontWeight: 600,
-          padding: "3px 8px",
-          borderRadius: "6px",
-          color: s.color,
-          background: s.bg,
-          whiteSpace: "nowrap",
-          minWidth: "80px",
-          textAlign: "center",
-        }}
-      >
-        {s.label}
-      </span>
+      <Badge variant={variant}>{STATE_LABELS[card.state] ?? "Novo"}</Badge>
       <div style={{ flex: 1, minWidth: 0 }}>
         <CardContent
           html={card.front}

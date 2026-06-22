@@ -88,7 +88,7 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 ---
 
-### [ ] T01.04 — Extrair componentes do `ReviewPage`
+### [x] T01.04 — Extrair componentes do `ReviewPage`
 
 **Descrição:** Dividir `ReviewPage.tsx` (818 linhas) em:
 - `ReviewCard.tsx` — o card virado (frente/verso com flip animation)
@@ -114,7 +114,7 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 ---
 
-### [ ] T01.05 — Extrair componentes do `DashboardPage`
+### [x] T01.05 — Extrair componentes do `DashboardPage`
 
 **Descrição:** Dividir `DashboardPage.tsx` (881 linhas) em:
 - `StreakCards.tsx` — cards de streak/dias/total
@@ -139,7 +139,7 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 ---
 
-### [ ] T01.06 — Mover CSS inline para classes Tailwind/componentes estilizados
+### [x] T01.06 — Mover CSS inline para classes Tailwind/componentes estilizados
 
 **Descrição:** Criar componentes-base estilizados (`Card`, `FormField`, `PageSection`, `Badge`) e substituir os `style={{}}` repetidos.
 
@@ -159,7 +159,7 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 
 ---
 
-### [ ] T01.07 — Adicionar testes para os novos componentes
+### [x] T01.07 — Adicionar testes para os novos componentes
 
 **Descrição:** Escrever testes com `@testing-library/react` para os componentes extraídos (pelo menos os mais críticos: ReviewCard, RatingButtons, DeckCard).
 
