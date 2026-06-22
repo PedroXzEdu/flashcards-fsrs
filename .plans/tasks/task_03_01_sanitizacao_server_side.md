@@ -2,7 +2,7 @@
 id: "T03.01"
 phase: "P03"
 title: "Adicionar Sanitização Server-Side com DOMPurify"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []

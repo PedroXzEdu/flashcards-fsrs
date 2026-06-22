@@ -38,7 +38,7 @@ Nenhuma
 
 ## Tarefas
 
-### [ ] [T03.01 — Adicionar sanitização server-side com DOMPurify](./task_03_01_sanitizacao_server_side.md)
+### [x] [T03.01 — Adicionar sanitização server-side com DOMPurify](./task_03_01_sanitizacao_server_side.md)
 
 **Descrição:** Adicionar `isomorphic-dompurify` (ou `dompurify` + `jsdom`) como dependência e sanitizar `front` e `back` no backend antes de persistir.
 

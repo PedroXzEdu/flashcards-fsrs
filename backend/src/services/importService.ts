@@ -2,6 +2,7 @@ import { createEmptyCard } from "ts-fsrs";
 import { deckRepository } from "../repositories/deckRepository";
 import { cardRepository } from "../repositories/cardRepository";
 import { collector } from "../middlewares/metrics";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
 
 interface NoteInput {
   front: string;
@@ -33,8 +34,8 @@ class ImportService {
 
       await cardRepository.create({
         deck_id: deck.id,
-        front: note.front,
-        back: note.back,
+        front: sanitizeHtml(note.front),
+        back: sanitizeHtml(note.back),
         stability: emptyCard.stability,
         difficulty: emptyCard.difficulty,
         elapsed_days: emptyCard.elapsed_days,

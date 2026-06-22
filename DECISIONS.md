@@ -184,7 +184,7 @@ Se houver requisito de segurança mais rígido (produção real com dados sensí
 
 ---
 
-## 7. Rich Text Preservado no Backend (sem strip HTML)
+## 7. Rich Text Preservado no Backend (com sanitização)
 
 ### Contexto
 
@@ -192,27 +192,29 @@ Cards tem campos front/back com formatação rich text (negrito, itálico, lista
 
 ### Escolha
 
-Backend armazena HTML bruto (TEXT columns) sem sanitizar ou fazer strip.
+Backend armazena HTML sanitizado (TEXT columns) usando `isomorphic-dompurify` antes de persistir. Frontend também sanitiza na renderização (defense-in-depth).
 
 ### Justificativa
 
-- Preserva formatação exata do editor Tiptap
-- Separação de responsabilidades: backend armazena, frontend sanitiza na renderização
-- Zero perda de informação
+- Preserva formatação segura (tags permitidas: negrito, itálico, listas, imagens, MathML/KaTeX)
+- Defesa em camadas: backend filtra antes de persistir, frontend reforça na renderização
+- Tags e atributos não-permitidos são removidos, não apenas escapados
+- URLs maliciosas (javascript:) são removidas via DOMPurify
 
 ### Trade-offs
 
 - Banco contém HTML (poluição visual em queries diretas)
-- Se outro cliente acessar o dado bruto sem sanitizar, pode ter XSS
-- Tamanho maior no banco
+- Perda mínima de fidelidade (tags não-permitidas são removidas)
+- Custo de processamento adicional em cada escrita (create/update/import)
+- Dependência adicional: `isomorphic-dompurify`
 
 ### Quando revisitar
 
-Se houver clientes não-frontend consumindo a API (ex: mobile app).
+Se houver necessidade de ajustar a lista de tags/atributos permitidos.
 
 ---
 
-## 8. Sanitização no Frontend em vez do Backend
+## 8. Sanitização em Camadas (Frontend + Backend)
 
 ### Contexto
 
@@ -220,25 +222,24 @@ XSS prevention no rich text dos cards.
 
 ### Escolha
 
-`CardContent.tsx` faz sanitizeHtml + KaTeX render no frontend. Backend aceita HTML bruto.
+Backend sanitiza com `isomorphic-dompurify` antes de persistir (`sanitizeHtml.ts`). Frontend reforça na renderização (`CardContent.tsx`). Defesa em camadas.
 
 ### Justificativa
 
-- O backend não sabe o que é HTML "seguro" sem perder formatação
-- Frontend controla exatamente como renderiza
-- Permite evoluir o editor sem migrar dados
-- Tags permitidas: p, a, img, math, semanticos basicos
-- URLs restritas a http, https, data:image
+- Backend agora também sanitiza, eliminando o risco de XSS via chamadas diretas à API
+- Frontend continua sanitizando na renderização como segunda camada (redundância segura)
+- Tags permitidas mantidas idênticas nos dois lados: 27 tags HTML + MathML + 10 atributos
+- URLs restritas a http, https, data:image, paths relativos
 
 ### Trade-offs
 
-- Dois lugares de sanitização (se um componente novo esquecer, vaza XSS)
-- `dangerouslySetInnerHTML` necessário (mas com entrada sanitizada)
-- Backend confia no frontend — se alguém chamar a API direto com script malicioso, o dado vai pro banco
+- Duas configurações de sanitização para manter sincronizadas (backend DOMPurify + frontend manual)
+- Custo de processamento adicional em cada escrita
+- `dangerouslySetInnerHTML` ainda necessário no frontend (mas com entrada sanitizada duas vezes)
 
 ### Quando revisitar
 
-Se houver ingestão de dados de terceiros (ex: API pública, import de fontes não-confiáveis).
+Se houver alteração na lista de tags/atributos permitidos — ambos os lados devem ser atualizados em conjunto.
 
 ---
 

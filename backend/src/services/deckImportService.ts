@@ -6,6 +6,7 @@ import { cardRepository } from "../repositories/cardRepository";
 
 import { AppError } from "../utils/AppError";
 import { withTransaction } from "../utils/transaction";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
 
 class DeckImportService {
   async importSharedDeck(token: string, userId: number) {
@@ -35,8 +36,8 @@ class DeckImportService {
         await cardRepository.create(
           {
             deck_id: newDeck.id,
-            front: card.front,
-            back: card.back,
+            front: sanitizeHtml(card.front),
+            back: sanitizeHtml(card.back),
 
             stability: emptyCard.stability,
             difficulty: emptyCard.difficulty,

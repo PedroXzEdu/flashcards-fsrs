@@ -3,6 +3,7 @@ import { cardRepository } from "../repositories/cardRepository";
 import { deckRepository } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
 import { collector } from "../middlewares/metrics";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
 
 class CardService {
   async create(
@@ -18,8 +19,8 @@ class CardService {
     const emptyCard = createEmptyCard();
     const card = await cardRepository.create({
       deck_id: deckId,
-      front: data.front,
-      back: data.back,
+      front: sanitizeHtml(data.front),
+      back: sanitizeHtml(data.back),
       stability: emptyCard.stability,
       difficulty: emptyCard.difficulty,
       elapsed_days: emptyCard.elapsed_days,
@@ -47,8 +48,8 @@ class CardService {
 
     const emptyCard = createEmptyCard();
     const cardsData = cards.map((c) => ({
-      front: c.front,
-      back: c.back,
+      front: sanitizeHtml(c.front),
+      back: sanitizeHtml(c.back),
       stability: emptyCard.stability,
       difficulty: emptyCard.difficulty,
       elapsed_days: emptyCard.elapsed_days,
@@ -109,8 +110,8 @@ class CardService {
     const card = await cardRepository.update(
       deckId,
       cardId,
-      data.front,
-      data.back,
+      sanitizeHtml(data.front),
+      sanitizeHtml(data.back),
     );
     if (!card) {
       throw new AppError("Card não encontrado.", 404);
