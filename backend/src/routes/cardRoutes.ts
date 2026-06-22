@@ -7,6 +7,7 @@ import {
   updateCardSchema,
   createCardsBatchSchema,
 } from "../schemas/cardSchema";
+import { paginationSchema } from "../schemas/querySchemas";
 import {
   createCard,
   createCardsBatch,
@@ -26,7 +27,7 @@ router.post(
   createCardsBatch,
 );
 router.post("/", createCardRateLimiter, validate(createCardSchema), createCard);
-router.get("/", getCards);
+router.get("/", validate(undefined, paginationSchema), getCards);
 router.put("/:card_id", validate(updateCardSchema), updateCard);
 router.delete("/:card_id", deleteCard);
 

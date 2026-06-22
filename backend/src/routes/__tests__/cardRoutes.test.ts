@@ -24,8 +24,8 @@ describe("cardRoutes", () => {
     expect(getRoute("/", "post").route.stack).toHaveLength(3);
   });
 
-  it("GET / tem 1 middleware", () => {
-    expect(getRoute("/", "get").route.stack).toHaveLength(1);
+  it("GET / tem 2 middlewares", () => {
+    expect(getRoute("/", "get").route.stack).toHaveLength(2);
   });
 
   it("PUT /:card_id tem 2 middlewares (validate + controller)", () => {

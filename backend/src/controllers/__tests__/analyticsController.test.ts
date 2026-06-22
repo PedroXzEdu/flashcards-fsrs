@@ -56,7 +56,7 @@ const mockDailyQueue = [
   },
 ];
 
-function createReq(query: Record<string, string> = {}) {
+function createReq(query: Record<string, unknown> = {}) {
   return { userId: 1, query } as any;
 }
 
@@ -77,7 +77,7 @@ describe("AnalyticsController", () => {
         mockRetention,
       );
 
-      const req = createReq();
+      const req = createReq({ months: 12 });
       const res = createRes();
       const next = vi.fn();
 
@@ -95,7 +95,7 @@ describe("AnalyticsController", () => {
       const error = new AppError("Erro ao calcular retenção.", 500);
       vi.mocked(analyticsService.getRetentionRate).mockRejectedValue(error);
 
-      const req = createReq();
+      const req = createReq({ months: 12 });
       const res = createRes();
       const next = vi.fn();
 
@@ -112,7 +112,7 @@ describe("AnalyticsController", () => {
         mockHeatmap,
       );
 
-      const req = createReq();
+      const req = createReq({ months: 12 });
       const res = createRes();
       const next = vi.fn();
 
@@ -130,7 +130,7 @@ describe("AnalyticsController", () => {
       const error = new AppError("Erro ao buscar heatmap.", 500);
       vi.mocked(analyticsService.getReviewHeatmap).mockRejectedValue(error);
 
-      const req = createReq();
+      const req = createReq({ months: 12 });
       const res = createRes();
       const next = vi.fn();
 
@@ -217,7 +217,7 @@ describe("AnalyticsController", () => {
         mockForecast,
       );
 
-      const req = createReq({});
+      const req = createReq({ days: 30 });
       const res = createRes();
       const next = vi.fn();
 
@@ -236,7 +236,7 @@ describe("AnalyticsController", () => {
         mockForecast,
       );
 
-      const req = createReq({ days: "14" });
+      const req = createReq({ days: 14 });
       const res = createRes();
       const next = vi.fn();
 
@@ -246,26 +246,11 @@ describe("AnalyticsController", () => {
       expect(next).not.toHaveBeenCalled();
     });
 
-    it("deve usar 30 se o valor informado não estiver em [7, 14, 30]", async () => {
-      vi.mocked(analyticsService.getWorkloadForecast).mockResolvedValue(
-        mockForecast,
-      );
-
-      const req = createReq({ days: "20" });
-      const res = createRes();
-      const next = vi.fn();
-
-      await getWorkloadForecast(req, res, next);
-
-      expect(analyticsService.getWorkloadForecast).toHaveBeenCalledWith(1, 30);
-      expect(next).not.toHaveBeenCalled();
-    });
-
     it("deve chamar next(err) se analyticsService.getWorkloadForecast lançar erro", async () => {
       const error = new AppError("Erro ao buscar forecast.", 500);
       vi.mocked(analyticsService.getWorkloadForecast).mockRejectedValue(error);
 
-      const req = createReq({ days: "30" });
+      const req = createReq({ days: 30 });
       const res = createRes();
       const next = vi.fn();
 

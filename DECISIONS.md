@@ -368,23 +368,24 @@ Validação de request body nas rotas.
 
 ### Escolha
 
-Middleware `validate(schema)` que aplica Zod schema no `req.body`.
+Middleware `validate(bodySchema?, querySchema?)` que aplica Zod schemas no `req.body` e/ou `req.query`.
 
 ### Justificativa
 
 - Separa validação do controller
 - Erros de validação caem no `errorHandler` e retornam 400 com detalhes
-- Schemas reutilizáveis (ex: cardSchema usado em create e update)
+- Schemas reutilizáveis (ex: cardSchema usado em create e update, querySchemas para paginação e analytics)
 - Tipos inferidos automaticamente dos schemas
+- Query params agora validados pelo mesmo middleware (segundo argumento opcional)
 
 ### Trade-offs
 
-- Valida apenas `req.body` (não params/query — precisa de middleware extra)
+- Path params ainda exigem validação manual ou middleware separado
 - Mensagens de erro em PT-BR hardcoded nos schemas
 
 ### Quando revisitar
 
-Se precisar validar query params ou path params com o mesmo padrão.
+Se precisar validar path params com o mesmo padrão de middleware.
 
 ---
 

@@ -53,8 +53,7 @@ export async function getCards(
   next: NextFunction,
 ) {
   try {
-    const page = Math.max(parseInt(req.query.page as string) || 1, 1);
-    const limit = Math.max(parseInt(req.query.limit as string) || 20, 1);
+    const { page, limit } = req.query as unknown as { page: number; limit: number };
 
     const { deck_id } = deckIdParams.parse(req.params);
     const result = await cardService.list(

@@ -3,8 +3,8 @@ import { z, ZodError } from "zod";
 
 import { validate } from "../validate";
 
-function createReq(body: unknown = {}) {
-  return { body } as any;
+function createReq(body: unknown = {}, query: unknown = {}) {
+  return { body, query } as any;
 }
 
 function createRes() {
@@ -75,5 +75,43 @@ describe("Validate middleware", () => {
 
     expect(() => validate(schema)(req, res, next)).toThrow(ZodError);
     expect(next).not.toHaveBeenCalled();
+  });
+
+  describe("querySchema", () => {
+    it("deve parsear query params quando querySchema é fornecido", () => {
+      const bodySchema = z.object({ name: z.string() });
+      const querySchema = z.object({ page: z.coerce.number().int().positive() });
+      const req = createReq({ name: "teste" }, { page: "1" });
+      const res = createRes();
+      const next = vi.fn();
+
+      validate(bodySchema, querySchema)(req, res, next);
+
+      expect(req.body).toEqual({ name: "teste" });
+      expect(req.query).toEqual({ page: 1 });
+      expect(next).toHaveBeenCalledTimes(1);
+    });
+
+    it("deve funcionar com apenas querySchema (bodySchema undefined)", () => {
+      const querySchema = z.object({ limit: z.coerce.number().default(20) });
+      const req = createReq({}, {});
+      const res = createRes();
+      const next = vi.fn();
+
+      validate(undefined, querySchema)(req, res, next);
+
+      expect(req.query).toEqual({ limit: 20 });
+      expect(next).toHaveBeenCalledTimes(1);
+    });
+
+    it("deve propagar ZodError quando querySchema falha", () => {
+      const querySchema = z.object({ page: z.coerce.number().positive() });
+      const req = createReq({}, { page: "-1" });
+      const res = createRes();
+      const next = vi.fn();
+
+      expect(() => validate(undefined, querySchema)(req, res, next)).toThrow(ZodError);
+      expect(next).not.toHaveBeenCalled();
+    });
   });
 });

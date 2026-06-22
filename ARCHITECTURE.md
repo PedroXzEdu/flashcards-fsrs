@@ -126,7 +126,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   ├── schemas/               → Zod schemas
 │   │   │   ├── authSchema.ts
 │   │   │   ├── cardSchema.ts
-│   │   │   └── deckSchema.ts
+│   │   │   ├── deckSchema.ts
+│   │   │   └── querySchemas.ts    → pagination, analyticsMonths, analyticsDays
 │   │   ├── database/
 │   │   │   ├── db.ts               → PG Pool + runMigrations() + ping()
 │   │   │   └── migrations.sql      → 4 tabelas + índices
@@ -227,7 +228,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 **Middleware**
 
 - `auth`: verifica JWT, seta `req.userId`
-- `validate(schema)`: valida req.body com Zod
+- `validate(bodySchema?, querySchema?)`: valida req.body e/ou req.query com Zod (ambos opcionais)
 - `rateLimiter`: 5 limiters (4 granulares + 1 global `1000/15min`)
 - `bruteForce`: bloqueia IP após 5 tentativas de login inválidas em 15min (30min de block), armazenamento in-memory
 - `requestId`: UUID + header X-Request-Id
@@ -301,7 +302,7 @@ POST /decks/shared/:token/import  → cópia transactional
 - **Rich text é armazenado como HTML bruto** no banco
 - **Frontend sanitiza render** — `CardContent` faz `sanitizeHtml()` + KaTeX
 - **Erros passam pelo `errorHandler`** — via `next(err)`
-- **Validação de request** via Zod middleware (`validate.ts`)
+- **Validação de request** via Zod middleware (`validate.ts`) — body, query params ou ambos
 - **Evitar lógica complexa em routes** — routes só registram middleware + controller
 - **Transações** via `PoolClient` adquirido com `pool.connect()`
 - **Respostas seguem padrão** `{ success: true, data: {} }`

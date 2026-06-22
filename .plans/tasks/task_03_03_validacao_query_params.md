@@ -2,7 +2,7 @@
 id: "T03.03"
 phase: "P03"
 title: "Adicionar Validação de Query Params"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []

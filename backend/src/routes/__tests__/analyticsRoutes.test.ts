@@ -16,12 +16,12 @@ describe("analyticsRoutes", () => {
     expect(getRoutes()).toHaveLength(6);
   });
 
-  it("GET /retention-rate tem 1 middleware", () => {
-    expect(getRoute("/retention-rate", "get").route.stack).toHaveLength(1);
+  it("GET /retention-rate tem 2 middlewares", () => {
+    expect(getRoute("/retention-rate", "get").route.stack).toHaveLength(2);
   });
 
-  it("GET /review-heatmap tem 1 middleware", () => {
-    expect(getRoute("/review-heatmap", "get").route.stack).toHaveLength(1);
+  it("GET /review-heatmap tem 2 middlewares", () => {
+    expect(getRoute("/review-heatmap", "get").route.stack).toHaveLength(2);
   });
 
   it("GET /forgetting-curve tem 1 middleware", () => {
@@ -32,8 +32,8 @@ describe("analyticsRoutes", () => {
     expect(getRoute("/predicted-recall", "get").route.stack).toHaveLength(1);
   });
 
-  it("GET /workload-forecast tem 1 middleware", () => {
-    expect(getRoute("/workload-forecast", "get").route.stack).toHaveLength(1);
+  it("GET /workload-forecast tem 2 middlewares", () => {
+    expect(getRoute("/workload-forecast", "get").route.stack).toHaveLength(2);
   });
 
   it("GET /daily-queue tem 1 middleware", () => {

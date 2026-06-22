@@ -29,7 +29,7 @@ const mockCard = {
 function createReq(
   params: Record<string, string> = {},
   body: Record<string, unknown> = {},
-  query: Record<string, string> = {},
+  query: Record<string, unknown> = {},
 ) {
   return { params, body, query, userId: 1 } as any;
 }
@@ -147,7 +147,7 @@ describe("CardController", () => {
       };
       vi.mocked(cardService.list).mockResolvedValue(paginatedResult);
 
-      const req = createReq({ deck_id: "1" });
+      const req = createReq({ deck_id: "1" }, {}, { page: 1, limit: 20 });
       const res = createRes();
       const next = vi.fn();
 

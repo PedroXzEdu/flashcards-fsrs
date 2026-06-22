@@ -11,10 +11,7 @@ export async function getRetentionRate(
   next: NextFunction,
 ) {
   try {
-    const months = Math.min(
-      Math.max(parseInt(req.query.months as string) || 12, 1),
-      120,
-    );
+    const { months } = req.query as unknown as { months: number };
 
     const result = await analyticsService.getRetentionRate(req.userId!, months);
 
@@ -33,10 +30,7 @@ export async function getReviewHeatmap(
   next: NextFunction,
 ) {
   try {
-    const months = Math.min(
-      Math.max(parseInt(req.query.months as string) || 12, 1),
-      120,
-    );
+    const { months } = req.query as unknown as { months: number };
 
     const result = await analyticsService.getReviewHeatmap(req.userId!, months);
 
@@ -89,17 +83,11 @@ export async function getWorkloadForecast(
   next: NextFunction,
 ) {
   try {
-    const days = Math.min(
-      Math.max(parseInt(req.query.days as string) || 30, 7),
-      30,
-    );
-
-    const allowed = [7, 14, 30];
-    const clamped = allowed.includes(days) ? days : 30;
+    const { days } = req.query as unknown as { days: number };
 
     const result = await analyticsService.getWorkloadForecast(
       req.userId!,
-      clamped,
+      days,
     );
 
     return res.json({

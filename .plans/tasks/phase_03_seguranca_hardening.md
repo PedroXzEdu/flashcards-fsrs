@@ -57,7 +57,7 @@ Nenhuma
 
 ---
 
-### [ ] [T03.02 — Ativar CSP enforcement (sair de reportOnly)](./task_03_02_csp_enforce.md)
+### [x] [T03.02 — Ativar CSP enforcement (sair de reportOnly)](./task_03_02_csp_enforce.md)
 
 **Descrição:** Mudar CSP de reportOnly para enforce, ajustando a política conforme necessário.
 
@@ -76,7 +76,7 @@ Nenhuma
 
 ---
 
-### [ ] [T03.03 — Adicionar validação de query params nas rotas](./task_03_03_validacao_query_params.md)
+### [x] [T03.03 — Adicionar validação de query params nas rotas](./task_03_03_validacao_query_params.md)
 
 **Descrição:** Criar middleware de validação para query params (ex: `page`, `limit`, `months`, `days`) usando Zod.
 
@@ -96,7 +96,7 @@ Nenhuma
 
 ---
 
-### [ ] [T03.04 — Adicionar validação de `card_id` e `deck_id` nas rotas](./task_00_01_validar_path_params.md)
+### [x] [T03.04 — Adicionar validação de `card_id` e `deck_id` nas rotas](./task_00_01_validar_path_params.md)
 
 **Descrição:** Aplicar validação dos path params como números inteiros positivos via middleware Zod.
 
