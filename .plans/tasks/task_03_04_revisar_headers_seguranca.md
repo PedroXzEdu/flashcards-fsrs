@@ -1,3 +1,13 @@
+---
+id: "T03.04"
+phase: "P03"
+title: "Revisar Headers de Segurança"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 03.04 — Revisar Headers de Segurança
 
 ## Estado Atual
@@ -25,6 +35,22 @@ Verificar se todos os headers de segurança recomendados estão presentes e conf
 
 - `backend/src/app.ts`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Verificar headers atuais: `curl -sI http://localhost:3000/health | grep -i "^x-\|^referrer\|^permissions"`
@@ -51,3 +77,9 @@ curl -sI http://localhost:3000/health
 - [ ] Headers revisados e configurados
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

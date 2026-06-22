@@ -1,3 +1,13 @@
+---
+id: "T07.02"
+phase: "P07"
+title: "Revisar e Atualizar ROADMAP.md"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 07.02 — Revisar e Atualizar ROADMAP.md
 
 ## Estado Atual
@@ -24,6 +34,22 @@ Atualizar o roadmap para marcar todas as funcionalidades concluídas e deixar cl
 
 - `ROADMAP.md`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Revisar todas as tasks concluídas
@@ -44,3 +70,9 @@ Atualizar o roadmap para marcar todas as funcionalidades concluídas e deixar cl
 
 - [ ] ROADMAP.md atualizado
 - [ ] `@doc` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

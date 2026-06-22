@@ -1,3 +1,11 @@
+---
+id: "task_5_4a_build_pipeline"
+title: "Build: Pipeline"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.4a — Build: Pipeline
 
 ## Estado Atual
@@ -79,3 +87,9 @@ cd frontend && npx vite preview --port 4173
 ```
 chore(build): configure production build pipeline for frontend and backend
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

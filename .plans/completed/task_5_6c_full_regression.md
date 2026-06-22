@@ -1,3 +1,11 @@
+---
+id: "task_5_6c_full_regression"
+title: "Deploy: Full Regression Verification"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.6c — Deploy: Full Regression Verification
 
 ## Estado Atual
@@ -93,3 +101,9 @@ docker compose -f docker-compose.prod.yml logs --tail=20 backend
 ```
 chore(release): complete Phase 05 — Production Readiness
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

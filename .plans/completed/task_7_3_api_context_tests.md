@@ -1,3 +1,11 @@
+---
+id: "task_7_3_api_context_tests"
+title: "Testes da API Layer e Contextos"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 7.3 — Testes da API Layer e Contextos
 
 ## Estado Atual
@@ -79,3 +87,9 @@ npx vitest --project frontend
 - [ ] useFocusTrap testado
 - [ ] `npx tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

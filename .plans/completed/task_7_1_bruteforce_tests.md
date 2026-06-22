@@ -1,3 +1,11 @@
+---
+id: "task_7_1_bruteforce_tests"
+title: "Testes do bruteForce.ts"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 7.1 — Testes do bruteForce.ts
 
 ## Estado Atual
@@ -54,3 +62,9 @@ npx vitest --project unit -t bruteForce
 - [ ] Testes criados e passando
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,13 @@
+---
+id: "T04.01"
+phase: "P04"
+title: "Criar Endpoint Agregado `GET /review/due-counts`"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 04.01 — Criar Endpoint Agregado `GET /review/due-counts`
 
 ## Estado Atual
@@ -34,6 +44,22 @@ Criar endpoint que retorna contagem de cards para revisão por baralho em UMA qu
 - `backend/src/routes/reviewRoutes.ts`
 - `frontend/src/api/cards.ts`
 - `frontend/src/pages/decks/DashboardPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -73,3 +99,9 @@ npx vitest run
 - [ ] Dashboard usando endpoint agregado
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

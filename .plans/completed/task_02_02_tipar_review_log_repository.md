@@ -1,8 +1,18 @@
+---
+id: "T02.02"
+phase: "P02"
+title: "Tipar `data: any` em ReviewLogRepository"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 02.02 — Tipar `data: any` em ReviewLogRepository
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 02 — Qualidade de Código e Tipagem](./phase_02_qualidade_tipagem.md)
 - **Dependências**: Nenhuma
 
@@ -24,6 +34,22 @@ Substituir `data: any` por interface `CreateReviewLogInput` em `reviewLogReposit
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/repositories/reviewLogRepository.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -51,3 +77,9 @@ npx vitest --project unit
 - [ ] `tsc --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

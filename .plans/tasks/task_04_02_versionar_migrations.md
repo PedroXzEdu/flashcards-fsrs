@@ -1,3 +1,13 @@
+---
+id: "T04.02"
+phase: "P04"
+title: "Versionar Migrations"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 04.02 — Versionar Migrations
 
 ## Estado Atual
@@ -38,6 +48,22 @@ Substituir `migrations.sql` único e executado em lote toda vez que o servidor s
 - `backend/src/database/db.ts`
 - `backend/src/database/migrations.sql` (remover ou manter como referência)
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Criar `backend/src/database/migrations/` com arquivos numerados extraídos de `migrations.sql`
@@ -69,3 +95,9 @@ cd backend && npx tsc --noEmit
 - [ ] Runner implementado
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,11 @@
+---
+id: "task_7_2_frontend_component_tests"
+title: "Testes de Componentes Frontend"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 7.2 — Testes de Componentes Frontend
 
 ## Estado Atual
@@ -67,3 +75,9 @@ npx vitest --project frontend
 - [ ] Testes passando
 - [ ] `npx tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

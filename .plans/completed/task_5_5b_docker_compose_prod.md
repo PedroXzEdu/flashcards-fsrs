@@ -1,3 +1,11 @@
+---
+id: "task_5_5b_docker_compose_prod"
+title: "Docker: Compose Production"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.5b — Docker: Compose Production
 
 ## Estado Atual
@@ -85,3 +93,9 @@ docker compose -f docker-compose.prod.yml down -v
 ```
 feat(docker): production docker-compose with persistent volume and healthchecks
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

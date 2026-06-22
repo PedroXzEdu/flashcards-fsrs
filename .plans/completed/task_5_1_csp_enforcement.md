@@ -1,3 +1,11 @@
+---
+id: "task_5_1_csp_enforcement"
+title: "CSP Enforcement"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.1 — CSP Enforcement
 
 ## Estado Atual
@@ -79,3 +87,9 @@ curl -sI http://localhost:PORT | grep content-security-policy
 ```
 feat(csp): enforce content security policy with nonce support
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

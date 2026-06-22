@@ -1,3 +1,11 @@
+---
+id: "task_5_2a_manifest_icons"
+title: "PWA: Manifest & Icons"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.2a — PWA: Manifest & Icons
 
 ## Estado Atual
@@ -75,3 +83,9 @@ npx vite build
 ```
 feat(pwa): configure manifest, icons and meta tags for installability
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

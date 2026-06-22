@@ -1,8 +1,18 @@
+---
+id: "T02.06"
+phase: "P02"
+title: "Limpar TODO, Dead Code e Comentários"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 02.06 — Limpar TODO, Dead Code e Comentários
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 02 — Qualidade de Código e Tipagem](./phase_02_qualidade_tipagem.md)
 - **Dependências**: Nenhuma
 
@@ -25,6 +35,22 @@ Revisar todo o código-fonte em busca de `TODO`, `FIXME`, `console.log` comentad
 ## Arquivos Permitidos para Modificação
 
 - Qualquer arquivo em `backend/src/` e `frontend/src/`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -53,3 +79,9 @@ cd frontend && npx tsc -b --noEmit
 - [ ] Código limpo de TODOs/FIXMEs
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,8 +1,18 @@
+---
+id: "T02.04"
+phase: "P02"
+title: "Habilitar `strict: true` no Frontend"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 02.04 — Habilitar `strict: true` no Frontend
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 02 — Qualidade de Código e Tipagem](./phase_02_qualidade_tipagem.md)
 - **Dependências**: Nenhuma
 
@@ -26,6 +36,22 @@ Ativar `"strict": true` no `frontend/tsconfig.json` e corrigir todos os erros de
 
 - `frontend/tsconfig.app.json`
 - Arquivos .ts/.tsx quebrados pelo strict mode
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -57,3 +83,9 @@ npm run build
 - [ ] Erros corrigidos
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

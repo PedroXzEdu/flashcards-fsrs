@@ -1,3 +1,13 @@
+---
+id: "T06.02"
+phase: "P06"
+title: "Criar Página de Deck Vazio (Empty State)"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 06.02 — Criar Página de Deck Vazio (Empty State)
 
 ## Estado Atual
@@ -26,6 +36,22 @@ Criar componente de empty state para quando um deck não tem cards ainda, com CT
 
 - `frontend/src/components/EmptyDeckState.tsx` (novo)
 - `frontend/src/pages/decks/DeckPage.tsx` (mudança mínima)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -56,3 +82,9 @@ npx vitest run
 - [ ] Integrado ao DeckPage
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

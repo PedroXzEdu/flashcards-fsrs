@@ -1,3 +1,13 @@
+---
+id: "T05.04"
+phase: "P05"
+title: "Documentar Arquitetura do FSRS"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 05.04 — Documentar Arquitetura do FSRS
 
 ## Estado Atual
@@ -27,6 +37,22 @@ Adicionar documentação no código sobre o fluxo FSRS, explicando a sincroniza�
 - `backend/src/services/fsrsService.ts`
 - `ARCHITECTURE.md`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Adicionar cabeçalho explicativo em `fsrsService.ts`
@@ -49,3 +75,9 @@ cd backend && npx tsc --noEmit
 - [ ] Documentação adicionada
 - [ ] `tsc --noEmit` passando
 - [ ] `@doc` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,11 @@
+---
+id: "task_5_3c_security_headers"
+title: "Hardening: Security Headers"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.3c — Hardening: Security Headers
 
 ## Estado Atual
@@ -75,3 +83,9 @@ curl -sI http://localhost:PORT | grep -E "(X-Frame|X-Content|Strict-Transport|X-
 ```
 feat(security): enforce security headers (X-Frame, X-Content-Type, HSTS, X-Robots)
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

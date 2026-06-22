@@ -1,3 +1,11 @@
+---
+id: "task_6_3_eslint_cleanup"
+title: "Remover `console.log` e Supressões ESLint"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 6.3 — Remover `console.log` e Supressões ESLint
 
 ## Estado Atual
@@ -66,3 +74,9 @@ npx tsc -b --noEmit
 - [ ] Supressões ESLint resolvidas ou justificadas
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,13 @@
+---
+id: "T06.01"
+phase: "P06"
+title: "Adicionar Testes Frontend para Componentes Reativos"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 06.01 — Adicionar Testes Frontend para Componentes Reativos
 
 ## Estado Atual
@@ -28,6 +38,22 @@ Adicionar testes unitários para componentes que têm lógica reativa complexa: 
 - `frontend/src/components/AddDeckModal.test.tsx` (novo)
 - `frontend/src/components/EditDeckModal.test.tsx` (novo)
 - `frontend/src/components/PasswordStrengthIndicator.test.tsx` (novo)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -64,3 +90,9 @@ npx tsc -b --noEmit
 - [ ] Testes criados e passando
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

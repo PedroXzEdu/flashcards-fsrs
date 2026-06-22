@@ -1,3 +1,11 @@
+---
+id: "task_5_5a_prod_dockerfiles"
+title: "Docker: Prod Dockerfiles"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.5a — Docker: Prod Dockerfiles
 
 ## Estado Atual
@@ -71,3 +79,9 @@ docker images flashfsrs-frontend flashfsrs-backend
 ```
 feat(docker): multi-stage Dockerfile for production (nginx frontend, node backend)
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

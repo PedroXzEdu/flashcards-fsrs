@@ -1,3 +1,13 @@
+---
+id: "T04.05"
+phase: "P04"
+title: "Otimizar `findDailyQueue` com Cálculo no SQL"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 04.05 — Otimizar `findDailyQueue` com Cálculo no SQL
 
 ## Estado Atual
@@ -26,6 +36,22 @@ Mover o cálculo de `predicted_recall` do backend (em memória) para o SQL, e or
 
 - `backend/src/repositories/cardRepository.ts`
 - `backend/src/services/priorityQueueService.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -65,3 +91,9 @@ npx vitest --project unit
 - [ ] Cálculo em memória removido
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,12 @@
+---
+id: "P05"
+title: "Evolução do FSRS"
+status: "pending"
+priority: "medium"
+estimate: "1 week"
+depends_on: []
+---
+
 # Fase 05 — Evolução do FSRS
 
 ## Objetivo
@@ -15,8 +24,14 @@ Médio (1 semana)
 ## Dependências
 Nenhuma
 
-## Critério de Conclusão
-Parâmetros FSRS armazenados por deck (ou globalmente). Fila de prioridade trata cards novos corretamente. Analytics usa dados reais.
+## Success Metrics
+
+- Parâmetros FSRS customizáveis por deck
+- Fila de prioridade integrada às revisões
+- Taxa de retenção real vs prevista calculada
+- `FsrsService` aceita parâmetros opcionais
+- Testes existentes continuam passando
+
 
 ---
 
@@ -101,3 +116,99 @@ Parâmetros FSRS armazenados por deck (ou globalmente). Fila de prioridade trata
 - [ ] Criar método `getFSRS(deckId?)` que carrega parâmetros do deck (ou usa default)
 - [ ] Se nenhum deck específico, usar `generatorParameters()` como fallback
 - [ ] Garantir que o preview e submit usem a mesma instância (ou com mesmos parâmetros)
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

@@ -1,8 +1,18 @@
+---
+id: "T01.05"
+phase: "P01"
+title: "Extrair Componentes do DashboardPage"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.05 — Extrair Componentes do DashboardPage
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Nenhuma
 
@@ -31,6 +41,22 @@ Dividir `DashboardPage.tsx` (881 linhas) em ~5 componentes independentes.
 - `frontend/src/components/dashboard/DeckList.tsx` (novo)
 - `frontend/src/components/dashboard/CreateDeckForm.tsx` (novo)
 - `frontend/src/pages/decks/DashboardPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -62,3 +88,9 @@ npx vitest run
 - [ ] DashboardPage reduzido
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

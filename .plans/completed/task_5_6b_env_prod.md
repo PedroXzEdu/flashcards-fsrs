@@ -1,3 +1,11 @@
+---
+id: "task_5_6b_env_prod"
+title: "Deploy: Production Environment File"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.6b — Deploy: Production Environment File
 
 ## Estado Atual
@@ -65,3 +73,9 @@ cat .env.prod.example
 ```
 chore(config): add .env.prod.example with production environment variables
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

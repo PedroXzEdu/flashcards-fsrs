@@ -1,8 +1,18 @@
+---
+id: "T01.04"
+phase: "P01"
+title: "Extrair Componentes do ReviewPage"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.04 — Extrair Componentes do ReviewPage
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Nenhuma
 
@@ -32,6 +42,22 @@ Dividir `ReviewPage.tsx` (818 linhas) em ~5 componentes independentes e refatora
 - `frontend/src/components/review/ReviewSessionProgress.tsx` (novo)
 - `frontend/src/components/review/ReviewSessionSummary.tsx` (novo)
 - `frontend/src/pages/review/ReviewPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -65,3 +91,9 @@ npx vitest run
 - [ ] `tsc -b --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

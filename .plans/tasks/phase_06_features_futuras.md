@@ -1,3 +1,12 @@
+---
+id: "P06"
+title: "Features Futuras"
+status: "pending"
+priority: "low"
+estimate: "2-4 weeks"
+depends_on: []
+---
+
 # Fase 06 — Features Futuras (Opcional)
 
 ## Objetivo
@@ -15,8 +24,15 @@ Variável (2-4 semanas no total)
 ## Dependências
 Fases 00-05 preferencialmente concluídas
 
-## Critério de Conclusão
-Features implementadas conforme disponibilidade de tempo. Nenhuma feature desta fase é obrigatória para a entrega do TCC.
+## Success Metrics
+
+- Sistema de tags implementado e funcional
+- Sistema de achievements/gamificação implementado
+- Modo de revisão expressa funcional
+- Exportação para .apkg implementada
+- Sincronização multi-dispositivo funcional
+- Nenhuma regressão em funcionalidades existentes
+
 
 ---
 
@@ -111,3 +127,99 @@ Features implementadas conforme disponibilidade de tempo. Nenhuma feature desta 
 - [ ] Adicionar header `Cache-Control: no-cache` nas respostas da API
 - [ ] Garantir que PWA não cacheie respostas de auth (token)
 - [ ] Adicionar "puxar atualização" ao abrir o app (verificar versão do service worker)
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

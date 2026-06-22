@@ -1,3 +1,11 @@
+---
+id: "task_5_2c_offline_page"
+title: "PWA: Offline Page"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.2c — PWA: Offline Page
 
 ## Estado Atual
@@ -68,3 +76,9 @@ npx vite build
 ```
 feat(pwa): add offline fallback page for when network is unavailable
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

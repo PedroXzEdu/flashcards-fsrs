@@ -1,3 +1,12 @@
+---
+id: "P03"
+title: "Segurança e Hardening"
+status: "pending"
+priority: "high"
+estimate: "1 week"
+depends_on: []
+---
+
 # Fase 03 — Segurança e Hardening
 
 ## Objetivo
@@ -15,8 +24,15 @@ Médio (1 semana)
 ## Dependências
 Nenhuma
 
-## Critério de Conclusão
-Sanitização server-side implementada para rich text. CSP em modo enforce (não mais reportOnly). Testes de segurança existentes continuam passando.
+## Success Metrics
+
+- Sanitização server-side com DOMPurify aplicada em cardService e importService
+- CSP em modo enforce (não mais reportOnly)
+- Validação de query params centralizada via middleware Zod
+- Path params validados como números inteiros positivos
+- Headers de segurança revisados e completos
+- Nenhuma regressão em fluxos existentes
+
 
 ---
 
@@ -109,3 +125,99 @@ Sanitização server-side implementada para rich text. CSP em modo enforce (não
 - [ ] Verificar headers atuais com `curl -I http://localhost:3000/health`
 - [ ] Adicionar `referrerPolicy` e `permissionsPolicy` no helmet config se ausentes
 - [ ] Testar que não quebram funcionalidades existentes
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

@@ -1,3 +1,13 @@
+---
+id: "T07.04"
+phase: "P07"
+title: "Limpeza Final de Código"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 07.04 — Limpeza Final de Código
 
 ## Estado Atual
@@ -26,6 +36,22 @@ Remover comentários temporários, `console.log` esquecidos, código comentado e
 
 - Qualquer arquivo de código (backend/frontend)
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Rodar `grep -rn "console.log"` no backend e frontend
@@ -53,3 +79,9 @@ cd frontend && npx tsc -b --noEmit
 - [ ] Código comentado removido
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

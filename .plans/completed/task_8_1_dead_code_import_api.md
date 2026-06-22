@@ -1,3 +1,11 @@
+---
+id: "task_8_1_dead_code_import_api"
+title: "Dead Code + ImportApi Refactor"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 8.1 — Dead Code + ImportApi Refactor
 
 ## Estado Atual
@@ -55,3 +63,9 @@ npx vitest --project frontend
 - [ ] ImportApi refatorado
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

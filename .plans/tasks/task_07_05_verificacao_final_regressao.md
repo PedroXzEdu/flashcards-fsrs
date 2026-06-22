@@ -1,3 +1,13 @@
+---
+id: "T07.05"
+phase: "P07"
+title: "Verificação Final de Regressão"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 07.05 — Verificação Final de Regressão
 
 ## Estado Atual
@@ -25,6 +35,22 @@ Executar verificação completa de regressão antes da entrega final: build, tes
 ## Arquivos Permitidos para Modificação
 
 - Nenhum (apenas verificação)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -62,3 +88,9 @@ docker compose up -d
 - [ ] Testes passando
 - [ ] Fluxos manuais OK
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

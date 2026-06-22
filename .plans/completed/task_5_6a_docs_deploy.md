@@ -1,3 +1,11 @@
+---
+id: "task_5_6a_docs_deploy"
+title: "Deploy: Documentation (README)"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.6a — Deploy: Documentation (README)
 
 ## Estado Atual
@@ -64,3 +72,9 @@ cat README.md | grep -A 20 "## Deploy"
 ```
 docs(readme): add deployment section with Docker Compose instructions
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

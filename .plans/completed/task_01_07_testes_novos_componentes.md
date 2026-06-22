@@ -1,8 +1,18 @@
+---
+id: "T01.07"
+phase: "P01"
+title: "Adicionar Testes para Componentes Extraídos"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.07 — Adicionar Testes para Componentes Extraídos
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Tasks 01.01 a 01.05
 
@@ -27,6 +37,22 @@ Escrever testes com `@testing-library/react` para os componentes extraídos nas 
 - `frontend/src/components/__tests__/ReviewCard.test.tsx` (novo)
 - `frontend/src/components/__tests__/DeckCard.test.tsx` (novo)
 - `frontend/src/components/__tests__/CardForm.test.tsx` (novo)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -77,3 +103,9 @@ cd frontend && npx vitest run
 - [ ] Testes dos 4 componentes criados
 - [ ] Todos os testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

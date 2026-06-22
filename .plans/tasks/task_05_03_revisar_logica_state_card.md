@@ -1,3 +1,13 @@
+---
+id: "T05.03"
+phase: "P05"
+title: "Revisar Lógica de `state` do Card na Transição"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 05.03 — Revisar Lógica de `state` do Card na Transição
 
 ## Estado Atual
@@ -27,6 +37,22 @@ Verificar se a transição de estados (New → Learning → Review, Review → R
 - `backend/src/services/fsrsService.ts` (mudanças mínimas se houver bug)
 - `backend/src/services/reviewService.ts`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Mapear máquina de estados atual do FSRS
@@ -54,3 +80,9 @@ npx vitest --project unit
 - [ ] Estados revisados e corretos
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

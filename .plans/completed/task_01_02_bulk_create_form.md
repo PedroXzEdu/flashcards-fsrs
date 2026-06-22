@@ -1,8 +1,18 @@
+---
+id: "T01.02"
+phase: "P01"
+title: "Extrair Componente `BulkCreateForm`"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.02 — Extrair Componente `BulkCreateForm`
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Nenhuma
 
@@ -25,6 +35,22 @@ Extrair o formulário de criação em lote (linhas 976-1096 do `DeckPage.tsx`) e
 
 - `frontend/src/components/BulkCreateForm.tsx` (novo)
 - `frontend/src/pages/decks/DeckPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -53,3 +79,9 @@ npx vitest run
 - [ ] DeckPage reduzido
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

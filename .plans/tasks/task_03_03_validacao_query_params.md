@@ -1,3 +1,13 @@
+---
+id: "T03.03"
+phase: "P03"
+title: "Adicionar Validação de Query Params"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 03.03 — Adicionar Validação de Query Params
 
 ## Estado Atual
@@ -29,6 +39,22 @@ Criar middleware de validação para query params usando Zod e aplicar nas rotas
 - `backend/src/controllers/cardController.ts`
 - `backend/src/controllers/analyticsController.ts`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Estender `validate()` para aceitar schema de query opcional
@@ -57,3 +83,9 @@ npx vitest --project unit
 - [ ] Validação manual removida
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

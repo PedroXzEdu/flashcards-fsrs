@@ -1,3 +1,11 @@
+---
+id: "task_5_3b_bruteforce_login"
+title: "Hardening: Brute Force Protection (Login)"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.3b — Hardening: Brute Force Protection (Login)
 
 ## Estado Atual
@@ -75,3 +83,9 @@ npx vitest --project integration
 ```
 feat(security): add brute force protection on login (5 attempts, 30min block)
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

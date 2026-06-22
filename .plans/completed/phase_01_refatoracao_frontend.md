@@ -1,3 +1,13 @@
+---
+id: "P01"
+title: "Refatoração Frontend"
+status: "completed"
+priority: "high"
+estimate: "2-3 weeks"
+depends_on: []
+---
+
+
 # Fase 01 — Refatoração Frontend
 
 ## Objetivo
@@ -21,9 +31,17 @@ Alto (2-3 semanas)
 ## Dependências
 Nenhuma — pode começar imediatamente
 
-## Critério de Conclusão
-Nenhum arquivo de página frontend excede 300 linhas de lógica própria (excluindo imports e types). Todos os testes existentes continuam passando.
+## Success Metrics
 
+- DeckPage <= 300 linhas de lógica própria
+- ReviewPage <= 300 linhas de lógica própria
+- DashboardPage <= 300 linhas de lógica própria
+- Componentes CardForm, BulkCreateForm, CardListItem extraídos
+- Componentes ReviewHeader, RatingButtons, ReviewCard, ReviewSessionProgress, ReviewSessionSummary extraídos
+- Componentes StreakCards, WorkloadChart, DeckCard, DeckList, CreateDeckForm extraídos
+- Componentes-base UI (Card, FormField, Badge, PageSection) criados
+- Testes para componentes críticos criados
+- `tsc -b --noEmit` passando sem erros
 ---
 
 ## Tarefas
@@ -174,3 +192,51 @@ Nenhum arquivo de página frontend excede 300 linhas de lógica própria (exclui
 - [ ] Testar `ReviewCard`: renderiza front, flip mostra back, preview é carregado
 - [ ] Testar `DeckCard`: renderiza título, descrição, contagem, due badge
 - [ ] Testar `CreateDeckForm`: submit com título válido, erro sem título
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

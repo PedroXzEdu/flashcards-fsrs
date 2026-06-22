@@ -1,3 +1,13 @@
+---
+id: "T06.03"
+phase: "P06"
+title: "Adicionar Feedback Visual para Ações do Usuário"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 06.03 — Adicionar Feedback Visual para Ações do Usuário
 
 ## Estado Atual
@@ -30,6 +40,22 @@ Adicionar feedback visual (toast/snackbar) para ações como criar deck, criar c
 - `frontend/src/contexts/ToastContext.tsx` (novo) (ou `frontend/src/hooks/useToast.ts`)
 - `frontend/src/App.tsx`
 - Componentes que chamam ações (AddDeckModal, EditDeckModal, CreateCard, ImportPage, etc.)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -65,3 +91,9 @@ npx vitest run
 - [ ] Toasts integrados nas ações principais
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

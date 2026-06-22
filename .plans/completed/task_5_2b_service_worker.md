@@ -1,3 +1,11 @@
+---
+id: "task_5_2b_service_worker"
+title: "PWA: Service Worker"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.2b — PWA: Service Worker
 
 ## Estado Atual
@@ -74,3 +82,9 @@ ls -la frontend/dist/sw* 2>/dev/null || ls -la frontend/dist/ | grep -i worker
 ```
 feat(pwa): configure service worker with NetworkFirst and CacheFirst strategies
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

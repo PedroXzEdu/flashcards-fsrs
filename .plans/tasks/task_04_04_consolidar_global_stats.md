@@ -1,3 +1,13 @@
+---
+id: "T04.04"
+phase: "P04"
+title: "Consolidar Queries do `getGlobalStats`"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 04.04 — Consolidar Queries do `getGlobalStats`
 
 ## Estado Atual
@@ -24,6 +34,22 @@ Analisar e possivelmente combinar as 4 queries separadas de `getGlobalStats` (ca
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/repositories/reviewLogRepository.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -60,3 +86,9 @@ npx vitest --project unit
 - [ ] Consolidado ou decisão documentada
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

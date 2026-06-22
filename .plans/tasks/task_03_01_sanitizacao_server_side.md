@@ -1,3 +1,13 @@
+---
+id: "T03.01"
+phase: "P03"
+title: "Adicionar Sanitização Server-Side com DOMPurify"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 03.01 — Adicionar Sanitização Server-Side com DOMPurify
 
 ## Estado Atual
@@ -31,6 +41,22 @@ Adicionar sanitização de HTML no backend usando `isomorphic-dompurify`, aplica
 - `backend/src/services/cardService.ts`
 - `backend/src/services/importService.ts` (se existir)
 - `backend/src/services/deckImportService.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -82,3 +108,9 @@ npx vitest --project unit
 - [ ] `tsc --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

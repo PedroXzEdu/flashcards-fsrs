@@ -1,3 +1,13 @@
+---
+id: "T03.02"
+phase: "P03"
+title: "Ativar CSP Enforcement"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 03.02 — Ativar CSP Enforcement
 
 ## Estado Atual
@@ -25,6 +35,22 @@ Mudar CSP de `reportOnly` para modo enforce, ajustando a política conforme nece
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/app.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -56,3 +82,9 @@ curl -sI http://localhost:3000/health | grep content-security-policy
 - [ ] Nenhuma violação no console
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,13 @@
+---
+id: "T06.04"
+phase: "P06"
+title: "Implementar Edição Inline de Cards no DeckPage"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 06.04 — Implementar Edição Inline de Cards no DeckPage
 
 ## Estado Atual
@@ -26,6 +36,22 @@ Adicionar edição inline dos campos `front` e `back` diretamente na listagem de
 
 - `frontend/src/components/CardInlineEdit.tsx` (novo)
 - `frontend/src/pages/decks/DeckPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -58,3 +84,9 @@ npx vitest run
 - [ ] Integrado ao DeckPage
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

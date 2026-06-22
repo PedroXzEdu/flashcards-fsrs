@@ -1,3 +1,13 @@
+---
+id: "T05.01"
+phase: "P05"
+title: "Adicionar Testes para `syncWithFSRS`"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 05.01 — Adicionar Testes para `syncWithFSRS`
 
 ## Estado Atual
@@ -26,6 +36,22 @@ Adicionar testes unitários para o fluxo de sincronização entre o frontend (FS
 
 - `backend/__tests__/unit/fsrsService.sync.test.ts` (novo)
 - `backend/__tests__/unit/fsrsService.review.test.ts` (novo)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -59,3 +85,9 @@ cd backend && npx vitest --project unit
 - [ ] Testes de review criados
 - [ ] Todos passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

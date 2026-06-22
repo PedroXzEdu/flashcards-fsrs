@@ -1,3 +1,11 @@
+---
+id: "task_6_2_frontend_tsconfig_strict"
+title: "Frontend tsconfig Strict Options"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 6.2 — Frontend tsconfig Strict Options
 
 ## Estado Atual
@@ -50,3 +58,9 @@ npx tsc -b --noEmit
 - [ ] Flags strict ativadas e compilando
 - [ ] `npx tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,11 @@
+---
+id: "task_6_1_production_any_types"
+title: "Tipar `any` em Produção (Backend)"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 6.1 — Tipar `any` em Produção (Backend)
 
 ## Estado Atual
@@ -63,3 +71,9 @@ npx vitest --project unit
 - [ ] `tsc --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,13 @@
+---
+id: "P02"
+title: "Qualidade de Código e Tipagem"
+status: "completed"
+priority: "high"
+estimate: "1-2 weeks"
+depends_on: []
+---
+
+
 # Fase 02 — Qualidade de Código e Tipagem
 
 ## Objetivo
@@ -15,9 +25,15 @@ Médio (1-2 semanas)
 ## Dependências
 Nenhuma
 
-## Critério de Conclusão
-Zero ocorrências de `data: any` em services e repositories (exceção: importController que lê formato externo). `npx tsc --noEmit` passa sem erros no backend e frontend com tsconfig strict habilitado.
+## Success Metrics
 
+- Zero ocorrências de `data: any` em services e repositories
+- Interfaces `CreateDeckInput`, `UpdateDeckInput`, `CreateReviewLogInput` definidas e aplicadas
+- `cardRepository.create` e `updateFsrsData` tipados com interfaces existentes
+- `strict: true` ativado no frontend tsconfig
+- Retornos explícitos em todos os repositories
+- TODO e dead code limpos
+- `tsc --noEmit` passando sem erros
 ---
 
 ## Tarefas
@@ -123,3 +139,51 @@ Zero ocorrências de `data: any` em services e repositories (exceção: importCo
 - [x] Buscar `TODO`, `FIXME`, `console.log`, `debugger` em todo o projeto — nenhum encontrado
 - [x] Remover ou resolver cada ocorrência — N/A
 - [x] Verificar CSS não utilizado — removido `App.css` (não importado) e classe `.mono` (não usada)
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. Implementação finalizada
+2. Validação concluída (`tsc --noEmit`, testes)
+3. Revisão (`@reviewer`) executada
+4. Achados da revisão corrigidos ou justificados
+5. Arquivo da task atualizado (status, frontmatter)
+6. Arquivo da fase atualizado (checklist)
+7. Commit criado
+
+Fluxo obrigatório:
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

@@ -1,8 +1,18 @@
+---
+id: "T00.03"
+phase: "P00"
+title: "Helper de Transação Reutilizável"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 00.03 — Helper de Transação Reutilizável
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 00 — Correções Rápidas](./phase_00_correcoes_rapidas.md)
 - **Dependências**: Nenhuma
 
@@ -26,6 +36,22 @@ Criar função `withTransaction<T>(fn: (client: PoolClient) => Promise<T>): Prom
 
 - `backend/src/utils/transaction.ts` (novo)
 - `backend/src/services/reviewService.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -74,3 +100,9 @@ npx vitest --project unit
 - [ ] `tsc --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

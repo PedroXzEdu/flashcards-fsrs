@@ -1,8 +1,18 @@
+---
+id: "T01.06"
+phase: "P01"
+title: "Mover CSS Inline para Componentes Base"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.06 — Mover CSS Inline para Componentes Base
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Tasks 01.01 a 01.05 (recomendado, não obrigatório)
 
@@ -32,6 +42,22 @@ Criar componentes-base estilizados (`Card`, `FormField`, `Badge`, `PageSection`)
 - `frontend/src/components/ui/PageSection.tsx` (novo)
 - Componentes extraídos nas tasks 01.01-01.05
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Criar `Card.tsx` — props: `variant?: 'default' | 'elevated'`, `padding?: string`, `children`
@@ -60,3 +86,9 @@ npx vitest run
 - [ ] Padrões repetidos substituídos
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

@@ -1,3 +1,10 @@
+---
+id: "INDEX"
+title: "Plano de Execução — FlashFSRS"
+type: "roadmap"
+updated: "2026-06-22"
+---
+
 # Plano de Execução — FlashFSRS
 
 > Este plano foi gerado a partir de uma análise técnica completa do código-fonte.
@@ -79,3 +86,77 @@ Fase 00 → Fase 07 (1 task) → Fase 01 → Fase 02 → Fase 03 → Fase 04 →
 - **Adicionar testes E2E para novos fluxos:** Os 3 existentes (auth, review, import) já cobrem o core. Novos testes E2E são opcionais.
 - **Adicionar sistema de tags/gamificação:** Features legais, mas não essenciais para TCC. Adiar para Fase 06 se sobrar tempo.
 - **Reescrever componentes Button/Modal/Input com variants complexas:** O que existe funciona. Overengineering de design system.
+
+---
+
+## Task Completion Policy
+
+A task é considerada completa apenas quando TODAS as condições abaixo são verdadeiras:
+
+1. **Implementação finalizada** — código escrito e funcional
+2. **Validação concluída** — `tsc --noEmit`, testes, build
+3. **Revisão executada** — `@reviewer` invocado e concluído
+4. **Achados da revisão corrigidos ou justificados** — zero achados em aberto
+5. **Arquivo da task atualizado** — frontmatter sincronizado, status refletido
+6. **Arquivo da fase atualizado** — checklist e progresso atualizados
+7. **Commit criado** — mudança commitada antes de prosseguir
+
+### Fluxo Obrigatório
+
+```
+Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task
+```
+
+A próxima task NÃO DEVE começar antes do commit da atual.
+
+### Exceções
+
+A única exceção para pular a revisão é quando o diff é zero (nenhum arquivo foi modificado).
+
+---
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas (frontmatter `status: completed`)
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Atualizar frontmatter da fase para `status: completed`
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão da fase
+
+Apenas após o arquivamento completo a próxima fase pode começar.
+
+---
+
+## Planning Source of Truth
+
+### Regras
+
+| Camada | Função | Localização |
+|--------|--------|-------------|
+| Política de execução | Define como o trabalho é executado | `AGENTS.md` |
+| Roadmap | Progresso atual do plano | `.plans/tasks/INDEX.md` |
+| Fases ativas | Escopo e status de cada fase | `.plans/tasks/` |
+| Tasks ativas | Escopo de implementação detalhado | `.plans/tasks/` |
+| Fases concluídas | Registro histórico | `.plans/completed/` |
+| Tasks concluídas | Registro histórico | `.plans/completed/` |
+
+### Princípios
+
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+- O arquivo de fase é a fonte primária de progresso
+- Status de task no frontmatter deve refletir o status na fase
+- Nenhuma task pode estar `completed` em um lugar e `pending` em outro
+
+---
+
+## Change History
+
+| Data | Responsável | Mudança |
+|------|-------------|---------|
+| 2026-06-22 | Sistema de Planejamento | Migração para novo template com YAML frontmatter, políticas de conclusão, seções de risco e validação |
+

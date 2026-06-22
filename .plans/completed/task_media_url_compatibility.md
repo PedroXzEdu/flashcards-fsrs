@@ -1,3 +1,10 @@
+---
+id: "task_media_url_compatibility"
+title: "Task Media Url Compatibility"
+status: "completed"
+type: "task-completed"
+---
+
 ## Tarefa: Corrigir compatibilidade de mídia (.apkg) para deploy Vercel + Render
 
 ### Contexto
@@ -15,3 +22,9 @@ Frontend (Vercel) e backend (Render) em origins diferentes. `processMidiaRefs()`
 ### Desvios
 - Reviewer apontou R1 (default perigoso em produção) — mitigado tornando required
 - R2 (cards existentes com URLs relativas) — aceito como limitação, registrado em DECISIONS.md
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

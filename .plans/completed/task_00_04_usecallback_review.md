@@ -1,8 +1,18 @@
+---
+id: "T00.04"
+phase: "P00"
+title: "Adicionar `useCallback` no ReviewPage"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 00.04 — Adicionar `useCallback` no ReviewPage
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 00 — Correções Rápidas](./phase_00_correcoes_rapidas.md)
 - **Dependências**: Nenhuma
 
@@ -25,6 +35,22 @@ Envolver `handleFlip` e `handleRate` em `useCallback` no `ReviewPage.tsx` para r
 ## Arquivos Permitidos para Modificação
 
 - `frontend/src/pages/review/ReviewPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -55,3 +81,9 @@ npx vitest run
 - [ ] `tsc -b --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

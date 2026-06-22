@@ -1,3 +1,13 @@
+---
+id: "T05.02"
+phase: "P05"
+title: "Integrar Revisões com Fila de Prioridade"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 05.02 — Integrar Revisões com Fila de Prioridade
 
 ## Estado Atual
@@ -27,6 +37,22 @@ Integrar o review flow com a fila de prioridade, de modo que o "Próximo Card" s
 - `backend/src/services/reviewService.ts`
 - `backend/src/controllers/reviewController.ts`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Estudar `reviewService.ts` e identificar onde a fila é obtida
@@ -53,3 +79,9 @@ npx vitest --project unit
 - [ ] Integração implementada
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

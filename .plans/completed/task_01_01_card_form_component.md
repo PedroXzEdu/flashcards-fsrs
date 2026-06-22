@@ -1,8 +1,18 @@
+---
+id: "T01.01"
+phase: "P01"
+title: "Extrair Componente `CardForm`"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 01.01 — Extrair Componente `CardForm`
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 01 — Refatoração Frontend](./phase_01_refatoracao_frontend.md)
 - **Dependências**: Nenhuma
 
@@ -26,6 +36,22 @@ Extrair o formulário de criação/edição de card (linhas 869-973 do `DeckPage
 
 - `frontend/src/components/CardForm.tsx` (novo)
 - `frontend/src/pages/decks/DeckPage.tsx`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -55,3 +81,9 @@ npx vitest run
 - [ ] DeckPage reduzido
 - [ ] `tsc -b --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

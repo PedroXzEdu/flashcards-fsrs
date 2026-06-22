@@ -1,3 +1,11 @@
+---
+id: "task_8_2_ux_fixes"
+title: "UX Fixes"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 8.2 — UX Fixes
 
 ## Estado Atual
@@ -61,3 +69,9 @@ npx vitest --project frontend
 - [ ] Testes passando
 - [ ] Verificação manual OK
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

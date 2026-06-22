@@ -1,3 +1,11 @@
+---
+id: "task_5_3a_global_rate_limit"
+title: "Hardening: Global Rate Limit"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.3a — Hardening: Global Rate Limit
 
 ## Estado Atual
@@ -73,3 +81,9 @@ npx vitest --project integration
 ```
 feat(security): add global rate limit middleware (1000 req/15min)
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

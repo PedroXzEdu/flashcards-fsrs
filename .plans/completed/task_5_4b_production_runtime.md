@@ -1,3 +1,11 @@
+---
+id: "task_5_4b_production_runtime"
+title: "Build: Production Runtime"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Task 5.4b — Build: Production Runtime
 
 ## Estado Atual
@@ -70,3 +78,9 @@ NODE_ENV=production node backend/dist/server.js 2>&1 | head -1 | python3 -m json
 ```
 chore(build): configure production runtime (JSON logger, no verbose, VITE_API_URL)
 ```
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

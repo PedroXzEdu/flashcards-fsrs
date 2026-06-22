@@ -1,8 +1,18 @@
+---
+id: "T00.02"
+phase: "P00"
+title: "Remover Duplicata PUT/PATCH em Settings"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 00.02 — Remover Duplicata PUT/PATCH em Settings
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 00 — Correções Rápidas](./phase_00_correcoes_rapidas.md)
 - **Dependências**: Nenhuma
 
@@ -23,6 +33,22 @@ Remover a rota `PATCH /decks/:id/settings` duplicada em `deckRoutes.ts`, mantend
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/routes/deckRoutes.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -47,3 +73,9 @@ cd frontend && npx tsc -b --noEmit
 - [ ] Rota duplicada removida
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

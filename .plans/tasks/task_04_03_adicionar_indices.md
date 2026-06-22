@@ -1,3 +1,13 @@
+---
+id: "T04.03"
+phase: "P04"
+title: "Adicionar Índices Faltantes"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 04.03 — Adicionar Índices Faltantes
 
 ## Estado Atual
@@ -25,6 +35,22 @@ Adicionar índices identificados na análise: `users.email` e `review_logs (user
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/database/migrations/008_add_missing_indexes.sql` (novo)
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -54,3 +80,9 @@ cd backend && npx tsc --noEmit
 - [ ] Índices adicionados
 - [ ] `tsc --noEmit` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

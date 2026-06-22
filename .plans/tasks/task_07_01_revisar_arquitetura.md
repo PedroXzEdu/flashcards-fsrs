@@ -1,3 +1,13 @@
+---
+id: "T07.01"
+phase: "P07"
+title: "Revisar e Atualizar ARCHITECTURE.md"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 07.01 — Revisar e Atualizar ARCHITECTURE.md
 
 ## Estado Atual
@@ -25,6 +35,22 @@ Revisar o `ARCHITECTURE.md` para refletir o estado atual do sistema após todas 
 
 - `ARCHITECTURE.md`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Comparar ARCHITECTURE.md com estrutura atual de pastas
@@ -47,3 +73,9 @@ Revisar o `ARCHITECTURE.md` para refletir o estado atual do sistema após todas 
 
 - [ ] ARCHITECTURE.md atualizado
 - [ ] `@doc` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

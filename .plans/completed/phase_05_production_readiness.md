@@ -1,3 +1,11 @@
+---
+id: "phase_05_production_readiness"
+title: "Production Readiness"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Phase 05 — Production Readiness
 
 > **Arquivo índice / master.** Cada task abaixo tem seu próprio arquivo de microtask com detalhes completos.
@@ -109,3 +117,31 @@ Tasks sem dependência entre si (ex: 5.3a, 5.3b, 5.3c) podem ser executadas em p
 6. Gere commits pequenos e focados por microtask.
 7. Após cada microtask, rode `tsc --noEmit` (backend) ou `tsc -b --noEmit` (frontend) conforme aplicável, e invoque `@reviewer` antes de commitar.
 8. **Task 5.6c é a verificação final**: não declare a fase concluída sem todos os testes verdes e `@doc` aprovado.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+

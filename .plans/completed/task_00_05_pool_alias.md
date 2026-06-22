@@ -1,8 +1,18 @@
+---
+id: "T00.05"
+phase: "P00"
+title: "Corrigir Alias `pool as client` em DeckRepository"
+status: "completed"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 00.05 — Corrigir Alias `pool as client` em DeckRepository
 
 ## Estado Atual
 
-- **Situação**: Pendente
+- **Situação**: Concluída
 - **Task pai**: [Phase 00 — Correções Rápidas](./phase_00_correcoes_rapidas.md)
 - **Dependências**: Nenhuma
 
@@ -24,6 +34,22 @@ Substituir `import { pool as client }` por `import { pool }` em `deckRepository.
 ## Arquivos Permitidos para Modificação
 
 - `backend/src/repositories/deckRepository.ts`
+
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
 
 ## Checklist de Implementação
 
@@ -49,3 +75,9 @@ npx vitest --project unit
 - [ ] `tsc --noEmit` passando
 - [ ] Testes passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

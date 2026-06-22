@@ -1,3 +1,13 @@
+---
+id: "T06.05"
+phase: "P06"
+title: "Adicionar Paginação na Listagem de Cards"
+status: "pending"
+priority: "medium"
+estimate: ""
+depends_on: []
+---
+
 # Task 06.05 — Adicionar Paginação na Listagem de Cards
 
 ## Estado Atual
@@ -29,6 +39,22 @@ Adicionar paginação na tela do DeckPage, já que o deck pode ter centenas de c
 - `frontend/src/pages/decks/DeckPage.tsx`
 - `frontend/src/api/cards.ts`
 
+## Regression Risks
+
+- (Listar riscos de regressão específicos desta task)
+
+## Validation Scope
+
+### Manual
+
+- (Listar fluxos manuais para validação)
+
+### Automated
+
+- `npx tsc --noEmit`
+- Build
+- Testes relevantes
+
 ## Checklist de Implementação
 
 - [ ] 1. Criar `Pagination.tsx`:
@@ -58,3 +84,9 @@ npx vitest run
 - [ ] Integrado ao DeckPage
 - [ ] `tsc` passando
 - [ ] `@reviewer` aprovou
+
+## Task Completion Policy
+
+Ver política completa em [INDEX.md](./INDEX.md#task-completion-policy).
+
+Resumo: Implementar → Validar → Revisar → Corrigir → Atualizar task → Atualizar fase → Commitar → Próxima task.

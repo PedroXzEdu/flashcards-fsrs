@@ -1,3 +1,11 @@
+---
+id: "phase_03_database_performance"
+title: "Database Performance & Batch Operations"
+status: "completed"
+priority: "medium"
+type: "phase-completed"
+---
+
 # Phase 03 — Database Performance & Batch Operations
 
 ## Objetivo
@@ -210,3 +218,31 @@ Revisar queries analíticas que agregam dados históricos.
 5. Gere commits pequenos e focados por tarefa.
 6. Após cada task, rode `tsc --noEmit` no backend e invoque `@reviewer` antes de commitar.
 7. Rode manualmente EXPLAIN ANALYZE para confirmar melhoria antes de declarar task concluída.
+
+
+## Phase Completion Policy
+
+Quando toda task da fase estiver completa:
+
+1. Verificar que todas as tasks estão marcadas como concluídas
+2. Verificar que os Success Metrics foram atingidos
+3. Verificar que não há achados de revisão em aberto
+4. Marcar a fase como `completed` no frontmatter
+5. Mover o arquivo da fase para `.plans/completed/`
+6. Mover todos os arquivos de task associados para `.plans/completed/`
+7. Criar um commit de conclusão
+
+Apenas após o arquivamento a próxima fase pode começar.
+
+
+## Planning Source of Truth
+
+Regras:
+
+- `AGENTS.md` define a política de execução
+- Arquivos de fase definem o progresso atual do roadmap
+- Arquivos de task definem o escopo de implementação
+- Fases concluídas são registros históricos em `.plans/completed/`
+- Trabalho ativo sempre vem de `.plans/tasks/`
+- Trabalho arquivado sempre vive em `.plans/completed/`
+
