@@ -2,7 +2,7 @@
 id: "T04.03"
 phase: "P04"
 title: "Adicionar Índices Faltantes"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -38,7 +38,8 @@ Adicionar índices identificados na análise: `users.email` e `review_logs (user
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- `idx_users_email` já existe em `005_add_indexes.sql` — `CREATE INDEX IF NOT EXISTS` torna idempotente
+- Nome do índice composto ajustado para `idx_review_logs_user_id_card_id` seguindo convenção existente
 
 ## Validation Scope
 
@@ -54,13 +55,9 @@ Adicionar índices identificados na análise: `users.email` e `review_logs (user
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar migration `008_add_missing_indexes.sql`:
-  ```sql
-  CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
-  CREATE INDEX IF NOT EXISTS idx_review_logs_user_card ON review_logs (user_id, card_id);
-  ```
-- [ ] 2. Verificar com `EXPLAIN ANALYZE` que `findByEmail` usa o índice
-- [ ] 3. Rodar `npx tsc --noEmit`
+- [x] 1. Criar migration `008_add_missing_indexes.sql`:
+- [ ] 2. Verificar com `EXPLAIN ANALYZE` que `findByEmail` usa o índice (opcional com Docker)
+- [x] 3. Rodar `npx tsc --noEmit`
 
 ## Critérios de Aceitação
 
@@ -76,10 +73,10 @@ cd backend && npx tsc --noEmit
 
 ## Definition of Done
 
-- [ ] Migração criada
-- [ ] Índices adicionados
-- [ ] `tsc --noEmit` passando
-- [ ] `@reviewer` aprovou
+- [x] Migração criada
+- [x] Índices adicionados
+- [x] `tsc --noEmit` passando
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

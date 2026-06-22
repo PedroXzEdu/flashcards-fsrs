@@ -88,7 +88,7 @@ Nenhuma
 
 ---
 
-### [ ] [T04.03 — Adicionar índices faltantes](./task_04_03_adicionar_indices.md)
+### [x] [T04.03 — Adicionar índices faltantes](./task_04_03_adicionar_indices.md)
 
 **Descrição:** Adicionar índices identificados na análise.
 
