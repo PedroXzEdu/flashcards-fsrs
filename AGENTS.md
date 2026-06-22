@@ -440,6 +440,14 @@ Specification: `.opencode/agents/doc.md`
 
 ---
 
+## Tools & MCPs
+
+### Context7
+
+Always use Context7 when you need library or API documentation, implementation details, setup instructions, configuration steps, or code generation related to external libraries and frameworks. Do not wait for the user to explicitly request its use.
+
+---
+
 ## Documentation Governance
 
 See `.docs/DOCUMENTATION_POLICY.md`
