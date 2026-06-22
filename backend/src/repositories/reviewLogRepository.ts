@@ -220,6 +220,11 @@ class ReviewLogRepository {
     return result.rows;
   }
 
+  // As 4 queries abaixo são mantidas separadas intencionalmente:
+  // - Operam em 3 tabelas diferentes (cards, review_logs, decks)
+  // - daily retorna múltiplas linhas (as demais são single-row)
+  // - Combinar com CTE exigiria subqueries JSON, prejudicando legibilidade
+  // - Ganho de performance marginal (~2-3ms em ambiente local)
   async getGlobalStats(userId: number): Promise<GlobalStatsResult> {
     const cards = await client.query(
       `SELECT

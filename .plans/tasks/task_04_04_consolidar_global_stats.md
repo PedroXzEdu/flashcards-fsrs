@@ -2,7 +2,7 @@
 id: "T04.04"
 phase: "P04"
 title: "Consolidar Queries do `getGlobalStats`"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -37,7 +37,7 @@ Analisar e possivelmente combinar as 4 queries separadas de `getGlobalStats` (ca
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- Nenhum — alteração é apenas comentário documentando decisão
 
 ## Validation Scope
 
@@ -53,20 +53,10 @@ Analisar e possivelmente combinar as 4 queries separadas de `getGlobalStats` (ca
 
 ## Checklist de Implementação
 
-- [ ] 1. Analisar se as 4 queries podem ser combinadas com CTE
-- [ ] 2. Se viável e a query resultante for legível, refatorar:
-  ```sql
-  WITH cards_stats AS (
-    SELECT COUNT(*) AS total_cards, ...
-    FROM cards WHERE deck_id IN (SELECT id FROM decks WHERE user_id = $1)
-  ),
-  reviews_stats AS ( ... ),
-  decks_stats AS ( ... ),
-  daily_stats AS ( ... )
-  SELECT ... FROM cards_stats, reviews_stats, decks_stats, daily_stats
-  ```
-- [ ] 3. Se a CTE ficar ilegível ou não trouxer ganho real, documentar decisão e pular
-- [ ] 4. Rodar `npx tsc --noEmit` e testes
+- [x] 1. Analisar se as 4 queries podem ser combinadas com CTE
+- [x] 2. CTE exigiria subqueries JSON (daily_stats retorna múltiplas linhas) — ilegível, mantido separado
+- [x] 3. Decisão documentada no código (comentário em reviewLogRepository.ts)
+- [x] 4. Rodar `npx tsc --noEmit` e testes
 
 ## Critérios de Aceitação
 
@@ -82,10 +72,10 @@ npx vitest --project unit
 
 ## Definition of Done
 
-- [ ] Queries analisadas
-- [ ] Consolidado ou decisão documentada
-- [ ] `tsc --noEmit` passando
-- [ ] `@reviewer` aprovou
+- [x] Queries analisadas
+- [x] Decisão documentada (manter 4 queries separadas)
+- [x] `tsc --noEmit` passando
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

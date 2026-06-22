@@ -106,7 +106,7 @@ Nenhuma
 
 ---
 
-### [ ] [T04.04 — Revisar e consolidar analyticsRepository queries](./task_04_04_consolidar_global_stats.md)
+### [x] [T04.04 — Revisar e consolidar analyticsRepository queries](./task_04_04_consolidar_global_stats.md)
 
 **Descrição:** Combinar as 4 queries separadas de `getGlobalStats` (cards, reviews, decks, daily) em uma única CTE ou reduzir para 2 queries.
 
