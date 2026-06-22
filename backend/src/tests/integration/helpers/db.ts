@@ -1,6 +1,5 @@
 import { Pool } from "pg";
-import fs from "fs";
-import path from "path";
+import { runMigrations as runVersionedMigrations } from "../../../database/migrationRunner";
 
 let pool: Pool | null = null;
 
@@ -19,9 +18,7 @@ export function getTestPool(): Pool {
 
 export async function runMigrations() {
   const p = getTestPool();
-  const sqlPath = path.resolve(__dirname, "../../../database/migrations.sql");
-  const sql = fs.readFileSync(sqlPath, "utf-8");
-  await p.query(sql);
+  await runVersionedMigrations(p);
 }
 
 export async function cleanDatabase() {

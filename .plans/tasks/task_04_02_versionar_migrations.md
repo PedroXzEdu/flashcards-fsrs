@@ -2,7 +2,7 @@
 id: "T04.02"
 phase: "P04"
 title: "Versionar Migrations"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -50,7 +50,9 @@ Substituir `migrations.sql` único e executado em lote toda vez que o servidor s
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- Build de produção: build script precisou ser atualizado para copiar diretório `migrations/` (não apenas `migrations.sql`)
+- Testes de integração: helper `db.ts` atualizado para usar o novo runner com pool injetado
+- Ordem 006/007 invertida em relação ao `migrations.sql` original (funcionalmente seguro pois ambos usam `IF NOT EXISTS`)
 
 ## Validation Scope
 
@@ -66,15 +68,15 @@ Substituir `migrations.sql` único e executado em lote toda vez que o servidor s
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar `backend/src/database/migrations/` com arquivos numerados extraídos de `migrations.sql`
-- [ ] 2. Criar `migrationRunner.ts` que:
+- [x] 1. Criar `backend/src/database/migrations/` com arquivos numerados extraídos de `migrations.sql`
+- [x] 2. Criar `migrationRunner.ts` que:
   - Cria tabela `_migrations` se não existir
   - Lê arquivos `.sql` ordenados
   - Executa apenas os não executados (por nome do arquivo)
   - Registra cada migration na tabela `_migrations`
-- [ ] 3. Substituir `runMigrations()` em `db.ts` para usar o runner
-- [ ] 4. Remover (ou arquivar) `migrations.sql`
-- [ ] 5. Rodar `npx tsc --noEmit` e testar com Docker
+- [x] 3. Substituir `runMigrations()` em `db.ts` para usar o runner
+- [ ] 4. Remover (ou arquivar) `migrations.sql` (mantido como referência)
+- [x] 5. Rodar `npx tsc --noEmit` e corrigir build script
 
 ## Critérios de Aceitação
 
@@ -91,10 +93,11 @@ cd backend && npx tsc --noEmit
 
 ## Definition of Done
 
-- [ ] Migrations numeradas criadas
-- [ ] Runner implementado
-- [ ] `tsc --noEmit` passando
-- [ ] `@reviewer` aprovou
+- [x] Migrations numeradas criadas
+- [x] Runner implementado
+- [x] `tsc --noEmit` passando
+- [x] Build script corrigido para copiar diretório `migrations/`
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

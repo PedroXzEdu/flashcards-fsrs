@@ -64,7 +64,7 @@ Nenhuma
 
 ---
 
-### [ ] [T04.02 — Versionar migrations](./task_04_02_versionar_migrations.md)
+### [x] [T04.02 — Versionar migrations](./task_04_02_versionar_migrations.md)
 
 **Descrição:** Substituir `migrations.sql` único (executado toda vez que o servidor sobe) por arquivos numerados em ordem.
 

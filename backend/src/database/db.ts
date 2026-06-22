@@ -1,9 +1,8 @@
 import { Pool } from "pg";
-import fs from "fs";
-import path from "path";
 
 import { env } from "../config/env";
 import { logger } from "../config/logger";
+import { runMigrations as runVersionedMigrations } from "./migrationRunner";
 
 export const pool = new Pool({
   host: env.db.host,
@@ -23,7 +22,6 @@ export async function ping(): Promise<boolean> {
 }
 
 export async function runMigrations() {
-  const sql = fs.readFileSync(path.join(__dirname, "migrations.sql"), "utf-8");
-  await pool.query(sql);
+  await runVersionedMigrations(pool);
   logger.info("Migrações executadas com sucesso!");
 }
