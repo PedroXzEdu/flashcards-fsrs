@@ -180,10 +180,6 @@ body,
   background: var(--text-muted);
 }
 
-.mono {
-  font-family: "JetBrains Mono", monospace;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;

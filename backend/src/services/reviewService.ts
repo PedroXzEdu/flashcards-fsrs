@@ -1,8 +1,8 @@
-import { Grade, Rating, RecordLogItem } from "ts-fsrs";
+import { Grade, Rating, RecordLogItem, Card, State } from "ts-fsrs";
 
 import { fsrsService } from "./fsrsService";
 
-import { cardRepository } from "../repositories/cardRepository";
+import { cardRepository, CardRow } from "../repositories/cardRepository";
 
 import { reviewLogRepository } from "../repositories/reviewLogRepository";
 
@@ -15,6 +15,15 @@ import { withTransaction } from "../utils/transaction";
 import { logger } from "../config/logger";
 
 import { collector } from "../middlewares/metrics";
+
+function toFsrsCard(row: CardRow): Card {
+  return {
+    ...row,
+    last_review: row.last_review ?? undefined,
+    learning_steps: 0,
+    state: row.state as State,
+  };
+}
 
 class ReviewService {
   async getDueCards(deckId: number, userId: number) {
@@ -45,7 +54,7 @@ class ReviewService {
       throw new AppError("Card não encontrado.", 404);
     }
 
-    const preview = fsrsService.preview(card);
+    const preview = fsrsService.preview(toFsrsCard(card));
 
     return {
       again: this.formatPreview(preview[Rating.Again]),
@@ -62,7 +71,7 @@ class ReviewService {
       throw new AppError("Card não encontrado.", 404);
     }
 
-    const scheduling = fsrsService.review(card, rating as Grade);
+    const scheduling = fsrsService.review(toFsrsCard(card), rating as Grade);
 
     const result = await withTransaction(async (client) => {
       const updatedCard = await cardRepository.updateFsrsData(
