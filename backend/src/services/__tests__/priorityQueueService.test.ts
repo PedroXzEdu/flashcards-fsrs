@@ -17,6 +17,7 @@ function mockCard(overrides: Partial<Record<string, unknown>> = {}) {
     stability: 2.5,
     due: new Date("2025-01-01"),
     state: 2,
+    predicted_recall: 50,
     ...overrides,
   };
 }
@@ -70,37 +71,21 @@ describe("PriorityQueueService", () => {
       expect(typeof result[0].predicted_recall).toBe("number");
     });
 
-    it("deve ordenar cards por predicted_recall ASC", async () => {
-      const cardA = mockCard({
-        id: 1,
-        stability: 2,
-        due: new Date("2025-06-10"),
-      });
-      const cardB = mockCard({
-        id: 2,
-        stability: 10,
-        due: new Date("2025-06-14"),
-      });
-      const cardC = mockCard({
-        id: 3,
-        stability: 5,
-        due: new Date("2025-06-12"),
-      });
+    it("deve preservar a ordenação vinda do repositório", async () => {
+      const cards = [
+        mockCard({ id: 1, predicted_recall: 10 }),
+        mockCard({ id: 2, predicted_recall: 50 }),
+        mockCard({ id: 3, predicted_recall: 80 }),
+      ];
 
-      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue([
-        cardA,
-        cardB,
-        cardC,
-      ]);
+      vi.mocked(cardRepository.findDailyQueue).mockResolvedValue(cards);
 
       const result = await priorityQueueService.getDailyQueue(1);
 
       expect(result).toHaveLength(3);
-      for (let i = 1; i < result.length; i++) {
-        expect(result[i].predicted_recall).toBeGreaterThanOrEqual(
-          result[i - 1].predicted_recall,
-        );
-      }
+      expect(result[0].predicted_recall).toBe(10);
+      expect(result[1].predicted_recall).toBe(50);
+      expect(result[2].predicted_recall).toBe(80);
     });
 
     it("deve funcionar com stability=0 sem quebrar", async () => {

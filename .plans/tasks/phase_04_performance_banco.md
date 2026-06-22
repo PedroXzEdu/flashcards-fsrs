@@ -123,7 +123,7 @@ Nenhuma
 
 ---
 
-### [ ] [T04.05 — Otimizar `findDailyQueue` com cálculo de predicted_recall no SQL](./task_04_05_otimizar_daily_queue.md)
+### [x] [T04.05 — Otimizar `findDailyQueue` com cálculo de predicted_recall no SQL](./task_04_05_otimizar_daily_queue.md)
 
 **Descrição:** Calcular `predicted_recall` diretamente no SQL em vez de em memória no backend.
 

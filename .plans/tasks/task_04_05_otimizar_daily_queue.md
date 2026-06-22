@@ -2,7 +2,7 @@
 id: "T04.05"
 phase: "P04"
 title: "Otimizar `findDailyQueue` com Cálculo no SQL"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -39,7 +39,7 @@ Mover o cálculo de `predicted_recall` do backend (em memória) para o SQL, e or
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- `NULLIF(c.stability, 1)` causava divisão por zero com stability=0 e NULL com stability=1 — corrigido para `COALESCE(NULLIF(c.stability, 0), 1)`
 
 ## Validation Scope
 
@@ -55,22 +55,10 @@ Mover o cálculo de `predicted_recall` do backend (em memória) para o SQL, e or
 
 ## Checklist de Implementação
 
-- [ ] 1. Modificar `findDailyQueue` para calcular `predicted_recall` no SQL:
-  ```sql
-  SELECT c.id, c.front, c.back, c.stability, c.due, c.state,
-         ROUND(
-           EXP(-GREATEST(EXTRACT(EPOCH FROM NOW() - c.due) / 86400, 0)
-               / NULLIF(c.stability, 1)) * 100, 2
-         ) AS predicted_recall
-  FROM cards c
-  JOIN decks d ON d.id = c.deck_id
-  WHERE d.user_id = $1
-  ORDER BY predicted_recall ASC
-  LIMIT $2
-  ```
-- [ ] 2. Remover cálculo em memória e `.sort()` de `priorityQueueService.ts`
-- [ ] 3. Ajustar tipo de retorno se necessário
-- [ ] 4. Rodar `npx tsc --noEmit` e testes
+- [x] 1. Modificar `findDailyQueue` para calcular `predicted_recall` no SQL
+- [x] 2. Remover cálculo em memória e `.sort()` de `priorityQueueService.ts`
+- [x] 3. Adicionar `predicted_recall` ao tipo `QueueCardRow`
+- [x] 4. Rodar `npx tsc --noEmit` e testes
 
 ## Critérios de Aceitação
 
@@ -87,10 +75,10 @@ npx vitest --project unit
 
 ## Definition of Done
 
-- [ ] Query otimizada
-- [ ] Cálculo em memória removido
-- [ ] `tsc --noEmit` passando
-- [ ] `@reviewer` aprovou
+- [x] Query otimizada
+- [x] Cálculo em memória removido
+- [x] `tsc --noEmit` passando
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

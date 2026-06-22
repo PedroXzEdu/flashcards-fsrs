@@ -39,6 +39,7 @@ export interface QueueCardRow {
   stability: number;
   due: Date;
   state: number;
+  predicted_recall: number;
 }
 
 export interface PaginatedCards {
@@ -95,11 +96,15 @@ class CardRepository {
 
   async findDailyQueue(userId: number, limit = 50): Promise<QueueCardRow[]> {
     const result = await pool.query(
-      `SELECT c.id, c.front, c.back, c.stability, c.due, c.state
+      `SELECT c.id, c.front, c.back, c.stability, c.due, c.state,
+              ROUND(
+                EXP(-GREATEST(EXTRACT(EPOCH FROM NOW() - c.due) / 86400, 0)
+                    / COALESCE(NULLIF(c.stability, 0), 1)) * 100, 2
+              ) AS predicted_recall
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
        WHERE d.user_id = $1
-       ORDER BY (EXTRACT(EPOCH FROM NOW() - c.due) / NULLIF(c.stability,0)) DESC NULLS LAST
+       ORDER BY predicted_recall ASC
        LIMIT $2`,
       [userId, limit],
     );
