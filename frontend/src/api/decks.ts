@@ -20,8 +20,28 @@ export const decksApi = {
 
   stats: (id: number) => api.get<DeckStats>(`/decks/${id}/stats`),
 
-  updateSettings: (id: number, new_cards_per_day: number) =>
-    api.put<Deck>(`/decks/${id}/settings`, { new_cards_per_day }),
+  getFsrsParams: (id: number) =>
+    api.get<{
+      request_retention: number;
+      maximum_interval: number;
+      enable_fuzz: boolean;
+      enable_short_term: boolean;
+      learning_steps: string;
+      relearning_steps: string;
+    } | null>(`/decks/${id}/fsrs-params`),
+
+  updateSettings: (
+    id: number,
+    settings: {
+      new_cards_per_day: number;
+      request_retention?: number;
+      maximum_interval?: number;
+      enable_fuzz?: boolean;
+      enable_short_term?: boolean;
+      learning_steps?: string;
+      relearning_steps?: string;
+    },
+  ) => api.put<Deck>(`/decks/${id}/settings`, settings),
 
   share: (id: number) => api.post<{ token: string }>(`/decks/${id}/share`, {}),
 

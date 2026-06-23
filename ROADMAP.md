@@ -43,6 +43,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] Lazy loading no frontend
 - [x] Error boundary
 - [x] Testes E2E (Playwright, 3 suites: auth, review, import)
+- [x] Parâmetros FSRS customizáveis por deck (request_retention, maximum_interval, enable_fuzz, enable_short_term, learning_steps, relearning_steps)
 
 ---
 

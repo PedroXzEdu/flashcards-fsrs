@@ -14,6 +14,7 @@ import {
   updateDeck,
   deleteDeck,
   getDeckStats,
+  getDeckFsrsParams,
   updateDeckSettings,
   shareDeck,
   unshareDeck,
@@ -33,6 +34,7 @@ router.post("/shared/:token/import", importSharedDeck);
 router.get("/:id", getDeck);
 router.get("/:id/stats", getDeckStats);
 router.put("/:id", validate(updateDeckSchema), updateDeck);
+router.get("/:id/fsrs-params", getDeckFsrsParams);
 router.put("/:id/settings", validate(settingsSchema), updateDeckSettings);
 router.delete("/:id", deleteDeck);
 router.post("/:id/share", shareDeck);

@@ -46,6 +46,13 @@ export default function DeckPage() {
   const [confirmDelete, setConfirmDelete] = useState<Card | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [newCardsPerDay, setNewCardsPerDay] = useState(20);
+  const [requestRetention, setRequestRetention] = useState(0.9);
+  const [maxInterval, setMaxInterval] = useState(36500);
+  const [enableFuzz, setEnableFuzz] = useState(false);
+  const [enableShortTerm, setEnableShortTerm] = useState(true);
+  const [learningSteps, setLearningSteps] = useState("1m,10m");
+  const [relearningSteps, setRelearningSteps] = useState("10m");
+  const [loadingFsrsParams, setLoadingFsrsParams] = useState(false);
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
@@ -129,6 +136,12 @@ export default function DeckPage() {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    if (showSettings) {
+      loadFsrsParams();
+    }
+  }, [showSettings]);
+
   async function handleRename(e: React.FormEvent) {
     e.preventDefault();
     if (!newTitle.trim()) return;
@@ -154,7 +167,15 @@ export default function DeckPage() {
   async function handleSaveSettings() {
     setSettingsSaving(true);
     try {
-      await decksApi.updateSettings(deckId, newCardsPerDay);
+      await decksApi.updateSettings(deckId, {
+        new_cards_per_day: newCardsPerDay,
+        request_retention: requestRetention,
+        maximum_interval: maxInterval,
+        enable_fuzz: enableFuzz,
+        enable_short_term: enableShortTerm,
+        learning_steps: learningSteps,
+        relearning_steps: relearningSteps,
+      });
       setShowSettings(false);
       toast.success("Configurações salvas.");
     } catch {
@@ -162,6 +183,25 @@ export default function DeckPage() {
       toast.error("Erro ao salvar configurações.");
     } finally {
       setSettingsSaving(false);
+    }
+  }
+
+  async function loadFsrsParams() {
+    setLoadingFsrsParams(true);
+    try {
+      const params = await decksApi.getFsrsParams(deckId);
+      if (params) {
+        setRequestRetention(params.request_retention);
+        setMaxInterval(params.maximum_interval);
+        setEnableFuzz(params.enable_fuzz);
+        setEnableShortTerm(params.enable_short_term);
+        setLearningSteps(params.learning_steps);
+        setRelearningSteps(params.relearning_steps);
+      }
+    } catch {
+      // usa defaults
+    } finally {
+      setLoadingFsrsParams(false);
     }
   }
 
@@ -582,70 +622,267 @@ export default function DeckPage() {
           >
             <Settings size={14} /> Configurações do baralho
           </h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <div style={{ flex: 1 }}>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "12px",
-                  fontWeight: 500,
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
-              >
-                Cards novos por dia
-              </label>
-              <p
-                style={{
-                  margin: "0 0 8px",
-                  fontSize: "12px",
-                  color: "var(--text-muted)",
-                }}
-              >
-                Quantos cards novos o FSRS introduz por dia neste baralho.
-              </p>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <input
-                  type="number"
-                  min={1}
-                  max={9999}
-                  value={newCardsPerDay}
-                  onChange={(e) => setNewCardsPerDay(Number(e.target.value))}
-                  style={{
-                    width: "80px",
-                    background: "var(--bg)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                    padding: "8px 12px",
-                    fontSize: "16px",
-                    fontWeight: 700,
-                    color: "var(--accent)",
-                    outline: "none",
-                    fontFamily: "JetBrains Mono, monospace",
-                    textAlign: "center",
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderColor = "var(--accent)")
-                  }
-                  onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
-                />
-                <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>
-                  cards novos por dia
-                </span>
+
+          {loadingFsrsParams ? (
+            <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>
+              Carregando...
+            </p>
+          ) : (
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                <div style={{ flex: 1 }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      color: "var(--text-muted)",
+                      marginBottom: "6px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    Cards novos por dia
+                  </label>
+                  <p
+                    style={{
+                      margin: "0 0 8px",
+                      fontSize: "12px",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    Quantos cards novos o FSRS introduz por dia neste baralho.
+                  </p>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                  >
+                    <input
+                      type="number"
+                      min={1}
+                      max={9999}
+                      value={newCardsPerDay}
+                      onChange={(e) => setNewCardsPerDay(Number(e.target.value))}
+                      style={{
+                        width: "80px",
+                        background: "var(--bg)",
+                        border: "1px solid var(--border)",
+                        borderRadius: "8px",
+                        padding: "8px 12px",
+                        fontSize: "16px",
+                        fontWeight: 700,
+                        color: "var(--accent)",
+                        outline: "none",
+                        fontFamily: "JetBrains Mono, monospace",
+                        textAlign: "center",
+                      }}
+                      onFocus={(e) =>
+                        (e.target.style.borderColor = "var(--accent)")
+                      }
+                      onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+                    />
+                    <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>
+                      cards novos por dia
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <Button
-              size="sm"
-              loading={settingsSaving}
-              onClick={handleSaveSettings}
-            >
-              Salvar
-            </Button>
-          </div>
+
+              <hr style={{
+                margin: "20px 0",
+                border: "none",
+                borderTop: "1px solid var(--border)",
+              }} />
+
+              <h3 style={{
+                margin: "0 0 12px",
+                fontSize: "13px",
+                fontWeight: 600,
+                color: "var(--text)",
+              }}>
+                Parâmetros FSRS
+              </h3>
+
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+              }}>
+                <div>
+                  <label style={{
+                    display: "block",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    marginBottom: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}>
+                    Retenção desejada
+                  </label>
+                  <input
+                    type="number"
+                    min={0.5}
+                    max={0.99}
+                    step={0.05}
+                    value={requestRetention}
+                    onChange={(e) => setRequestRetention(Number(e.target.value))}
+                    style={{
+                      width: "100%",
+                      background: "var(--bg)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "8px",
+                      padding: "8px 12px",
+                      fontSize: "14px",
+                      color: "var(--text)",
+                      outline: "none",
+                      fontFamily: "Outfit, sans-serif",
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{
+                    display: "block",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    marginBottom: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}>
+                    Intervalo máximo (dias)
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={36500}
+                    value={maxInterval}
+                    onChange={(e) => setMaxInterval(Number(e.target.value))}
+                    style={{
+                      width: "100%",
+                      background: "var(--bg)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "8px",
+                      padding: "8px 12px",
+                      fontSize: "14px",
+                      color: "var(--text)",
+                      outline: "none",
+                      fontFamily: "Outfit, sans-serif",
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{
+                    display: "block",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    marginBottom: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}>
+                    Passos de aprendizado
+                  </label>
+                  <input
+                    type="text"
+                    value={learningSteps}
+                    onChange={(e) => setLearningSteps(e.target.value)}
+                    style={{
+                      width: "100%",
+                      background: "var(--bg)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "8px",
+                      padding: "8px 12px",
+                      fontSize: "14px",
+                      color: "var(--text)",
+                      outline: "none",
+                      fontFamily: "Outfit, sans-serif",
+                    }}
+                    placeholder="1m,10m"
+                  />
+                </div>
+                <div>
+                  <label style={{
+                    display: "block",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    marginBottom: "6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}>
+                    Passos de re-aprendizado
+                  </label>
+                  <input
+                    type="text"
+                    value={relearningSteps}
+                    onChange={(e) => setRelearningSteps(e.target.value)}
+                    style={{
+                      width: "100%",
+                      background: "var(--bg)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "8px",
+                      padding: "8px 12px",
+                      fontSize: "14px",
+                      color: "var(--text)",
+                      outline: "none",
+                      fontFamily: "Outfit, sans-serif",
+                    }}
+                    placeholder="10m"
+                  />
+                </div>
+                <div>
+                  <label style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                    cursor: "pointer",
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={enableFuzz}
+                      onChange={(e) => setEnableFuzz(e.target.checked)}
+                    />
+                    Habilitar fuzz
+                  </label>
+                </div>
+                <div>
+                  <label style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "var(--text-muted)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                    cursor: "pointer",
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={enableShortTerm}
+                      onChange={(e) => setEnableShortTerm(e.target.checked)}
+                    />
+                    Passos de curto prazo
+                  </label>
+                </div>
+              </div>
+
+              <div style={{ marginTop: "16px", textAlign: "right" }}>
+                <Button
+                  size="sm"
+                  loading={settingsSaving}
+                  onClick={handleSaveSettings}
+                >
+                  Salvar
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       )}
 

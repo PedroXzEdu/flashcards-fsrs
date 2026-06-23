@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { deckRepository, CreateDeckInput, UpdateDeckInput } from "../repositories/deckRepository";
+import { deckRepository, CreateDeckInput, UpdateDeckInput, DeckFsrsParamsRow } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
 import { sanitizeInput } from "../utils/sanitize";
 import { collector } from "../middlewares/metrics";
@@ -97,8 +97,22 @@ class DeckService {
     };
   }
 
-  async updateSettings(deckId: number, userId: number, data: { new_cards_per_day: number }) {
-    const { new_cards_per_day } = data;
+  async getFsrsParams(deckId: number, userId: number) {
+    const deckExists = await deckRepository.exists(deckId, userId);
+
+    if (!deckExists) {
+      throw new AppError("Baralho não encontrado.", 404);
+    }
+
+    return deckRepository.getFsrsParams(deckId) ?? null;
+  }
+
+  async updateSettings(
+    deckId: number,
+    userId: number,
+    data: { new_cards_per_day: number } & Partial<DeckFsrsParamsRow>,
+  ) {
+    const { new_cards_per_day, ...fsrsParams } = data;
 
     const deck = await deckRepository.updateSettings(
       deckId,
@@ -108,6 +122,30 @@ class DeckService {
 
     if (!deck) {
       throw new AppError("Baralho não encontrado.", 404);
+    }
+
+    const fsrsKeys: (keyof DeckFsrsParamsRow)[] = [
+      "request_retention",
+      "maximum_interval",
+      "enable_fuzz",
+      "enable_short_term",
+      "learning_steps",
+      "relearning_steps",
+    ];
+
+    const hasFsrsParams = fsrsKeys.some(
+      (key) => fsrsParams[key as keyof typeof fsrsParams] !== undefined,
+    );
+
+    if (hasFsrsParams) {
+      const cleanParams: Partial<DeckFsrsParamsRow> = {};
+      for (const key of fsrsKeys) {
+        const val = fsrsParams[key as keyof typeof fsrsParams];
+        if (val !== undefined) {
+          cleanParams[key] = val as never;
+        }
+      }
+      await deckRepository.upsertFsrsParams(deckId, cleanParams);
     }
 
     return deck;

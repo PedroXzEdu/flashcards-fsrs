@@ -26,8 +26,8 @@ describe("FsrsService", () => {
   });
 
   describe("preview", () => {
-    it("deve retornar 4 ratings (Again, Hard, Good, Easy)", () => {
-      const preview = fsrsService.preview(newCard);
+    it("deve retornar 4 ratings (Again, Hard, Good, Easy)", async () => {
+      const preview = await fsrsService.preview(newCard);
 
       expect(preview[Rating.Again]).toBeDefined();
       expect(preview[Rating.Hard]).toBeDefined();
@@ -35,8 +35,8 @@ describe("FsrsService", () => {
       expect(preview[Rating.Easy]).toBeDefined();
     });
 
-    it("cada item deve conter card, log e campos esperados", () => {
-      const preview = fsrsService.preview(newCard);
+    it("cada item deve conter card, log e campos esperados", async () => {
+      const preview = await fsrsService.preview(newCard);
 
       const grades = [
         Rating.Again,
@@ -62,8 +62,8 @@ describe("FsrsService", () => {
   describe("review", () => {
     it.each([Rating.Again, Rating.Hard, Rating.Good, Rating.Easy])(
       "deve retornar RecordLogItem válido para rating %i",
-      (rating) => {
-        const result = fsrsService.review(newCard, rating as Grade);
+      async (rating) => {
+        const result = await fsrsService.review(newCard, rating as Grade);
 
         expect(result.card.stability).toBeTypeOf("number");
         expect(result.card.difficulty).toBeTypeOf("number");
@@ -80,8 +80,8 @@ describe("FsrsService", () => {
   });
 
   describe("scheduling invariant", () => {
-    it("Again <= Hard <= Good <= Easy em scheduled_days", () => {
-      const preview = fsrsService.preview(newCard);
+    it("Again <= Hard <= Good <= Easy em scheduled_days", async () => {
+      const preview = await fsrsService.preview(newCard);
 
       const again = preview[Rating.Again].card.scheduled_days;
       const hard = preview[Rating.Hard].card.scheduled_days;

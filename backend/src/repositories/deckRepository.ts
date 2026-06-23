@@ -46,6 +46,16 @@ interface ReviewStatsRow {
   retention_rate: number;
 }
 
+export interface DeckFsrsParamsRow {
+  deck_id: number;
+  request_retention: number;
+  maximum_interval: number;
+  enable_fuzz: boolean;
+  enable_short_term: boolean;
+  learning_steps: string;
+  relearning_steps: string;
+}
+
 interface SharedDeckPreviewRow {
   title: string;
   description: string | null;
@@ -237,6 +247,35 @@ class DeckRepository {
     );
 
     return result.rows[0];
+  }
+
+  async getFsrsParams(deckId: number): Promise<DeckFsrsParamsRow | undefined> {
+    const result = await pool.query(
+      `SELECT * FROM deck_fsrs_params WHERE deck_id = $1`,
+      [deckId],
+    );
+    return result.rows[0];
+  }
+
+  async upsertFsrsParams(
+    deckId: number,
+    params: Partial<DeckFsrsParamsRow>,
+  ): Promise<void> {
+    const columns = Object.keys(params);
+    if (columns.length === 0) return;
+
+    const setClauses = columns.map(
+      (col, i) => `${col} = $${i + 2}`,
+    );
+    const values = columns.map((col) => (params as Record<string, unknown>)[col]);
+
+    await pool.query(
+      `INSERT INTO deck_fsrs_params (deck_id, ${columns.join(", ")})
+       VALUES ($1, ${values.map((_, i) => `$${i + 2}`).join(", ")})
+       ON CONFLICT (deck_id)
+       DO UPDATE SET ${setClauses.join(", ")}`,
+      [deckId, ...values],
+    );
   }
 
   async createCopy(

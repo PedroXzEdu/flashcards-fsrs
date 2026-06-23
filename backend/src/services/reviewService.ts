@@ -60,7 +60,7 @@ class ReviewService {
       throw new AppError("Card não encontrado.", 404);
     }
 
-    const preview = fsrsService.preview(toFsrsCard(card));
+    const preview = await fsrsService.preview(toFsrsCard(card), card.deck_id);
 
     return {
       again: this.formatPreview(preview[Rating.Again]),
@@ -77,7 +77,7 @@ class ReviewService {
       throw new AppError("Card não encontrado.", 404);
     }
 
-    const scheduling = fsrsService.review(toFsrsCard(card), rating as Grade);
+    const scheduling = await fsrsService.review(toFsrsCard(card), rating as Grade, card.deck_id);
 
     const result = await withTransaction(async (client) => {
       const updatedCard = await cardRepository.updateFsrsData(

@@ -1,8 +1,8 @@
 ---
 id: "T05.01"
 phase: "P05"
-title: "Adicionar Testes para `syncWithFSRS`"
-status: "pending"
+title: "Parâmetros FSRS Customizáveis por Deck"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []

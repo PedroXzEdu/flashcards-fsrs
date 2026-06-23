@@ -64,7 +64,7 @@ describe("decksApi", () => {
   });
 
   it("updateSettings deve chamar api.put com new_cards_per_day", () => {
-    decksApi.updateSettings(1, 15);
+    decksApi.updateSettings(1, { new_cards_per_day: 15 });
     expect(api.put).toHaveBeenCalledWith("/decks/1/settings", {
       new_cards_per_day: 15,
     });

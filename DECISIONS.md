@@ -113,11 +113,12 @@ Biblioteca `ts-fsrs` v5.3.2 (mantida pela comunidade FSRS).
 
 - Dependência externa (risco de breaking change)
 - Personalização limitada dos parâmetros (usa `generatorParameters()` default)
-- Sem suporte a parâmetros por deck (uniforme global)
+- ~~Sem suporte a parâmetros por deck (uniforme global)~~ → Parâmetros por deck implementados via `deck_fsrs_params` + `createFSRS(overrides?)`
 
 ### Quando revisitar
 
-Se precisar de parâmetros FSRS customizados por deck ou se a biblioteca parar de ser mantida.
+~~Se precisar de parâmetros FSRS customizados por deck ou se a biblioteca parar de ser mantida.~~
+→ Se a biblioteca `ts-fsrs` parar de ser mantida ou se houver breaking change que exija migração para implementação própria.
 
 ---
 
@@ -690,6 +691,37 @@ PWA adicionado para tornar o app instalável e funcional offline. Alternativas: 
 ### Quando revisitar
 
 Se houver requisito de funcionalidade offline completa (revisar cards sem internet) — migrar para estratégia mais agressiva de cache e sincronização em background.
+
+---
+
+## 25. Parâmetros FSRS por Deck: Tabela Separada + Factory por Request
+
+### Contexto
+
+O FSRS usava `generatorParameters()` fixo (singleton) para todos os decks. Para T05.01, precisava-se de parâmetros customizáveis por baralho (request_retention, maximum_interval, enable_fuzz, enable_short_term, learning_steps, relearning_steps).
+
+### Escolha
+
+Tabela separada `deck_fsrs_params` (PK = deck_id, FK → decks ON DELETE CASCADE). Factory `createFSRS(overrides?)` que mescla defaults com overrides opcionais. `fsrsService.preview/review` aceitam `deckId?` opcional.
+
+### Justificativa
+
+- Tabela separada evita poluir a tabela `decks` com colunas de configuração que só alguns decks usam
+- ON DELETE CASCADE limpa automaticamente ao remover o deck
+- Factory por request é leve (criação de objeto é barata) e evita cache de instância
+- TEXT para steps (com split por vírgula) simplifica o schema PostgreSQL e mantém compatibilidade com `generatorParameters()`
+- Fallback implícito: sem registro na tabela → usa defaults do `generatorParameters()` sem branch extra
+
+### Trade-offs
+
+- Tabela separada adiciona query extra opcional no fluxo de revisão (apenas se deck_id é passado)
+- learning_steps/relearning_steps armazenados como TEXT exigem parsing (split por vírgula)
+- Factory por request recria a instância FSRS a cada preview/review (sem cache)
+- Se o número de parâmetros crescer significativamente, tabela separada vs JSONB pode ser revisitado
+
+### Quando revisitar
+
+Se o número de parâmetros FSRS crescer significativamente ou se houver necessidade de validação mais rigorosa dos steps (ex: UI de seleção de intervalos em vez de texto livre).
 
 ---
 

@@ -117,6 +117,24 @@ export async function getDeckStats(
   }
 }
 
+export async function getDeckFsrsParams(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = numericIdParams.parse(req.params);
+    const params = await deckService.getFsrsParams(id, req.userId!);
+
+    return res.json({
+      success: true,
+      data: params,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function updateDeckSettings(
   req: AuthRequest,
   res: Response,
