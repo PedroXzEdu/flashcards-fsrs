@@ -1,3 +1,31 @@
+// FSRS (Free Spaced Repetition Scheduler) integration layer.
+//
+// This service wraps ts-fsrs (https://github.com/open-spaced-repetition/ts-fsrs)
+// and provides two operations used by ReviewService:
+//
+//   preview(card) — simulates all 4 ratings (Again/Hard/Good/Easy) without
+//                   persisting anything. Used to show the user upcoming intervals.
+//   review(card, rating) — applies a single rating and returns the updated card
+//                          + review log. The caller (ReviewService) persists both.
+//
+// Deck-specific FSRS parameters are loaded from deck_fsrs_params when deckId is
+// provided; otherwise global defaults (generatorParameters()) are used.
+//
+// State machine (default config):
+//   New ──Again─────> Learning
+//   New ──Good──────> Learning
+//   New ──Easy──────> Review
+//   Learning ──Again──> Learning (reset step)
+//   Learning ──Good───> Review (or next learning step)
+//   Learning ──Easy───> Review
+//   Review ──Again───> Relearning
+//   Review ──Hard/Good/Easy─> Review (stays, interval adjusts)
+//   Relearning ──Again──> Relearning (reset step)
+//   Relearning ──Good/Easy─> Review
+//
+// learning_steps on the Card tracks the current step index; it is persisted in
+// the cards table so progress survives DB roundtrips (T05.03).
+
 import {
   fsrs,
   generatorParameters,

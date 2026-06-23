@@ -268,6 +268,94 @@ Request → authMiddleware → reviewController
   → { success: true, data: { card, review, next_review, scheduled_days } }
 ```
 
+### FSRS — Spaced Repetition Architecture
+
+**Algorithm**: FSRS-5 via `ts-fsrs` (https://github.com/open-spaced-repetition/ts-fsrs).
+Wrapped by `FsrsService` which loads deck-specific parameters from `deck_fsrs_params`.
+
+**Card States** (enum `State`):
+
+| Value | Name        | Description                              |
+|-------|-------------|------------------------------------------|
+| 0     | New         | Never reviewed                           |
+| 1     | Learning    | In initial learning steps                |
+| 2     | Review      | Graduated, normal review cycle           |
+| 3     | Relearning  | Forgotten, re-learning                   |
+
+**Transitions** (default config):
+
+```
+New ──Again──> Learning
+New ──Good───> Learning
+New ──Easy───> Review
+
+Learning ──Again──> Learning (reset to step 0)
+Learning ──Good───> Review (or next learning step)
+Learning ──Easy───> Review
+
+Review ──Again───> Relearning
+Review ──Hard────> Review (shorter interval)
+Review ──Good────> Review (normal interval)
+Review ──Easy────> Review (longer interval)
+
+Relearning ──Again──> Relearning (reset)
+Relearning ──Good───> Review (recovered)
+Relearning ──Easy───> Review (recovered)
+```
+
+**Key fields on Card** (persisted in `cards` table):
+
+| Field           | Purpose                                  |
+|-----------------|------------------------------------------|
+| `state`         | 0=New, 1=Learning, 2=Review, 3=Relearning |
+| `stability`     | Memory stability (interval when R=90%)     |
+| `difficulty`    | Card difficulty (1–10)                     |
+| `due`           | Next review datetime                       |
+| `scheduled_days`| Days until next review                     |
+| `learning_steps`| Current learning step index (T05.03 fix)   |
+| `reps`          | Total review count                         |
+| `lapses`        | Times forgotten                            |
+
+**Priority Queue** (T05.02):
+
+The per-deck review queue (`findDueByDeck`) and the cross-deck daily queue
+(`findDailyQueue`) both separate new cards from review cards:
+
+- **Review cards** (state > 0): ordered by `predicted_recall ASC` (most likely
+  to forget first). `predicted_recall = exp(-elapsed_days / stability) × 100`.
+- **New cards** (state = 0): ordered by `created_at ASC` (oldest first), after
+  all review cards. Capped by `deck.new_cards_per_day` (default 20).
+
+**Custom Parameters Per Deck** (T05.01):
+
+Decks may override FSRS defaults via `deck_fsrs_params`:
+`request_retention`, `maximum_interval`, `enable_fuzz`,
+`enable_short_term`, `learning_steps`, `relearning_steps`.
+If no custom params exist, `generatorParameters()` defaults are used.
+
+**Flow: submitReview**
+
+```
+1. cardRepository.findById(cardId)       → CardRow (from DB)
+2. toFsrsCard(row)                        → Card (ts-fsrs type)
+3. fsrsService.review(card, rating)       → RecordLogItem (via f.repeat())
+4. withTransaction:
+   a. cardRepository.updateFsrsData        → saves new stability, state, due, etc.
+   b. reviewLogRepository.create           → logs the review
+5. Return { card, review, next_review, scheduled_days }
+```
+
+**Daily Queue** (cross-deck analytics):
+
+```
+GET /analytics/daily-queue
+  → priorityQueueService.getDailyQueue(userId)
+    → cardRepository.findDailyQueue(userId, limit)
+  → Returns top N cards with lowest predicted_recall
+
+Used by the DailyQueue component (frontend) to show at-risk cards.
+```
+
 ### Import .apkg
 
 ```
