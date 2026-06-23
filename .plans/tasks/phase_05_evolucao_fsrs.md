@@ -55,7 +55,7 @@ Nenhuma
 
 ---
 
-### [ ] [T05.02 — Integrar revisões com fila de prioridade](./task_05_02_integrar_review_stack.md)
+### [x] [T05.02 — Integrar revisões com fila de prioridade](./task_05_02_integrar_review_stack.md)
 
 **Descrição:** Separar cards novos (state=0) dos de revisão na fila diária. Cards novos podem ter prioridade baseada em ordem de criação ou sorteio, não em `predicted_recall` (que é 0 para stability=0).
 

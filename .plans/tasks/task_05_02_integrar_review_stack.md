@@ -2,7 +2,7 @@
 id: "T05.02"
 phase: "P05"
 title: "Integrar Revisões com Fila de Prioridade"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -24,8 +24,7 @@ Integrar o review flow com a fila de prioridade, de modo que o "Próximo Card" s
 
 | # | Arquivo | O que fazer |
 |---|---------|-------------|
-| 1 | `backend/src/services/reviewService.ts` | Usar priority queue para próximo card |
-| 2 | `backend/src/routes/reviewRoutes.ts` | Se necessário, ajustar rota |
+| 1 | `backend/src/repositories/cardRepository.ts` | Ordenar fila por prioridade (review: predicted_recall, new: created_at) |
 
 ## Fora de Escopo
 
@@ -55,11 +54,11 @@ Integrar o review flow com a fila de prioridade, de modo que o "Próximo Card" s
 
 ## Checklist de Implementação
 
-- [ ] 1. Estudar `reviewService.ts` e identificar onde a fila é obtida
-- [ ] 2. Substituir `findDailyQueue` por chamada com prioridade
-- [ ] 3. Garantir que o card returned é o de menor `predicted_recall` não revisado hoje
-- [ ] 4. Testar manualmente o fluxo
-- [ ] 5. Rodar `npx tsc --noEmit` e testes
+- [x] 1. Estudar `reviewService.ts` e identificar onde a fila é obtida
+- [x] 2. Substituir `findDueByDeck` por chamada com prioridade (predicted_recall)
+- [x] 3. Garantir que o card returned é o de menor `predicted_recall` não revisado hoje
+- [x] 4. Separar cards novos por `created_at ASC` na fila diária
+- [x] 5. Rodar `npx tsc --noEmit` e testes
 
 ## Critérios de Aceitação
 

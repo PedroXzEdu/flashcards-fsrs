@@ -104,7 +104,10 @@ class CardRepository {
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
        WHERE d.user_id = $1
-       ORDER BY predicted_recall ASC
+       ORDER BY
+         CASE WHEN c.state = 0 THEN 1 ELSE 0 END,
+         CASE WHEN c.state = 0 THEN c.created_at END ASC NULLS LAST,
+         predicted_recall ASC
        LIMIT $2`,
       [userId, limit],
     );
@@ -122,8 +125,11 @@ class CardRepository {
          AND c.due <= NOW()
        ORDER BY
          CASE WHEN c.state = 0 THEN 1 ELSE 0 END,
-         c.due ASC,
-         c.created_at ASC
+         CASE WHEN c.state = 0 THEN c.created_at END ASC NULLS LAST,
+         CASE WHEN c.state > 0 THEN
+           EXP(-GREATEST(EXTRACT(EPOCH FROM NOW() - c.due) / 86400, 0)
+               / COALESCE(NULLIF(c.stability, 0), 1)) * 100
+         END ASC NULLS LAST
        LIMIT $3`,
       [deckId, userId, limit],
     );
