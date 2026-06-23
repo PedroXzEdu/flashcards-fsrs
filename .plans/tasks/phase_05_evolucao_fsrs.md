@@ -37,9 +37,9 @@ Nenhuma
 
 ## Tarefas
 
-### [ ] [T05.01 — Testes para syncWithFSRS](./task_05_01_tests_fsrs_sync.md)
+### [x] [T05.01 — Parâmetros FSRS Customizáveis por Deck](./task_05_01_tests_fsrs_sync.md)
 
-**Descrição:** Criar uma tabela `deck_fsrs_params` (ou colunas JSONB em `decks`) para armazenar parâmetros FSRS por deck. Usar parâmetros default se não houver configuração.
+**Descrição:** Criar uma tabela `deck_fsrs_params` para armazenar parâmetros FSRS por deck. Usar parâmetros default se não houver configuração.
 
 **Motivação:** `generatorParameters()` usa defaults do FSRS-5. Diferentes tipos de conteúdo podem se beneficiar de parâmetros diferentes (ex: learning_step menor para vocabulário, maior para fórmulas).
 
@@ -48,19 +48,10 @@ Nenhuma
 **Estimativa:** 4-6 horas
 
 **Subtarefas:**
-- [ ] Criar migration `006_create_deck_fsrs_params.sql` com tabela:
-  ```sql
-  CREATE TABLE IF NOT EXISTS deck_fsrs_params (
-    deck_id INTEGER PRIMARY KEY REFERENCES decks(id) ON DELETE CASCADE,
-    maximum_interval INTEGER DEFAULT 36500,
-    easy_bonus FLOAT DEFAULT 1.3,
-    hard_factor FLOAT DEFAULT 1.2,
-    ...
-  );
-  ```
-- [ ] Atualizar `FsrsService` para aceitar parâmetros customizados
-- [ ] Criar UI de configuração FSRS no modal de settings do deck
-- [ ] Usar parâmetros default se deck não tiver configuração própria
+- [x] Criar migration `009_create_deck_fsrs_params.sql` com tabela
+- [x] Atualizar `FsrsService` para aceitar parâmetros customizados
+- [x] Criar UI de configuração FSRS no modal de settings do deck
+- [x] Usar parâmetros default se deck não tiver configuração própria
 
 ---
 
