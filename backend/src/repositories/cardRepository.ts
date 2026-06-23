@@ -13,6 +13,7 @@ export interface CreateCardInput {
   lapses: number;
   state: number;
   due: Date;
+  learning_steps?: number;
 }
 
 export interface CardRow {
@@ -30,6 +31,7 @@ export interface CardRow {
   due: Date;
   last_review: Date | null;
   created_at: Date;
+  learning_steps: number;
 }
 
 export interface QueueCardRow {
@@ -57,6 +59,7 @@ export interface FsrsUpdateData {
   state: number;
   due: Date;
   last_review?: Date;
+  learning_steps: number;
 }
 
 class CardRepository {
@@ -139,6 +142,7 @@ class CardRepository {
 
   async create(data: CreateCardInput, client?: PoolClient): Promise<CardRow> {
     const db = client ?? pool;
+    const learningSteps = data.learning_steps ?? 0;
     const result = await db.query(
       `INSERT INTO cards
         (
@@ -152,12 +156,13 @@ class CardRepository {
           reps,
           lapses,
           state,
-          due
+          due,
+          learning_steps
         )
        VALUES
         (
           $1,$2,$3,$4,$5,
-          $6,$7,$8,$9,$10,$11
+          $6,$7,$8,$9,$10,$11,$12
         )
        RETURNING *`,
       [
@@ -172,6 +177,7 @@ class CardRepository {
         data.lapses,
         data.state,
         data.due,
+        learningSteps,
       ],
     );
 
@@ -191,9 +197,10 @@ class CardRepository {
     const placeholders: string[] = [];
 
     cards.forEach((card, i) => {
-      const base = i * 12;
+      const base = i * 13;
+      const learningSteps = card.learning_steps ?? 0;
       placeholders.push(
-        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12})`,
+        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13})`,
       );
       values.push(
         deckId,
@@ -208,12 +215,13 @@ class CardRepository {
         card.state,
         card.due,
         now,
+        learningSteps,
       );
     });
 
     const result = await db.query(
       `INSERT INTO cards
-        (deck_id, front, back, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due, created_at)
+        (deck_id, front, back, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due, created_at, learning_steps)
        VALUES ${placeholders.join(", ")}
        RETURNING *`,
       values,
@@ -234,8 +242,9 @@ class CardRepository {
          lapses = $6,
          state = $7,
          due = $8,
-         last_review = $9
-       WHERE id = $10
+         last_review = $9,
+         learning_steps = $10
+       WHERE id = $11
        RETURNING *`,
       [
         data.stability,
@@ -247,6 +256,7 @@ class CardRepository {
         data.state,
         data.due,
         data.last_review,
+        data.learning_steps,
         cardId,
       ],
     );

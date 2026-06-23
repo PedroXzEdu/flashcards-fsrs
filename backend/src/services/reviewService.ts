@@ -20,7 +20,6 @@ function toFsrsCard(row: CardRow): Card {
   return {
     ...row,
     last_review: row.last_review ?? undefined,
-    learning_steps: 0,
     state: row.state as State,
   };
 }

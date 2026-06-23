@@ -2,7 +2,7 @@
 id: "T05.03"
 phase: "P05"
 title: "Revisar Lógica de `state` do Card na Transição"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -55,12 +55,12 @@ Verificar se a transição de estados (New → Learning → Review, Review → R
 
 ## Checklist de Implementação
 
-- [ ] 1. Mapear máquina de estados atual do FSRS
-- [ ] 2. Comparar com a documentação oficial do FSRS
-- [ ] 3. Verificar se `New → Learning` acontece no primeiro review
-- [ ] 4. Verificar se `Review → Relearning` acontece quando `Again` em card com `stability > 0`
-- [ ] 5. Corrigir se necessário (com teste correspondente)
-- [ ] 6. Rodar `npx tsc --noEmit` e testes
+- [x] 1. Mapear máquina de estados atual do FSRS
+- [x] 2. Comparar com a documentação oficial do FSRS
+- [x] 3. Verificar se `New → Learning` acontece no primeiro review
+- [x] 4. Verificar se `Review → Relearning` acontece quando `Again` em card com `stability > 0`
+- [x] 5. Corrigir `learning_steps` não persistido (bug de transição)
+- [x] 6. Rodar `npx tsc --noEmit` e testes
 
 ## Critérios de Aceitação
 

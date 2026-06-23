@@ -73,7 +73,7 @@ Nenhuma
 
 ---
 
-### [ ] [T05.03 — Revisar lógica de state do card](./task_05_03_revisar_logica_state_card.md)
+### [x] [T05.03 — Revisar lógica de state do card](./task_05_03_revisar_logica_state_card.md)
 
 **Descrição:** Calcular a taxa de retenção real (rating >= 3 como "lembrado") e comparar com a retenção prevista pelo FSRS no momento do agendamento.
 
