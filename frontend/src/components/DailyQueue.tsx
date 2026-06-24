@@ -21,8 +21,13 @@ export function DailyQueue() {
     try {
       const data = await getDailyQueue();
       setQueue(data);
-    } catch {
-      setError("Não foi possível carregar a fila do dia.");
+    } catch (err) {
+      console.error("DailyQueue — erro:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível carregar a fila do dia.",
+      );
     } finally {
       setLoading(false);
     }

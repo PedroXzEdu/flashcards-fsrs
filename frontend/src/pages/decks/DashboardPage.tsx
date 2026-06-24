@@ -90,8 +90,13 @@ export default function DashboardPage() {
         counts[item.deck_id] = item.due_count;
       }
       setDueCounts(counts);
-    } catch {
-      setError("Erro ao carregar baralhos.");
+    } catch (err) {
+      console.error("DashboardPage — loadDecks erro:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erro ao carregar baralhos.",
+      );
     } finally {
       setLoading(false);
     }

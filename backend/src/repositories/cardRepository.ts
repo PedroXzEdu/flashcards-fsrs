@@ -106,7 +106,7 @@ class CardRepository {
               ) AS predicted_recall
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
-       WHERE d.user_id = $1
+       WHERE d.user_id = $1 AND c.due <= NOW()
        ORDER BY
          CASE WHEN c.state = 0 THEN 1 ELSE 0 END,
          CASE WHEN c.state = 0 THEN c.created_at END ASC NULLS LAST,

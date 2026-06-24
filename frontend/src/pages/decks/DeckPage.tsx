@@ -112,8 +112,13 @@ export default function DeckPage() {
       setPage(1);
       setHasMore(cardsData.pagination.page < cardsData.pagination.totalPages);
       setDueCount(reviewData.total);
-    } catch {
-      setError("Erro ao carregar baralho.");
+    } catch (err) {
+      console.error("DeckPage — loadData erro:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Erro ao carregar baralho.",
+      );
     } finally {
       setLoading(false);
     }
