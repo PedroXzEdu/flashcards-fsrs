@@ -41,10 +41,20 @@ const RATINGS = [
   },
 ];
 
-function formatDays(days: number) {
-  if (days === 0) return "minutos";
-  if (days === 1) return "amanhã";
-  return `${days}d`;
+function formatInterval(days: number) {
+  if (days < 1 / 1440) return "≤1m";
+  const totalMinutes = days * 1440;
+  const minutes = Math.round(totalMinutes);
+  if (minutes < 60) return `${minutes}m`;
+  const totalHours = days * 24;
+  const hours = Math.round(totalHours);
+  if (hours < 24) return `${hours}h`;
+  const totalDays = days;
+  if (totalDays < 30) return `${Math.round(totalDays)}d`;
+  const totalMonths = totalDays / 30.44;
+  if (totalMonths < 12) return `${Math.round(totalMonths)}mo`;
+  const years = Math.round(totalDays / 365.25);
+  return `${years}y`;
 }
 
 interface RatingButtonsProps {
@@ -218,7 +228,7 @@ function RatingButton({
               fontFamily: "JetBrains Mono, monospace",
             }}
           >
-            {formatDays(days)}
+            {formatInterval(days)}
           </span>
         )}
       </button>

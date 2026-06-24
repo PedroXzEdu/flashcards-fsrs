@@ -103,6 +103,52 @@ export async function importApkg(
   }
 }
 
+export async function importCsvTxt(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  let filePath: string | undefined;
+
+  try {
+    if (!req.file) {
+      throw new AppError("Nenhum arquivo enviado.", 400);
+    }
+
+    filePath = req.file.path;
+
+    const deckId = Number(req.body.deck_id);
+    if (!deckId || isNaN(deckId)) {
+      throw new AppError("deck_id é obrigatório.", 400);
+    }
+    const ext = path.extname(req.file.originalname).toLowerCase();
+    const content = fs.readFileSync(filePath, "utf-8");
+
+    const result = await importService.importFromCsvTxt(
+      req.userId!,
+      deckId,
+      content,
+      ext,
+    );
+
+    res.json({
+      success: true,
+      data: {
+        ...result,
+        message: `${result.imported} cards importados com sucesso!`,
+      },
+    });
+  } catch (err) {
+    next(err);
+  } finally {
+    try {
+      if (filePath) fs.rmSync(filePath, { force: true });
+    } catch {
+      /* ignora erros de limpeza */
+    }
+  }
+}
+
 function processMidiaRefs(text: string): string {
   const mediaUrl = (path: string) => `${env.mediaBaseUrl}/media/${path}`;
 

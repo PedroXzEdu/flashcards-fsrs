@@ -65,7 +65,14 @@ export const importApi = {
     const formData = new FormData();
     formData.append("file", file);
     return api.postFormData("/import", formData) as Promise<ImportResult>;
-  }
+  },
+
+  importCsvTxt: async (file: File, deckId: number) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("deck_id", String(deckId));
+    return api.postFormData("/import/csv", formData) as Promise<ImportResult>;
+  },
 };
 
 interface ImportResult {

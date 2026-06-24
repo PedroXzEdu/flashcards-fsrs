@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import { authMiddleware } from "../middlewares/auth";
 import { importRateLimiter } from "../middlewares/rateLimiter";
-import { importApkg } from "../controllers/importController";
+import { importApkg, importCsvTxt } from "../controllers/importController";
 
 const uploadDir = path.join(__dirname, "../../uploads/tmp");
 fs.mkdirSync(uploadDir, { recursive: true });
@@ -44,8 +44,24 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 },
 });
 
+const csvUpload = multer({
+  storage,
+  fileFilter: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (ext === ".csv" || ext === ".txt") {
+      cb(null, true);
+    } else {
+      const err = new Error("Tipo de arquivo inválido. Aceito apenas .csv e .txt.") as Error & { code: string };
+      err.code = "INVALID_FILE_TYPE";
+      cb(err);
+    }
+  },
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+
 const router = Router();
 router.use(authMiddleware);
 router.post("/", importRateLimiter, upload.single("file"), importApkg);
+router.post("/csv", importRateLimiter, csvUpload.single("file"), importCsvTxt);
 
 export default router;

@@ -12,11 +12,15 @@ function getRoute(path: string, method: string) {
 }
 
 describe("importRoutes", () => {
-  it("deve registrar 1 rota", () => {
-    expect(getRoutes()).toHaveLength(1);
+  it("deve registrar 2 rotas", () => {
+    expect(getRoutes()).toHaveLength(2);
   });
 
   it("POST / tem 3 middlewares (rateLimiter + upload + controller)", () => {
     expect(getRoute("/", "post").route.stack).toHaveLength(3);
+  });
+
+  it("POST /csv tem 3 middlewares (rateLimiter + upload + controller)", () => {
+    expect(getRoute("/csv", "post").route.stack).toHaveLength(3);
   });
 });

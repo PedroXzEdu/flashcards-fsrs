@@ -13,6 +13,7 @@ import LoadMoreButton from "../../components/LoadMoreButton";
 import Button from "../../components/Button";
 import CardForm from "../../components/CardForm";
 import BulkCreateForm from "../../components/BulkCreateForm";
+import CsvImportModal from "../../components/CsvImportModal";
 import ShareModal from "../../components/ShareModal";
 import {
   BarChart2,
@@ -25,6 +26,7 @@ import {
   Search,
   Share2,
   MoreVertical,
+  FileSpreadsheet,
 } from "lucide-react";
 
 export default function DeckPage() {
@@ -65,6 +67,7 @@ export default function DeckPage() {
   );
   const [showBulk, setShowBulk] = useState(false);
   const [bulkSaving, setBulkSaving] = useState(false);
+  const [showCsvImport, setShowCsvImport] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const toast = useToast();
   const [renaming, setRenaming] = useState(false);
@@ -1045,6 +1048,16 @@ export default function DeckPage() {
         <Button
           variant="secondary"
           size="sm"
+          icon={<FileSpreadsheet size={13} />}
+          onClick={() => setShowCsvImport(true)}
+          style={{ marginRight: "8px" }}
+        >
+          Importar
+        </Button>
+
+        <Button
+          variant="secondary"
+          size="sm"
           icon={<ListPlus size={13} />}
           onClick={() => setShowBulk((s) => !s)}
           style={{ marginRight: "12px" }}
@@ -1081,6 +1094,14 @@ export default function DeckPage() {
           onSave={handleBulkCreate}
           onCancel={() => setShowBulk(false)}
           saving={bulkSaving}
+        />
+      )}
+
+      {showCsvImport && (
+        <CsvImportModal
+          deckId={deckId}
+          onClose={() => setShowCsvImport(false)}
+          onSuccess={loadData}
         />
       )}
 

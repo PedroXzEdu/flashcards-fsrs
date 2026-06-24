@@ -64,8 +64,8 @@ describe("RatingButtons", () => {
         error=""
       />,
     );
-    expect(screen.getByText("minutos")).toBeInTheDocument();
-    expect(screen.getByText("amanhã")).toBeInTheDocument();
+    expect(screen.getByText("≤1m")).toBeInTheDocument();
+    expect(screen.getByText("1d")).toBeInTheDocument();
     expect(screen.getByText("3d")).toBeInTheDocument();
     expect(screen.getByText("7d")).toBeInTheDocument();
   });
