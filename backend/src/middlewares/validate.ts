@@ -9,7 +9,10 @@ export function validate(schema?: ZodSchema, querySchema?: ZodSchema) {
     }
 
     if (querySchema) {
-      req.query = querySchema.parse(req.query);
+      const parsed = querySchema.parse(req.query);
+      for (const [key, value] of Object.entries(parsed)) {
+        (req.query as Record<string, unknown>)[key] = value;
+      }
     }
 
     next();
