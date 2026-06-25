@@ -101,8 +101,8 @@ class CardRepository {
     const result = await pool.query(
       `SELECT c.id, c.front, c.back, c.stability, c.due, c.state,
               ROUND(
-                EXP(-GREATEST(EXTRACT(EPOCH FROM NOW() - c.due) / 86400, 0)
-                    / COALESCE(NULLIF(c.stability, 0), 1)) * 100, 2
+                (EXP(-GREATEST(EXTRACT(EPOCH FROM NOW() - c.due) / 86400, 0)
+                    / COALESCE(NULLIF(c.stability, 0), 1)) * 100)::numeric, 2
               ) AS predicted_recall
        FROM cards c
        JOIN decks d ON d.id = c.deck_id
