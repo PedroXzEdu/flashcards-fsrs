@@ -2,7 +2,7 @@
 id: "T06.05"
 phase: "P06"
 title: "Adicionar Paginação na Listagem de Cards"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -57,13 +57,13 @@ Adicionar paginação na tela do DeckPage, já que o deck pode ter centenas de c
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar `Pagination.tsx`:
+- [x] 1. Criar `Pagination.tsx`:
   - Props: currentPage, totalPages, onPageChange
   - Botões Anterior/Próximo
   - Número da página atual
-- [ ] 2. Modificar `api/cards.ts` para aceitar `page` e `limit`
-- [ ] 3. Integrar no DeckPage: estado de página, chamar API com paginação
-- [ ] 4. Rodar `npx tsc -b --noEmit`
+- [x] 2. Modificar `api/cards.ts` para aceitar `page` e `limit`
+- [x] 3. Integrar no DeckPage: estado de página, chamar API com paginação
+- [x] 4. Rodar `npx tsc -b --noEmit`
 
 ## Critérios de Aceitação
 
@@ -80,10 +80,10 @@ npx vitest run
 
 ## Definition of Done
 
-- [ ] Componente de paginação criado
-- [ ] Integrado ao DeckPage
-- [ ] `tsc` passando
-- [ ] `@reviewer` aprovou
+- [x] Componente de paginação criado
+- [x] Integrado ao DeckPage
+- [x] `tsc` passando
+- [x] `@reviewer` aprovou
 
 ## Task Completion Policy
 

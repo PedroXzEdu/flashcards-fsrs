@@ -10,7 +10,7 @@ import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonCardItem } from "../../components/SkeletonCard";
 import CardListItem from "../../components/CardListItem";
 import CardInlineEdit from "../../components/CardInlineEdit";
-import LoadMoreButton from "../../components/LoadMoreButton";
+import Pagination from "../../components/Pagination";
 import Button from "../../components/Button";
 import CardForm from "../../components/CardForm";
 import BulkCreateForm from "../../components/BulkCreateForm";
@@ -38,7 +38,8 @@ export default function DeckPage() {
   const [cards, setCards] = useState<Card[]>([]);
   const [dueCount, setDueCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCards, setTotalCards] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -111,7 +112,8 @@ export default function DeckPage() {
       setNewCardsPerDay(deckData.new_cards_per_day ?? 20);
       setCards(cardsData.cards);
       setPage(1);
-      setHasMore(cardsData.pagination.page < cardsData.pagination.totalPages);
+      setTotalPages(cardsData.pagination.totalPages);
+      setTotalCards(cardsData.pagination.total);
       setDueCount(reviewData.total);
     } catch (err) {
       console.error("DeckPage — loadData erro:", err);
@@ -125,16 +127,16 @@ export default function DeckPage() {
     }
   }, [deckId]);
 
-  async function loadMore() {
+  async function loadPage(targetPage: number) {
     setLoadingMore(true);
     try {
-      const nextPage = page + 1;
-      const data = await cardsApi.list(deckId, nextPage, 20);
-      setCards((prev) => [...prev, ...data.cards]);
-      setPage(nextPage);
-      setHasMore(nextPage < data.pagination.totalPages);
+      const data = await cardsApi.list(deckId, targetPage, 20);
+      setCards(data.cards);
+      setPage(targetPage);
+      setTotalPages(data.pagination.totalPages);
+      setTotalCards(data.pagination.total);
     } catch {
-      toast.error("Erro ao carregar mais cards.");
+      toast.error("Erro ao carregar cards.");
     } finally {
       setLoadingMore(false);
     }
@@ -999,7 +1001,7 @@ export default function DeckPage() {
         }}
       >
         <p style={{ margin: 0, color: "var(--text-muted)", fontSize: "13px" }}>
-          {cards.length} {cards.length === 1 ? "card" : "cards"}
+          {totalCards} {totalCards === 1 ? "card" : "cards"}
           {dueCount > 0 && (
             <span
               style={{
@@ -1115,17 +1117,25 @@ export default function DeckPage() {
       {cards.length === 0 ? (
         <EmptyDeckState onCreateCard={() => setShowForm(true)} />
       ) : search !== "" && filteredCards.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 0" }}>
-          <p
-            style={{
-              color: "var(--text-sub)",
-              margin: 0,
-              fontWeight: 500,
-              fontSize: "14px",
-            }}
-          >
-            Nenhum card encontrado para sua busca.
-          </p>
+        <div>
+          <div style={{ textAlign: "center", padding: "60px 0" }}>
+            <p
+              style={{
+                color: "var(--text-sub)",
+                margin: 0,
+                fontWeight: 500,
+                fontSize: "14px",
+              }}
+            >
+              Nenhum card encontrado para sua busca.
+            </p>
+          </div>
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={loadPage}
+            loading={loadingMore}
+          />
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -1148,9 +1158,12 @@ export default function DeckPage() {
               />
             ),
           )}
-          {hasMore && (
-            <LoadMoreButton onClick={loadMore} loading={loadingMore} />
-          )}
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={loadPage}
+            loading={loadingMore}
+          />
         </div>
       )}
       <style>{`

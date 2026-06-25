@@ -2,7 +2,7 @@
 id: "T06.02"
 phase: "P06"
 title: "Criar Página de Deck Vazio (Empty State)"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -55,13 +55,13 @@ Criar componente de empty state para quando um deck não tem cards ainda, com CT
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar `EmptyDeckState.tsx` com:
+- [x] 1. Criar `EmptyDeckState.tsx` com:
   - Mensagem amigável "Este baralho está vazio"
-  - Botão "Criar primeiro card" navegando para criação
-  - Ícone ilustrativo
-  - (Opcional) Botão "Importar .apkg"
-- [ ] 2. Importar e usar no `DeckPage.tsx` quando `cards.length === 0`
-- [ ] 3. Rodar `npx tsc -b --noEmit`
+  - Botão "Criar primeiro card" chamando `onCreateCard`
+  - Ícone ilustrativo (FileText)
+  - (Opcional) Botão "Importar .apkg" via `onImportApkg`
+- [x] 2. Substituir `EmptyState` por `EmptyDeckState` no `DeckPage.tsx`
+- [x] 3. Rodar `npx tsc -b --noEmit` — passou
 
 ## Critérios de Aceitação
 
@@ -78,9 +78,9 @@ npx vitest run
 
 ## Definition of Done
 
-- [ ] Componente criado
-- [ ] Integrado ao DeckPage
-- [ ] `tsc` passando
+- [x] Componente criado
+- [x] Integrado ao DeckPage (substitui EmptyState)
+- [x] `tsc` passando
 - [ ] `@reviewer` aprovou
 
 ## Task Completion Policy

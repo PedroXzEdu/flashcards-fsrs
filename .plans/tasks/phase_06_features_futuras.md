@@ -113,7 +113,7 @@ Fases 00-05 preferencialmente concluídas
 
 ---
 
-### [ ] [T06.05 — Paginação na listagem de cards](./task_06_05_paginacao_cards.md)
+### [x] [T06.05 — Paginação na listagem de cards](./task_06_05_paginacao_cards.md)
 
 **Descrição:** Garantir que o sync funcione corretamente para usuários que acessam de múltiplos dispositivos. Já é stateless (JWT) — apenas validar que o cache PWA não atrapalha.
 
