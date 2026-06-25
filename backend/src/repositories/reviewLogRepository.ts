@@ -275,11 +275,27 @@ class ReviewLogRepository {
       [userId],
     );
 
+    const dailyMap = new Map(daily.rows.map((r: GlobalStatsDaily) => [r.date, Number(r.total)]));
+    const now = new Date();
+    const filledDaily: GlobalStatsDaily[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      const dateStr = `${year}-${month}-${day}`;
+      filledDaily.push({
+        date: dateStr,
+        total: dailyMap.get(dateStr) ?? 0,
+      });
+    }
+
     return {
       cards: cards.rows[0],
       reviews: reviews.rows[0],
       decks: decks.rows[0],
-      daily: daily.rows,
+      daily: filledDaily,
     };
   }
 }
