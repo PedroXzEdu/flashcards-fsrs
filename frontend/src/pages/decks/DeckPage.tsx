@@ -5,10 +5,11 @@ import { cardsApi } from "../../api/cards";
 import type { Deck, Card } from "../../types";
 import { useToast } from "../../contexts/ToastContext";
 import Layout from "../../components/Layout";
-import EmptyState from "../../components/EmptyState";
+import EmptyDeckState from "../../components/EmptyDeckState";
 import ConfirmModal from "../../components/ConfirmModal";
 import { SkeletonCardItem } from "../../components/SkeletonCard";
 import CardListItem from "../../components/CardListItem";
+import CardInlineEdit from "../../components/CardInlineEdit";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import Button from "../../components/Button";
 import CardForm from "../../components/CardForm";
@@ -17,7 +18,6 @@ import CsvImportModal from "../../components/CsvImportModal";
 import ShareModal from "../../components/ShareModal";
 import {
   BarChart2,
-  FileText,
   ListPlus,
   Play,
   Pencil,
@@ -44,7 +44,7 @@ export default function DeckPage() {
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [editingCard, setEditingCard] = useState<Card | null>(null);
+  const [editingCardId, setEditingCardId] = useState<number | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Card | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [newCardsPerDay, setNewCardsPerDay] = useState(20);
@@ -90,6 +90,7 @@ export default function DeckPage() {
     function handleKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
       if (showForm) setShowForm(false);
+      if (editingCardId) setEditingCardId(null);
       if (showBulk) setShowBulk(false);
       if (showSettings) setShowSettings(false);
       if (editingTitle) setEditingTitle(false);
@@ -97,7 +98,7 @@ export default function DeckPage() {
     }
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [showForm, showBulk, showSettings, editingTitle, showMoreMenu]);
+  }, [showForm, editingCardId, showBulk, showSettings, editingTitle, showMoreMenu]);
 
   const loadData = useCallback(async () => {
     try {
@@ -216,20 +217,24 @@ export default function DeckPage() {
   async function handleSave(front: string, back: string) {
     setSaving(true);
     try {
-      if (editingCard) {
-        const updated = await cardsApi.update(
-          deckId,
-          editingCard.id,
-          front,
-          back,
-        );
-        setCards((p) => p.map((c) => (c.id === updated.id ? updated : c)));
-        setEditingCard(null);
-      } else {
-        const card = await cardsApi.create(deckId, front, back);
-        setCards((p) => [card, ...p]);
-      }
+      const card = await cardsApi.create(deckId, front, back);
+      setCards((p) => [card, ...p]);
       setShowForm(false);
+      toast.success("Card criado");
+    } catch {
+      setError("Erro ao criar card.");
+      toast.error("Erro ao criar card.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleInlineSave(cardId: number, front: string, back: string) {
+    setSaving(true);
+    try {
+      const updated = await cardsApi.update(deckId, cardId, front, back);
+      setCards((p) => p.map((c) => (c.id === updated.id ? updated : c)));
+      setEditingCardId(null);
       toast.success("Card salvo");
     } catch {
       setError("Erro ao salvar card.");
@@ -274,13 +279,15 @@ export default function DeckPage() {
   }
 
   function handleEdit(card: Card) {
-    setEditingCard(card);
-    setShowForm(true);
+    setEditingCardId(card.id);
   }
 
   function cancelForm() {
     setShowForm(false);
-    setEditingCard(null);
+  }
+
+  function cancelInlineEdit() {
+    setEditingCardId(null);
   }
 
   const dropdownItemStyle: React.CSSProperties = {
@@ -1082,15 +1089,10 @@ export default function DeckPage() {
 
       {showForm && (
         <CardForm
-          initialValues={
-            editingCard
-              ? { front: editingCard.front, back: editingCard.back }
-              : undefined
-          }
           onSave={handleSave}
           onCancel={cancelForm}
           saving={saving}
-          editMode={editingCard !== null}
+          editMode={false}
         />
       )}
 
@@ -1111,11 +1113,7 @@ export default function DeckPage() {
       )}
 
       {cards.length === 0 ? (
-        <EmptyState
-          icon={<FileText size={28} color="var(--text-muted)" />}
-          title="Nenhum card ainda."
-          description="Adicione seu primeiro card!"
-        />
+        <EmptyDeckState onCreateCard={() => setShowForm(true)} />
       ) : search !== "" && filteredCards.length === 0 ? (
         <div style={{ textAlign: "center", padding: "60px 0" }}>
           <p
@@ -1131,15 +1129,25 @@ export default function DeckPage() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          {filteredCards.map((card, i) => (
-            <CardListItem
-              key={card.id}
-              card={card}
-              index={i}
-              onEdit={handleEdit}
-              onDelete={(c) => setConfirmDelete(c)}
-            />
-          ))}
+          {filteredCards.map((card, i) =>
+            card.id === editingCardId ? (
+              <CardInlineEdit
+                key={card.id}
+                card={card}
+                onSave={handleInlineSave}
+                onCancel={cancelInlineEdit}
+                saving={saving}
+              />
+            ) : (
+              <CardListItem
+                key={card.id}
+                card={card}
+                index={i}
+                onEdit={handleEdit}
+                onDelete={(c) => setConfirmDelete(c)}
+              />
+            ),
+          )}
           {hasMore && (
             <LoadMoreButton onClick={loadMore} loading={loadingMore} />
           )}

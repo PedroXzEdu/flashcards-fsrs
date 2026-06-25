@@ -2,7 +2,7 @@
 id: "T06.03"
 phase: "P06"
 title: "Adicionar Feedback Visual para Ações do Usuário"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []

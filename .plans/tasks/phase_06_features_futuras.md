@@ -38,7 +38,7 @@ Fases 00-05 preferencialmente concluídas
 
 ## Tarefas
 
-### [ ] [T06.01 — Testes frontend para componentes reativos](./task_06_01_testes_frontend_reactivos.md)
+### [x] [T06.01 — Testes frontend para componentes reativos](./task_06_01_testes_frontend_reactivos.md)
 
 **Descrição:** Adicionar coluna `tags TEXT[]` na tabela `cards` e permitir filtrar/filtrar por tags no frontend.
 
@@ -57,7 +57,7 @@ Fases 00-05 preferencialmente concluídas
 
 ---
 
-### [ ] [T06.02 — Página de deck vazio (empty state)](./task_06_02_ferramenta_deck_vazio.md)
+### [x] [T06.02 — Página de deck vazio (empty state)](./task_06_02_ferramenta_deck_vazio.md)
 
 **Descrição:** Adicionar achievements baseados em streak, total de revisões, cards criados. Sem badges complexos — apenas notificações visuais.
 
@@ -76,7 +76,7 @@ Fases 00-05 preferencialmente concluídas
 
 ---
 
-### [ ] [T06.03 — Feedback visual (toast) para ações](./task_06_03_feedback_acao_usuario.md)
+### [x] [T06.03 — Feedback visual (toast) para ações](./task_06_03_feedback_acao_usuario.md)
 
 **Descrição:** Adicionar opção no ReviewPage para pular o preview e ir direto para os botões de rating após virar o card. Opcionalmente, ativar um modo "revisão expressa" com timer.
 
@@ -94,7 +94,7 @@ Fases 00-05 preferencialmente concluídas
 
 ---
 
-### [ ] [T06.04 — Edição inline de cards](./task_06_04_desevolver_edicao_cards.md)
+### [x] [T06.04 — Edição inline de cards](./task_06_04_desevolver_edicao_cards.md)
 
 **Descrição:** Implementar exportação de baralho no formato Anki .apkg (coleção SQLite + mídia).
 

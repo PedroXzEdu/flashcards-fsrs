@@ -2,7 +2,7 @@
 id: "T06.04"
 phase: "P06"
 title: "Implementar Edição Inline de Cards no DeckPage"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
