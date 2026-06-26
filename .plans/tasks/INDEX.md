@@ -2,7 +2,7 @@
 id: "INDEX"
 title: "Plano de Execução — FlashFSRS"
 type: "roadmap"
-updated: "2026-06-22"
+updated: "2026-06-26"
 ---
 
 # Plano de Execução — FlashFSRS
@@ -33,13 +33,14 @@ updated: "2026-06-22"
 | 05 | Evolução do FSRS | Baixo | Médio | Média |
 | 06 | Features Futuras | Variável | Variável | Opcional |
 | 07 | Preparação Final para TCC | Baixo | Muito Alto | Essencial |
+| 08 | Testes E2E — Cobertura Completa | Médio | Alto | Alta |
 
 ---
 
 ## Ordem de Implementação Recomendada
 
 ```
-Fase 00 → Fase 07 (1 task) → Fase 01 → Fase 02 → Fase 03 → Fase 04 → Fase 05 → Fase 06 → Fase 07 (restante)
+Fase 00 → Fase 07 (1 task) → Fase 01 → Fase 02 → Fase 03 → Fase 04 → Fase 05 → Fase 06 → Fase 07 → Fase 08 (intercalada)
 ```
 
 **Justificativa:** Comece com vitórias rápidas (Fase 00) e com a preparação inicial da apresentação (Fase 07 task de esqueleto), pois isso dá direção. Depois o grosso da refatoração frontend (Fase 01) que é o que mais impacta a qualidade percebida pela banca. Em paralelo, melhore tipagem (Fase 02) e segurança (Fase 03). Deixe performance, FSRS e features para depois.
@@ -54,6 +55,7 @@ Fase 00 → Fase 07 (1 task) → Fase 01 → Fase 02 → Fase 03 → Fase 04 →
 | Mês 3 | Fase 02 + Fase 03 (tipagem + segurança) |
 | Mês 4 | Fase 04 + Fase 05 (performance + FSRS) |
 | Mês 5-6 | Fase 06 (features, opcional) + Fase 07 (preparação final) |
+| Mês 6-7 | Fase 08 (testes E2E, opcional — intercalado com Fase 07) |
 
 ---
 
@@ -83,7 +85,7 @@ Fase 00 → Fase 07 (1 task) → Fase 01 → Fase 02 → Fase 03 → Fase 04 →
 - **Adicionar CI/CD completo:** Útil, mas não crítico para TCC. Um script simples de deploy é suficiente.
 - **Refatorar FSRS internamente:** `ts-fsrs` é biblioteca oficial e testada. Implementação própria seria retrabalho.
 - **Mudar sistema de temas (CSS Modules, Styled Components, etc.):** Tailwind + CSS variables funciona. Trocar agora é retrabalho.
-- **Adicionar testes E2E para novos fluxos:** Os 3 existentes (auth, review, import) já cobrem o core. Novos testes E2E são opcionais.
+- ~~**Adicionar testes E2E para novos fluxos:**~~ — **REMOVIDO.** Agora planejado na Fase 08 devido ao valor para validação de regressão e apresentação do TCC.
 - **Adicionar sistema de tags/gamificação:** Features legais, mas não essenciais para TCC. Adiar para Fase 06 se sobrar tempo.
 - **Reescrever componentes Button/Modal/Input com variants complexas:** O que existe funciona. Overengineering de design system.
 
@@ -159,4 +161,5 @@ Apenas após o arquivamento completo a próxima fase pode começar.
 | Data | Responsável | Mudança |
 |------|-------------|---------|
 | 2026-06-22 | Sistema de Planejamento | Migração para novo template com YAML frontmatter, políticas de conclusão, seções de risco e validação |
+| 2026-06-26 | Planejamento E2E | Adicionada Fase 08 (Testes E2E) com 7 tarefas de infraestrutura, cobertura de auth, deck, card, review, import/share/analytics e navegação. Removida restrição anterior de "não adicionar testes E2E". |
 
