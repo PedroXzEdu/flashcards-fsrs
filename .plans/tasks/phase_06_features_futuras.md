@@ -87,10 +87,10 @@ Fases 00-05 preferencialmente concluídas
 **Estimativa:** 2-3 dias
 
 **Subtarefas:**
-- [ ] Adicionar toggle "Modo rápido" no header da revisão
-- [ ] Quando ativo, esconder preview e mostrar botões de rating imediatamente após virar
-- [ ] Persistir preferência em localStorage
-- [ ] Garantir que o preview ainda seja carregado em background para mostrar scheduled_days
+- [x] Adicionar toggle "Modo rápido" no header da revisão
+- [x] Quando ativo, esconder preview e mostrar botões de rating imediatamente após virar
+- [x] Persistir preferência em localStorage
+- [x] Garantir que o preview ainda seja carregado em background para mostrar scheduled_days
 
 ---
 

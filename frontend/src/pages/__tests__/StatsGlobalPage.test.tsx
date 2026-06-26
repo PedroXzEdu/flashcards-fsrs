@@ -19,6 +19,12 @@ vi.mock("../../api/decks", () => ({
   },
 }));
 
+vi.mock("../../api/achievements", () => ({
+  achievementsApi: {
+    list: vi.fn().mockResolvedValue([]),
+  },
+}));
+
 vi.mock("../../api/client", () => ({
   api: {
     get: vi.fn(),

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useReducer } from "react";
+import { useEffect, useCallback, useReducer, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cardsApi } from "../../api/cards";
 import type { Card, PreviewRatings } from "../../types";
@@ -106,7 +106,16 @@ export default function ReviewPage() {
   const { theme, toggle } = useTheme();
   const deckId = Number(id);
   const [state, dispatch] = useReducer(reviewReducer, initialState);
+  const [fastMode, setFastMode] = useState(() => localStorage.getItem("fastMode") === "true");
   const toast = useToast();
+
+  function toggleFastMode() {
+    setFastMode((prev) => {
+      const next = !prev;
+      localStorage.setItem("fastMode", String(next));
+      return next;
+    });
+  }
 
   async function loadCards() {
     try {
@@ -167,6 +176,13 @@ export default function ReviewPage() {
         : shuffle(state.cards),
     });
   }, [state.shuffled, state.cards]);
+
+  useEffect(() => {
+    if (fastMode && !state.flipped && !state.loading && !state.done && state.cards.length > 0) {
+      handleFlip();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleFlip é estável com base em state.index
+  }, [state.index, fastMode, state.flipped, state.loading, state.done]);
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -263,6 +279,8 @@ export default function ReviewPage() {
         onShuffleToggle={handleShuffleToggle}
         theme={theme}
         onThemeToggle={toggle}
+        fastMode={fastMode}
+        onFastModeToggle={toggleFastMode}
       />
 
       <ReviewSessionProgress

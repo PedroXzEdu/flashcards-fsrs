@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import ReviewPage from "../review/ReviewPage";
 import { ThemeProvider } from "../../contexts/ThemeContext";
+import { ToastProvider } from "../../contexts/ToastContext";
 import { cardsApi } from "../../api/cards";
 
 vi.mock("../../api/cards", () => ({
@@ -49,9 +50,11 @@ function renderReviewPage() {
   return render(
     <MemoryRouter initialEntries={["/decks/1/review"]}>
       <ThemeProvider>
-        <Routes>
-          <Route path="/decks/:id/review" element={<ReviewPage />} />
-        </Routes>
+        <ToastProvider>
+          <Routes>
+            <Route path="/decks/:id/review" element={<ReviewPage />} />
+          </Routes>
+        </ToastProvider>
       </ThemeProvider>
     </MemoryRouter>,
   );

@@ -1,4 +1,4 @@
-import { Sun, Moon, X, Shuffle } from "lucide-react";
+import { Sun, Moon, X, Shuffle, Zap } from "lucide-react";
 
 interface ReviewHeaderProps {
   onExit: () => void;
@@ -9,6 +9,8 @@ interface ReviewHeaderProps {
   onShuffleToggle: () => void;
   theme: "dark" | "light";
   onThemeToggle: () => void;
+  fastMode: boolean;
+  onFastModeToggle: () => void;
 }
 
 export default function ReviewHeader({
@@ -20,6 +22,8 @@ export default function ReviewHeader({
   onShuffleToggle,
   theme,
   onThemeToggle,
+  fastMode,
+  onFastModeToggle,
 }: ReviewHeaderProps) {
   return (
     <header
@@ -86,6 +90,26 @@ export default function ReviewHeader({
           ))}
         </div>
 
+        <button
+          type="button"
+          aria-label="Modo rápido"
+          onClick={onFastModeToggle}
+          title={fastMode ? "Modo rápido ativo" : "Ativar modo rápido"}
+          style={{
+            background: fastMode
+              ? "rgba(166,227,161,0.15)"
+              : "var(--bg-card)",
+            border: `1px solid ${fastMode ? "var(--success)" : "var(--border)"}`,
+            borderRadius: "6px",
+            cursor: "pointer",
+            padding: "5px 7px",
+            display: "flex",
+            alignItems: "center",
+            color: fastMode ? "var(--success)" : "var(--text-sub)",
+          }}
+        >
+          <Zap size={13} />
+        </button>
         <button
           type="button"
           aria-label="Embaralhar ordem dos cards"
