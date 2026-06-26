@@ -1,7 +1,7 @@
 ---
 id: "P06"
 title: "Features Futuras"
-status: "pending"
+status: "completed"
 priority: "low"
 estimate: "2-4 weeks"
 depends_on: []
