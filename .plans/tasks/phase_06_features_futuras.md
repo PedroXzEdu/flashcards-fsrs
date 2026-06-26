@@ -49,11 +49,11 @@ Fases 00-05 preferencialmente concluídas
 **Estimativa:** 1 semana
 
 **Subtarefas:**
-- [ ] Migration: `ALTER TABLE cards ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';`
-- [ ] Índice GIN: `CREATE INDEX IF NOT EXISTS idx_cards_tags ON cards USING GIN (tags);`
-- [ ] Atualizar schemas Zod para aceitar `tags?: string[]`
-- [ ] Adicionar input de tags no formulário de card
-- [ ] Permitir filtro por tag na listagem de cards
+- [x] Migration: `ALTER TABLE cards ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';`
+- [x] Índice GIN: `CREATE INDEX IF NOT EXISTS idx_cards_tags ON cards USING GIN (tags);`
+- [x] Atualizar schemas Zod para aceitar `tags?: string[]`
+- [x] Adicionar input de tags no formulário de card
+- [x] Permitir filtro por tag na listagem de cards
 
 ---
 

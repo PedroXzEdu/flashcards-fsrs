@@ -44,6 +44,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] Error boundary
 - [x] Testes E2E (Playwright, 3 suites: auth, review, import)
 - [x] Parâmetros FSRS customizáveis por deck (request_retention, maximum_interval, enable_fuzz, enable_short_term, learning_steps, relearning_steps)
+- [x] Sistema de tags (coluna `tags TEXT[]` + índice GIN, input por vírgula, badges no card, filtro por tags)
 
 ---
 
@@ -70,6 +71,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] `importController` padronizado com wrapper `{ success, data }`
 - [x] `getSharedDeckPreview` corrigido: `Request` em vez de `AuthRequest` (rota pública)
 - [x] Auth middleware padronizado com `next(err)` em vez de resposta inline
+- [x] Sistema de tags em cards: coluna `tags TEXT[]` + índice GIN, backend (create/update/batch), frontend (input + badges + filtro)
 
 ### Sessão de testes e normalização
 
@@ -150,7 +152,6 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 
 Itens não cobertos pelas fases planejadas:
 
-- Sistema de tags
 - Gamificação
 - Sincronização em tempo real
 

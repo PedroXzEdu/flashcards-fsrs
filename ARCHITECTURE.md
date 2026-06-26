@@ -130,7 +130,9 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   └── querySchemas.ts    → pagination, analyticsMonths, analyticsDays
 │   │   ├── database/
 │   │   │   ├── db.ts               → PG Pool + runMigrations() + ping()
-│   │   │   └── migrations.sql      → 4 tabelas + índices
+│   │   │   ├── migrations.sql      → Schema inicial (4 tabelas + índices)
+│   │   │   ├── migrationRunner.ts  → Runner de migrações sequenciais (pasta `migrations/`)
+│   │   │   └── migrations/         → Migrações SQL numeradas (001_*, 002_*, etc.)
 │   │   ├── tests/                  → Testes de integração
 │   │   │   └── integration/
 │   │   │       ├── helpers/
@@ -313,6 +315,7 @@ Relearning ──Easy───> Review (recovered)
 | `due`           | Next review datetime                       |
 | `scheduled_days`| Days until next review                     |
 | `learning_steps`| Current learning step index (T05.03 fix)   |
+| `tags`          | Array de tags TEXT (GIN index)             |
 | `reps`          | Total review count                         |
 | `lapses`        | Times forgotten                            |
 

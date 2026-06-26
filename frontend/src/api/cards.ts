@@ -17,14 +17,14 @@ export const cardsApi = {
       `/decks/${deckId}/cards?page=${page}&limit=${limit}`,
     ),
 
-  create: (deckId: number, front: string, back: string) =>
-    api.post<Card>(`/decks/${deckId}/cards`, { front, back }),
+  create: (deckId: number, front: string, back: string, tags?: string[]) =>
+    api.post<Card>(`/decks/${deckId}/cards`, { front, back, tags }),
 
-  createBatch: (deckId: number, cards: { front: string; back: string }[]) =>
+  createBatch: (deckId: number, cards: { front: string; back: string; tags?: string[] }[]) =>
     api.post<Card[]>(`/decks/${deckId}/cards/batch`, { cards }),
 
-  update: (deckId: number, cardId: number, front: string, back: string) =>
-    api.put<Card>(`/decks/${deckId}/cards/${cardId}`, { front, back }),
+  update: (deckId: number, cardId: number, front: string, back: string, tags?: string[]) =>
+    api.put<Card>(`/decks/${deckId}/cards/${cardId}`, { front, back, tags }),
 
   delete: (deckId: number, cardId: number) =>
     api.delete<null>(`/decks/${deckId}/cards/${cardId}`),

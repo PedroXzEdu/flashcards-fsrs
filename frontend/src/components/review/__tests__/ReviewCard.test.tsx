@@ -18,6 +18,7 @@ const mockCard = {
   due: new Date().toISOString(),
   last_review: null,
   created_at: new Date().toISOString(),
+  tags: [],
 };
 
 describe("ReviewCard", () => {

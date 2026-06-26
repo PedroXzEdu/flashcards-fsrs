@@ -78,6 +78,34 @@ export default function CardListItem({
           }}
         />
       </div>
+      {card.tags && card.tags.length > 0 && (
+        <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", maxWidth: "160px" }}>
+          {card.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                color: "var(--accent)",
+                background: "rgba(203,166,247,0.1)",
+                borderRadius: "4px",
+                padding: "2px 6px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                maxWidth: "80px",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+          {card.tags.length > 3 && (
+            <span style={{ fontSize: "10px", color: "var(--text-muted)" }}>
+              +{card.tags.length - 3}
+            </span>
+          )}
+        </div>
+      )}
       {card.reps > 0 && (
         <span
           style={{

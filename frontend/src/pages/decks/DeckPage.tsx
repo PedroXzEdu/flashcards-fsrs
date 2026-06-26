@@ -60,12 +60,16 @@ export default function DeckPage() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [search, setSearch] = useState("");
-  const filteredCards = cards.filter(
-    (card) =>
-      search === "" ||
-      card.front.toLowerCase().includes(search.toLowerCase()) ||
-      card.back.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredCards = cards.filter((card) => {
+    if (search === "") return true;
+    const q = search.toLowerCase();
+    const matchesText =
+      card.front.toLowerCase().includes(q) ||
+      card.back.toLowerCase().includes(q);
+    const matchesTag =
+      card.tags?.some((t) => t.toLowerCase().includes(q)) ?? false;
+    return matchesText || matchesTag;
+  });
   const [showBulk, setShowBulk] = useState(false);
   const [bulkSaving, setBulkSaving] = useState(false);
   const [showCsvImport, setShowCsvImport] = useState(false);
@@ -216,10 +220,10 @@ export default function DeckPage() {
     }
   }
 
-  async function handleSave(front: string, back: string) {
+  async function handleSave(front: string, back: string, tags?: string[]) {
     setSaving(true);
     try {
-      const card = await cardsApi.create(deckId, front, back);
+      const card = await cardsApi.create(deckId, front, back, tags);
       setCards((p) => [card, ...p]);
       setShowForm(false);
       toast.success("Card criado");
@@ -234,7 +238,8 @@ export default function DeckPage() {
   async function handleInlineSave(cardId: number, front: string, back: string) {
     setSaving(true);
     try {
-      const updated = await cardsApi.update(deckId, cardId, front, back);
+      const currentCard = cards.find((c) => c.id === cardId);
+      const updated = await cardsApi.update(deckId, cardId, front, back, currentCard?.tags);
       setCards((p) => p.map((c) => (c.id === updated.id ? updated : c)));
       setEditingCardId(null);
       toast.success("Card salvo");

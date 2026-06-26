@@ -3,8 +3,8 @@ import RichTextEditor from "./RichTextEditor";
 import Button from "./Button";
 
 interface CardFormProps {
-  initialValues?: { front: string; back: string };
-  onSave: (front: string, back: string) => Promise<void>;
+  initialValues?: { front: string; back: string; tags?: string[] };
+  onSave: (front: string, back: string, tags?: string[]) => Promise<void>;
   onCancel: () => void;
   saving: boolean;
   editMode: boolean;
@@ -19,12 +19,17 @@ export default function CardForm({
 }: CardFormProps) {
   const [front, setFront] = useState(initialValues?.front ?? "");
   const [back, setBack] = useState(initialValues?.back ?? "");
+  const [tagsInput, setTagsInput] = useState(initialValues?.tags?.join(", ") ?? "");
   const [saveStatus, setSaveStatus] = useState<"saving" | "saved" | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaveStatus("saving");
-    await onSave(front, back);
+    const tags = tagsInput
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
+    await onSave(front, back, tags.length > 0 ? tags : undefined);
     setSaveStatus("saved");
     setTimeout(() => setSaveStatus(null), 2000);
   }
@@ -100,6 +105,40 @@ export default function CardForm({
             placeholder="Resposta ou definição..."
           />
         </div>
+      </div>
+      <div style={{ marginTop: "12px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "11px",
+            fontWeight: 500,
+            color: "var(--text-muted)",
+            marginBottom: "6px",
+            letterSpacing: "0.5px",
+            textTransform: "uppercase",
+          }}
+        >
+          Tags (separadas por vírgula)
+        </label>
+        <input
+          type="text"
+          value={tagsInput}
+          onChange={(e) => setTagsInput(e.target.value)}
+          placeholder="ex: biologia, célula, dna"
+          style={{
+            width: "100%",
+            background: "var(--bg)",
+            border: "1px solid var(--border)",
+            borderRadius: "8px",
+            padding: "8px 12px",
+            fontSize: "13px",
+            color: "var(--text)",
+            outline: "none",
+            fontFamily: "Outfit, sans-serif",
+          }}
+          onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
+          onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+        />
       </div>
       <div
         style={{

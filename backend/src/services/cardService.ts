@@ -9,7 +9,7 @@ class CardService {
   async create(
     deckId: number,
     userId: number,
-    data: { front: string; back: string },
+    data: { front: string; back: string; tags?: string[] },
   ) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
@@ -29,6 +29,7 @@ class CardService {
       lapses: emptyCard.lapses,
       state: emptyCard.state,
       due: emptyCard.due,
+      tags: data.tags,
     });
 
     collector.incrementBusiness("cardsCreated");
@@ -39,7 +40,7 @@ class CardService {
   async createBatch(
     deckId: number,
     userId: number,
-    cards: { front: string; back: string }[],
+    cards: { front: string; back: string; tags?: string[] }[],
   ) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
@@ -58,6 +59,7 @@ class CardService {
       lapses: emptyCard.lapses,
       state: emptyCard.state,
       due: emptyCard.due,
+      tags: c.tags,
     }));
 
     const created = await cardRepository.createBatch(
@@ -100,7 +102,7 @@ class CardService {
     deckId: number,
     cardId: number,
     userId: number,
-    data: { front: string; back: string },
+    data: { front: string; back: string; tags?: string[] },
   ) {
     const deck = await deckRepository.findById(deckId, userId);
     if (!deck) {
@@ -112,6 +114,7 @@ class CardService {
       cardId,
       sanitizeHtml(data.front),
       sanitizeHtml(data.back),
+      data.tags,
     );
     if (!card) {
       throw new AppError("Card não encontrado.", 404);

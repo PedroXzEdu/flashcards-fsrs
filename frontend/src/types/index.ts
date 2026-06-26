@@ -31,6 +31,7 @@ export interface Card {
   due: string;
   last_review: string | null;
   created_at: string;
+  tags: string[];
 }
 
 export interface ReviewLog {

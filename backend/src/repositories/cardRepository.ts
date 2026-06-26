@@ -14,6 +14,7 @@ export interface CreateCardInput {
   state: number;
   due: Date;
   learning_steps?: number;
+  tags?: string[];
 }
 
 export interface CardRow {
@@ -32,6 +33,7 @@ export interface CardRow {
   last_review: Date | null;
   created_at: Date;
   learning_steps: number;
+  tags: string[];
 }
 
 export interface QueueCardRow {
@@ -143,6 +145,7 @@ class CardRepository {
   async create(data: CreateCardInput, client?: PoolClient): Promise<CardRow> {
     const db = client ?? pool;
     const learningSteps = data.learning_steps ?? 0;
+    const tags = data.tags ?? [];
     const result = await db.query(
       `INSERT INTO cards
         (
@@ -157,12 +160,13 @@ class CardRepository {
           lapses,
           state,
           due,
-          learning_steps
+          learning_steps,
+          tags
         )
        VALUES
         (
           $1,$2,$3,$4,$5,
-          $6,$7,$8,$9,$10,$11,$12
+          $6,$7,$8,$9,$10,$11,$12,$13
         )
        RETURNING *`,
       [
@@ -178,6 +182,7 @@ class CardRepository {
         data.state,
         data.due,
         learningSteps,
+        tags,
       ],
     );
 
@@ -197,10 +202,11 @@ class CardRepository {
     const placeholders: string[] = [];
 
     cards.forEach((card, i) => {
-      const base = i * 13;
+      const base = i * 14;
       const learningSteps = card.learning_steps ?? 0;
+      const tags = card.tags ?? [];
       placeholders.push(
-        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13})`,
+        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},$${base + 14})`,
       );
       values.push(
         deckId,
@@ -216,12 +222,13 @@ class CardRepository {
         card.due,
         now,
         learningSteps,
+        tags,
       );
     });
 
     const result = await db.query(
       `INSERT INTO cards
-        (deck_id, front, back, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due, created_at, learning_steps)
+        (deck_id, front, back, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due, created_at, learning_steps, tags)
        VALUES ${placeholders.join(", ")}
        RETURNING *`,
       values,
@@ -278,12 +285,12 @@ class CardRepository {
     return result.rows[0];
   }
 
-  async update(deckId: number, cardId: number, front: string, back: string): Promise<CardRow | undefined> {
+  async update(deckId: number, cardId: number, front: string, back: string, tags?: string[]): Promise<CardRow | undefined> {
     const result = await pool.query(
-      `UPDATE cards SET front = $1, back = $2
-       WHERE id = $3 AND deck_id = $4
+      `UPDATE cards SET front = $1, back = $2, tags = $3
+       WHERE id = $4 AND deck_id = $5
        RETURNING *`,
-      [front, back, cardId, deckId],
+      [front, back, tags ?? [], cardId, deckId],
     );
 
     return result.rows[0];

@@ -152,6 +152,7 @@ describe("CardService", () => {
         1,
         "Nova Frente",
         "Novo Verso",
+        undefined,
       );
     });
 

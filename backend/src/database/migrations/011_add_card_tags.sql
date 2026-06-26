@@ -1,0 +1,2 @@
+ALTER TABLE cards ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';
+CREATE INDEX IF NOT EXISTS idx_cards_tags ON cards USING GIN (tags);
