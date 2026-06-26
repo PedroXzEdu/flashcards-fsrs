@@ -124,9 +124,9 @@ Fases 00-05 preferencialmente concluídas
 **Estimativa:** 2-3 dias
 
 **Subtarefas:**
-- [ ] Adicionar header `Cache-Control: no-cache` nas respostas da API
-- [ ] Garantir que PWA não cacheie respostas de auth (token)
-- [ ] Adicionar "puxar atualização" ao abrir o app (verificar versão do service worker)
+- [x] Adicionar header `Cache-Control: no-cache, no-store, must-revalidate` nas respostas da API
+- [x] Garantir que PWA não cacheie respostas de auth (token) — removido `auth` do padrão de runtime caching
+- [x] Adicionar "puxar atualização" ao abrir o app — SW alterado de `autoUpdate` para `prompt` com `onNeedRefresh`
 
 ## Task Completion Policy
 

@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       injectRegister: null,
       includeAssets: ["favicon.svg", "apple-touch-icon.png", "icons.svg"],
       manifest: {
@@ -46,7 +46,7 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern:
-              /\/(?:auth|decks|import|review-logs|metrics|analytics|health|media)\b/,
+              /\/(?:decks|import|review-logs|metrics|analytics|health|media)\b/,
             handler: "NetworkFirst",
             options: {
               cacheName: "api-cache",

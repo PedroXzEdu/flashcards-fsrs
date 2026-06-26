@@ -145,6 +145,11 @@ app.get("/health", healthCheck);
 
 app.use("/media", express.static(path.join(__dirname, "../uploads/media")));
 
+app.use((_req, res, next) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  next();
+});
+
 app.use(routes);
 
 app.use("/analytics", analyticsRoutes);
