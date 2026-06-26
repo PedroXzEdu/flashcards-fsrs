@@ -12,6 +12,7 @@ import ReviewSessionSummary from "../../components/review/ReviewSessionSummary";
 import ConfirmModal from "../../components/ConfirmModal";
 import EmptyState from "../../components/EmptyState";
 import { SkeletonReviewCard } from "../../components/SkeletonCard";
+import { useToast } from "../../contexts/ToastContext";
 
 interface ReviewState {
   cards: Card[];
@@ -105,6 +106,7 @@ export default function ReviewPage() {
   const { theme, toggle } = useTheme();
   const deckId = Number(id);
   const [state, dispatch] = useReducer(reviewReducer, initialState);
+  const toast = useToast();
 
   async function loadCards() {
     try {
@@ -138,7 +140,12 @@ export default function ReviewPage() {
     if (state.submitting) return;
     dispatch({ type: "SET_SUBMITTING", submitting: true });
     try {
-      await cardsApi.review(deckId, state.cards[state.index].id, rating);
+      const result = await cardsApi.review(deckId, state.cards[state.index].id, rating);
+      if (result.new_achievements?.length) {
+        result.new_achievements.forEach((a) => {
+          toast.success(`🎉 Conquista: ${a.title}`);
+        });
+      }
       dispatch({ type: "RATE", rating });
     } catch (err: unknown) {
       dispatch({

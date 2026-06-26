@@ -68,11 +68,11 @@ Fases 00-05 preferencialmente concluídas
 **Estimativa:** 1-2 semanas
 
 **Subtarefas:**
-- [ ] Criar tabela `achievements` com `id, user_id, key, unlocked_at`
-- [ ] Definir achievements iniciais (ex: "Primeira revisão", "7 dias de streak", "100 cards revisados")
-- [ ] Verificar achievements após cada revisão (hook no service)
-- [ ] Notificar usuário com toast quando um achievement for desbloqueado
-- [ ] Mostrar achievements na página de perfil ou dashboard
+- [x] Criar tabela `achievements` com `id, user_id, key, unlocked_at`
+- [x] Definir achievements iniciais (ex: "Primeira revisão", "7 dias de streak", "100 cards revisados")
+- [x] Verificar achievements após cada revisão (hook no service)
+- [x] Notificar usuário com toast quando um achievement for desbloqueado
+- [x] Mostrar achievements na página de perfil ou dashboard
 
 ---
 

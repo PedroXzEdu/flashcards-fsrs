@@ -22,6 +22,12 @@ vi.mock("../../repositories/deckRepository", () => ({
   },
 }));
 
+vi.mock("../achievementService", () => ({
+  achievementService: {
+    checkAndUnlock: vi.fn().mockResolvedValue([]),
+  },
+}));
+
 const mockDeck = { id: 1, title: "Meu Deck", user_id: 1 };
 const mockCard = {
   id: 1,

@@ -84,6 +84,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── reviewLogsController.ts
 │   │   │   ├── importController.ts    ← raw SQL
 │   │   │   ├── analyticsController.ts
+│   │   │   ├── achievementController.ts
 │   │   │   └── healthController.ts
 │   │   ├── services/           → Business logic
 │   │   │   ├── authService.ts
@@ -93,6 +94,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── reviewService.ts      ← transactional (FSRS)
 │   │   │   ├── reviewLogsService.ts
 │   │   │   ├── fsrsService.ts        ← ts-fsrs wrapper
+│   │   │   ├── achievementService.ts
 │   │   │   ├── analyticsService.ts
 │   │   │   ├── priorityQueueService.ts
 │   │   │   ├── importService.ts
@@ -102,6 +104,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── deckRepository.ts
 │   │   │   ├── cardRepository.ts
 │   │   │   ├── reviewLogRepository.ts
+│   │   │   ├── achievementRepository.ts
 │   │   │   ├── analyticsRepository.ts
 │   │   │   └── __tests__/
 │   │   ├── middlewares/
@@ -120,6 +123,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── cardRoutes.ts
 │   │   │   ├── reviewRoutes.ts
 │   │   │   ├── reviewLogsRoutes.ts
+│   │   │   ├── achievementRoutes.ts
 │   │   │   ├── importRoutes.ts
 │   │   │   ├── analyticsRoutes.ts
 │   │   │   └── metricsRoutes.ts
@@ -159,7 +163,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── client.ts          → fetch wrapper genérico
 │   │   │   ├── auth.ts
 │   │   │   ├── decks.ts
-│   │   │   └── cards.ts
+│   │   │   ├── cards.ts
+│   │   │   └── achievements.ts
 │   │   ├── pages/
 │   │   │   ├── auth/              → LoginPage, RegisterPage
 │   │   │   ├── decks/             → DashboardPage, DeckPage, StatsPage
@@ -268,7 +273,25 @@ Request → authMiddleware → reviewController
     → fsrsService (ts-fsrs: f.repeat())
     → [transação] cardRepository.updateFsrsData + reviewLogRepository.create
   → { success: true, data: { card, review, next_review, scheduled_days } }
+  → Opcionalmente inclui `new_achievements` (Achievement[]) se alguma conquista for desbloqueada
 ```
+
+### Achievements
+
+```
+GET /achievements                     → conquistas desbloqueadas
+
+Request → authMiddleware → achievementController
+  → achievementService.getUserAchievements
+    → achievementRepository.findByUser
+  → { success: true, data: Achievement[] }
+
+**Hooks (fire-and-forget):**
+  POST /decks/:deck_id/review/:cardId (submitReview) → achievementService.checkAndUnlock() → novas conquistas na resposta
+  POST /decks/:id/cards (create/batch)              → achievementService.checkAndUnlock() → sem retorno ao cliente
+```
+
+**Achievements predefinidos:** first_review, streak_7, streak_30, reviews_100, reviews_1000, cards_25, cards_100
 
 ### FSRS — Spaced Repetition Architecture
 

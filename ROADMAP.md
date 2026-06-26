@@ -45,6 +45,7 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] Testes E2E (Playwright, 3 suites: auth, review, import)
 - [x] Parâmetros FSRS customizáveis por deck (request_retention, maximum_interval, enable_fuzz, enable_short_term, learning_steps, relearning_steps)
 - [x] Sistema de tags (coluna `tags TEXT[]` + índice GIN, input por vírgula, badges no card, filtro por tags)
+- [x] Sistema de achievements/gamificação (7 conquistas, check-and-unlock, toast de novas conquistas, exibição em stats)
 
 ---
 
@@ -72,6 +73,15 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] `getSharedDeckPreview` corrigido: `Request` em vez de `AuthRequest` (rota pública)
 - [x] Auth middleware padronizado com `next(err)` em vez de resposta inline
 - [x] Sistema de tags em cards: coluna `tags TEXT[]` + índice GIN, backend (create/update/batch), frontend (input + badges + filtro)
+
+### Sessão atual (tags + achievements)
+
+- [x] Migration `011_add_card_tags.sql`: coluna `tags TEXT[]` + índice GIN
+- [x] `cardRepository.ts`, `cardSchema.ts`, `cardService.ts`: suporte a tags em create/update/batch
+- [x] Frontend: `CardForm.tsx` (input tags por vírgula), `CardListItem.tsx` (badges), `DeckPage.tsx` (filtro por tags)
+- [x] Migration `012_add_achievements.sql`: tabela `achievements` (user_id, key, unlocked_at)
+- [x] `achievementService.ts`: 7 conquistas, `checkAndUnlock` após revisão/criação de cards
+- [x] Frontend: seção de conquistas em `StatsGlobalPage.tsx`, toast de novas conquistas na `ReviewPage`
 
 ### Sessão de testes e normalização
 
@@ -152,7 +162,6 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 
 Itens não cobertos pelas fases planejadas:
 
-- Gamificação
 - Sincronização em tempo real
 
 ---

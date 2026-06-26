@@ -15,6 +15,7 @@ import { withTransaction } from "../utils/transaction";
 import { logger } from "../config/logger";
 
 import { collector } from "../middlewares/metrics";
+import { achievementService } from "./achievementService";
 
 function toFsrsCard(row: CardRow): Card {
   return {
@@ -121,7 +122,9 @@ class ReviewService {
       };
     });
 
-    return result;
+    const newAchievements = await achievementService.checkAndUnlock(userId).catch(() => []);
+
+    return { ...result, new_achievements: newAchievements };
   }
 
   private formatPreview(item: RecordLogItem) {

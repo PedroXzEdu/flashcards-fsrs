@@ -1,5 +1,5 @@
 import { api } from "./client";
-import type { Card, PreviewRatings } from "../types";
+import type { Card, PreviewRatings, Achievement } from "../types";
 
 export interface PaginatedResponse<T> {
   cards: T[];
@@ -39,7 +39,7 @@ export const cardsApi = {
     api.get<PreviewRatings>(`/decks/${deckId}/review/${cardId}/preview`),
 
   review: (deckId: number, cardId: number, rating: number) =>
-    api.post<{ card: Card; next_review: string; scheduled_days: number }>(
+    api.post<{ card: Card; next_review: string; scheduled_days: number; new_achievements?: Achievement[] }>(
       `/decks/${deckId}/review/${cardId}`,
       { rating },
     ),

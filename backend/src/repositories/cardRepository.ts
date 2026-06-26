@@ -308,6 +308,17 @@ class CardRepository {
     return result.rows;
   }
 
+  async getCardCountByUser(userId: number): Promise<number> {
+    const result = await pool.query(
+      `SELECT COUNT(*)::int AS total
+       FROM cards c
+       JOIN decks d ON d.id = c.deck_id
+       WHERE d.user_id = $1`,
+      [userId],
+    );
+    return result.rows[0].total;
+  }
+
   async delete(deckId: number, cardId: number): Promise<{ id: number } | undefined> {
     const result = await pool.query(
       `DELETE FROM cards WHERE id = $1 AND deck_id = $2 RETURNING id`,

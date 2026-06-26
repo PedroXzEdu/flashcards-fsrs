@@ -29,6 +29,12 @@ vi.mock("../../repositories/reviewLogRepository", () => ({
   },
 }));
 
+vi.mock("../achievementService", () => ({
+  achievementService: {
+    checkAndUnlock: vi.fn().mockResolvedValue([]),
+  },
+}));
+
 vi.mock("../../services/fsrsService", () => ({
   fsrsService: {
     preview: vi.fn(),

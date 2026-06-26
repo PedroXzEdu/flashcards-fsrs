@@ -76,6 +76,12 @@ export interface PreviewRatings {
   easy: { due: string; scheduled_days: number };
 }
 
+export interface Achievement {
+  key: string;
+  title: string;
+  description: string;
+}
+
 export interface GlobalStats {
   cards: {
     total_cards: string;

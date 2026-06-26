@@ -76,9 +76,14 @@ export async function submitReview(
       req.body.rating,
     );
 
+    const { new_achievements, ...reviewData } = result;
+
     return res.json({
       success: true,
-      data: result,
+      data: {
+        ...reviewData,
+        ...(new_achievements && new_achievements.length > 0 ? { new_achievements } : {}),
+      },
     });
   } catch (err) {
     next(err);

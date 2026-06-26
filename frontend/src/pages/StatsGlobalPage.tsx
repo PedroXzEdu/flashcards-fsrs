@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { statsApi } from "../api/decks";
-import type { GlobalStats } from "../types";
+import { achievementsApi } from "../api/achievements";
+import type { GlobalStats, Achievement } from "../types";
 import Layout from "../components/Layout";
 import ActivityHeatmap from "../components/ActivityHeatmap";
 import { SkeletonDeckCard } from "../components/SkeletonCard";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Award } from "lucide-react";
 import Button from "../components/Button";
 import {
   AreaChart,
@@ -30,13 +31,19 @@ const RATING_COLORS = [
 
 export default function StatsGlobalPage() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   function fetchStats() {
-    return statsApi
-      .globalStats()
-      .then(setStats)
+    return Promise.all([
+      statsApi.globalStats(),
+      achievementsApi.list().catch(() => []),
+    ])
+      .then(([s, a]) => {
+        setStats(s);
+        setAchievements(a);
+      })
       .catch((err) => {
         setError(
           err instanceof Error ? err.message : "Erro ao carregar estatísticas",
@@ -433,6 +440,81 @@ export default function StatsGlobalPage() {
         {/* Heatmap */}
         <div style={{ ...cardStyle, overflow: "visible" }}>
           <ActivityHeatmap />
+        </div>
+
+        {/* Achievements */}
+        <div style={cardStyle}>
+          <p style={{
+            margin: "0 0 16px",
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "var(--text)",
+            textTransform: "uppercase",
+            letterSpacing: "0.5px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}>
+            <Award size={14} /> Conquistas
+          </p>
+          {achievements.length === 0 ? (
+            <p style={{
+              color: "var(--text-muted)",
+              fontSize: "13px",
+              textAlign: "center",
+              padding: "40px 0",
+            }}>
+              Nenhuma conquista ainda. Continue revisando para desbloquear!
+            </p>
+          ) : (
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gap: "10px",
+            }}>
+              {achievements.map((a) => (
+                <div key={a.key} style={{
+                  background: "var(--bg)",
+                  borderRadius: "10px",
+                  padding: "14px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                }}>
+                  <div style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    background: "rgba(203,166,247,0.12)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
+                    flexShrink: 0,
+                  }}>
+                    <Award size={16} color="var(--accent)" />
+                  </div>
+                  <div>
+                    <p style={{
+                      margin: 0,
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: "var(--text)",
+                    }}>
+                      {a.title}
+                    </p>
+                    <p style={{
+                      margin: "2px 0 0",
+                      fontSize: "11px",
+                      color: "var(--text-muted)",
+                    }}>
+                      {a.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <style>{`

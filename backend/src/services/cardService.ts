@@ -4,6 +4,7 @@ import { deckRepository } from "../repositories/deckRepository";
 import { AppError } from "../utils/AppError";
 import { collector } from "../middlewares/metrics";
 import { sanitizeHtml } from "../utils/sanitizeHtml";
+import { achievementService } from "./achievementService";
 
 class CardService {
   async create(
@@ -33,6 +34,8 @@ class CardService {
     });
 
     collector.incrementBusiness("cardsCreated");
+
+    await achievementService.checkAndUnlock(userId).catch(() => {});
 
     return card;
   }
@@ -70,6 +73,8 @@ class CardService {
     for (let i = 0; i < created.length; i++) {
       collector.incrementBusiness("cardsCreated");
     }
+
+    await achievementService.checkAndUnlock(userId).catch(() => {});
 
     return created;
   }
