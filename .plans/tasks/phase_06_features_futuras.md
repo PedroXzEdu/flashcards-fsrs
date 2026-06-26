@@ -105,11 +105,11 @@ Fases 00-05 preferencialmente concluídas
 **Estimativa:** 1 semana
 
 **Subtarefas:**
-- [ ] Criar `GET /decks/:id/export` que gera .apkg em memória
-- [ ] Usar `better-sqlite3` para criar collection.anki2
-- [ ] Copiar mídia para dentro do .apkg
-- [ ] Stream arquivo como download
-- [ ] Adicionar botão "Exportar" no DeckPage
+- [x] Criar `POST /decks/:id/export` que gera .apkg em memória (POST para side-effect)
+- [x] Usar `better-sqlite3` para criar collection.anki2 com schema compatível Anki
+- [ ] Copiar mídia para dentro do .apkg (MVP omite — apenas strip referências)
+- [x] Stream arquivo como download (PassThrough + archiver)
+- [x] Adicionar botão "Exportar" no DeckPage
 
 ---
 

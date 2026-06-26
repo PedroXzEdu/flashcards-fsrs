@@ -20,6 +20,7 @@ import {
   unshareDeck,
   importSharedDeck,
   getSharedDeckPreview,
+  exportDeck,
 } from "../controllers/deckController";
 
 const router = Router();
@@ -39,5 +40,6 @@ router.put("/:id/settings", validate(settingsSchema), updateDeckSettings);
 router.delete("/:id", deleteDeck);
 router.post("/:id/share", shareDeck);
 router.delete("/:id/share", unshareDeck);
+router.post("/:id/export", exportDeck);
 
 export default router;

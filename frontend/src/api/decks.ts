@@ -58,6 +58,21 @@ export const decksApi = {
       `/decks/shared/${token}/import`,
       {},
     ),
+
+  exportDeck: async (id: number) => {
+    const token = localStorage.getItem("token");
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL ?? "http://localhost:3000"}/decks/${id}/export`,
+      {
+        method: "POST",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      },
+    );
+    if (!res.ok) throw new Error("Erro ao exportar baralho");
+    return res.blob();
+  },
 };
 
 export const importApi = {

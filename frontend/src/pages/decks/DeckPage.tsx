@@ -18,6 +18,7 @@ import CsvImportModal from "../../components/CsvImportModal";
 import ShareModal from "../../components/ShareModal";
 import {
   BarChart2,
+  Download,
   ListPlus,
   Play,
   Pencil,
@@ -232,6 +233,21 @@ export default function DeckPage() {
       toast.error("Erro ao criar card.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleExport() {
+    try {
+      const blob = await decksApi.exportDeck(deckId);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${deck?.title || "deck"}.apkg`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success("Baralho exportado!");
+    } catch {
+      toast.error("Erro ao exportar baralho.");
     }
   }
 
@@ -1072,6 +1088,16 @@ export default function DeckPage() {
           style={{ marginRight: "8px" }}
         >
           Importar
+        </Button>
+
+        <Button
+          variant="secondary"
+          size="sm"
+          icon={<Download size={13} />}
+          onClick={handleExport}
+          style={{ marginRight: "8px" }}
+        >
+          Exportar
         </Button>
 
         <Button

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AuthRequest } from "../middlewares/auth";
 import { deckService } from "../services/deckService";
 import { deckImportService } from "../services/deckImportService";
+import { exportService } from "../services/exportService";
 import { numericIdParams } from "../schemas/paramsSchema";
 
 export async function createDeck(
@@ -233,6 +234,24 @@ export async function getSharedDeckPreview(
       success: true,
       data: deck,
     });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function exportDeck(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = numericIdParams.parse(req.params);
+    const stream = await exportService.exportDeckToApkg(id, req.userId!);
+
+    const filename = `deck_${id}.apkg`;
+    res.setHeader("Content-Type", "application/apkg");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    stream.pipe(res);
   } catch (err) {
     next(err);
   }
