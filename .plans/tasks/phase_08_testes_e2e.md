@@ -114,7 +114,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ---
 
-### [ ] [T08.04 — Gerenciamento de Flashcards (CRUD)](./task_08_04_card_crud.md)
+### [x] [T08.04 — Gerenciamento de Flashcards (CRUD)](./task_08_04_card_crud.md)
 
 **Descrição:** Testes de criação (editor + lote), edição, exclusão, paginação e validação.
 
