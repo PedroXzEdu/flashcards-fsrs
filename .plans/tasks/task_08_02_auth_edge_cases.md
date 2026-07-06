@@ -2,7 +2,7 @@
 id: "T08.02"
 phase: "P08"
 title: "Autenticação: Cenários de Borda"
-status: "pending"
+status: "completed"
 priority: "high"
 estimate: "1 day"
 depends_on: ["T08.01"]
@@ -73,14 +73,14 @@ Expandir a cobertura de autenticação para cobrir formulários, validações, e
 
 ## Checklist de Implementação
 
-- [ ] 1. Adicionar testes de validação de formulário de registro
-- [ ] 2. Adicionar teste de email duplicado
-- [ ] 3. Adicionar testes de login inválido
-- [ ] 4. Adicionar testes de persistência de sessão
-- [ ] 5. Adicionar testes de proteção de rotas restantes
-- [ ] 6. Refatorar testes existentes para usar `authTest` fixture quando aplicável
-- [ ] 7. Executar `tsc --noEmit` e `npm run test:e2e`
-- [ ] 8. Invocar `@reviewer`
+- [x] 1. Adicionar testes de validação de formulário de registro (empty name, invalid email, short password)
+- [x] 2. Adicionar teste de email duplicado
+- [x] 3. Adicionar testes de login inválido (non-existent email, wrong password, empty fields)
+- [x] 4. Adicionar testes de persistência de sessão (page reload, new tab)
+- [x] 5. Adicionar testes de proteção de rotas restantes (/decks/:id, /decks/:id/review)
+- [x] 6. Refatorar: session persistence tests usam `authTest` fixture; validação/form usa `test` normal
+- [x] 7. Executar `tsc --noEmit` e `npm run test:e2e` — 16 auth tests verdes
+- [x] 8. Invocar `@reviewer`
 
 ## Critérios de Aceitação
 

@@ -90,7 +90,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ---
 
-### [ ] [T08.02 — Autenticação: Cenários de Borda](./task_08_02_auth_edge_cases.md)
+### [x] [T08.02 — Autenticação: Cenários de Borda](./task_08_02_auth_edge_cases.md)
 
 **Descrição:** Expandir `auth.spec.ts` para cobrir validações, erros e persistência de sessão.
 
