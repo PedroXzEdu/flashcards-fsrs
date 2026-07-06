@@ -78,7 +78,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ## Tarefas
 
-### [ ] [T08.01 — Infraestrutura E2E e Configuração Global](./task_08_01_infraestrutura_e2e.md)
+### [x] [T08.01 — Infraestrutura E2E e Configuração Global](./task_08_01_infraestrutura_e2e.md)
 
 **Descrição:** Configurar Playwright com `webServer`, global setup, e fixture de autenticação.
 

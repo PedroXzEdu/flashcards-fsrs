@@ -56,12 +56,19 @@ Três arquivos em `backend/` definem a configuração do backend:
 ├── .env.prod.example          → Template de ambiente de produção
 ├── e2e/
 │   ├── playwright.config.ts
-│   ├── helpers.ts
+│   ├── .env.e2e              → Variáveis de ambiente para E2E
+│   ├── global-setup.ts       → Global setup (Docker lifecycle + auth fixo)
+│   ├── global-teardown.ts    → No-op (placeholder)
 │   ├── auth.spec.ts
 │   ├── review.spec.ts
 │   ├── import.spec.ts
+│   ├── analytics.spec.ts
+│   ├── share.spec.ts
+│   ├── tsconfig.json         → TypeScript config para typecheck E2E
 │   └── helpers/
-│       └── generate-apkg.mjs
+│       ├── index.ts           → uniqueUser() + sampleApkgPath()
+│       ├── auth.ts            → authTest fixture (storageState pré-autenticado)
+│       └── generate-apkg.mjs  → Gerador de .apkg programático
 ├── .opencode/
 │   └── agents/
 │       ├── reviewer.md
@@ -251,7 +258,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 **Rich text** → Tiptap + KaTeX render no `CardContent`
 **State** → local (useState/useEffect), sem Redux/Zustand
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
-**E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 3 suites (auth, review, import)
+**E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 5 suites (auth, review, import, analytics, share). Global setup gerencia lifecycle do Docker (`global-setup.ts`) e autentica usuário E2E fixo, salvando `storageState` em `e2e/.auth/user.json`. Fixture `authTest` disponível para testes pré-autenticados. Configuração via `.env.e2e`. Typecheck via `e2e/tsconfig.json`.
 
 **Infra adicional (produção ativa):** frontend servido como SPA estático no Vercel, backend Express no Render com PostgreSQL gerenciado. O Vercel faz o roteamento SPA e o proxy das requisições API para o backend no Render.
 

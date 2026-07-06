@@ -12,5 +12,5 @@ export function uniqueUser() {
 }
 
 export function sampleApkgPath() {
-  return join(__dirname, "fixtures", "sample.apkg");
+  return join(__dirname, "..", "fixtures", "sample.apkg");
 }

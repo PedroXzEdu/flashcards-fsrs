@@ -123,6 +123,17 @@ detalhado em [`.plans/tasks/`](.plans/tasks/):
 - [x] Rate limiting desabilitado em modo de teste (NODE_ENV=test)
 - [x] Fixture .apkg gerado programaticamente via `better-sqlite3`
 
+### Sessão de infraestrutura E2E (T08.01)
+
+- [x] `globalSetup` gerencia lifecycle do Docker (start + health checks) — alternativa ao `webServer` do Playwright
+- [x] `authTest` fixture com usuário E2E fixo e `storageState` compartilhado entre testes
+- [x] `.env.e2e` para variáveis de ambiente do ambiente E2E
+- [x] `e2e/tsconfig.json` para typecheck do diretório E2E
+- [x] `backend/.env` para ambiente de desenvolvimento Docker Compose
+- [x] `helpers.ts` migrado para `helpers/index.ts` (resolvendo conflito com diretório `helpers/`)
+- [x] Timeouts realistas no Playwright (60s teste, 30s navegação, 15s ação)
+- [x] `dotenv`, `typescript`, `@types/node` adicionados como devDependencies
+
 ---
 
 ### Fase 01 — Observability & Monitoring

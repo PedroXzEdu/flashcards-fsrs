@@ -514,6 +514,21 @@ Playwright com Chromium, testes em `e2e/`, configurado via `e2e/playwright.confi
 
 Se surgirem regressões nos flows cobertos, ou quando houver necessidade de expandir para flows adicionais (compartilhamento, analytics). Se os testes se tornarem lentos, considerar parallelização com múltiplos workers e banco isolado.
 
+### Atualização (T08.01 — Infraestrutura E2E)
+
+O gerenciamento do Docker foi movido do `webServer` do Playwright (intenção inicial) para o `globalSetup`.
+
+**Motivação:** O `webServer` do Playwright espera que o comando permaneça em execução (ex: `npm run dev`). `docker compose up -d` retorna imediatamente após iniciar os containers, incompatível com o modelo do `webServer`. O `globalSetup` permite:
+- Verificar se a stack já está rodando (pular start se ok)
+- Aguardar health checks do frontend e backend antes de prosseguir
+- Mensagens de erro claras se o Docker não estiver disponível
+
+**Usuário E2E fixo:** Em vez de criar um novo usuário por teste com `uniqueUser()`, o `globalSetup` autentica (login ou register) um usuário fixo e salva o `storageState`. A fixture `authTest` carrega esse estado, eliminando a necessidade de login em cada teste.
+
+**`.env.e2e`:** Variáveis de ambiente do E2E separadas em arquivo próprio, carregado via `dotenv` no config e globalSetup.
+
+**`e2e/tsconfig.json`:** Configuração TypeScript isolada para o diretório `e2e/`, permitindo `tsc --noEmit` nos arquivos de teste.
+
 ---
 
 ## 18. Custom In-Memory Metrics Collector em vez de Prometheus Client

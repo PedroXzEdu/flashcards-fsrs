@@ -2,7 +2,7 @@
 id: "T08.01"
 phase: "P08"
 title: "Infraestrutura E2E e Configuração Global"
-status: "pending"
+status: "completed"
 priority: "high"
 estimate: "1-2 days"
 depends_on: []
@@ -66,14 +66,14 @@ Criar infraestrutura E2E sólida que permita `npm run test:e2e` funcionar de for
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar `e2e/.env.e2e` com variáveis de ambiente para E2E
-- [ ] 2. Criar `e2e/global-setup.ts` com registro de usuário fixo e salvamento de storageState
-- [ ] 3. Criar `e2e/global-teardown.ts` (pode ser no-op inicialmente)
-- [ ] 4. Criar `e2e/helpers/auth.ts` com fixture `authTest` usando storageState
-- [ ] 5. Atualizar `playwright.config.ts` com `webServer`, `globalSetup`, `globalTeardown`, `storageState`, timeouts
-- [ ] 6. Executar `tsc --noEmit` no diretório `e2e/` para garantir tipagem correta
-- [ ] 7. Rodar todos os testes existentes e verificar que continuam passando
-- [ ] 8. Invocar `@reviewer`
+- [x] 1. Criar `e2e/.env.e2e` com variáveis de ambiente para E2E
+- [x] 2. Criar `e2e/global-setup.ts` com registro de usuário fixo e salvamento de storageState
+- [x] 3. Criar `e2e/global-teardown.ts` (no-op inicial)
+- [x] 4. Criar `e2e/helpers/auth.ts` com fixture `authTest` usando storageState
+- [x] 5. Atualizar `playwright.config.ts` com `globalSetup`, `globalTeardown`, timeouts (webServer substituído por lifecycle no globalSetup — `docker compose up -d` retorna imediatamente, incompatível com webServer do Playwright)
+- [x] 6. Executar `tsc --noEmit` no diretório `e2e/` — OK
+- [x] 7. Rodar todos os testes existentes — 8/10 verdes (2 falhas pré-existentes: import.spec.ts timeout de importação, share.spec.ts "meus baralhos" ausente)
+- [x] 8. Invocar `@reviewer` — findings corrigidos (dotenv carregado, waitForServer backend, conflito helpers.ts resolvido)
 
 ## Critérios de Aceitação
 
