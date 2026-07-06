@@ -102,7 +102,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ---
 
-### [ ] [T08.03 — Gerenciamento de Baralhos (CRUD)](./task_08_03_deck_crud.md)
+### [x] [T08.03 — Gerenciamento de Baralhos (CRUD)](./task_08_03_deck_crud.md)
 
 **Descrição:** Testes completos de criar, renomear, excluir baralhos, estado vazio e validação.
 

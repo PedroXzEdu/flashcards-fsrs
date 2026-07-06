@@ -2,7 +2,7 @@
 id: "T08.03"
 phase: "P08"
 title: "Gerenciamento de Baralhos (CRUD)"
-status: "pending"
+status: "completed"
 priority: "high"
 estimate: "2 days"
 depends_on: ["T08.01"]
@@ -72,14 +72,14 @@ Criar teste E2E completo para operações CRUD de baralhos: criar, renomear, exc
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar `e2e/deck.spec.ts` com describe "Deck Management"
-- [ ] 2. Implementar testes de criação (fluxo feliz + validação)
-- [ ] 3. Implementar teste de renomear
-- [ ] 4. Implementar teste de excluir (vazio + com cards + cancelar)
-- [ ] 5. Implementar teste de estado vazio da dashboard
-- [ ] 6. Implementar teste de listagem
-- [ ] 7. Executar `tsc --noEmit` e `npm run test:e2e`
-- [ ] 8. Invocar `@reviewer`
+- [x] 1. Criar `e2e/deck.spec.ts` com describe "Deck Management"
+- [x] 2. Implementar testes de criação (fluxo feliz + validação)
+- [x] 3. Implementar teste de renomear
+- [x] 4. Implementar teste de excluir (vazio + com cards + cancelar)
+- [x] 5. Implementar teste de estado vazio da dashboard
+- [x] 6. Implementar teste de listagem
+- [x] 7. Executar `tsc --noEmit` e `npm run test:e2e`
+- [x] 8. Invocar `@reviewer`
 
 ## Critérios de Aceitação
 
@@ -98,10 +98,11 @@ npm run test:e2e -- --grep "Deck"
 
 ## Definition of Done
 
-- [ ] 5+ testes implementados e verdes
-- [ ] CRUD completo coberto
-- [ ] Estado vazio coberto
-- [ ] `@reviewer` aprovou
+- [x] 7 testes implementados e verdes
+- [x] CRUD completo coberto (criar, renomear, excluir, listar)
+- [x] Estado vazio coberto
+- [x] Validação de formulário coberta (título vazio)
+- [x] `@reviewer` aprovou (LOW risk)
 
 ## Task Completion Policy
 
