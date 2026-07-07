@@ -2,7 +2,7 @@
 id: "T07.02"
 phase: "P07"
 title: "Revisar e Atualizar ROADMAP.md"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -36,13 +36,14 @@ Atualizar o roadmap para marcar todas as funcionalidades concluídas e deixar cl
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- Nenhum risco de regressão — mudanças exclusivamente em documentação (ROADMAP.md)
+- Nenhum código TypeScript/JavaScript foi alterado
 
 ## Validation Scope
 
 ### Manual
 
-- (Listar fluxos manuais para validação)
+- Revisão visual do ROADMAP.md comparando com git log e estado real do código
 
 ### Automated
 
@@ -52,9 +53,9 @@ Atualizar o roadmap para marcar todas as funcionalidades concluídas e deixar cl
 
 ## Checklist de Implementação
 
-- [ ] 1. Revisar todas as tasks concluídas
-- [ ] 2. Atualizar ROADMAP.md com status atual
-- [ ] 3. Verificar com `@doc`
+- [x] 1. Revisar todas as tasks concluídas
+- [x] 2. Atualizar ROADMAP.md com status atual
+- [x] 3. Verificar com `@doc`
 
 ## Critérios de Aceitação
 
@@ -68,8 +69,8 @@ Atualizar o roadmap para marcar todas as funcionalidades concluídas e deixar cl
 
 ## Definition of Done
 
-- [ ] ROADMAP.md atualizado
-- [ ] `@doc` aprovou
+- [x] ROADMAP.md atualizado
+- [x] `@doc` aprovou
 
 ## Task Completion Policy
 

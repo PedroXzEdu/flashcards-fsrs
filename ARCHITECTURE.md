@@ -64,6 +64,8 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   ├── import.spec.ts
 │   ├── analytics.spec.ts
 │   ├── share.spec.ts
+│   ├── deck.spec.ts
+│   ├── card.spec.ts
 │   ├── tsconfig.json         → TypeScript config para typecheck E2E
 │   └── helpers/
 │       ├── index.ts           → uniqueUser() + sampleApkgPath()
@@ -105,6 +107,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── analyticsService.ts
 │   │   │   ├── priorityQueueService.ts
 │   │   │   ├── importService.ts
+│   │   │   ├── exportService.ts          → .apkg export (archiver + better-sqlite3)
 │   │   │   └── __tests__/
 │   │   ├── repositories/       → SQL puro (pg)
 │   │   │   ├── userRepository.ts
@@ -138,7 +141,9 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── authSchema.ts
 │   │   │   ├── cardSchema.ts
 │   │   │   ├── deckSchema.ts
-│   │   │   └── querySchemas.ts    → pagination, analyticsMonths, analyticsDays
+│   │   │   ├── paramsSchema.ts    → deck/card route param validation
+│   │   │   ├── querySchemas.ts    → pagination, analyticsMonths, analyticsDays
+│   │   │   └── reviewSchema.ts    → rating (1-4) validation
 │   │   ├── database/
 │   │   │   ├── db.ts               → PG Pool + runMigrations() + ping()
 │   │   │   ├── migrations.sql      → Schema inicial (4 tabelas + índices)
@@ -148,14 +153,20 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   └── integration/
 │   │   │       ├── helpers/
 │   │   │       │   ├── db.ts       → testPool, runMigrations, cleanDatabase
-│   │   │       │   └── factories.ts → createUser, createDeck, createCard
+│   │   │       │   ├── factories.ts → createUser, createDeck, createCard
+│   │   │       │   └── generateFixture.ts → geração de dados de teste
 │   │   │       ├── auth.integration.test.ts
 │   │   │       ├── decks.integration.test.ts
-│   │   │       └── review.integration.test.ts
+│   │   │       ├── review.integration.test.ts
+│   │   │       ├── analytics.integration.test.ts
+│   │   │       ├── import.integration.test.ts
+│   │   │       └── security.integration.test.ts
 │   │   ├── types/                  → Type declarations
 │   │   └── utils/
 │   │       ├── AppError.ts         → Error class com statusCode
-│   │       └── sanitize.ts
+│   │       ├── sanitize.ts
+│   │       ├── sanitizeHtml.ts     → DOMPurify server-side (importService)
+│   │       └── transaction.ts      → withTransaction() helper (BEGIN/COMMIT/ROLLBACK)
 │   └── uploads/
 │       ├── tmp/                    → .apkg temporário
 │       └── media/                  → Mídia extraída de .apkg
@@ -192,25 +203,57 @@ Três arquivos em `backend/` definem a configuração do backend:
 │   │   │   ├── SkeletonCard.tsx
 │   │   │   ├── Tooltip.tsx
 │   │   │   ├── EmptyState.tsx     → Feedback para listas vazias
+│   │   │   ├── AddDeckModal.tsx
+│   │   │   ├── EditDeckModal.tsx
+│   │   │   ├── CardForm.tsx       → Card create/edit with tags
+│   │   │   ├── CardInlineEdit.tsx → Inline card editing
+│   │   │   ├── CardListItem.tsx   → Card item with state badge + tags
+│   │   │   ├── BulkCreateForm.tsx → Bulk card creation
+│   │   │   ├── CsvImportModal.tsx → CSV/TXT import with drag-and-drop
+│   │   │   ├── EmptyDeckState.tsx → Empty deck placeholder
+│   │   │   ├── LoadMoreButton.tsx
+│   │   │   ├── Pagination.tsx
+│   │   │   ├── ProgressBar.tsx
+│   │   │   ├── PasswordStrengthIndicator.tsx
+│   │   │   ├── dashboard/
+│   │   │   │   ├── CreateDeckForm.tsx
+│   │   │   │   ├── DeckCard.tsx
+│   │   │   │   ├── DeckList.tsx
+│   │   │   │   ├── StreakCards.tsx
+│   │   │   │   └── WorkloadChart.tsx
+│   │   │   ├── review/
+│   │   │   │   ├── RatingButtons.tsx
+│   │   │   │   ├── ReviewCard.tsx
+│   │   │   │   ├── ReviewHeader.tsx
+│   │   │   │   ├── ReviewSessionProgress.tsx
+│   │   │   │   └── ReviewSessionSummary.tsx
+│   │   │   ├── ui/
+│   │   │   │   ├── Badge.tsx
+│   │   │   │   ├── Card.tsx
+│   │   │   │   ├── FormField.tsx
+│   │   │   │   └── PageSection.tsx
 │   │   │   └── __tests__/        → Testes de componentes (Button, CardContent, etc.)
 │   │   ├── contexts/
 │   │   │   ├── AuthContext.tsx     → token + user state
 │   │   │   ├── ThemeContext.tsx    → dark/light
 │   │   │   └── ToastContext.tsx    → Notificações toast
+│   │   ├── hooks/
+│   │   │   └── useFocusTrap.ts
 │   │   ├── services/
 │   │   │   └── analyticsApi.ts
 │   │   ├── types/
 │   │   │   └── index.ts
 │   │   ├── test/
 │   │   │   └── setup.ts          → Vitest global setup (localStorage + matchMedia mocks)
-│   │   └── styles/
-│   │       └── index.css          → Tailwind + Catppuccin + animations + design tokens
-│       └── public/
-        ├── offline.html           → Página offline do PWA
-        ├── pwa-192x192.png        → Ícone PWA
-        ├── pwa-512x512.png        → Ícone PWA
-        ├── apple-touch-icon.png
-        └── favicon.svg
+│   │   └── index.css              → Tailwind + Catppuccin + animations + design tokens
+│   │
+│   └── public/
+│       ├── offline.html           → Página offline do PWA
+│       ├── icons.svg              → SVG sprite (bluesky, discord, documentation)
+│       ├── pwa-192x192.png        → Ícone PWA
+│       ├── pwa-512x512.png        → Ícone PWA
+│       ├── apple-touch-icon.png
+│       └── favicon.svg
 ```
 
 ---
@@ -258,7 +301,7 @@ Três arquivos em `backend/` definem a configuração do backend:
 **Rich text** → Tiptap + KaTeX render no `CardContent`
 **State** → local (useState/useEffect), sem Redux/Zustand
 **Testing** → vitest + @testing-library/react + jsdom; mocks globais em `src/test/setup.ts`
-**E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 5 suites (auth, review, import, analytics, share). Global setup gerencia lifecycle do Docker (`global-setup.ts`) e autentica usuário E2E fixo, salvando `storageState` em `e2e/.auth/user.json`. Fixture `authTest` disponível para testes pré-autenticados. Configuração via `.env.e2e`. Typecheck via `e2e/tsconfig.json`.
+**E2E** → Playwright (Chromium) em `e2e/`, run contra Docker Compose, 7 suites (auth, review, import, analytics, share, deck, card). Global setup gerencia lifecycle do Docker (`global-setup.ts`) e autentica usuário E2E fixo, salvando `storageState` em `e2e/.auth/user.json`. Fixture `authTest` disponível para testes pré-autenticados. Configuração via `.env.e2e`. Typecheck via `e2e/tsconfig.json`.
 
 **Infra adicional (produção ativa):** frontend servido como SPA estático no Vercel, backend Express no Render com PostgreSQL gerenciado. O Vercel faz o roteamento SPA e o proxy das requisições API para o backend no Render.
 
@@ -411,6 +454,85 @@ DELETE /decks/:id/share → remove token
 
 GET  /decks/shared/:token/preview → público (sem auth)
 POST /decks/shared/:token/import  → cópia transactional
+```
+
+---
+
+### Express Review (Preview)
+
+```
+GET /decks/:deck_id/review/:cardId/preview → simula 4 ratings sem persistir
+
+Request → authMiddleware → reviewController.previewReview
+  → reviewService.previewReview(cardId, userId)
+    → cardRepository.findById(cardId)
+    → fsrsService.preview(card) ← f.repeat() para Again/Hard/Good/Easy
+  → { success: true, data: { again, hard, good, easy } }
+```
+
+Útil para o usuário ver o impacto de cada rating antes de decidir.
+
+---
+
+### Export .apkg
+
+```
+POST /decks/:id/export
+  → authMiddleware → deckController.exportDeck
+    → exportService.exportDeck(deckId, userId)
+      → deckRepository.findById
+      → cardRepository.findByDeck (todos os cards)
+      → Monta SQLite Anki em memória (better-sqlite3)
+      → Cria collection.anki2 + media map
+      → Archiver empacota .apkg (ZIP)
+  → Content-Disposition: attachment → stream .apkg
+```
+
+---
+
+### CSV/TXT Import
+
+```
+POST /import/csv (multipart: file + deckId)
+  → authMiddleware → importController.importCsvTxt
+    → importService.importFromCsvTxt(file, deckId)
+      → parseCsv() / parseTxt() → extrai pares front/back
+      → Para cada par: cardRepository.create()
+  → { success: true, data: { imported, errors } }
+
+Frontend: CsvImportModal.tsx com drag-and-drop
+```
+
+---
+
+### Analytics Endpoints
+
+Seis endpoints montados diretamente em `app.ts` (fora de `routes/index.ts`):
+
+```
+GET /analytics/retention-rate     → taxa de retenção real
+GET /analytics/review-heatmap     → heatmap de atividade
+GET /analytics/forgetting-curve   → curva de esquecimento real vs predita
+GET /analytics/predicted-recall   → recall predito agregado
+GET /analytics/workload-forecast  → previsão de carga de revisão
+GET /analytics/daily-queue        → fila de prioridade (cross-deck)
+
+Todos seguem: authMiddleware → analyticsController
+  → analyticsService → analyticsRepository
+  → { success: true, data: ... }
+```
+
+### Due Counts
+
+```
+GET /decks/review/due-counts
+  → authMiddleware, dueCountsRouter (separado)
+  → reviewController.getDueCounts
+    → reviewService.getDueCounts(userId)
+      → cardRepository.getDueCountsByUser(userId)
+  → { success: true, data: [{ deck_id, due_count }] }
+
+Usado pelo DashboardPage para mostrar contagem de revisões pendentes por deck.
 ```
 
 ---

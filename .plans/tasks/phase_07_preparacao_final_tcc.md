@@ -39,7 +39,7 @@ Fases 00-06 (preferencialmente, mas a Fase 07 pode começar parcialmente antes)
 
 ## Tarefas
 
-### [ ] [T07.01 — Revisar e atualizar documentação do projeto](./task_07_01_revisar_arquitetura.md)
+### [x] [T07.01 — Revisar e atualizar documentação do projeto](./task_07_01_revisar_arquitetura.md)
 
 **Descrição:** Revisar `README.md`, `ARCHITECTURE.md`, `DECISIONS.md`, `ROADMAP.md` para garantir que refletem o estado atual do código.
 
@@ -50,15 +50,15 @@ Fases 00-06 (preferencialmente, mas a Fase 07 pode começar parcialmente antes)
 **Estimativa:** 4-6 horas
 
 **Subtarefas:**
-- [ ] Atualizar `ROADMAP.md` com status das fases concluídas
-- [ ] Verificar `ARCHITECTURE.md` se novas pastas/arquivos foram criados
-- [ ] Verificar `DECISIONS.md` se decisões foram alteradas (ex: sanitização server-side)
-- [ ] Atualizar `README.md` com instruções de setup atualizadas
+- [ ] Atualizar `ROADMAP.md` com status das fases concluídas (T07.02)
+- [x] Verificar `ARCHITECTURE.md` se novas pastas/arquivos foram criados
+- [ ] Verificar `DECISIONS.md` se decisões foram alteradas (T07.03)
+- [ ] Atualizar `README.md` com instruções de setup atualizadas (T07.02/T07.03)
 - [ ] Adicionar prints das telas principais no README
 
 ---
 
-### [ ] [T07.02 — Revisar ROADMAP.md](./task_07_02_revisar_roadmap.md)
+### [x] [T07.02 — Revisar ROADMAP.md](./task_07_02_revisar_roadmap.md)
 
 **Descrição:** Preparar um documento com os pontos técnicos que devem ser destacados na apresentação para a banca.
 

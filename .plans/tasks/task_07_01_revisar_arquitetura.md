@@ -2,7 +2,7 @@
 id: "T07.01"
 phase: "P07"
 title: "Revisar e Atualizar ARCHITECTURE.md"
-status: "pending"
+status: "completed"
 priority: "medium"
 estimate: ""
 depends_on: []
@@ -37,13 +37,14 @@ Revisar o `ARCHITECTURE.md` para refletir o estado atual do sistema após todas 
 
 ## Regression Risks
 
-- (Listar riscos de regressão específicos desta task)
+- Nenhum risco de regressão — mudanças exclusivamente em documentação (ARCHITECTURE.md)
+- Nenhum código TypeScript/JavaScript foi alterado
 
 ## Validation Scope
 
 ### Manual
 
-- (Listar fluxos manuais para validação)
+- Comparação visual entre ARCHITECTURE.md e estrutura real de diretórios do código
 
 ### Automated
 
@@ -53,10 +54,10 @@ Revisar o `ARCHITECTURE.md` para refletir o estado atual do sistema após todas 
 
 ## Checklist de Implementação
 
-- [ ] 1. Comparar ARCHITECTURE.md com estrutura atual de pastas
-- [ ] 2. Atualizar descrição de camadas se mudaram
-- [ ] 3. Adicionar novos componentes relevantes
-- [ ] 4. Verificar com `@doc`
+- [x] 1. Comparar ARCHITECTURE.md com estrutura atual de pastas
+- [x] 2. Atualizar descrição de camadas se mudaram
+- [x] 3. Adicionar novos componentes relevantes
+- [x] 4. Verificar com `@doc`
 
 ## Critérios de Aceitação
 
@@ -71,8 +72,8 @@ Revisar o `ARCHITECTURE.md` para refletir o estado atual do sistema após todas 
 
 ## Definition of Done
 
-- [ ] ARCHITECTURE.md atualizado
-- [ ] `@doc` aprovou
+- [x] ARCHITECTURE.md atualizado
+- [x] `@doc` aprovou
 
 ## Task Completion Policy
 
