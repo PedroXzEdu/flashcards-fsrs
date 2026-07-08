@@ -1,38 +1,54 @@
-import { test, expect } from "@playwright/test";
-import { uniqueUser, sampleApkgPath } from "./helpers";
+import { expect } from "@playwright/test";
+import { authTest } from "./helpers/auth";
+import { sampleApkgPath } from "./helpers";
+import { tmpdir } from "os";
+import { join } from "path";
+import { writeFileSync, unlinkSync } from "fs";
 
-test.describe("Import .apkg Flow", () => {
-  test("import a sample .apkg file", async ({ page }) => {
-    const user = uniqueUser();
+authTest.describe("Import .apkg Flow", () => {
+  authTest("import a sample .apkg file", async ({ page }) => {
+    await page.goto("/");
 
-    // Register
-    await page.goto("/register");
-    await page.getByPlaceholder("Seu nome").fill(user.name);
-    await page.getByPlaceholder("seu@email.com").fill(user.email);
-    await page.getByPlaceholder("••••••••").fill(user.password);
-    await page.getByRole("button", { name: /criar conta/i }).click();
-    await expect(page.getByText(/meus baralhos/i)).toBeVisible({ timeout: 10000 });
-
-    // Open import modal
     await page.getByRole("button", { name: /importar .apkg/i }).click();
     await expect(page.getByText(/importar baralho anki/i)).toBeVisible();
 
-    // Upload the .apkg file via hidden input
     await page.locator('input[type="file"]').setInputFiles(sampleApkgPath());
     await expect(page.getByText("sample.apkg")).toBeVisible();
 
-    // Click Import button
     await page.getByRole("button", { name: /^importar$/i }).click();
 
-    // Wait for import to complete
     await expect(page.getByText(/importação concluída/i)).toBeVisible({
       timeout: 15000,
     });
 
-    // Click "Ver baralho importado"
     await page.getByRole("button", { name: /ver baralho importado/i }).click();
-
-    // Verify the imported deck appears in the dashboard (name from filename)
     await expect(page.getByText("sample")).toBeVisible();
+  });
+
+  authTest("invalid file type shows error message", async ({ page }) => {
+    const invalidPath = join(tmpdir(), "not-an-apkg.txt");
+    writeFileSync(invalidPath, "this is not an apkg file", "utf-8");
+
+    await page.goto("/");
+    await page.getByRole("button", { name: /importar .apkg/i }).click();
+    await expect(page.getByText(/importar baralho anki/i)).toBeVisible();
+
+    await page.locator('input[type="file"]').setInputFiles(invalidPath);
+
+    await expect(page.getByText("Apenas arquivos .apkg são aceitos.")).toBeVisible();
+
+    unlinkSync(invalidPath);
+  });
+
+  authTest("import without file shows error message", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /importar .apkg/i }).click();
+    await expect(page.getByText(/importar baralho anki/i)).toBeVisible();
+
+    await page.getByRole("button", { name: /^importar$/i }).click();
+
+    await expect(
+      page.getByText("Selecione um arquivo .apkg primeiro."),
+    ).toBeVisible();
   });
 });

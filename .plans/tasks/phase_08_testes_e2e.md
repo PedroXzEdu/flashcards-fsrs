@@ -138,7 +138,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ---
 
-### [ ] [T08.06 — Import, Share e Analytics (Hardening)](./task_08_06_import_share_analytics.md)
+### [x] [T08.06 — Import, Share e Analytics (Hardening)](./task_08_06_import_share_analytics.md)
 
 **Descrição:** Adicionar cenários de erro/estado vazio para import, share e analytics.
 
