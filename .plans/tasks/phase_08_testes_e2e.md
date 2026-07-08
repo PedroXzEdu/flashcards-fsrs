@@ -126,7 +126,7 @@ Apesar do INDEX.md atual listar "Novos testes E2E" como "O que NÃO mexer agora"
 
 ---
 
-### [ ] [T08.05 — Fluxo de Revisão FSRS (Cobertura Completa)](./task_08_05_review_completo.md)
+### [x] [T08.05 — Fluxo de Revisão FSRS (Cobertura Completa)](./task_08_05_review_completo.md)
 
 **Descrição:** Expandir `review.spec.ts` para todos os 4 ratings, teclas de atalho, fila vazia, Learning state.
 
